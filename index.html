@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PM Hub · EREN CONS SRL</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+<style>
+:root {
+  --navy:#1F3864;--blue:#185FA5;--blue-light:#E6F1FB;--blue-mid:#378ADD;
+  --green:#3B6D11;--green-light:#EAF3DE;--green-mid:#C0DD97;
+  --amber:#854F0B;--amber-light:#FAEEDA;--amber-mid:#FAC775;
+  --red:#A32D2D;--red-light:#FCEBEB;--red-mid:#F7C1C1;
+  --grey-100:#F5F5F5;--grey-200:#E8E8E8;
+  --text:#1A1A1A;--text-secondary:#5F5F5F;--text-tertiary:#9E9E9E;
+  --border:#E0E0E0;--bg:#F4F4F2;--white:#FFFFFF;
+  --radius:8px;--radius-lg:12px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:14px;line-height:1.5}
+
+/* LOGIN */
+.login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--navy)}
+.login-card{background:var(--white);border-radius:var(--radius-lg);padding:36px 40px;width:100%;max-width:360px;box-shadow:0 4px 24px rgba(0,0,0,0.18);margin:16px}
+.login-logo{display:flex;align-items:center;gap:10px;margin-bottom:28px}
+.login-logo i{font-size:24px;color:var(--navy)}
+.login-logo-text{font-size:15px;font-weight:600;color:var(--navy)}
+.login-logo-sub{font-size:11px;color:var(--text-tertiary)}
+.login-label{font-size:12px;font-weight:500;color:var(--text-secondary);margin-bottom:6px;display:block}
+.login-input{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:var(--radius);font-size:14px;font-family:'Inter',sans-serif;color:var(--text);margin-bottom:14px;outline:none;transition:border-color 0.15s}
+.login-input:focus{border-color:var(--blue)}
+.login-btn{width:100%;padding:11px;background:var(--navy);color:var(--white);border:none;border-radius:var(--radius);font-size:14px;font-weight:500;font-family:'Inter',sans-serif;cursor:pointer;margin-top:4px}
+.login-btn:hover{background:var(--blue)}
+.login-error{font-size:12px;color:var(--red);margin-top:10px;display:none;text-align:center}
+
+/* APP */
+.app-screen{display:none}
+.topbar{background:var(--navy);padding:0 16px;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200}
+.topbar-left{display:flex;align-items:center;gap:10px}
+.menu-btn{background:none;border:none;color:rgba(255,255,255,0.8);cursor:pointer;padding:6px;font-size:22px;line-height:1;display:flex;align-items:center}
+.back-btn{background:none;border:none;color:rgba(255,255,255,0.8);cursor:pointer;padding:6px;font-size:22px;line-height:1;display:none;align-items:center}
+.brand-name{font-size:14px;font-weight:600;color:#fff}
+.brand-sub{font-size:11px;color:rgba(255,255,255,0.5);margin-left:4px}
+.topbar-right{display:flex;align-items:center;gap:10px}
+.avatar{width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,0.15);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#fff;flex-shrink:0}
+.user-name{font-size:12px;color:rgba(255,255,255,0.8)}
+.logout-btn{font-size:11px;color:rgba(255,255,255,0.5);cursor:pointer;background:none;border:none;font-family:'Inter',sans-serif;padding:4px 8px;border-radius:4px}
+.logout-btn:hover{color:#fff;background:rgba(255,255,255,0.1)}
+
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:150}
+.overlay.open{display:block}
+.layout{display:flex;min-height:calc(100vh - 52px)}
+
+/* SIDEBAR */
+.sidebar{width:220px;background:var(--white);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;position:sticky;top:52px;height:calc(100vh - 52px);overflow-y:auto;z-index:160;transition:transform 0.25s ease}
+.sidebar-section{padding:16px 16px 6px;font-size:10px;font-weight:600;color:var(--text-tertiary);letter-spacing:0.08em;text-transform:uppercase}
+.proj-item{display:flex;align-items:center;gap:10px;padding:9px 16px;cursor:pointer;border-left:2px solid transparent;transition:background 0.12s}
+.proj-item:hover{background:var(--grey-100)}
+.proj-item.active{background:var(--blue-light);border-left-color:var(--blue)}
+.proj-icon{width:28px;height:28px;border-radius:var(--radius);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.pi-blue{background:var(--blue-light);color:var(--blue)}
+.pi-amber{background:var(--amber-light);color:var(--amber)}
+.proj-info{flex:1;min-width:0}
+.proj-name{font-size:12px;font-weight:500;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.proj-item.active .proj-name{color:var(--blue)}
+.proj-sublabel{font-size:10px;color:var(--text-tertiary);margin-top:1px}
+.demo-pill{font-size:9px;background:var(--amber-light);color:var(--amber);border-radius:99px;padding:1px 6px;margin-top:2px;display:inline-block;font-weight:500}
+.submenu{background:var(--grey-100);border-left:2px solid var(--border);margin-left:16px;display:none}
+.submenu.open{display:block}
+.submenu-item{display:flex;align-items:center;gap:8px;padding:7px 14px;cursor:pointer;font-size:11px;color:var(--text-secondary);transition:background 0.12s;border-left:2px solid transparent}
+.submenu-item:hover{background:var(--grey-200);color:var(--text)}
+.submenu-item.active{color:var(--blue);font-weight:500;border-left-color:var(--blue);background:var(--blue-light)}
+.submenu-item i{font-size:13px}
+.chevron{margin-left:auto;font-size:12px;color:var(--text-tertiary);transition:transform 0.2s}
+.chevron.open{transform:rotate(180deg)}
+.sidebar-add{margin:12px 16px;padding:8px 12px;border:1px dashed var(--border);border-radius:var(--radius);font-size:12px;color:var(--text-tertiary);cursor:pointer;display:flex;align-items:center;gap:6px;background:transparent;font-family:'Inter',sans-serif}
+.sidebar-add:hover{background:var(--grey-100)}
+.sidebar-footer{margin-top:auto;padding:12px 16px;border-top:1px solid var(--border);font-size:10px;color:var(--text-tertiary)}
+
+/* MAIN */
+.main{flex:1;padding:24px;max-width:900px;min-width:0}
+.proj-header{margin-bottom:16px}
+.proj-title{font-size:20px;font-weight:600;color:var(--text);margin-bottom:4px}
+.proj-meta{font-size:12px;color:var(--text-tertiary)}
+.module-badge{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:500;padding:3px 10px;border-radius:99px;margin-bottom:14px}
+.module-badge.validare{background:var(--blue-light);color:var(--blue)}
+.module-badge.productie{background:var(--green-light);color:var(--green)}
+.demo-banner{background:var(--amber-light);border:1px solid var(--amber-mid);border-radius:var(--radius);padding:8px 14px;font-size:12px;color:var(--amber);display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.decizie{padding:14px 18px;border-radius:var(--radius-lg);margin-bottom:20px;display:flex;align-items:center;gap:12px;font-size:13px;font-weight:500;border:1px solid}
+.decizie i{font-size:22px;flex-shrink:0}
+.decizie.stop{background:var(--red-light);color:var(--red);border-color:var(--red-mid)}
+.decizie.go{background:var(--green-light);color:var(--green);border-color:var(--green-mid)}
+.kpi-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:20px}
+.kpi{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:14px 16px}
+.kpi-label{font-size:11px;color:var(--text-tertiary);margin-bottom:6px}
+.kpi-val{font-size:20px;font-weight:600;color:var(--text);line-height:1}
+.kpi-sub{font-size:10px;color:var(--text-tertiary);margin-top:4px}
+.nivel-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-bottom:20px}
+.nivel-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:16px}
+.nivel-title{font-size:13px;font-weight:600;color:var(--navy);margin-bottom:12px;display:flex;align-items:center;gap:7px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.nivel-title i{font-size:16px}
+.ind-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--grey-100);font-size:12px}
+.ind-row:last-child{border-bottom:none}
+.ind-label{color:var(--text-secondary);flex:1;padding-right:10px}
+.badge{padding:3px 10px;border-radius:99px;font-size:10px;font-weight:600;flex-shrink:0}
+.badge.ok{background:var(--green-light);color:var(--green)}
+.badge.warn{background:var(--amber-light);color:var(--amber)}
+.badge.risk{background:var(--red-light);color:var(--red)}
+.badge.na{background:var(--grey-100);color:var(--text-tertiary)}
+.progress-section{margin-top:12px}
+.pr-row{margin-bottom:8px}
+.pr-label-row{display:flex;justify-content:space-between;font-size:10px;color:var(--text-tertiary);margin-bottom:3px}
+.pr-bar-bg{height:6px;background:var(--grey-200);border-radius:99px;overflow:hidden}
+.pr-bar{height:6px;border-radius:99px}
+.bar-blue{background:var(--blue-mid)}
+.bar-amber{background:#EF9F27}
+.bar-red{background:#E24B4A}
+.open-fisa-btn{width:100%;padding:11px;border:1px solid var(--border);border-radius:var(--radius);font-size:13px;color:var(--text-secondary);background:var(--white);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;font-family:'Inter',sans-serif;transition:background 0.12s}
+.open-fisa-btn:hover{background:var(--grey-100)}
+.coming-soon{text-align:center;padding:60px 20px;color:var(--text-tertiary)}
+.coming-soon i{font-size:48px;margin-bottom:16px;display:block}
+.coming-soon h3{font-size:16px;font-weight:500;color:var(--text-secondary);margin-bottom:8px}
+.page-footer{padding:20px 0 12px;font-size:10px;color:var(--text-tertiary)}
+.proj-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;margin-bottom:16px}
+.proj-card-header{padding:10px 16px;display:flex;align-items:center;gap:10px}
+.proj-card-body{padding:12px 16px;display:flex;flex-direction:column;gap:8px}
+
+@media(max-width:768px){
+  .menu-btn{display:flex}
+  .brand-sub{display:none}
+  .sidebar{position:fixed;top:52px;left:0;height:calc(100vh - 52px);transform:translateX(-100%)}
+  .sidebar.open{transform:translateX(0);box-shadow:4px 0 16px rgba(0,0,0,0.15)}
+  .kpi-grid{grid-template-columns:repeat(2,1fr)}
+  .nivel-grid{grid-template-columns:1fr}
+  .main{padding:16px}
+  .proj-title{font-size:17px}
+  .user-name{display:none}
+}
+@media(min-width:769px){
+  .menu-btn{display:none}
+  .back-btn{display:none !important}
+}
+</style>
+</head>
+<body>
+
+<div class="login-screen" id="login-screen">
+  <div class="login-card">
+    <div class="login-logo">
+      <i class="ti ti-layout-dashboard"></i>
+      <div>
+        <div class="login-logo-text">PM Hub</div>
+        <div class="login-logo-sub">EREN CONS SRL</div>
+      </div>
+    </div>
+    <label class="login-label">Utilizator</label>
+    <input class="login-input" type="text" id="inp-user" placeholder="Utilizator" autocomplete="username">
+    <label class="login-label">Parolă</label>
+    <input class="login-input" type="password" id="inp-pass" placeholder="Parolă" autocomplete="current-password">
+    <button class="login-btn" onclick="doLogin()">Intră în aplicație</button>
+    <div class="login-error" id="login-error">Utilizator sau parolă incorecte.</div>
+  </div>
+</div>
+
+<div class="app-screen" id="app-screen">
+  <div class="topbar">
+    <div class="topbar-left">
+      <button class="menu-btn" id="menu-btn" onclick="openMenu()" aria-label="Meniu"><i class="ti ti-menu-2"></i></button>
+      <button class="back-btn" id="back-btn" onclick="goHome()"><i class="ti ti-arrow-left"></i></button>
+      <span class="brand-name">PM Hub</span>
+      <span class="brand-sub">· EREN CONS SRL</span>
+    </div>
+    <div class="topbar-right">
+      <div class="avatar" id="app-avatar">GS</div>
+      <span class="user-name" id="app-username">Spătaru Gelu</span>
+      <button class="logout-btn" onclick="doLogout()">Ieșire</button>
+    </div>
+  </div>
+
+  <div class="overlay" id="overlay" onclick="closeMenu()"></div>
+
+  <div class="layout">
+    <div class="sidebar" id="sidebar">
+      <div class="sidebar-section">Proiecte active</div>
+
+      <div class="proj-item" id="proj-hangar" onclick="toggleSub('hangar')">
+        <div class="proj-icon pi-blue"><i class="ti ti-building"></i></div>
+        <div class="proj-info">
+          <div class="proj-name">Hangar Kogălniceanu</div>
+          <div class="proj-sublabel">În validare</div>
+        </div>
+        <i class="ti ti-chevron-down chevron" id="chev-hangar"></i>
+      </div>
+      <div class="submenu" id="sub-hangar">
+        <div class="submenu-item" id="item-hangar-validare" onclick="goModule('hangar','validare')">
+          <i class="ti ti-chart-bar"></i> Validare Bugete
+        </div>
+        <div class="submenu-item" id="item-hangar-productie" onclick="goModule('hangar','productie')">
+          <i class="ti ti-hammer"></i> Raportări Producție
+        </div>
+      </div>
+
+      <div class="proj-item" id="proj-campus" onclick="toggleSub('campus')">
+        <div class="proj-icon pi-amber"><i class="ti ti-school"></i></div>
+        <div class="proj-info">
+          <div class="proj-name">Campus DUAL</div>
+          <div class="proj-sublabel">În execuție</div>
+          <div class="demo-pill">parțial real</div>
+        </div>
+        <i class="ti ti-chevron-down chevron" id="chev-campus"></i>
+      </div>
+      <div class="submenu" id="sub-campus">
+        <div class="submenu-item" id="item-campus-validare" onclick="goModule('campus','validare')">
+          <i class="ti ti-chart-bar"></i> Validare Bugete
+        </div>
+        <div class="submenu-item" id="item-campus-productie" onclick="toggleSubSub('campus-prod')">
+          <i class="ti ti-hammer"></i> Raportări Producție
+          <i class="ti ti-chevron-down chevron" id="chev-campus-prod" style="font-size:11px"></i>
+        </div>
+        <div class="submenu" id="sub-campus-prod" style="margin-left:14px;border-left:2px solid var(--grey-200)">
+          <div class="submenu-item" id="item-campus-sl11" onclick="openLink('https://drive.google.com/file/d/1yoPPZ7XhBklfjDqzUdujQnmI5SnhR-r2/view?usp=sharing','item-campus-sl11')">
+            <i class="ti ti-file-analytics"></i> Raport producție SL11
+          </div>
+        </div>
+      </div>
+
+      <button class="sidebar-add" onclick="alert('Funcționalitate în dezvoltare.')">
+        <i class="ti ti-plus"></i> Proiect nou
+      </button>
+      <div class="sidebar-footer">PM Hub · EREN CONS SRL · 2026</div>
+    </div>
+
+    <div class="main" id="main"></div>
+  </div>
+</div>
+
+<script>
+var USERS = {"Gelu":"GSP2026#"};
+
+function doLogin() {
+  var u = document.getElementById('inp-user').value.trim();
+  var p = document.getElementById('inp-pass').value;
+  var err = document.getElementById('login-error');
+  if (USERS[u] && USERS[u] === p) {
+    sessionStorage.setItem('pmhub_user', u);
+    err.style.display = 'none';
+    showApp(u);
+  } else {
+    err.style.display = 'block';
+  }
+}
+
+function doLogout() {
+  sessionStorage.removeItem('pmhub_user');
+  document.getElementById('app-screen').style.display = 'none';
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('inp-pass').value = '';
+}
+
+function showApp(user) {
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('app-screen').style.display = 'block';
+  document.getElementById('app-avatar').textContent = user.substring(0,2).toUpperCase();
+  document.getElementById('app-username').textContent = 'Spătaru ' + user;
+  goHome();
+}
+
+function openMenu() {
+  document.getElementById('sidebar').classList.add('open');
+  document.getElementById('overlay').classList.add('open');
+}
+
+function closeMenu() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('overlay').classList.remove('open');
+}
+
+function goHome() {
+  closeMenu();
+  document.querySelectorAll('.submenu-item').forEach(function(i){ i.classList.remove('active'); });
+  document.getElementById('menu-btn').style.display = 'flex';
+  document.getElementById('back-btn').style.display = 'none';
+  renderHome();
+}
+
+function toggleSub(proj) {
+  var sub = document.getElementById('sub-' + proj);
+  var chev = document.getElementById('chev-' + proj);
+  var isOpen = sub.classList.contains('open');
+  document.querySelectorAll('.submenu').forEach(function(s){ s.classList.remove('open'); });
+  document.querySelectorAll('.chevron').forEach(function(c){ c.classList.remove('open'); });
+  document.querySelectorAll('.submenu-item').forEach(function(i){ i.classList.remove('active'); });
+  if (!isOpen) {
+    sub.classList.add('open');
+    chev.classList.add('open');
+    renderProjHome(proj);
+    document.getElementById('menu-btn').style.display = 'none';
+    document.getElementById('back-btn').style.display = 'flex';
+  } else {
+    goHome();
+  }
+}
+
+function toggleSubSub(id) {
+  var sub = document.getElementById('sub-' + id);
+  var chev = document.getElementById('chev-' + id);
+  sub.classList.toggle('open');
+  if (chev) chev.classList.toggle('open');
+}
+
+function goModule(proj, module) {
+  document.querySelectorAll('.submenu-item').forEach(function(i){ i.classList.remove('active'); });
+  var item = document.getElementById('item-' + proj + '-' + module);
+  if (item) item.classList.add('active');
+  closeMenu();
+  document.getElementById('menu-btn').style.display = 'none';
+  document.getElementById('back-btn').style.display = 'flex';
+  if (module === 'validare') renderValidare(proj);
+  else renderProductie(proj);
+}
+
+function openLink(url, itemId) {
+  window.open(url, '_blank');
+  document.querySelectorAll('.submenu-item').forEach(function(i){ i.classList.remove('active'); });
+  var item = document.getElementById(itemId);
+  if (item) item.classList.add('active');
+  closeMenu();
+}
+
+var DATA = {
+  hangar: {
+    title:"Hangar Kogălniceanu", meta:"PM: Spătaru Gelu · Buget: 22.622.113 lei · Start: 19.06.2026", demo:false,
+    decizie:"stop", decizie_text:"STOP — Riscuri majore nerezolvate. Discuție obligatorie cu DVO și DT înainte de execuție.", decizie_icon:"ti-alert-octagon",
+    kpis:[
+      {label:"Buget total contract",val:"22,6 mil lei",sub:"Lucrări principale + suplimentare"},
+      {label:"Grad fundamentare (OP)",val:"1,4%",sub:"Oferte ferme din piață"},
+      {label:"Buget documentat total",val:"6,6%",sub:"OP + PA + EP"},
+      {label:"Valoare nedocumentată",val:"21,1 mil lei",sub:"Fără sursă de fundamentare"}
+    ],
+    n1:[
+      {label:"Fundamentare oferte ferme (OP)",badge:"risk",text:"RISC"},
+      {label:"Buget documentat total",badge:"warn",text:"ATENȚIE"},
+      {label:"Valoare nedocumentată",badge:"risk",text:"RISC"}
+    ],
+    bars:[
+      {label:"Oferte ferme (OP)",pct:1.4,cls:"bar-blue"},
+      {label:"Estimare proprie (EP)",pct:3.2,cls:"bar-amber"},
+      {label:"Proiect anterior (PA)",pct:2.0,cls:"bar-amber"},
+      {label:"Nedocumentat",pct:93.4,cls:"bar-red"}
+    ],
+    n2:[
+      {label:"Export ERP încărcat",badge:"risk",text:"LIPSĂ"},
+      {label:"Export eDevize încărcat",badge:"risk",text:"LIPSĂ"},
+      {label:"Articole conforme",badge:"na",text:"—"},
+      {label:"Abateri majore (> 15%)",badge:"na",text:"—"},
+      {label:"Articole lipsă în contract",badge:"na",text:"—"}
+    ]
+  },
+  campus: {
+    title:"Campus DUAL Politehnica", meta:"PM: Spătaru Gelu · Corp C1 · În execuție", demo:true,
+    decizie:"go", decizie_text:"GO — Bugetul validat. Execuția în curs.", decizie_icon:"ti-circle-check",
+    kpis:[
+      {label:"Buget total contract",val:"8,4 mil lei",sub:"Corp C1"},
+      {label:"Grad fundamentare (OP)",val:"74%",sub:"Oferte ferme din piață"},
+      {label:"Buget documentat total",val:"91%",sub:"OP + PA + EP"},
+      {label:"Valoare nedocumentată",val:"756k lei",sub:"Fără sursă de fundamentare"}
+    ],
+    n1:[
+      {label:"Fundamentare oferte ferme (OP)",badge:"ok",text:"OK"},
+      {label:"Buget documentat total",badge:"ok",text:"OK"},
+      {label:"Valoare nedocumentată",badge:"warn",text:"ATENȚIE"}
+    ],
+    bars:[
+      {label:"Oferte ferme (OP)",pct:74,cls:"bar-blue"},
+      {label:"Estimare proprie (EP)",pct:12,cls:"bar-amber"},
+      {label:"Proiect anterior (PA)",pct:5,cls:"bar-amber"},
+      {label:"Nedocumentat",pct:9,cls:"bar-red"}
+    ],
+    n2:[
+      {label:"Export ERP încărcat",badge:"ok",text:"OK"},
+      {label:"Export eDevize încărcat",badge:"ok",text:"OK"},
+      {label:"Articole conforme",badge:"ok",text:"82%"},
+      {label:"Abateri majore (> 15%)",badge:"ok",text:"0"},
+      {label:"Articole lipsă în contract",badge:"ok",text:"0"}
+    ]
+  }
+};
+
+function renderProjHome(proj) {
+  var p = DATA[proj];
+  var isHangar = proj === 'hangar';
+  var html = '';
+  html += '<div class="proj-header"><div class="proj-title">' + p.title + '</div><div class="proj-meta">' + p.meta + '</div></div>';
+
+  if (isHangar) {
+    html += '<div class="proj-card">';
+    html += '<div class="proj-card-header" style="background:var(--blue-light);border-bottom:1px solid var(--border)">';
+    html += '<i class="ti ti-chart-bar" style="font-size:16px;color:var(--blue)"></i>';
+    html += '<span style="font-size:13px;font-weight:600;color:var(--navy)">Validare Bugete</span>';
+    html += '</div>';
+    html += '<div class="proj-card-body">';
+    html += '<button class="open-fisa-btn" onclick="goModule(\'hangar\',\'validare\')"><i class="ti ti-layout-dashboard"></i> Deschide tabloul de bord</button>';
+    html += '<div style="display:flex;gap:8px;flex-wrap:wrap">';
+    html += '<button class="open-fisa-btn" style="flex:1;min-width:140px" onclick="window.open(\'https://docs.google.com/spreadsheets/d/1gT9LXVKagnQyMJ8T7ZjPVVH4SMt2zDheiQHRO85dqH0/edit?gid=416236326#gid=416236326\',\'_blank\')"><i class="ti ti-table"></i> Fișa Validare Buget</button>';
+    html += '<button class="open-fisa-btn" style="flex:1;min-width:140px" onclick="window.open(\'https://drive.google.com/file/d/1pUQjk1pk7JsXk8cXdLShgpbqSMYh2JFj/view?usp=drive_link\',\'_blank\')"><i class="ti ti-chart-gantt"></i> Gantt implementare</button>';
+    html += '</div></div></div>';
+    html += '<div class="proj-card">';
+    html += '<div class="proj-card-header" style="background:var(--green-light);border-bottom:1px solid var(--border)">';
+    html += '<i class="ti ti-hammer" style="font-size:16px;color:var(--green)"></i>';
+    html += '<span style="font-size:13px;font-weight:600;color:var(--navy)">Raportări Producție</span>';
+    html += '</div>';
+    html += '<div class="proj-card-body">';
+    html += '<div class="coming-soon" style="padding:20px"><i class="ti ti-hammer" style="font-size:28px;margin-bottom:8px"></i><h3 style="font-size:13px">Modul în dezvoltare</h3></div>';
+    html += '</div></div>';
+  } else {
+    html += '<div class="proj-card">';
+    html += '<div class="proj-card-header" style="background:var(--blue-light);border-bottom:1px solid var(--border)">';
+    html += '<i class="ti ti-chart-bar" style="font-size:16px;color:var(--blue)"></i>';
+    html += '<span style="font-size:13px;font-weight:600;color:var(--navy)">Validare Bugete</span>';
+    html += '<span style="font-size:9px;background:var(--amber-light);color:var(--amber);border-radius:99px;padding:1px 8px;margin-left:8px;font-weight:500">demonstrativ</span>';
+    html += '</div>';
+    html += '<div class="proj-card-body">';
+    html += '<button class="open-fisa-btn" onclick="goModule(\'campus\',\'validare\')"><i class="ti ti-layout-dashboard"></i> Deschide tabloul de bord</button>';
+    html += '</div></div>';
+    html += '<div class="proj-card">';
+    html += '<div class="proj-card-header" style="background:var(--green-light);border-bottom:1px solid var(--border)">';
+    html += '<i class="ti ti-hammer" style="font-size:16px;color:var(--green)"></i>';
+    html += '<span style="font-size:13px;font-weight:600;color:var(--navy)">Raportări Producție</span>';
+    html += '<span style="font-size:9px;background:var(--green-light);color:var(--green);border-radius:99px;padding:1px 8px;margin-left:8px;font-weight:600;border:1px solid var(--green-mid)">date reale</span>';
+    html += '</div>';
+    html += '<div class="proj-card-body">';
+    html += '<button class="open-fisa-btn" onclick="window.open(\'https://drive.google.com/file/d/1yoPPZ7XhBklfjDqzUdujQnmI5SnhR-r2/view?usp=sharing\',\'_blank\')"><i class="ti ti-file-analytics"></i> Raport producție SL11</button>';
+    html += '</div></div>';
+  }
+
+  html += '<div class="page-footer">PM Hub · EREN CONS SRL · 2026</div>';
+  document.getElementById('main').innerHTML = html;
+}
+
+function renderHome() {
+  document.getElementById('main').innerHTML =
+    '<div class="proj-header"><div class="proj-title">PM Hub</div><div class="proj-meta">EREN CONS SRL · Spătaru Gelu · 2026</div></div>' +
+
+    '<div class="proj-card">' +
+      '<div class="proj-card-header" style="background:var(--navy)">' +
+        '<div class="proj-icon" style="background:rgba(255,255,255,0.15)"><i class="ti ti-building" style="color:#fff"></i></div>' +
+        '<div><div style="font-size:13px;font-weight:600;color:#fff">Hangar Kogălniceanu</div>' +
+        '<div style="font-size:10px;color:rgba(255,255,255,0.6)">În validare · Start: 19.06.2026</div></div>' +
+      '</div>' +
+      '<div class="proj-card-body">' +
+        '<button class="open-fisa-btn" onclick="goModule(\'hangar\',\'validare\');toggleSub(\'hangar\')"><i class="ti ti-chart-bar"></i> Validare Bugete</button>' +
+        '<div style="display:flex;gap:8px;flex-wrap:wrap">' +
+          '<button class="open-fisa-btn" style="flex:1;min-width:140px" onclick="window.open(\'https://docs.google.com/spreadsheets/d/1gT9LXVKagnQyMJ8T7ZjPVVH4SMt2zDheiQHRO85dqH0/edit?gid=416236326#gid=416236326\',\'_blank\')"><i class="ti ti-table"></i> Fișa Validare Buget</button>' +
+          '<button class="open-fisa-btn" style="flex:1;min-width:140px" onclick="window.open(\'https://drive.google.com/file/d/1pUQjk1pk7JsXk8cXdLShgpbqSMYh2JFj/view?usp=drive_link\',\'_blank\')"><i class="ti ti-chart-gantt"></i> Gantt implementare</button>' +
+        '</div>' +
+      '</div>' +
+    '</div>' +
+
+    '<div class="proj-card">' +
+      '<div class="proj-card-header" style="background:#5C3D0A">' +
+        '<div class="proj-icon" style="background:rgba(255,255,255,0.15)"><i class="ti ti-school" style="color:#fff"></i></div>' +
+        '<div style="flex:1"><div style="font-size:13px;font-weight:600;color:#fff">Campus DUAL Politehnica</div>' +
+        '<div style="font-size:10px;color:rgba(255,255,255,0.6)">În execuție · Corp C1</div></div>' +
+        '<span style="font-size:9px;background:rgba(255,255,255,0.2);color:#fff;border-radius:99px;padding:2px 8px;font-weight:500">parțial real</span>' +
+      '</div>' +
+      '<div class="proj-card-body">' +
+        '<button class="open-fisa-btn" onclick="goModule(\'campus\',\'validare\');toggleSub(\'campus\')"><i class="ti ti-chart-bar"></i> Validare Bugete <span style="font-size:10px;color:var(--text-tertiary);margin-left:4px">demonstrativ</span></button>' +
+        '<button class="open-fisa-btn" onclick="window.open(\'https://drive.google.com/file/d/1yoPPZ7XhBklfjDqzUdujQnmI5SnhR-r2/view?usp=sharing\',\'_blank\')"><i class="ti ti-file-analytics"></i> Raport producție SL11 <span style="font-size:10px;background:var(--green-light);color:var(--green);border-radius:99px;padding:1px 6px;margin-left:4px;font-weight:600">date reale</span></button>' +
+      '</div>' +
+    '</div>' +
+
+    '<div class="page-footer">PM Hub · EREN CONS SRL · 2026</div>';
+}
+
+function renderValidare(proj) {
+  var p = DATA[proj];
+  var html = '';
+  html += '<div class="proj-header"><div class="proj-title">' + p.title + '</div><div class="proj-meta">' + p.meta + '</div></div>';
+  html += '<div class="module-badge validare"><i class="ti ti-chart-bar" style="font-size:13px"></i> Validare Bugete</div>';
+  html += '<div style="display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap">';
+  if (proj === 'hangar') {
+    html += '<button class="open-fisa-btn" style="flex:1;min-width:160px" onclick="window.open(\'https://docs.google.com/spreadsheets/d/1gT9LXVKagnQyMJ8T7ZjPVVH4SMt2zDheiQHRO85dqH0/edit?gid=416236326#gid=416236326\',\'_blank\')"><i class="ti ti-table"></i>Fișa de Validare Buget</button>';
+    html += '<button class="open-fisa-btn" style="flex:1;min-width:160px" onclick="window.open(\'https://drive.google.com/file/d/1pUQjk1pk7JsXk8cXdLShgpbqSMYh2JFj/view?usp=drive_link\',\'_blank\')"><i class="ti ti-chart-gantt"></i>Gantt de implementare</button>';
+  }
+  html += '</div>';
+  if (p.demo) {
+    html += '<div class="demo-banner"><i class="ti ti-info-circle" style="font-size:15px;flex-shrink:0"></i>Validare Bugete conține date demonstrative. Raportările de Producție conțin date reale.</div>';
+  }
+  html += '<div class="decizie ' + p.decizie + '"><i class="ti ' + p.decizie_icon + '"></i><span>' + p.decizie_text + '</span></div>';
+  html += '<div class="kpi-grid">';
+  p.kpis.forEach(function(k) { html += '<div class="kpi"><div class="kpi-label">' + k.label + '</div><div class="kpi-val">' + k.val + '</div><div class="kpi-sub">' + k.sub + '</div></div>'; });
+  html += '</div><div class="nivel-grid">';
+  html += '<div class="nivel-card"><div class="nivel-title"><i class="ti ti-chart-bar"></i>Nivel 1 — Validare financiară</div>';
+  p.n1.forEach(function(r) { html += '<div class="ind-row"><span class="ind-label">' + r.label + '</span><span class="badge ' + r.badge + '">' + r.text + '</span></div>'; });
+  html += '<div class="progress-section">';
+  p.bars.forEach(function(b) { html += '<div class="pr-row"><div class="pr-label-row"><span>' + b.label + '</span><span>' + b.pct.toFixed(1) + '%</span></div><div class="pr-bar-bg"><div class="pr-bar ' + b.cls + '" style="width:' + b.pct + '%"></div></div></div>'; });
+  html += '</div></div>';
+  html += '<div class="nivel-card"><div class="nivel-title"><i class="ti ti-file-check"></i>Nivel 2 — Validare rețete</div>';
+  p.n2.forEach(function(r) { html += '<div class="ind-row"><span class="ind-label">' + r.label + '</span><span class="badge ' + r.badge + '">' + r.text + '</span></div>'; });
+  html += '</div></div>';
+  html += '<div class="page-footer">PM Hub · EREN CONS SRL · 2026</div>';
+  document.getElementById('main').innerHTML = html;
+}
+
+function renderProductie(proj) {
+  var p = DATA[proj];
+  var html = '';
+  html += '<div class="proj-header"><div class="proj-title">' + p.title + '</div><div class="proj-meta">' + p.meta + '</div></div>';
+  html += '<div class="module-badge productie"><i class="ti ti-hammer" style="font-size:13px"></i> Raportări Producție</div>';
+  html += '<div class="coming-soon"><i class="ti ti-hammer"></i><h3>Modul în dezvoltare</h3><p>Raportările de producție vor fi disponibile în versiunea următoare a PM Hub.</p></div>';
+  html += '<div class="page-footer">PM Hub · EREN CONS SRL · 2026</div>';
+  document.getElementById('main').innerHTML = html;
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  document.getElementById('inp-pass').addEventListener('keydown', function(e) { if (e.key === 'Enter') doLogin(); });
+  document.getElementById('inp-user').addEventListener('keydown', function(e) { if (e.key === 'Enter') document.getElementById('inp-pass').focus(); });
+  var saved = sessionStorage.getItem('pmhub_user');
+  if (saved && USERS[saved]) { showApp(saved); }
+});
+</script>
+</body>
+</html>

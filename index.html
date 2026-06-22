@@ -224,6 +224,9 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
           <div class="submenu-item" id="item-campus-sl11" onclick="openLink('https://drive.google.com/file/d/1yoPPZ7XhBklfjDqzUdujQnmI5SnhR-r2/view?usp=sharing','item-campus-sl11')">
             <i class="ti ti-file-analytics"></i> Raport producție SL11
           </div>
+          <div class="submenu-item" id="item-campus-lunar" onclick="renderSintezaCOO()">
+            <i class="ti ti-calendar-stats"></i> Raport lunar
+          </div>
         </div>
       </div>
 
@@ -245,7 +248,7 @@ function doLogin() {
   var p = document.getElementById('inp-pass').value;
   var err = document.getElementById('login-error');
   if (USERS[u] && USERS[u] === p) {
-    sessionStorage.setItem('pmhub_user', u);
+    window._pmhub_user = u;
     err.style.display = 'none';
     showApp(u);
   } else {
@@ -254,7 +257,7 @@ function doLogin() {
 }
 
 function doLogout() {
-  sessionStorage.removeItem('pmhub_user');
+  window._pmhub_user = null;
   document.getElementById('app-screen').style.display = 'none';
   document.getElementById('login-screen').style.display = 'flex';
   document.getElementById('inp-pass').value = '';
@@ -433,11 +436,65 @@ function renderProjHome(proj) {
     html += '</div>';
     html += '<div class="proj-card-body">';
     html += '<button class="open-fisa-btn" onclick="window.open(\'https://drive.google.com/file/d/1yoPPZ7XhBklfjDqzUdujQnmI5SnhR-r2/view?usp=sharing\',\'_blank\')"><i class="ti ti-file-analytics"></i> Raport producție SL11</button>';
+    html += '<button class="open-fisa-btn" onclick="renderSintezaCOO()"><i class="ti ti-calendar-stats"></i> Raport lunar</button>';
     html += '</div></div>';
   }
 
   html += '<div class="page-footer">PM Hub · EREN CONS SRL · 2026</div>';
   document.getElementById('main').innerHTML = html;
+}
+
+function renderSintezaCOO() {
+  document.querySelectorAll('.submenu-item').forEach(function(i){ i.classList.remove('active'); });
+  var item = document.getElementById('item-campus-lunar');
+  if (item) item.classList.add('active');
+  closeMenu();
+  document.getElementById('menu-btn').style.display = 'none';
+  document.getElementById('back-btn').style.display = 'flex';
+
+  document.getElementById('main').innerHTML =
+    '<div class="proj-header"><div class="proj-title">Campus DUAL Politehnica</div><div class="proj-meta">PM: Spătaru Gelu · Corp C1 · Raport lunar · Mai 2026</div></div>' +
+    '<div class="module-badge productie"><i class="ti ti-calendar-stats" style="font-size:13px"></i> Sinteză COO</div>' +
+
+    '<div style="display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap">' +
+      '<button class="open-fisa-btn" style="flex:1;min-width:160px" onclick="window.open(\'https://docs.google.com/spreadsheets/d/1-MAuuToO9vThEAfm9dP24oGHOJNVRL5ht7s3tDr83Zc/edit?usp=sharing\',\'_blank\')"><i class="ti ti-table"></i> Deschide raportul complet</button>' +
+    '</div>' +
+
+    '<div class="nivel-grid">' +
+
+      '<div class="nivel-card">' +
+        '<div class="nivel-title"><i class="ti ti-chart-bar"></i>A. Indicatori principali</div>' +
+        '<div class="ind-row"><span class="ind-label">Valoare contract</span><span style="font-size:12px;font-weight:600;color:var(--navy)">27.959.116 lei</span></div>' +
+        '<div class="ind-row"><span class="ind-label">Progres planificat</span><span class="badge ok">81,3%</span></div>' +
+        '<div class="ind-row"><span class="ind-label">Progres realizat</span><span class="badge warn">68,6%</span></div>' +
+        '<div class="ind-row"><span class="ind-label">CA lună — buget</span><span style="font-size:12px;font-weight:500">3.354.452 lei</span></div>' +
+        '<div class="ind-row"><span class="ind-label">CA lună — realizat</span><span style="font-size:12px;font-weight:500;color:var(--green)">3.893.712 lei</span></div>' +
+        '<div class="ind-row"><span class="ind-label">CA YTD — buget</span><span style="font-size:12px;font-weight:500">0 lei</span></div>' +
+        '<div class="ind-row"><span class="ind-label">CA YTD — realizat</span><span style="font-size:12px;font-weight:500;color:var(--green)">18.666.448 lei</span></div>' +
+      '</div>' +
+
+      '<div class="nivel-card">' +
+        '<div class="nivel-title"><i class="ti ti-trending-up"></i>B. Indicatori suplimentari</div>' +
+        '<div class="ind-row"><span class="ind-label">Zile întârziere estimate</span><span class="badge risk">13 zile</span></div>' +
+        '<div class="ind-row"><span class="ind-label">Producție previzionată M+1</span><span style="font-size:12px;font-weight:500">3.843.834 lei</span></div>' +
+        '<div class="ind-row"><span class="ind-label">Producție previzionată M+2</span><span style="font-size:12px;font-weight:500">4.713.834 lei</span></div>' +
+        '<div class="ind-row"><span class="ind-label">Capacitate necesară M+1</span><span style="font-size:12px;font-weight:500">65 persoane</span></div>' +
+        '<div class="ind-row"><span class="ind-label">SUBA executat luna curentă</span><span style="font-size:12px;font-weight:500">0 lei</span></div>' +
+        '<div class="ind-row"><span class="ind-label">Claimuri aprobate</span><span style="font-size:12px;font-weight:500">0 lei</span></div>' +
+      '</div>' +
+
+    '</div>' +
+
+    '<div class="nivel-card" style="margin-bottom:20px">' +
+      '<div class="nivel-title"><i class="ti ti-alert-triangle"></i>C. Autoverificare praguri escaladare</div>' +
+      '<div class="ind-row"><span class="ind-label">Abatere CA lună</span><span class="badge ok">+16,1% — OK</span></div>' +
+      '<div class="ind-row"><span class="ind-label">Deviații înregistrate în lună</span><span class="badge ok">0</span></div>' +
+      '<div class="ind-row"><span class="ind-label">Impact financiar deviații</span><span class="badge ok">0 lei</span></div>' +
+      '<div class="ind-row"><span class="ind-label">Impact termen deviații</span><span class="badge ok">0 zile</span></div>' +
+    '</div>' +
+
+    '<div style="font-size:10px;color:var(--text-tertiary);margin-bottom:4px">Date extrase din Raportul Lunar Campus DUAL · Mai 2026 · Actualizat manual la fiecare raport</div>' +
+    '<div class="page-footer">PM Hub · EREN CONS SRL · 2026</div>';
 }
 
 function renderHome() {
@@ -469,6 +526,7 @@ function renderHome() {
       '<div class="proj-card-body">' +
         '<button class="open-fisa-btn" onclick="goModule(\'campus\',\'validare\');toggleSub(\'campus\')"><i class="ti ti-chart-bar"></i> Validare Bugete <span style="font-size:10px;color:var(--text-tertiary);margin-left:4px">demonstrativ</span></button>' +
         '<button class="open-fisa-btn" onclick="window.open(\'https://drive.google.com/file/d/1yoPPZ7XhBklfjDqzUdujQnmI5SnhR-r2/view?usp=sharing\',\'_blank\')"><i class="ti ti-file-analytics"></i> Raport producție SL11 <span style="font-size:10px;background:var(--green-light);color:var(--green);border-radius:99px;padding:1px 6px;margin-left:4px;font-weight:600">date reale</span></button>' +
+        '<button class="open-fisa-btn" onclick="renderSintezaCOO()"><i class="ti ti-calendar-stats"></i> Raport lunar</button>' +
       '</div>' +
     '</div>' +
 
@@ -518,8 +576,8 @@ function renderProductie(proj) {
 document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('inp-pass').addEventListener('keydown', function(e) { if (e.key === 'Enter') doLogin(); });
   document.getElementById('inp-user').addEventListener('keydown', function(e) { if (e.key === 'Enter') document.getElementById('inp-pass').focus(); });
-  var saved = sessionStorage.getItem('pmhub_user');
-  if (saved && USERS[saved]) { showApp(saved); }
+  var saved = window._pmhub_user || null;
+  // auto-login disabled for local file compatibility
 });
 </script>
 </body>

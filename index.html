@@ -198,6 +198,9 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
         <div class="submenu-item" id="item-hangar-validare" onclick="goModule('hangar','validare')">
           <i class="ti ti-chart-bar"></i> Validare Bugete
         </div>
+        <div class="submenu-item" id="item-hangar-plan" onclick="openLink('PLACEHOLDER_HANGAR_PLAN','item-hangar-plan')">
+          <i class="ti ti-layout-list"></i> Plan Proiect
+        </div>
         <div class="submenu-item" id="item-hangar-productie" onclick="goModule('hangar','productie')">
           <i class="ti ti-hammer"></i> Raportări Producție
         </div>
@@ -215,6 +218,9 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
       <div class="submenu" id="sub-campus">
         <div class="submenu-item" id="item-campus-validare" onclick="goModule('campus','validare')">
           <i class="ti ti-chart-bar"></i> Validare Bugete
+        </div>
+        <div class="submenu-item" id="item-campus-plan" onclick="openLink('PLACEHOLDER_CAMPUS_PLAN','item-campus-plan')">
+          <i class="ti ti-layout-list"></i> Plan Proiect
         </div>
         <div class="submenu-item" id="item-campus-productie" onclick="toggleSubSub('campus-prod')">
           <i class="ti ti-hammer"></i> Raportări Producție
@@ -326,6 +332,10 @@ function goModule(proj, module) {
 }
 
 function openLink(url, itemId) {
+  if (!url || url.indexOf('PLACEHOLDER') !== -1) {
+    alert('Link în pregătire.');
+    return;
+  }
   window.open(url, '_blank');
   document.querySelectorAll('.submenu-item').forEach(function(i){ i.classList.remove('active'); });
   var item = document.getElementById(itemId);
@@ -411,6 +421,14 @@ function renderProjHome(proj) {
     html += '<button class="open-fisa-btn" style="flex:1;min-width:140px" onclick="window.open(\'https://drive.google.com/file/d/1pUQjk1pk7JsXk8cXdLShgpbqSMYh2JFj/view?usp=drive_link\',\'_blank\')"><i class="ti ti-chart-gantt"></i> Gantt implementare</button>';
     html += '</div></div></div>';
     html += '<div class="proj-card">';
+    html += '<div class="proj-card-header" style="background:#2C4A6E;border-bottom:1px solid var(--border)">';
+    html += '<i class="ti ti-layout-list" style="font-size:16px;color:#fff"></i>';
+    html += '<span style="font-size:13px;font-weight:600;color:#fff">Plan Proiect</span>';
+    html += '</div>';
+    html += '<div class="proj-card-body">';
+    html += '<button class="open-fisa-btn" onclick="alert(\'Link în pregătire.\')"><i class="ti ti-layout-list"></i> Deschide planul de proiect</button>';
+    html += '</div></div>';
+    html += '<div class="proj-card">';
     html += '<div class="proj-card-header" style="background:var(--green-light);border-bottom:1px solid var(--border)">';
     html += '<i class="ti ti-hammer" style="font-size:16px;color:var(--green)"></i>';
     html += '<span style="font-size:13px;font-weight:600;color:var(--navy)">Raportări Producție</span>';
@@ -427,6 +445,14 @@ function renderProjHome(proj) {
     html += '</div>';
     html += '<div class="proj-card-body">';
     html += '<button class="open-fisa-btn" onclick="goModule(\'campus\',\'validare\')"><i class="ti ti-layout-dashboard"></i> Deschide tabloul de bord</button>';
+    html += '</div></div>';
+    html += '<div class="proj-card">';
+    html += '<div class="proj-card-header" style="background:#2C4A6E;border-bottom:1px solid var(--border)">';
+    html += '<i class="ti ti-layout-list" style="font-size:16px;color:#fff"></i>';
+    html += '<span style="font-size:13px;font-weight:600;color:#fff">Plan Proiect</span>';
+    html += '</div>';
+    html += '<div class="proj-card-body">';
+    html += '<button class="open-fisa-btn" onclick="alert(\'Link în pregătire.\')"><i class="ti ti-layout-list"></i> Deschide planul de proiect</button>';
     html += '</div></div>';
     html += '<div class="proj-card">';
     html += '<div class="proj-card-header" style="background:var(--green-light);border-bottom:1px solid var(--border)">';

@@ -6,7 +6,7 @@
 <title>PM Hub · EREN CONS SRL</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Comfortaa:wght@700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
 <style>
 :root {
@@ -23,22 +23,24 @@
 body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:14px;line-height:1.5}
 
 /* LOGIN */
-.login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--navy)}
-.login-card{background:var(--white);border-radius:var(--radius-lg);padding:36px 40px;width:100%;max-width:360px;box-shadow:0 4px 24px rgba(0,0,0,0.18);margin:16px}
-.login-logo{display:flex;align-items:center;gap:10px;margin-bottom:28px}
-.login-logo i{font-size:24px;color:var(--navy)}
-.login-logo-text{font-size:15px;font-weight:600;color:var(--navy)}
-.login-logo-sub{font-size:11px;color:var(--text-tertiary)}
+.login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;background:#181818}
+.login-card{background:var(--white);border-radius:var(--radius-lg);padding:36px 40px;width:100%;max-width:360px;box-shadow:0 8px 40px rgba(0,0,0,0.45);margin:16px}
+.login-logo{margin-bottom:28px}
+.eren-wordmark{font-family:'Comfortaa',cursive;font-size:38px;font-weight:700;color:#CC1515;line-height:1;letter-spacing:-1px}
+.eren-tagline{font-size:8px;font-weight:600;color:#BDBDBD;letter-spacing:.18em;text-transform:uppercase;margin-top:3px}
+.eren-sep{width:36px;height:2px;background:#CC1515;margin:6px 0 10px}
+.login-pmhub{font-size:13px;font-weight:600;color:var(--text);display:flex;align-items:center;gap:6px}
+.login-pmhub span{font-size:11px;font-weight:400;color:var(--text-tertiary)}
 .login-label{font-size:12px;font-weight:500;color:var(--text-secondary);margin-bottom:6px;display:block}
 .login-input{width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:var(--radius);font-size:14px;font-family:'Inter',sans-serif;color:var(--text);margin-bottom:14px;outline:none;transition:border-color 0.15s}
-.login-input:focus{border-color:var(--blue)}
-.login-btn{width:100%;padding:11px;background:var(--navy);color:var(--white);border:none;border-radius:var(--radius);font-size:14px;font-weight:500;font-family:'Inter',sans-serif;cursor:pointer;margin-top:4px}
-.login-btn:hover{background:var(--blue)}
+.login-input:focus{border-color:#CC1515;box-shadow:0 0 0 3px rgba(204,21,21,.08)}
+.login-btn{width:100%;padding:11px;background:#CC1515;color:var(--white);border:none;border-radius:var(--radius);font-size:14px;font-weight:500;font-family:'Inter',sans-serif;cursor:pointer;margin-top:4px;transition:background .15s}
+.login-btn:hover{background:#A81010}
 .login-error{font-size:12px;color:var(--red);margin-top:10px;display:none;text-align:center}
 
 /* APP */
 .app-screen{display:none}
-.topbar{background:var(--navy);padding:0 16px;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200}
+.topbar{background:#181818;padding:0 16px;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200;border-bottom:2px solid #CC1515}
 .topbar-left{display:flex;align-items:center;gap:10px}
 .menu-btn{background:none;border:none;color:rgba(255,255,255,0.8);cursor:pointer;padding:6px;font-size:22px;line-height:1;display:flex;align-items:center}
 .back-btn{background:none;border:none;color:rgba(255,255,255,0.8);cursor:pointer;padding:6px;font-size:22px;line-height:1;display:none;align-items:center}
@@ -84,6 +86,11 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 .main{flex:1;padding:24px;max-width:900px;min-width:0}
 .proj-header{margin-bottom:16px}
 .proj-title{font-size:20px;font-weight:600;color:var(--text);margin-bottom:4px}
+.home-hero{margin-bottom:20px;padding:20px 0 16px;border-bottom:1px solid var(--border)}
+.home-eren-wordmark{font-family:'Comfortaa',cursive;font-size:44px;font-weight:700;color:#CC1515;line-height:1;letter-spacing:-1.5px}
+.home-eren-tagline{font-size:9px;font-weight:600;color:var(--text-tertiary);letter-spacing:.2em;text-transform:uppercase;margin-top:4px}
+.home-sep{width:40px;height:2px;background:#CC1515;margin:8px 0 12px}
+.home-pmhub-label{font-size:13px;font-weight:600;color:var(--text);display:flex;align-items:center;gap:6px}
 .proj-meta{font-size:12px;color:var(--text-tertiary)}
 .module-badge{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:500;padding:3px 10px;border-radius:99px;margin-bottom:14px}
 .module-badge.validare{background:var(--blue-light);color:var(--blue)}
@@ -93,6 +100,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 .decizie i{font-size:22px;flex-shrink:0}
 .decizie.stop{background:var(--red-light);color:var(--red);border-color:var(--red-mid)}
 .decizie.go{background:var(--green-light);color:var(--green);border-color:var(--green-mid)}
+.decizie.conditionat{background:var(--amber-light);color:var(--amber);border-color:#e0a800}
 .kpi-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:20px}
 .kpi{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:14px 16px}
 .kpi-label{font-size:11px;color:var(--text-tertiary);margin-bottom:6px}
@@ -124,6 +132,52 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 .coming-soon i{font-size:48px;margin-bottom:16px;display:block}
 .coming-soon h3{font-size:16px;font-weight:500;color:var(--text-secondary);margin-bottom:8px}
 .page-footer{padding:20px 0 12px;font-size:10px;color:var(--text-tertiary)}
+/* SECTIUNI NOI */
+.sec-block{margin-top:16px}
+.sec-block-title{font-size:10px;font-weight:600;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.sec-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+/* coverage table */
+.cov-table{width:100%;border-collapse:collapse;font-size:12px}
+.cov-table th{font-size:10px;font-weight:600;color:var(--text-tertiary);padding:7px 12px;text-align:left;border-bottom:1px solid var(--border);background:var(--grey-100);text-transform:uppercase;letter-spacing:.04em}
+.cov-table td{padding:9px 12px;border-bottom:1px solid var(--grey-100);color:var(--text);vertical-align:middle;font-size:12px}
+.cov-table tr:last-child td{border-bottom:none}
+.cov-table td:first-child{font-weight:500}
+.bar-wrap{display:flex;align-items:center;gap:7px}
+.bar-bg{flex:1;height:5px;background:var(--grey-200);border-radius:3px;overflow:hidden}
+.bar-fill{height:100%;border-radius:3px;transition:width .3s}
+.bar-pct{font-size:11px;color:var(--text-tertiary);min-width:28px;text-align:right}
+.cpill{display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600}
+.cpill-ok{background:var(--green-light);color:var(--green)}
+.cpill-warn{background:var(--amber-light);color:var(--amber)}
+.cpill-risk{background:var(--red-light);color:var(--red)}
+.cpill-na{background:var(--grey-100);color:var(--text-tertiary)}
+/* doc grid */
+.doc-grid{display:grid;grid-template-columns:1fr 1fr}
+.doc-item{display:flex;align-items:center;gap:9px;padding:9px 12px;border-bottom:1px solid var(--grey-100);border-right:1px solid var(--grey-100)}
+.doc-item:nth-child(2n){border-right:none}
+.doc-item:nth-last-child(-n+2){border-bottom:none}
+.doc-ico{width:26px;height:26px;border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:13px}
+.doc-ico.ok{background:var(--green-light);color:var(--green)}
+.doc-ico.warn{background:var(--amber-light);color:var(--amber)}
+.doc-ico.risk{background:var(--red-light);color:var(--red)}
+.doc-ico.na{background:var(--grey-100);color:var(--text-tertiary)}
+.doc-name{font-size:11px;font-weight:500;color:var(--text);line-height:1.3}
+.doc-sub{font-size:10px;color:var(--text-tertiary);margin-top:1px}
+/* alerts */
+.alert-row{display:flex;align-items:flex-start;gap:9px;padding:9px 12px;border-bottom:1px solid var(--grey-100)}
+.alert-row:last-child{border-bottom:none}
+.alert-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;margin-top:4px}
+.dot-risk{background:var(--red)}
+.dot-warn{background:var(--amber)}
+.alert-body{flex:1}
+.alert-title{font-size:12px;font-weight:500;color:var(--text)}
+.alert-meta{font-size:11px;color:var(--text-tertiary);margin-top:1px}
+.alert-date{font-size:10px;font-weight:600;padding:2px 7px;border-radius:8px;flex-shrink:0;margin-top:1px;white-space:nowrap}
+.alert-date.risk{background:var(--red-light);color:var(--red)}
+.alert-date.warn{background:var(--amber-light);color:var(--amber)}
+@media(max-width:560px){.two-col{grid-template-columns:1fr}.doc-grid{grid-template-columns:1fr}.doc-item{border-right:none}.doc-item:nth-last-child(-n+2){border-bottom:1px solid var(--grey-100)}.doc-item:last-child{border-bottom:none}}
+
 .proj-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;margin-bottom:16px}
 .proj-card-header{padding:10px 16px;display:flex;align-items:center;gap:10px}
 .proj-card-body{padding:12px 16px;display:flex;flex-direction:column;gap:8px}
@@ -150,11 +204,10 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 <div class="login-screen" id="login-screen">
   <div class="login-card">
     <div class="login-logo">
-      <i class="ti ti-layout-dashboard"></i>
-      <div>
-        <div class="login-logo-text">PM Hub</div>
-        <div class="login-logo-sub">EREN CONS SRL</div>
-      </div>
+      <div class="eren-wordmark">eren</div>
+      <div class="eren-tagline">Suntem ce construim</div>
+      <div class="eren-sep"></div>
+      <div class="login-pmhub"><i class="ti ti-layout-dashboard" style="font-size:14px;color:#CC1515"></i> PM Hub <span>· EREN CONS SRL</span></div>
     </div>
     <label class="login-label">Utilizator</label>
     <input class="login-input" type="text" id="inp-user" placeholder="Utilizator" autocomplete="username">
@@ -170,8 +223,8 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
     <div class="topbar-left">
       <button class="menu-btn" id="menu-btn" onclick="openMenu()" aria-label="Meniu"><i class="ti ti-menu-2"></i></button>
       <button class="back-btn" id="back-btn" onclick="goHome()"><i class="ti ti-arrow-left"></i></button>
-      <span class="brand-name">PM Hub</span>
-      <span class="brand-sub">· EREN CONS SRL</span>
+      <span class="brand-name" style="font-family:'Comfortaa',cursive;color:#CC1515;font-size:17px;letter-spacing:-0.5px">eren</span>
+      <span class="brand-sub">PM Hub · EREN CONS SRL</span>
     </div>
     <div class="topbar-right">
       <div class="avatar" id="app-avatar">GS</div>
@@ -345,31 +398,54 @@ function openLink(url, itemId) {
 
 var DATA = {
   hangar: {
-    title:"Hangar Kogălniceanu", meta:"PM: Spătaru Gelu · Buget: 22.622.113 lei · Start: 19.06.2026", demo:false,
-    decizie:"stop", decizie_text:"STOP — Riscuri majore nerezolvate. Discuție obligatorie cu DVO și DT înainte de execuție.", decizie_icon:"ti-alert-octagon",
+    title:"Hangar Kogălniceanu", meta:"PM: Spătaru Gelu · Buget: 19.261.832 lei · Start: 19.06.2026", demo:false,
+    decizie:"conditionat", decizie_text:"CONDITIONAT — Validare buget în curs. Problemele identificate, riscurile și acțiunile recomandate pentru PM sunt detaliate în Planul de Proiect.", decizie_icon:"ti-alert-triangle",
     kpis:[
-      {label:"Buget total contract",val:"22,6 mil lei",sub:"Lucrări principale + suplimentare"},
-      {label:"Grad fundamentare (OP)",val:"1,4%",sub:"Oferte ferme din piață"},
-      {label:"Buget documentat total",val:"6,6%",sub:"OP + PA + EP"},
-      {label:"Valoare nedocumentată",val:"21,1 mil lei",sub:"Fără sursă de fundamentare"}
+      {label:"Buget total contract",val:"19,3 mil lei",sub:"Fără TVA · Fără lucrări suplimentare"},
+      {label:"Buget intern eDevize",val:"17,1 mil lei",sub:"−11,4% față de contract · Completat Cap.1-13"},
+      {label:"Grad fundamentare (OP)",val:"5,5%",sub:"Cap.1 Demolari + Cap.2.1 partial (WOPFINGER + CARMEUSE)"},
+      {label:"Valoare nedocumentată",val:"16,1 mil lei",sub:"Cap.2.1 partial + Cap.3-13 + Proiectare fără ofertă piață"}
     ],
     n1:[
-      {label:"Fundamentare oferte ferme (OP)",badge:"risk",text:"RISC"},
-      {label:"Buget documentat total",badge:"warn",text:"ATENȚIE"},
-      {label:"Valoare nedocumentată",badge:"risk",text:"RISC"}
+      {label:"Fundamentare oferte ferme (OP)",badge:"warn",text:"5,5% — CAP.1 + CAP.2.1 partial"},
+      {label:"Buget intern eDevize",badge:"ok",text:"COMPLET — 17,1 mil lei (Cap.1-13)"},
+      {label:"Valoare nedocumentată (fără ofertă)",badge:"risk",text:"16,1 mil lei"},
+      {label:"RISC Cap.5 Org.Șantier",badge:"risk",text:"+120% vs contract — deviz 5.1.3 nou (1,22 mil lei)"}
     ],
     bars:[
-      {label:"Oferte ferme (OP)",pct:1.4,cls:"bar-blue"},
-      {label:"Estimare proprie (EP)",pct:3.2,cls:"bar-amber"},
-      {label:"Proiect anterior (PA)",pct:2.0,cls:"bar-amber"},
-      {label:"Nedocumentat",pct:93.4,cls:"bar-red"}
+      {label:"Oferte ferme (OP) — Cap.1 Demolari + Cap.2.1 partial",pct:5.5,cls:"bar-blue"},
+      {label:"Estimare proprie (EP)",pct:0,cls:"bar-amber"},
+      {label:"Proiect anterior (PA)",pct:0,cls:"bar-amber"},
+      {label:"Nedocumentat (fără ofertă piață) — Cap.2.1 partial + Cap.3-13",pct:94.5,cls:"bar-red"}
     ],
     n2:[
       {label:"Export ERP încărcat",badge:"risk",text:"LIPSĂ"},
-      {label:"Export eDevize încărcat",badge:"risk",text:"LIPSĂ"},
+      {label:"Devize eDevize (F3/F2/F4)",badge:"ok",text:"COMPLETAT — manual Cap.1-13"},
       {label:"Articole conforme",badge:"na",text:"—"},
       {label:"Abateri majore (> 15%)",badge:"na",text:"—"},
       {label:"Articole lipsă în contract",badge:"na",text:"—"}
+    ],
+    coverage:[
+      {cap:"Cap.1 Demolări",      buget:"851.456 lei",   pct:100, bar:"#639922", contractat:"În negociere", status:"ok",   statusLabel:"Oferte OK"},
+      {cap:"Cap.2.1 Platformă",   buget:"916.517 lei",   pct:51,  bar:"#EF9F27", contractat:"—",            status:"warn", statusLabel:"Parțial"},
+      {cap:"Cap.3 Proiectare",    buget:"740.500 lei",   pct:0,   bar:"#E24B4A", contractat:"—",            status:"risk", statusLabel:"Lipsă"},
+      {cap:"Cap.4 C&amp;I + Utilaje", buget:"14.734.564 lei", pct:0,   bar:"#E24B4A", contractat:"—",            status:"risk", statusLabel:"Lipsă"},
+      {cap:"Cap.5 Org. Șantier",  buget:"1.600.888 lei", pct:0,   bar:"#E24B4A", contractat:"—",            status:"risk", statusLabel:"+120% vs ctrt"}
+    ],
+    docs:[
+      {name:"Studiu geotehnic",    sub:"Primit",           status:"ok"},
+      {name:"PT complet + DWG",    sub:"În curs",          status:"warn"},
+      {name:"Autorizație ISC",     sub:"Semnată 21.05",    status:"ok"},
+      {name:"Plan calitate",       sub:"În lucru",         status:"warn"},
+      {name:"Asigurare CAR",       sub:"Lipsă",            status:"risk"},
+      {name:"Export ERP",          sub:"Lipsă",            status:"risk"}
+    ],
+    alerts:[
+      {title:"Ofertă alternativă piatră spartă", meta:"Cap.2.1 · COMPREST +23,8% vs buget",     date:"10 iul", cls:"risk"},
+      {title:"Clarificare deviz 5.1.3",          meta:"Cap.5 · +120% față de contract",          date:"10 iul", cls:"risk"},
+      {title:"Încărcare buget ERP",              meta:"17,1 mil lei neîncărcați",                date:"10 iul", cls:"risk"},
+      {title:"Contractare TAB CONSTRUCT",        meta:"Cap.1 · Negociere în curs",               date:"15 iul", cls:"warn"},
+      {title:"Asigurare CAR proiect",            meta:"Obligație contractuală",                   date:"Depășit",cls:"risk"}
     ]
   },
   campus: {
@@ -524,11 +600,16 @@ function renderSintezaCOO() {
 
 function renderHome() {
   document.getElementById('main').innerHTML =
-    '<div class="proj-header"><div class="proj-title">PM Hub</div><div class="proj-meta">EREN CONS SRL · Spătaru Gelu · 2026</div></div>' +
+    '<div class="home-hero">' +
+      '<div class="home-eren-wordmark">eren</div>' +
+      '<div class="home-eren-tagline">Suntem ce construim</div>' +
+      '<div class="home-sep"></div>' +
+      '<div class="home-pmhub-label"><i class="ti ti-layout-dashboard" style="font-size:13px;color:#CC1515"></i> PM Hub <span style="font-weight:400;color:var(--text-tertiary)">· EREN CONS SRL · Spătaru Gelu</span></div>' +
+    '</div>' +
 
     '<div class="proj-card">' +
-      '<div class="proj-card-header" style="background:var(--navy)">' +
-        '<div class="proj-icon" style="background:rgba(255,255,255,0.15)"><i class="ti ti-building" style="color:#fff"></i></div>' +
+      '<div class="proj-card-header" style="background:#1C1C1C;border-left:3px solid #CC1515">' +
+        '<div class="proj-icon" style="background:rgba(204,21,21,0.25)"><i class="ti ti-building" style="color:#CC1515"></i></div>' +
         '<div><div style="font-size:13px;font-weight:600;color:#fff">Hangar Kogălniceanu</div>' +
         '<div style="font-size:10px;color:rgba(255,255,255,0.6)">În validare · Start: 19.06.2026</div></div>' +
       '</div>' +
@@ -542,8 +623,8 @@ function renderHome() {
     '</div>' +
 
     '<div class="proj-card">' +
-      '<div class="proj-card-header" style="background:#5C3D0A">' +
-        '<div class="proj-icon" style="background:rgba(255,255,255,0.15)"><i class="ti ti-school" style="color:#fff"></i></div>' +
+      '<div class="proj-card-header" style="background:#132A13;border-left:3px solid #3B8A3B">' +
+        '<div class="proj-icon" style="background:rgba(59,138,59,0.3)"><i class="ti ti-school" style="color:#7DC87D"></i></div>' +
         '<div style="flex:1"><div style="font-size:13px;font-weight:600;color:#fff">Campus DUAL Politehnica</div>' +
         '<div style="font-size:10px;color:rgba(255,255,255,0.6)">În execuție · Corp C1</div></div>' +
         '<span style="font-size:9px;background:rgba(255,255,255,0.2);color:#fff;border-radius:99px;padding:2px 8px;font-weight:500">parțial real</span>' +
@@ -584,6 +665,45 @@ function renderValidare(proj) {
   html += '<div class="nivel-card"><div class="nivel-title"><i class="ti ti-file-check"></i>Nivel 2 — Validare rețete</div>';
   p.n2.forEach(function(r) { html += '<div class="ind-row"><span class="ind-label">' + r.label + '</span><span class="badge ' + r.badge + '">' + r.text + '</span></div>'; });
   html += '</div></div>';
+
+  if (p.coverage && p.coverage.length) {
+    html += '<div class="sec-block"><div class="sec-block-title"><i class="ti ti-chart-bar" style="font-size:12px"></i>Acoperire pe capitol</div>';
+    html += '<div class="sec-card"><table class="cov-table"><thead><tr><th>Capitol</th><th>Buget intern</th><th>Acoperire oferte</th><th>Contractat</th><th>Statut</th></tr></thead><tbody>';
+    p.coverage.forEach(function(c) {
+      html += '<tr><td>' + c.cap + '</td>';
+      html += '<td style="color:var(--text-secondary)">' + c.buget + '</td>';
+      html += '<td><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:' + c.pct + '%;background:' + c.bar + '"></div></div><span class="bar-pct">' + c.pct + '%</span></div></td>';
+      html += '<td><span class="cpill cpill-na">' + c.contractat + '</span></td>';
+      html += '<td><span class="cpill cpill-' + c.status + '">' + c.statusLabel + '</span></td></tr>';
+    });
+    html += '</tbody></table></div></div>';
+  }
+
+  if (p.docs && p.docs.length) {
+    var docIcons = {ok:'ti-file-check', warn:'ti-file-text', risk:'ti-file-x', na:'ti-file'};
+    html += '<div class="two-col">';
+    html += '<div class="sec-block"><div class="sec-block-title"><i class="ti ti-files" style="font-size:12px"></i>Documente-cheie</div>';
+    html += '<div class="sec-card"><div class="doc-grid">';
+    p.docs.forEach(function(d) {
+      var ico = docIcons[d.status] || 'ti-file';
+      html += '<div class="doc-item"><div class="doc-ico ' + d.status + '"><i class="ti ' + ico + '"></i></div>';
+      html += '<div><div class="doc-name">' + d.name + '</div><div class="doc-sub">' + d.sub + '</div></div></div>';
+    });
+    html += '</div></div></div>';
+
+    if (p.alerts && p.alerts.length) {
+      html += '<div class="sec-block"><div class="sec-block-title"><i class="ti ti-bell" style="font-size:12px"></i>Alerte săptămâna aceasta</div>';
+      html += '<div class="sec-card">';
+      p.alerts.forEach(function(a) {
+        html += '<div class="alert-row"><div class="alert-dot dot-' + a.cls + '"></div>';
+        html += '<div class="alert-body"><div class="alert-title">' + a.title + '</div><div class="alert-meta">' + a.meta + '</div></div>';
+        html += '<span class="alert-date ' + a.cls + '">' + a.date + '</span></div>';
+      });
+      html += '</div></div>';
+    }
+    html += '</div>';
+  }
+
   html += '<div class="page-footer">PM Hub · EREN CONS SRL · 2026</div>';
   document.getElementById('main').innerHTML = html;
 }

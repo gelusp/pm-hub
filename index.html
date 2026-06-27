@@ -101,7 +101,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 .decizie.stop{background:var(--red-light);color:var(--red);border-color:var(--red-mid)}
 .decizie.go{background:var(--green-light);color:var(--green);border-color:var(--green-mid)}
 .decizie.conditionat{background:var(--amber-light);color:var(--amber);border-color:#e0a800}
-.kpi-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:20px}
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:20px}
 .kpi{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:14px 16px}
 .kpi-label{font-size:11px;color:var(--text-tertiary);margin-bottom:6px}
 .kpi-val{font-size:20px;font-weight:600;color:var(--text);line-height:1}
@@ -142,6 +142,15 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 .cov-table th{font-size:10px;font-weight:600;color:var(--text-tertiary);padding:7px 12px;text-align:left;border-bottom:1px solid var(--border);background:var(--grey-100);text-transform:uppercase;letter-spacing:.04em}
 .cov-table td{padding:9px 12px;border-bottom:1px solid var(--grey-100);color:var(--text);vertical-align:middle;font-size:12px}
 .cov-table tr:last-child td{border-bottom:none}
+.cov-detail{background:var(--grey-100);padding:8px 12px 10px 24px;border-bottom:1px solid var(--border)}
+.cov-detail-grid{display:flex;flex-wrap:wrap;gap:6px}
+.cov-kpi{background:var(--white);border:1px solid var(--border);border-radius:6px;padding:5px 10px;min-width:110px}
+.cov-kpi.ok{border-left:3px solid var(--green)}
+.cov-kpi.risk{border-left:3px solid var(--red)}
+.cov-kpi.warn{border-left:3px solid var(--amber)}
+.cov-kpi-label{font-size:9px;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.04em;margin-bottom:2px}
+.cov-kpi-val{font-size:12px;font-weight:600;color:var(--text)}
+.cov-kpi-val2{font-size:10px;color:var(--text-secondary);margin-top:1px}
 .cov-table td:first-child{font-weight:500}
 .bar-wrap{display:flex;align-items:center;gap:7px}
 .bar-bg{flex:1;height:5px;background:var(--grey-200);border-radius:3px;overflow:hidden}
@@ -228,7 +237,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
     </div>
     <div class="topbar-right">
       <div class="avatar" id="app-avatar">GS</div>
-      <span class="user-name" id="app-username">Spătaru Gelu</span>
+      <span class="user-name" id="app-username">Gelu Spătaru</span>
       <button class="logout-btn" onclick="doLogout()">Ieșire</button>
     </div>
   </div>
@@ -251,11 +260,14 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
         <div class="submenu-item" id="item-hangar-validare" onclick="goModule('hangar','validare')">
           <i class="ti ti-chart-bar"></i> Validare Bugete
         </div>
-        <div class="submenu-item" id="item-hangar-plan" onclick="openLink('PLACEHOLDER_HANGAR_PLAN','item-hangar-plan')">
+        <div class="submenu-item" id="item-hangar-plan" onclick="openLink('https://docs.google.com/spreadsheets/d/1RFe_7IBvzUx1k-HyJCdTDgpXSR7OGV9L/edit?gid=1723128337#gid=1723128337','item-hangar-plan')">
           <i class="ti ti-layout-list"></i> Plan Proiect
         </div>
         <div class="submenu-item" id="item-hangar-productie" onclick="goModule('hangar','productie')">
           <i class="ti ti-hammer"></i> Raportări Producție
+        </div>
+        <div class="submenu-item" id="item-hangar-powerbi" onclick="goModule('hangar','powerbi')">
+          <i class="ti ti-presentation-analytics" style="color:#7B2D8B"></i> Power BI
         </div>
       </div>
 
@@ -272,7 +284,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
         <div class="submenu-item" id="item-campus-validare" onclick="goModule('campus','validare')">
           <i class="ti ti-chart-bar"></i> Validare Bugete
         </div>
-        <div class="submenu-item" id="item-campus-plan" onclick="openLink('PLACEHOLDER_CAMPUS_PLAN','item-campus-plan')">
+        <div class="submenu-item" id="item-campus-plan" onclick="openLink('https://docs.google.com/spreadsheets/d/12MRUPuu_AUNogKQolIAumsQpMYBjB15V39vU1QDusUE/edit?gid=803862891#gid=803862891','item-campus-plan')">
           <i class="ti ti-layout-list"></i> Plan Proiect
         </div>
         <div class="submenu-item" id="item-campus-productie" onclick="toggleSubSub('campus-prod')">
@@ -286,6 +298,9 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
           <div class="submenu-item" id="item-campus-lunar" onclick="renderSintezaCOO()">
             <i class="ti ti-calendar-stats"></i> Raport lunar
           </div>
+        </div>
+        <div class="submenu-item" id="item-campus-powerbi" onclick="goModule('campus','powerbi')">
+          <i class="ti ti-presentation-analytics" style="color:#7B2D8B"></i> Power BI
         </div>
       </div>
 
@@ -379,8 +394,12 @@ function goModule(proj, module) {
   if (item) item.classList.add('active');
   closeMenu();
   document.getElementById('menu-btn').style.display = 'none';
-  document.getElementById('back-btn').style.display = 'flex';
+  var btn = document.getElementById('back-btn');
+  btn.style.display = 'flex';
+  btn.onclick = function() { renderProjHome(proj); };
   if (module === 'validare') renderValidare(proj);
+  else if (module === 'analize') renderAnalize(proj);
+  else if (module === 'powerbi') renderPowerBI(proj);
   else renderProductie(proj);
 }
 
@@ -398,25 +417,23 @@ function openLink(url, itemId) {
 
 var DATA = {
   hangar: {
-    title:"Hangar Kogălniceanu", meta:"PM: Spătaru Gelu · Buget: 19.261.832 lei · Start: 19.06.2026", demo:false,
-    decizie:"conditionat", decizie_text:"CONDITIONAT — Validare buget în curs. Problemele identificate, riscurile și acțiunile recomandate pentru PM sunt detaliate în Planul de Proiect.", decizie_icon:"ti-alert-triangle",
+    title:"Hangar Kogălniceanu", meta:"PM: Gelu Spătaru · Buget: 19.261.832 lei · Start: 19.06.2026", demo:false,
+    decizie:"conditionat", decizie_text:"CONDITIONAT — Validare buget în curs. Problemele identificate, riscurile și acțiunile validate de PM se încarcă automat în Planul de Proiect.", decizie_icon:"ti-alert-triangle",
     kpis:[
       {label:"Buget total contract",val:"19,3 mil lei",sub:"Fără TVA · Fără lucrări suplimentare"},
       {label:"Buget intern eDevize",val:"17,1 mil lei",sub:"−11,4% față de contract · Completat Cap.1-13"},
-      {label:"Grad fundamentare (OP)",val:"5,5%",sub:"Cap.1 Demolari + Cap.2.1 partial (WOPFINGER + CARMEUSE)"},
-      {label:"Valoare nedocumentată",val:"16,1 mil lei",sub:"Cap.2.1 partial + Cap.3-13 + Proiectare fără ofertă piață"}
+      {label:"Grad fundamentare (OP)",val:"6,2%",sub:"Cap.1 97,4% + Cap.2 54,4% · 2 capitole analizate din 5"},
+      {label:"Valoare nedocumentată",val:"16,1 mil lei",sub:"Cap.2 parțial + Cap.3-13 + Proiectare fără ofertă piață"}
     ],
     n1:[
-      {label:"Fundamentare oferte ferme (OP)",badge:"warn",text:"5,5% — CAP.1 + CAP.2.1 partial"},
+      {label:"Fundamentare cu oferte din piață (OP)",badge:"warn",text:"6,2%"},
       {label:"Buget intern eDevize",badge:"ok",text:"COMPLET — 17,1 mil lei (Cap.1-13)"},
       {label:"Valoare nedocumentată (fără ofertă)",badge:"risk",text:"16,1 mil lei"},
       {label:"RISC Cap.5 Org.Șantier",badge:"risk",text:"+120% vs contract — deviz 5.1.3 nou (1,22 mil lei)"}
     ],
     bars:[
-      {label:"Oferte ferme (OP) — Cap.1 Demolari + Cap.2.1 partial",pct:5.5,cls:"bar-blue"},
-      {label:"Estimare proprie (EP)",pct:0,cls:"bar-amber"},
-      {label:"Proiect anterior (PA)",pct:0,cls:"bar-amber"},
-      {label:"Nedocumentat (fără ofertă piață) — Cap.2.1 partial + Cap.3-13",pct:94.5,cls:"bar-red"}
+      {label:"Oferte din piață (OP)",pct:6.2,cls:"bar-blue"},
+      {label:"Nedocumentat / Estimare proprie DO",pct:93.8,cls:"bar-red"}
     ],
     n2:[
       {label:"Export ERP încărcat",badge:"risk",text:"LIPSĂ"},
@@ -426,8 +443,16 @@ var DATA = {
       {label:"Articole lipsă în contract",badge:"na",text:"—"}
     ],
     coverage:[
-      {cap:"Cap.1 Demolări",      buget:"851.456 lei",   pct:100, bar:"#639922", contractat:"În negociere", status:"ok",   statusLabel:"Oferte OK"},
-      {cap:"Cap.2.1 Platformă",   buget:"916.517 lei",   pct:51,  bar:"#EF9F27", contractat:"—",            status:"warn", statusLabel:"Parțial"},
+      {cap:"Cap.1 Demolări",      buget:"382.137 lei",   pct:97,  bar:"#639922", contractat:"În negociere", status:"ok",   statusLabel:"97,4% fund.",
+       detail:[
+         {label:"Documentat cu oferte",val:"372.356 lei", val2:"97,4%", cls:"ok"},
+         {label:"Nedocumentat",        val:"9.781 lei",   val2:"2,6%",  cls:"risk"}
+       ]},
+      {cap:"Cap.2 Platformă",     buget:"1.267.787 lei", pct:54,  bar:"#EF9F27", contractat:"—",            status:"warn", statusLabel:"54,4% fund.",
+       detail:[
+         {label:"Documentat cu oferte",val:"689.129 lei", val2:"54,4%", cls:"ok"},
+         {label:"Nedocumentat",        val:"578.658 lei", val2:"45,6%", cls:"risk"}
+       ]},
       {cap:"Cap.3 Proiectare",    buget:"740.500 lei",   pct:0,   bar:"#E24B4A", contractat:"—",            status:"risk", statusLabel:"Lipsă"},
       {cap:"Cap.4 C&amp;I + Utilaje", buget:"14.734.564 lei", pct:0,   bar:"#E24B4A", contractat:"—",            status:"risk", statusLabel:"Lipsă"},
       {cap:"Cap.5 Org. Șantier",  buget:"1.600.888 lei", pct:0,   bar:"#E24B4A", contractat:"—",            status:"risk", statusLabel:"+120% vs ctrt"}
@@ -441,7 +466,7 @@ var DATA = {
       {name:"Export ERP",          sub:"Lipsă",            status:"risk"}
     ],
     alerts:[
-      {title:"Ofertă alternativă piatră spartă", meta:"Cap.2.1 · COMPREST +23,8% vs buget",     date:"10 iul", cls:"risk"},
+      {title:"Ofertă alternativă piatră spartă", meta:"Cap.2 · COMPREST +23,8% vs buget",        date:"10 iul", cls:"risk"},
       {title:"Clarificare deviz 5.1.3",          meta:"Cap.5 · +120% față de contract",          date:"10 iul", cls:"risk"},
       {title:"Încărcare buget ERP",              meta:"17,1 mil lei neîncărcați",                date:"10 iul", cls:"risk"},
       {title:"Contractare TAB CONSTRUCT",        meta:"Cap.1 · Negociere în curs",               date:"15 iul", cls:"warn"},
@@ -449,21 +474,21 @@ var DATA = {
     ]
   },
   campus: {
-    title:"Campus DUAL Politehnica", meta:"PM: Spătaru Gelu · Corp C1 · În execuție", demo:true,
+    title:"Campus DUAL Politehnica", meta:"PM: Gelu Spătaru · Corp C1 · În execuție", demo:true,
     decizie:"go", decizie_text:"GO — Bugetul validat. Execuția în curs.", decizie_icon:"ti-circle-check",
     kpis:[
       {label:"Buget total contract",val:"8,4 mil lei",sub:"Corp C1"},
-      {label:"Grad fundamentare (OP)",val:"74%",sub:"Oferte ferme din piață"},
+      {label:"Grad fundamentare (OP)",val:"74%",sub:"Oferte din piață din piață"},
       {label:"Buget documentat total",val:"91%",sub:"OP + PA + EP"},
       {label:"Valoare nedocumentată",val:"756k lei",sub:"Fără sursă de fundamentare"}
     ],
     n1:[
-      {label:"Fundamentare oferte ferme (OP)",badge:"ok",text:"OK"},
+      {label:"Fundamentare cu oferte din piață (OP)",badge:"ok",text:"OK"},
       {label:"Buget documentat total",badge:"ok",text:"OK"},
       {label:"Valoare nedocumentată",badge:"warn",text:"ATENȚIE"}
     ],
     bars:[
-      {label:"Oferte ferme (OP)",pct:74,cls:"bar-blue"},
+      {label:"Oferte din piață (OP)",pct:74,cls:"bar-blue"},
       {label:"Estimare proprie (EP)",pct:12,cls:"bar-amber"},
       {label:"Proiect anterior (PA)",pct:5,cls:"bar-amber"},
       {label:"Nedocumentat",pct:9,cls:"bar-red"}
@@ -481,6 +506,8 @@ var DATA = {
 function renderProjHome(proj) {
   var p = DATA[proj];
   var isHangar = proj === 'hangar';
+  var btn = document.getElementById('back-btn');
+  if (btn) { btn.style.display = 'flex'; btn.onclick = function() { goHome(); }; }
   var html = '';
   html += '<div class="proj-header"><div class="proj-title">' + p.title + '</div><div class="proj-meta">' + p.meta + '</div></div>';
 
@@ -493,8 +520,9 @@ function renderProjHome(proj) {
     html += '<div class="proj-card-body">';
     html += '<button class="open-fisa-btn" onclick="goModule(\'hangar\',\'validare\')"><i class="ti ti-layout-dashboard"></i> Deschide tabloul de bord</button>';
     html += '<div style="display:flex;gap:8px;flex-wrap:wrap">';
-    html += '<button class="open-fisa-btn" style="flex:1;min-width:140px" onclick="window.open(\'https://docs.google.com/spreadsheets/d/1gT9LXVKagnQyMJ8T7ZjPVVH4SMt2zDheiQHRO85dqH0/edit?gid=416236326#gid=416236326\',\'_blank\')"><i class="ti ti-table"></i> Fișa Validare Buget</button>';
+    html += '<button class="open-fisa-btn" style="flex:1;min-width:140px" onclick="window.open(\'https://docs.google.com/spreadsheets/d/1zNxiwjknXO7MuPfCHeiQbNIUUIT10ROH/edit?gid=1538641983#gid=1538641983\',\'_blank\')"><i class="ti ti-table"></i> Fișa Validare Buget</button>';
     html += '<button class="open-fisa-btn" style="flex:1;min-width:140px" onclick="window.open(\'https://drive.google.com/file/d/1pUQjk1pk7JsXk8cXdLShgpbqSMYh2JFj/view?usp=drive_link\',\'_blank\')"><i class="ti ti-chart-gantt"></i> Gantt implementare</button>';
+    html += '<button class="open-fisa-btn" style="flex:1;min-width:140px" onclick="goModule(\'hangar\',\'analize\')"><i class="ti ti-file-analytics"></i> Analiză pe capitole contract</button>';
     html += '</div></div></div>';
     html += '<div class="proj-card">';
     html += '<div class="proj-card-header" style="background:#2C4A6E;border-bottom:1px solid var(--border)">';
@@ -502,7 +530,7 @@ function renderProjHome(proj) {
     html += '<span style="font-size:13px;font-weight:600;color:#fff">Plan Proiect</span>';
     html += '</div>';
     html += '<div class="proj-card-body">';
-    html += '<button class="open-fisa-btn" onclick="alert(\'Link în pregătire.\')"><i class="ti ti-layout-list"></i> Deschide planul de proiect</button>';
+    html += '<button class="open-fisa-btn" onclick="window.open(\'https://docs.google.com/spreadsheets/d/1RFe_7IBvzUx1k-HyJCdTDgpXSR7OGV9L/edit?gid=1723128337#gid=1723128337\',\'_blank\')"><i class="ti ti-layout-list"></i> Deschide planul de proiect</button>';
     html += '</div></div>';
     html += '<div class="proj-card">';
     html += '<div class="proj-card-header" style="background:var(--green-light);border-bottom:1px solid var(--border)">';
@@ -511,6 +539,14 @@ function renderProjHome(proj) {
     html += '</div>';
     html += '<div class="proj-card-body">';
     html += '<div class="coming-soon" style="padding:20px"><i class="ti ti-hammer" style="font-size:28px;margin-bottom:8px"></i><h3 style="font-size:13px">Modul în dezvoltare</h3></div>';
+    html += '</div></div>';
+    html += '<div class="proj-card">';
+    html += '<div class="proj-card-header" style="background:#F3EEF8;border-bottom:1px solid var(--border)">';
+    html += '<i class="ti ti-presentation-analytics" style="font-size:16px;color:#7B2D8B"></i>';
+    html += '<span style="font-size:13px;font-weight:600;color:#4A1260">Power BI</span>';
+    html += '</div>';
+    html += '<div class="proj-card-body">';
+    html += '<div class="coming-soon" style="padding:20px"><i class="ti ti-presentation-analytics" style="font-size:28px;margin-bottom:8px;color:#7B2D8B"></i><h3 style="font-size:13px">Modul în dezvoltare</h3></div>';
     html += '</div></div>';
   } else {
     html += '<div class="proj-card">';
@@ -528,7 +564,7 @@ function renderProjHome(proj) {
     html += '<span style="font-size:13px;font-weight:600;color:#fff">Plan Proiect</span>';
     html += '</div>';
     html += '<div class="proj-card-body">';
-    html += '<button class="open-fisa-btn" onclick="alert(\'Link în pregătire.\')"><i class="ti ti-layout-list"></i> Deschide planul de proiect</button>';
+    html += '<button class="open-fisa-btn" onclick="window.open(\'https://docs.google.com/spreadsheets/d/12MRUPuu_AUNogKQolIAumsQpMYBjB15V39vU1QDusUE/edit?gid=803862891#gid=803862891\',\'_blank\')"><i class="ti ti-layout-list"></i> Deschide planul de proiect</button>';
     html += '</div></div>';
     html += '<div class="proj-card">';
     html += '<div class="proj-card-header" style="background:var(--green-light);border-bottom:1px solid var(--border)">';
@@ -539,6 +575,14 @@ function renderProjHome(proj) {
     html += '<div class="proj-card-body">';
     html += '<button class="open-fisa-btn" onclick="window.open(\'https://drive.google.com/file/d/1yoPPZ7XhBklfjDqzUdujQnmI5SnhR-r2/view?usp=sharing\',\'_blank\')"><i class="ti ti-file-analytics"></i> Raport producție SL11</button>';
     html += '<button class="open-fisa-btn" onclick="renderSintezaCOO()"><i class="ti ti-calendar-stats"></i> Raport lunar</button>';
+    html += '</div></div>';
+    html += '<div class="proj-card">';
+    html += '<div class="proj-card-header" style="background:#F3EEF8;border-bottom:1px solid var(--border)">';
+    html += '<i class="ti ti-presentation-analytics" style="font-size:16px;color:#7B2D8B"></i>';
+    html += '<span style="font-size:13px;font-weight:600;color:#4A1260">Power BI</span>';
+    html += '</div>';
+    html += '<div class="proj-card-body">';
+    html += '<div class="coming-soon" style="padding:20px"><i class="ti ti-presentation-analytics" style="font-size:28px;margin-bottom:8px;color:#7B2D8B"></i><h3 style="font-size:13px">Modul în dezvoltare</h3></div>';
     html += '</div></div>';
   }
 
@@ -552,10 +596,12 @@ function renderSintezaCOO() {
   if (item) item.classList.add('active');
   closeMenu();
   document.getElementById('menu-btn').style.display = 'none';
-  document.getElementById('back-btn').style.display = 'flex';
+  var btn = document.getElementById('back-btn');
+  btn.style.display = 'flex';
+  btn.onclick = function() { renderProjHome('campus'); };
 
   document.getElementById('main').innerHTML =
-    '<div class="proj-header"><div class="proj-title">Campus DUAL Politehnica</div><div class="proj-meta">PM: Spătaru Gelu · Corp C1 · Raport lunar · Mai 2026</div></div>' +
+    '<div class="proj-header"><div class="proj-title">Campus DUAL Politehnica</div><div class="proj-meta">PM: Gelu Spătaru · Corp C1 · Raport lunar · Mai 2026</div></div>' +
     '<div class="module-badge productie"><i class="ti ti-calendar-stats" style="font-size:13px"></i> Sinteză COO</div>' +
 
     '<div style="display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap">' +
@@ -604,11 +650,11 @@ function renderHome() {
       '<div class="home-eren-wordmark">eren</div>' +
       '<div class="home-eren-tagline">Suntem ce construim</div>' +
       '<div class="home-sep"></div>' +
-      '<div class="home-pmhub-label"><i class="ti ti-layout-dashboard" style="font-size:13px;color:#CC1515"></i> PM Hub <span style="font-weight:400;color:var(--text-tertiary)">· EREN CONS SRL · Spătaru Gelu</span></div>' +
+      '<div class="home-pmhub-label"><i class="ti ti-layout-dashboard" style="font-size:13px;color:#CC1515"></i> PM Hub <span style="font-weight:400;color:var(--text-tertiary)">· EREN CONS SRL · Gelu Spătaru</span></div>' +
     '</div>' +
 
     '<div class="proj-card">' +
-      '<div class="proj-card-header" style="background:#1C1C1C;border-left:3px solid #CC1515">' +
+      '<div class="proj-card-header" style="background:#A03535;border-left:3px solid #CC1515">' +
         '<div class="proj-icon" style="background:rgba(204,21,21,0.25)"><i class="ti ti-building" style="color:#CC1515"></i></div>' +
         '<div><div style="font-size:13px;font-weight:600;color:#fff">Hangar Kogălniceanu</div>' +
         '<div style="font-size:10px;color:rgba(255,255,255,0.6)">În validare · Start: 19.06.2026</div></div>' +
@@ -616,14 +662,15 @@ function renderHome() {
       '<div class="proj-card-body">' +
         '<button class="open-fisa-btn" onclick="goModule(\'hangar\',\'validare\');toggleSub(\'hangar\')"><i class="ti ti-chart-bar"></i> Validare Bugete</button>' +
         '<div style="display:flex;gap:8px;flex-wrap:wrap">' +
-          '<button class="open-fisa-btn" style="flex:1;min-width:140px" onclick="window.open(\'https://docs.google.com/spreadsheets/d/1gT9LXVKagnQyMJ8T7ZjPVVH4SMt2zDheiQHRO85dqH0/edit?gid=416236326#gid=416236326\',\'_blank\')"><i class="ti ti-table"></i> Fișa Validare Buget</button>' +
+          '<button class="open-fisa-btn" style="flex:1;min-width:140px" onclick="window.open(\'https://docs.google.com/spreadsheets/d/1zNxiwjknXO7MuPfCHeiQbNIUUIT10ROH/edit?gid=1538641983#gid=1538641983\',\'_blank\')"><i class="ti ti-table"></i> Fișa Validare Buget</button>' +
           '<button class="open-fisa-btn" style="flex:1;min-width:140px" onclick="window.open(\'https://drive.google.com/file/d/1pUQjk1pk7JsXk8cXdLShgpbqSMYh2JFj/view?usp=drive_link\',\'_blank\')"><i class="ti ti-chart-gantt"></i> Gantt implementare</button>' +
+          '<button class="open-fisa-btn" style="flex:1;min-width:140px" onclick="goModule(\'hangar\',\'analize\')"><i class="ti ti-file-analytics"></i> Analiză pe capitole contract</button>' +
         '</div>' +
       '</div>' +
     '</div>' +
 
     '<div class="proj-card">' +
-      '<div class="proj-card-header" style="background:#132A13;border-left:3px solid #3B8A3B">' +
+      '<div class="proj-card-header" style="background:#1F5C1F;border-left:3px solid #3B8A3B">' +
         '<div class="proj-icon" style="background:rgba(59,138,59,0.3)"><i class="ti ti-school" style="color:#7DC87D"></i></div>' +
         '<div style="flex:1"><div style="font-size:13px;font-weight:600;color:#fff">Campus DUAL Politehnica</div>' +
         '<div style="font-size:10px;color:rgba(255,255,255,0.6)">În execuție · Corp C1</div></div>' +
@@ -646,8 +693,9 @@ function renderValidare(proj) {
   html += '<div class="module-badge validare"><i class="ti ti-chart-bar" style="font-size:13px"></i> Validare Bugete</div>';
   html += '<div style="display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap">';
   if (proj === 'hangar') {
-    html += '<button class="open-fisa-btn" style="flex:1;min-width:160px" onclick="window.open(\'https://docs.google.com/spreadsheets/d/1gT9LXVKagnQyMJ8T7ZjPVVH4SMt2zDheiQHRO85dqH0/edit?gid=416236326#gid=416236326\',\'_blank\')"><i class="ti ti-table"></i>Fișa de Validare Buget</button>';
+    html += '<button class="open-fisa-btn" style="flex:1;min-width:160px" onclick="window.open(\'https://docs.google.com/spreadsheets/d/1zNxiwjknXO7MuPfCHeiQbNIUUIT10ROH/edit?gid=1538641983#gid=1538641983\',\'_blank\')"><i class="ti ti-table"></i>Fișa de Validare Buget</button>';
     html += '<button class="open-fisa-btn" style="flex:1;min-width:160px" onclick="window.open(\'https://drive.google.com/file/d/1pUQjk1pk7JsXk8cXdLShgpbqSMYh2JFj/view?usp=drive_link\',\'_blank\')"><i class="ti ti-chart-gantt"></i>Gantt de implementare</button>';
+    html += '<button class="open-fisa-btn" style="flex:1;min-width:160px" onclick="goModule(\'hangar\',\'analize\')"><i class="ti ti-file-analytics"></i>Analiză pe capitole contract</button>';
   }
   html += '</div>';
   if (p.demo) {
@@ -655,7 +703,10 @@ function renderValidare(proj) {
   }
   html += '<div class="decizie ' + p.decizie + '"><i class="ti ' + p.decizie_icon + '"></i><span>' + p.decizie_text + '</span></div>';
   html += '<div class="kpi-grid">';
-  p.kpis.forEach(function(k) { html += '<div class="kpi"><div class="kpi-label">' + k.label + '</div><div class="kpi-val">' + k.val + '</div><div class="kpi-sub">' + k.sub + '</div></div>'; });
+  p.kpis.forEach(function(k) {
+    var valColor = k.badge === 'warn' ? 'color:var(--amber)' : k.badge === 'risk' ? 'color:var(--red)' : k.badge === 'ok' ? 'color:var(--green)' : '';
+    html += '<div class="kpi"><div class="kpi-label">' + k.label + '</div><div class="kpi-val" style="' + valColor + '">' + k.val + '</div><div class="kpi-sub">' + k.sub + '</div></div>';
+  });
   html += '</div><div class="nivel-grid">';
   html += '<div class="nivel-card"><div class="nivel-title"><i class="ti ti-chart-bar"></i>Nivel 1 — Validare financiară</div>';
   p.n1.forEach(function(r) { html += '<div class="ind-row"><span class="ind-label">' + r.label + '</span><span class="badge ' + r.badge + '">' + r.text + '</span></div>'; });
@@ -668,10 +719,14 @@ function renderValidare(proj) {
 
   if (p.coverage && p.coverage.length) {
     html += '<div class="sec-block"><div class="sec-block-title"><i class="ti ti-chart-bar" style="font-size:12px"></i>Acoperire pe capitol</div>';
-    html += '<div class="sec-card"><table class="cov-table"><thead><tr><th>Capitol</th><th>Buget intern</th><th>Acoperire oferte</th><th>Contractat</th><th>Statut</th></tr></thead><tbody>';
+    html += '<div class="sec-card"><table class="cov-table"><thead><tr><th>Capitol</th><th>Buget intern</th><th>Documentat cu oferte</th><th>Nedocumentat</th><th>Acoperire oferte</th><th>Contractat</th><th>Statut</th></tr></thead><tbody>';
     p.coverage.forEach(function(c) {
+      var doc = c.detail && c.detail[0];
+      var ned = c.detail && c.detail[1];
       html += '<tr><td>' + c.cap + '</td>';
       html += '<td style="color:var(--text-secondary)">' + c.buget + '</td>';
+      html += '<td style="color:var(--green);font-weight:500">' + (doc ? doc.val + '<br><span style="font-size:10px;font-weight:400;color:var(--text-tertiary)">' + doc.val2 + '</span>' : '—') + '</td>';
+      html += '<td style="color:#C05050;font-weight:500">' + (ned ? ned.val + '<br><span style="font-size:10px;font-weight:400;color:var(--text-tertiary)">' + ned.val2 + '</span>' : '—') + '</td>';
       html += '<td><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:' + c.pct + '%;background:' + c.bar + '"></div></div><span class="bar-pct">' + c.pct + '%</span></div></td>';
       html += '<td><span class="cpill cpill-na">' + c.contractat + '</span></td>';
       html += '<td><span class="cpill cpill-' + c.status + '">' + c.statusLabel + '</span></td></tr>';
@@ -716,6 +771,84 @@ function renderProductie(proj) {
   html += '<div class="coming-soon"><i class="ti ti-hammer"></i><h3>Modul în dezvoltare</h3><p>Raportările de producție vor fi disponibile în versiunea următoare a PM Hub.</p></div>';
   html += '<div class="page-footer">PM Hub · EREN CONS SRL · 2026</div>';
   document.getElementById('main').innerHTML = html;
+}
+
+function renderPowerBI(proj) {
+  var p = DATA[proj];
+  document.querySelectorAll('.submenu-item').forEach(function(i){ i.classList.remove('active'); });
+  var item = document.getElementById('item-' + proj + '-powerbi');
+  if (item) item.classList.add('active');
+  closeMenu();
+  document.getElementById('menu-btn').style.display = 'none';
+  var btn = document.getElementById('back-btn');
+  btn.style.display = 'flex';
+  btn.onclick = function() { renderProjHome(proj); };
+  var html = '';
+  html += '<div class="proj-header"><div class="proj-title">' + p.title + '</div><div class="proj-meta">' + p.meta + '</div></div>';
+  html += '<div class="module-badge" style="background:#F3EEF8;color:#7B2D8B"><i class="ti ti-presentation-analytics" style="font-size:13px"></i> Power BI</div>';
+  html += '<div class="coming-soon"><i class="ti ti-presentation-analytics" style="color:#7B2D8B"></i><h3>Modul în dezvoltare</h3><p>Rapoartele Power BI vor fi disponibile în versiunea următoare a PM Hub.</p></div>';
+  html += '<div class="page-footer">PM Hub · EREN CONS SRL · 2026</div>';
+  document.getElementById('main').innerHTML = html;
+}
+
+function renderAnalize(proj) {
+  var base = 'file:///C:/Users/gelu.spataru/Claude/Projects/KOGALNICEANU/';
+  var analyses = {
+    hangar: [
+      {
+        cap:"Cap.1 — Demolări",
+        url:"https://docs.google.com/spreadsheets/d/1V5D_T4og7XnykHgye6tW3YikdlqysJMS/edit?gid=132998986#gid=132998986",
+        status:"ok",
+        label:"Finalizată",
+        date:"Iun 2026",
+        buget:"382.137 lei",
+        desc:"TAB CONSTRUCT recomandat · Grad fundamentare 97,4% · Art.4 tâmplării + Art.8 săpături fără ofertă (9.781 lei) · Discrepanță cantitate deviz 1.2 +3,8%"
+      },
+      {
+        cap:"Cap.2 — Amenajare Platformă",
+        url:"https://docs.google.com/spreadsheets/d/1nReO_wKqFKi70VWo0YZDs68MVukERYWS/edit?gid=1150560864#gid=1150560864",
+        status:"ok",
+        label:"Finalizată",
+        date:"Iun 2026",
+        buget:"1.267.787 lei",
+        desc:"WOPFINGER recomandat BCR beton · Grad fundamentare 54,4% · Piatră spartă +23,8% vs buget · Balast + rosturi fără ofertă"
+      }
+    ]
+  };
+
+  var list = analyses[proj] || [];
+  var p = DATA[proj];
+  var html = '';
+  html += '<div class="proj-header"><div class="proj-title">Analiză pe capitole contract</div><div class="proj-meta">' + p.title + ' · ' + list.length + ' analize disponibile · actualizat Iun 2026</div></div>';
+  html += '<div class="module-badge" style="background:#EEF2FF;color:#4338CA"><i class="ti ti-file-analytics" style="font-size:13px"></i> Analize Comparative Oferte</div>';
+
+  list.forEach(function(a) {
+    html += '<div class="proj-card" style="margin-bottom:12px">';
+    html += '<div class="proj-card-header" style="background:#F5DEDE;border-left:3px solid #CC1515">';
+    html += '<div class="proj-icon" style="background:rgba(204,21,21,0.12)"><i class="ti ti-table" style="color:#A03535"></i></div>';
+    html += '<div style="flex:1">';
+    html += '<div style="font-size:13px;font-weight:600;color:#7A1F1F">' + a.cap + '</div>';
+    html += '<div style="font-size:11px;color:#A05050;margin-top:3px">' + a.desc + '</div>';
+    html += '</div>';
+    html += '<span style="font-size:10px;font-weight:600;padding:2px 10px;border-radius:10px;background:rgba(55,86,35,0.12);color:#375623;flex-shrink:0">' + a.label + '</span>';
+    html += '</div>';
+    html += '<div class="proj-card-body" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">';
+    html += '<div style="font-size:12px;color:var(--text-secondary);display:flex;gap:16px">';
+    html += '<span><i class="ti ti-coins" style="font-size:12px"></i> ' + a.buget + '</span>';
+    html += '<span><i class="ti ti-calendar" style="font-size:12px"></i> ' + a.date + '</span>';
+    html += '</div>';
+    html += '<a href="' + a.url + '" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:7px 18px;background:#A03535;color:#fff;border-radius:var(--radius);font-size:12px;font-weight:600;text-decoration:none;border:1px solid rgba(204,21,21,0.4)">';
+    html += '<i class="ti ti-file-spreadsheet" style="font-size:13px;color:#FF8080"></i> Deschide analiză</a>';
+    html += '</div></div>';
+  });
+
+  if (list.length === 0) {
+    html += '<div class="coming-soon"><i class="ti ti-file-analytics"></i><h3>Nicio analiză disponibilă</h3><p>Analizele comparative vor apărea aici pe măsură ce capitolele sunt procesate.</p></div>';
+  }
+
+  html += '<div class="page-footer">PM Hub · EREN CONS SRL · 2026</div>';
+  document.getElementById('main').innerHTML = html;
+  window.scrollTo(0, 0);
 }
 
 document.addEventListener('DOMContentLoaded', function() {

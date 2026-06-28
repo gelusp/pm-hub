@@ -260,7 +260,10 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
         <div class="submenu-item" id="item-hangar-validare" onclick="goModule('hangar','validare')">
           <i class="ti ti-chart-bar"></i> Validare Bugete
         </div>
-        <div class="submenu-item" id="item-hangar-plan" onclick="openLink('https://docs.google.com/spreadsheets/d/1RFe_7IBvzUx1k-HyJCdTDgpXSR7OGV9L/edit?gid=1723128337#gid=1723128337','item-hangar-plan')">
+        <div class="submenu-item" id="item-hangar-sinteza" onclick="goModule('hangar','sinteza')">
+          <i class="ti ti-clipboard-list"></i> Acțiuni / Riscuri / Rec.
+        </div>
+        <div class="submenu-item" id="item-hangar-plan" onclick="openLink('https://docs.google.com/spreadsheets/d/1ZTLxiHNHZSoIqa3BoH7MNvyArLelJpGm/edit?gid=514226828#gid=514226828','item-hangar-plan')">
           <i class="ti ti-layout-list"></i> Plan Proiect
         </div>
         <div class="submenu-item" id="item-hangar-productie" onclick="goModule('hangar','productie')">
@@ -399,6 +402,7 @@ function goModule(proj, module) {
   btn.onclick = function() { renderProjHome(proj); };
   if (module === 'validare') renderValidare(proj);
   else if (module === 'analize') renderAnalize(proj);
+  else if (module === 'sinteza') renderSinteza(proj);
   else if (module === 'powerbi') renderPowerBI(proj);
   else renderProductie(proj);
 }
@@ -418,22 +422,22 @@ function openLink(url, itemId) {
 var DATA = {
   hangar: {
     title:"Hangar Kogălniceanu", meta:"PM: Gelu Spătaru · Buget: 19.261.832 lei · Start: 19.06.2026", demo:false,
-    decizie:"conditionat", decizie_text:"CONDITIONAT — Validare buget în curs. Problemele identificate, riscurile și acțiunile validate de PM se încarcă automat în Planul de Proiect.", decizie_icon:"ti-alert-triangle",
+    decizie:"conditionat", decizie_text:"CONDITIONAT — Validare buget în curs.", decizie_icon:"ti-alert-triangle",
     kpis:[
       {label:"Buget total contract",val:"19,3 mil lei",sub:"Fără TVA · Fără lucrări suplimentare"},
       {label:"Buget intern eDevize",val:"17,1 mil lei",sub:"−11,4% față de contract · Completat Cap.1-13"},
-      {label:"Grad fundamentare (OP)",val:"6,2%",sub:"Cap.1 97,4% + Cap.2 54,4% · 2 capitole analizate din 5"},
-      {label:"Valoare nedocumentată",val:"16,1 mil lei",sub:"Cap.2 parțial + Cap.3-13 + Proiectare fără ofertă piață"}
+      {label:"Grad fundamentare (OP)",val:"29,5%",sub:"Cap.1 97,4% + Cap.2 54,4% + Cap.3 48,3% + Cap.4 51,7% · 4 capitole analizate"},
+      {label:"Valoare nedocumentată",val:"14,2 mil lei",sub:"Cap.5-13 + Proiectare fără ofertă · Cap.3+4 parțial acoperite"}
     ],
     n1:[
-      {label:"Fundamentare cu oferte din piață (OP)",badge:"warn",text:"6,2%"},
+      {label:"Fundamentare cu oferte din piață (OP)",badge:"warn",text:"29,5%"},
       {label:"Buget intern eDevize",badge:"ok",text:"COMPLET — 17,1 mil lei (Cap.1-13)"},
-      {label:"Valoare nedocumentată (fără ofertă)",badge:"risk",text:"16,1 mil lei"},
+      {label:"Valoare nedocumentată (fără ofertă)",badge:"warn",text:"14,2 mil lei"},
       {label:"RISC Cap.5 Org.Șantier",badge:"risk",text:"+120% vs contract — deviz 5.1.3 nou (1,22 mil lei)"}
     ],
     bars:[
-      {label:"Oferte din piață (OP)",pct:6.2,cls:"bar-blue"},
-      {label:"Nedocumentat / Estimare proprie DO",pct:93.8,cls:"bar-red"}
+      {label:"Oferte din piață (OP)",pct:29.5,cls:"bar-blue"},
+      {label:"Nedocumentat / Estimare proprie DO",pct:70.5,cls:"bar-red"}
     ],
     n2:[
       {label:"Export ERP încărcat",badge:"risk",text:"LIPSĂ"},
@@ -443,19 +447,19 @@ var DATA = {
       {label:"Articole lipsă în contract",badge:"na",text:"—"}
     ],
     coverage:[
-      {cap:"Cap.1 Demolări",      buget:"382.137 lei",   pct:97,  bar:"#639922", contractat:"În negociere", status:"ok",   statusLabel:"97,4% fund.",
-       detail:[
-         {label:"Documentat cu oferte",val:"372.356 lei", val2:"97,4%", cls:"ok"},
-         {label:"Nedocumentat",        val:"9.781 lei",   val2:"2,6%",  cls:"risk"}
-       ]},
-      {cap:"Cap.2 Platformă",     buget:"1.267.787 lei", pct:54,  bar:"#EF9F27", contractat:"—",            status:"warn", statusLabel:"54,4% fund.",
-       detail:[
-         {label:"Documentat cu oferte",val:"689.129 lei", val2:"54,4%", cls:"ok"},
-         {label:"Nedocumentat",        val:"578.658 lei", val2:"45,6%", cls:"risk"}
-       ]},
-      {cap:"Cap.3 Proiectare",    buget:"740.500 lei",   pct:0,   bar:"#E24B4A", contractat:"—",            status:"risk", statusLabel:"Lipsă"},
-      {cap:"Cap.4 C&amp;I + Utilaje", buget:"14.734.564 lei", pct:0,   bar:"#E24B4A", contractat:"—",            status:"risk", statusLabel:"Lipsă"},
-      {cap:"Cap.5 Org. Șantier",  buget:"1.600.888 lei", pct:0,   bar:"#E24B4A", contractat:"—",            status:"risk", statusLabel:"+120% vs ctrt"}
+      {cap:"Cap.3 — Proiectare",       buget:"740.500 lei",   doc:"—",           nedoc:"740.500 lei",   pct:0,  bar:"#E24B4A", contractat:"—",            status:"risk", statusLabel:"Lipsă"},
+      {cap:"1. Demolări",              buget:"382.095 lei",   doc:"372.356 lei", nedoc:"9.739 lei",     pct:97, bar:"#639922", contractat:"În negociere", status:"ok",   statusLabel:"97,4%"},
+      {cap:"2. Amenajare Platformă",   buget:"1.267.781 lei", doc:"689.129 lei", nedoc:"578.652 lei",   pct:54, bar:"#EF9F27", contractat:"—",            status:"warn", statusLabel:"54,4%"},
+      {cap:"3. Structură Hangar",      buget:"3.787.359 lei", doc:"1.831.092 lei", nedoc:"1.956.267 lei", pct:48, bar:"#EF9F27", contractat:"—",            status:"warn", statusLabel:"48,3%"},
+      {cap:"4. Arhitectură Hangar",    buget:"4.033.077 lei", doc:"2.204.711 lei", nedoc:"1.828.366 lei", pct:52, bar:"#EF9F27", contractat:"—",            status:"warn", statusLabel:"51,7%"},
+      {cap:"6. Rețele ext. sanitare",  buget:"447.531 lei",   doc:"—",           nedoc:"447.531 lei",   pct:0,  bar:"#E24B4A", contractat:"—",            status:"risk", statusLabel:"Lipsă"},
+      {cap:"7. Rețele electrice ext.", buget:"722.999 lei",   doc:"—",           nedoc:"722.999 lei",   pct:0,  bar:"#E24B4A", contractat:"—",            status:"risk", statusLabel:"Lipsă"},
+      {cap:"8. Inst. sanitare int.",   buget:"616.244 lei",   doc:"—",           nedoc:"616.244 lei",   pct:0,  bar:"#E24B4A", contractat:"—",            status:"risk", statusLabel:"Lipsă"},
+      {cap:"9. HVAC",                  buget:"232.787 lei",   doc:"—",           nedoc:"232.787 lei",   pct:0,  bar:"#E24B4A", contractat:"—",            status:"risk", statusLabel:"Lipsă"},
+      {cap:"10. Curenți tari",         buget:"788.116 lei",   doc:"—",           nedoc:"788.116 lei",   pct:0,  bar:"#E24B4A", contractat:"—",            status:"risk", statusLabel:"Lipsă"},
+      {cap:"11. Curenți slabi",        buget:"281.652 lei",   doc:"—",           nedoc:"281.652 lei",   pct:0,  bar:"#E24B4A", contractat:"—",            status:"risk", statusLabel:"Lipsă"},
+      {cap:"4.3 Utilaje",              buget:"2.132.377 lei", doc:"—",           nedoc:"2.132.377 lei", pct:0,  bar:"#E24B4A", contractat:"—",            status:"risk", statusLabel:"Lipsă"},
+      {cap:"5.1 Org. Șantier",         buget:"1.600.888 lei", doc:"—",           nedoc:"1.600.888 lei", pct:0,  bar:"#E24B4A", contractat:"—",            status:"risk", statusLabel:"+120% vs ctrt"}
     ],
     docs:[
       {name:"Studiu geotehnic",    sub:"Primit",           status:"ok"},
@@ -466,6 +470,8 @@ var DATA = {
       {name:"Export ERP",          sub:"Lipsă",            status:"risk"}
     ],
     alerts:[
+      {title:"Structură metalică hală URGENT", meta:"Cap.3 · 1.586.706 lei fără ofertă · Cap.3 total 48,3% fund.", date:"10 iul", cls:"risk"},
+      {title:"Cap.4 pod rulant + echipamente (F4)", meta:"Cap.4 · 213.790 lei buget F4 — oferte în așteptare", date:"15 iul", cls:"warn"},
       {title:"Ofertă alternativă piatră spartă", meta:"Cap.2 · COMPREST +23,8% vs buget",        date:"10 iul", cls:"risk"},
       {title:"Clarificare deviz 5.1.3",          meta:"Cap.5 · +120% față de contract",          date:"10 iul", cls:"risk"},
       {title:"Încărcare buget ERP",              meta:"17,1 mil lei neîncărcați",                date:"10 iul", cls:"risk"},
@@ -520,7 +526,7 @@ function renderProjHome(proj) {
     html += '<div class="proj-card-body">';
     html += '<button class="open-fisa-btn" onclick="goModule(\'hangar\',\'validare\')"><i class="ti ti-layout-dashboard"></i> Deschide tabloul de bord</button>';
     html += '<div style="display:flex;gap:8px;flex-wrap:wrap">';
-    html += '<button class="open-fisa-btn" style="flex:1;min-width:140px" onclick="window.open(\'https://docs.google.com/spreadsheets/d/1zNxiwjknXO7MuPfCHeiQbNIUUIT10ROH/edit?gid=1538641983#gid=1538641983\',\'_blank\')"><i class="ti ti-table"></i> Fișa Validare Buget</button>';
+    html += '<button class="open-fisa-btn" style="flex:1;min-width:140px" onclick="window.open(\'https://docs.google.com/spreadsheets/d/1zNxiwjknXO7MuPfCHeiQbNIUUIT10ROH/edit?gid=1691462389#gid=1691462389\',\'_blank\')"><i class="ti ti-table"></i> Fișa Validare Buget</button>';
     html += '<button class="open-fisa-btn" style="flex:1;min-width:140px" onclick="window.open(\'https://drive.google.com/file/d/1pUQjk1pk7JsXk8cXdLShgpbqSMYh2JFj/view?usp=drive_link\',\'_blank\')"><i class="ti ti-chart-gantt"></i> Gantt implementare</button>';
     html += '<button class="open-fisa-btn" style="flex:1;min-width:140px" onclick="goModule(\'hangar\',\'analize\')"><i class="ti ti-file-analytics"></i> Analiză pe capitole contract</button>';
     html += '</div></div></div>';
@@ -530,7 +536,7 @@ function renderProjHome(proj) {
     html += '<span style="font-size:13px;font-weight:600;color:#fff">Plan Proiect</span>';
     html += '</div>';
     html += '<div class="proj-card-body">';
-    html += '<button class="open-fisa-btn" onclick="window.open(\'https://docs.google.com/spreadsheets/d/1RFe_7IBvzUx1k-HyJCdTDgpXSR7OGV9L/edit?gid=1723128337#gid=1723128337\',\'_blank\')"><i class="ti ti-layout-list"></i> Deschide planul de proiect</button>';
+    html += '<button class="open-fisa-btn" onclick="window.open(\'https://docs.google.com/spreadsheets/d/1ZTLxiHNHZSoIqa3BoH7MNvyArLelJpGm/edit?gid=514226828#gid=514226828\',\'_blank\')"><i class="ti ti-layout-list"></i> Deschide planul de proiect</button>';
     html += '</div></div>';
     html += '<div class="proj-card">';
     html += '<div class="proj-card-header" style="background:var(--green-light);border-bottom:1px solid var(--border)">';
@@ -662,9 +668,10 @@ function renderHome() {
       '<div class="proj-card-body">' +
         '<button class="open-fisa-btn" onclick="goModule(\'hangar\',\'validare\');toggleSub(\'hangar\')"><i class="ti ti-chart-bar"></i> Validare Bugete</button>' +
         '<div style="display:flex;gap:8px;flex-wrap:wrap">' +
-          '<button class="open-fisa-btn" style="flex:1;min-width:140px" onclick="window.open(\'https://docs.google.com/spreadsheets/d/1zNxiwjknXO7MuPfCHeiQbNIUUIT10ROH/edit?gid=1538641983#gid=1538641983\',\'_blank\')"><i class="ti ti-table"></i> Fișa Validare Buget</button>' +
+          '<button class="open-fisa-btn" style="flex:1;min-width:140px" onclick="window.open(\'https://docs.google.com/spreadsheets/d/1zNxiwjknXO7MuPfCHeiQbNIUUIT10ROH/edit?gid=1691462389#gid=1691462389\',\'_blank\')"><i class="ti ti-table"></i> Fișa Validare Buget</button>' +
           '<button class="open-fisa-btn" style="flex:1;min-width:140px" onclick="window.open(\'https://drive.google.com/file/d/1pUQjk1pk7JsXk8cXdLShgpbqSMYh2JFj/view?usp=drive_link\',\'_blank\')"><i class="ti ti-chart-gantt"></i> Gantt implementare</button>' +
           '<button class="open-fisa-btn" style="flex:1;min-width:140px" onclick="goModule(\'hangar\',\'analize\')"><i class="ti ti-file-analytics"></i> Analiză pe capitole contract</button>' +
+          '<button class="open-fisa-btn" style="flex:1;min-width:140px" onclick="goModule(\'hangar\',\'sinteza\');toggleSub(\'hangar\')"><i class="ti ti-clipboard-list"></i> Acțiuni / Riscuri / Rec.</button>' +
         '</div>' +
       '</div>' +
     '</div>' +
@@ -693,9 +700,10 @@ function renderValidare(proj) {
   html += '<div class="module-badge validare"><i class="ti ti-chart-bar" style="font-size:13px"></i> Validare Bugete</div>';
   html += '<div style="display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap">';
   if (proj === 'hangar') {
-    html += '<button class="open-fisa-btn" style="flex:1;min-width:160px" onclick="window.open(\'https://docs.google.com/spreadsheets/d/1zNxiwjknXO7MuPfCHeiQbNIUUIT10ROH/edit?gid=1538641983#gid=1538641983\',\'_blank\')"><i class="ti ti-table"></i>Fișa de Validare Buget</button>';
+    html += '<button class="open-fisa-btn" style="flex:1;min-width:160px" onclick="window.open(\'https://docs.google.com/spreadsheets/d/1zNxiwjknXO7MuPfCHeiQbNIUUIT10ROH/edit?gid=1691462389#gid=1691462389\',\'_blank\')"><i class="ti ti-table"></i>Fișa de Validare Buget</button>';
     html += '<button class="open-fisa-btn" style="flex:1;min-width:160px" onclick="window.open(\'https://drive.google.com/file/d/1pUQjk1pk7JsXk8cXdLShgpbqSMYh2JFj/view?usp=drive_link\',\'_blank\')"><i class="ti ti-chart-gantt"></i>Gantt de implementare</button>';
     html += '<button class="open-fisa-btn" style="flex:1;min-width:160px" onclick="goModule(\'hangar\',\'analize\')"><i class="ti ti-file-analytics"></i>Analiză pe capitole contract</button>';
+    html += '<button class="open-fisa-btn" style="flex:1;min-width:160px" onclick="goModule(\'hangar\',\'sinteza\')"><i class="ti ti-clipboard-list"></i>Acțiuni / Riscuri / Rec.</button>';
   }
   html += '</div>';
   if (p.demo) {
@@ -711,107 +719,82 @@ function renderValidare(proj) {
   html += '<div class="nivel-card"><div class="nivel-title"><i class="ti ti-chart-bar"></i>Nivel 1 — Validare financiară</div>';
   p.n1.forEach(function(r) { html += '<div class="ind-row"><span class="ind-label">' + r.label + '</span><span class="badge ' + r.badge + '">' + r.text + '</span></div>'; });
   html += '<div class="progress-section">';
-  p.bars.forEach(function(b) { html += '<div class="pr-row"><div class="pr-label-row"><span>' + b.label + '</span><span>' + b.pct.toFixed(1) + '%</span></div><div class="pr-bar-bg"><div class="pr-bar ' + b.cls + '" style="width:' + b.pct + '%"></div></div></div>'; });
+  p.bars.forEach(function(b) {
+    html += '<div class="pr-row"><div class="pr-label-row"><span>' + b.label + '</span><span style="font-weight:600">' + b.pct + '%</span></div>';
+    html += '<div class="pr-bar-bg"><div class="pr-bar ' + b.cls + '" style="width:' + b.pct + '%"></div></div></div>';
+  });
   html += '</div></div>';
-  html += '<div class="nivel-card"><div class="nivel-title"><i class="ti ti-file-check"></i>Nivel 2 — Validare rețete</div>';
+  html += '<div class="nivel-card"><div class="nivel-title"><i class="ti ti-database"></i>Nivel 2 — Date & devize</div>';
   p.n2.forEach(function(r) { html += '<div class="ind-row"><span class="ind-label">' + r.label + '</span><span class="badge ' + r.badge + '">' + r.text + '</span></div>'; });
-  html += '</div></div>';
-
+  html += '</div>';
+  html += '</div>';
   if (p.coverage && p.coverage.length) {
-    html += '<div class="sec-block"><div class="sec-block-title"><i class="ti ti-chart-bar" style="font-size:12px"></i>Acoperire pe capitol</div>';
-    html += '<div class="sec-card"><table class="cov-table"><thead><tr><th>Capitol</th><th>Buget intern</th><th>Documentat cu oferte</th><th>Nedocumentat</th><th>Acoperire oferte</th><th>Contractat</th><th>Statut</th></tr></thead><tbody>';
-    p.coverage.forEach(function(c) {
-      var doc = c.detail && c.detail[0];
-      var ned = c.detail && c.detail[1];
-      html += '<tr><td>' + c.cap + '</td>';
-      html += '<td style="color:var(--text-secondary)">' + c.buget + '</td>';
-      html += '<td style="color:var(--green);font-weight:500">' + (doc ? doc.val + '<br><span style="font-size:10px;font-weight:400;color:var(--text-tertiary)">' + doc.val2 + '</span>' : '—') + '</td>';
-      html += '<td style="color:#C05050;font-weight:500">' + (ned ? ned.val + '<br><span style="font-size:10px;font-weight:400;color:var(--text-tertiary)">' + ned.val2 + '</span>' : '—') + '</td>';
-      html += '<td><div class="bar-wrap"><div class="bar-bg"><div class="bar-fill" style="width:' + c.pct + '%;background:' + c.bar + '"></div></div><span class="bar-pct">' + c.pct + '%</span></div></td>';
-      html += '<td><span class="cpill cpill-na">' + c.contractat + '</span></td>';
-      html += '<td><span class="cpill cpill-' + c.status + '">' + c.statusLabel + '</span></td></tr>';
+    html += '<div class="sec-card" style="margin-top:16px"><div style="padding:12px 16px 8px;font-size:12px;font-weight:600;color:var(--text)"><i class="ti ti-table"></i> Acoperire oferte pe capitole</div>';
+    html += '<table class="cov-table"><thead><tr><th>Capitol</th><th>Buget intern</th><th>Documentat cu Oferte</th><th>Nedocumentat</th><th>Acoperire Oferte</th><th>Contractat</th><th>Statut</th></tr></thead><tbody>';
+    p.coverage.forEach(function(row) {
+      var sc = row.status==='ok' ? 'var(--green)' : row.status==='warn' ? 'var(--amber)' : 'var(--red)';
+      var bar = '<div style="display:flex;align-items:center;gap:6px"><div style="width:60px;height:5px;background:var(--grey-200);border-radius:99px;overflow:hidden"><div style="width:' + Math.min(row.pct,100) + '%;height:5px;background:' + row.bar + ';border-radius:99px"></div></div><span style="font-size:11px;font-weight:600;color:' + sc + '">' + row.pct + '%</span></div>';
+      html += '<tr><td style="font-weight:500">' + row.cap + '</td><td>' + row.buget + '</td><td>' + (row.doc||'—') + '</td><td>' + (row.nedoc||'—') + '</td><td>' + bar + '</td><td>' + row.contractat + '</td><td><span class="badge ' + row.status + '">' + row.statusLabel + '</span></td></tr>';
     });
-    html += '</tbody></table></div></div>';
+    html += '</tbody></table></div>';
   }
-
   if (p.docs && p.docs.length) {
-    var docIcons = {ok:'ti-file-check', warn:'ti-file-text', risk:'ti-file-x', na:'ti-file'};
-    html += '<div class="two-col">';
-    html += '<div class="sec-block"><div class="sec-block-title"><i class="ti ti-files" style="font-size:12px"></i>Documente-cheie</div>';
-    html += '<div class="sec-card"><div class="doc-grid">';
-    p.docs.forEach(function(d) {
-      var ico = docIcons[d.status] || 'ti-file';
-      html += '<div class="doc-item"><div class="doc-ico ' + d.status + '"><i class="ti ' + ico + '"></i></div>';
-      html += '<div><div class="doc-name">' + d.name + '</div><div class="doc-sub">' + d.sub + '</div></div></div>';
+    html += '<div class="sec-card" style="margin-top:16px"><div style="padding:12px 16px 8px;font-size:12px;font-weight:600;color:var(--text)"><i class="ti ti-files"></i> Documente proiect</div><div style="padding:0 4px">';
+    p.docs.forEach(function(d) { html += '<div class="ind-row"><span class="ind-label">' + d.name + ' <span style="font-size:10px;color:var(--text-tertiary)">· ' + d.sub + '</span></span><span class="badge ' + d.status + '">' + (d.status==='ok'?'OK':d.status==='warn'?'Parțial':'Lipsă') + '</span></div>'; });
+    html += '</div></div>';
+  }
+  if (p.alerts && p.alerts.length) {
+    html += '<div class="sec-card" style="margin-top:16px"><div style="padding:12px 16px 8px;font-size:12px;font-weight:600;color:var(--text)"><i class="ti ti-alert-circle"></i> Alerte prioritare</div>';
+    p.alerts.forEach(function(a) {
+      html += '<div class="alert-row" style="display:flex;align-items:flex-start;gap:10px;padding:9px 12px;border-bottom:1px solid var(--grey-100)">';
+      html += '<div class="alert-dot dot-' + a.cls + '" style="margin-top:4px"></div>';
+      html += '<div class="alert-body"><div class="alert-title">' + a.title + '</div><div class="alert-meta">' + a.meta + '</div></div>';
+      html += '<div class="alert-date ' + a.cls + '">' + a.date + '</div></div>';
     });
-    html += '</div></div></div>';
-
-    if (p.alerts && p.alerts.length) {
-      html += '<div class="sec-block"><div class="sec-block-title"><i class="ti ti-bell" style="font-size:12px"></i>Alerte săptămâna aceasta</div>';
-      html += '<div class="sec-card">';
-      p.alerts.forEach(function(a) {
-        html += '<div class="alert-row"><div class="alert-dot dot-' + a.cls + '"></div>';
-        html += '<div class="alert-body"><div class="alert-title">' + a.title + '</div><div class="alert-meta">' + a.meta + '</div></div>';
-        html += '<span class="alert-date ' + a.cls + '">' + a.date + '</span></div>';
-      });
-      html += '</div></div>';
-    }
     html += '</div>';
   }
-
-  html += '<div class="page-footer">PM Hub · EREN CONS SRL · 2026</div>';
-  document.getElementById('main').innerHTML = html;
-}
-
-function renderProductie(proj) {
-  var p = DATA[proj];
-  var html = '';
-  html += '<div class="proj-header"><div class="proj-title">' + p.title + '</div><div class="proj-meta">' + p.meta + '</div></div>';
-  html += '<div class="module-badge productie"><i class="ti ti-hammer" style="font-size:13px"></i> Raportări Producție</div>';
-  html += '<div class="coming-soon"><i class="ti ti-hammer"></i><h3>Modul în dezvoltare</h3><p>Raportările de producție vor fi disponibile în versiunea următoare a PM Hub.</p></div>';
-  html += '<div class="page-footer">PM Hub · EREN CONS SRL · 2026</div>';
-  document.getElementById('main').innerHTML = html;
-}
-
-function renderPowerBI(proj) {
-  var p = DATA[proj];
-  document.querySelectorAll('.submenu-item').forEach(function(i){ i.classList.remove('active'); });
-  var item = document.getElementById('item-' + proj + '-powerbi');
-  if (item) item.classList.add('active');
-  closeMenu();
-  document.getElementById('menu-btn').style.display = 'none';
-  var btn = document.getElementById('back-btn');
-  btn.style.display = 'flex';
-  btn.onclick = function() { renderProjHome(proj); };
-  var html = '';
-  html += '<div class="proj-header"><div class="proj-title">' + p.title + '</div><div class="proj-meta">' + p.meta + '</div></div>';
-  html += '<div class="module-badge" style="background:#F3EEF8;color:#7B2D8B"><i class="ti ti-presentation-analytics" style="font-size:13px"></i> Power BI</div>';
-  html += '<div class="coming-soon"><i class="ti ti-presentation-analytics" style="color:#7B2D8B"></i><h3>Modul în dezvoltare</h3><p>Rapoartele Power BI vor fi disponibile în versiunea următoare a PM Hub.</p></div>';
   html += '<div class="page-footer">PM Hub · EREN CONS SRL · 2026</div>';
   document.getElementById('main').innerHTML = html;
 }
 
 function renderAnalize(proj) {
-  var base = 'file:///C:/Users/gelu.spataru/Claude/Projects/KOGALNICEANU/';
   var analyses = {
     hangar: [
       {
         cap:"Cap.1 — Demolări",
-        url:"https://docs.google.com/spreadsheets/d/1V5D_T4og7XnykHgye6tW3YikdlqysJMS/edit?gid=132998986#gid=132998986",
+        url:"https://docs.google.com/spreadsheets/d/1V5D_T4og7XnykHgye6tW3YikdlqysJMS/edit?gid=387681877#gid=387681877",
         status:"ok",
         label:"Finalizată",
         date:"Iun 2026",
         buget:"382.137 lei",
-        desc:"TAB CONSTRUCT recomandat · Grad fundamentare 97,4% · Art.4 tâmplării + Art.8 săpături fără ofertă (9.781 lei) · Discrepanță cantitate deviz 1.2 +3,8%"
+        desc:"TAB CONSTRUCT recomandat · 3 articole fără acoperire (tâmplării + săpături) · Discrepanță cantitate deviz 1.2 +3,8%"
       },
       {
         cap:"Cap.2 — Amenajare Platformă",
-        url:"https://docs.google.com/spreadsheets/d/1nReO_wKqFKi70VWo0YZDs68MVukERYWS/edit?gid=1150560864#gid=1150560864",
+        url:"https://docs.google.com/spreadsheets/d/1nReO_wKqFKi70VWo0YZDs68MVukERYWS/edit?gid=1301857850#gid=1301857850",
         status:"ok",
         label:"Finalizată",
         date:"Iun 2026",
         buget:"1.267.787 lei",
-        desc:"WOPFINGER recomandat BCR beton · Grad fundamentare 54,4% · Piatră spartă +23,8% vs buget · Balast + rosturi fără ofertă"
+        desc:"WOPFINGER recomandat BCR beton · Piatră spartă COMPREST +23,8% vs buget · Balast + rosturi fără ofertă (~18%)"
+      },
+      {
+        cap:"Cap.3 — Structură Hangar",
+        url:"https://docs.google.com/spreadsheets/d/1XDitKUerD6nFvVZbQeOxppeqq8iKSVKI/edit?gid=792507624#gid=792507624",
+        status:"warn",
+        label:"Revizuită",
+        date:"Iun 2026",
+        buget:"3.787.359 lei",
+        desc:"ADN + MBS: 1.831.092 lei (48,3% fund.) · ADN pahare+stalpi 779.992 lei · MBS lucrări civile 1.051.100 lei · Structură metalică 109t (1.586.706 lei) fără ofertă"
+      },
+      {
+        cap:"Cap.4 — Arhitectură Hangar",
+        url:"https://docs.google.com/spreadsheets/d/1zI4KFsUY0QXwO3iT3S5mRnGMc37JoGai/edit?gid=335311695#gid=335311695",
+        status:"warn",
+        label:"Revizuită",
+        date:"Iun 2026",
+        buget:"4.033.077 lei",
+        desc:"11 oferte: JORISIDE, POLISOL, IBUILDING, KONECRANES, ELMAS, EMI, MBS, MENATWORK, MERCOR, SUNLIGHT, VELUX · OP=2.204.711 lei (51,7% fund.) · Economie vs buget: 212.873 lei"
       }
     ]
   };
@@ -819,43 +802,232 @@ function renderAnalize(proj) {
   var list = analyses[proj] || [];
   var p = DATA[proj];
   var html = '';
-  html += '<div class="proj-header"><div class="proj-title">Analiză pe capitole contract</div><div class="proj-meta">' + p.title + ' · ' + list.length + ' analize disponibile · actualizat Iun 2026</div></div>';
+  html += '<div class="proj-header"><div class="proj-title">Analiză pe capitole contract</div><div class="proj-meta">' + p.title + ' · ' + list.length + ' analize disponibile · actualizat Iun 2026 · v5 Cap.4 + v4 Cap.3</div></div>';
   html += '<div class="module-badge" style="background:#EEF2FF;color:#4338CA"><i class="ti ti-file-analytics" style="font-size:13px"></i> Analize Comparative Oferte</div>';
 
   list.forEach(function(a) {
+    var isRisk = a.status === 'risk';
+    var labelBg = isRisk ? '#CC1515' : '#7A1F1F';
     html += '<div class="proj-card" style="margin-bottom:12px">';
-    html += '<div class="proj-card-header" style="background:#F5DEDE;border-left:3px solid #CC1515">';
-    html += '<div class="proj-icon" style="background:rgba(204,21,21,0.12)"><i class="ti ti-table" style="color:#A03535"></i></div>';
+    html += '<div class="proj-card-header" style="background:#FDECEA;border-left:3px solid #CC1515">';
+    html += '<div class="proj-icon" style="background:rgba(204,21,21,0.15)"><i class="ti ti-table" style="color:#CC1515"></i></div>';
     html += '<div style="flex:1">';
-    html += '<div style="font-size:13px;font-weight:600;color:#7A1F1F">' + a.cap + '</div>';
-    html += '<div style="font-size:11px;color:#A05050;margin-top:3px">' + a.desc + '</div>';
+    html += '<div style="font-size:13px;font-weight:600;color:var(--text)">' + a.cap + '</div>';
+    html += '<div style="font-size:11px;color:var(--text-secondary);margin-top:3px">' + a.desc + '</div>';
     html += '</div>';
-    html += '<span style="font-size:10px;font-weight:600;padding:2px 10px;border-radius:10px;background:rgba(55,86,35,0.12);color:#375623;flex-shrink:0">' + a.label + '</span>';
+    html += '<span style="font-size:10px;font-weight:600;padding:2px 10px;border-radius:10px;background:' + labelBg + ';color:#fff;flex-shrink:0">' + a.label + '</span>';
     html += '</div>';
     html += '<div class="proj-card-body" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px">';
     html += '<div style="font-size:12px;color:var(--text-secondary);display:flex;gap:16px">';
     html += '<span><i class="ti ti-coins" style="font-size:12px"></i> ' + a.buget + '</span>';
     html += '<span><i class="ti ti-calendar" style="font-size:12px"></i> ' + a.date + '</span>';
     html += '</div>';
-    html += '<a href="' + a.url + '" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:7px 18px;background:#A03535;color:#fff;border-radius:var(--radius);font-size:12px;font-weight:600;text-decoration:none;border:1px solid rgba(204,21,21,0.4)">';
-    html += '<i class="ti ti-file-spreadsheet" style="font-size:13px;color:#FF8080"></i> Deschide analiză</a>';
+    if (a.url && a.url !== 'PLACEHOLDER_CAP3') {
+      html += '<a href="' + a.url + '" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:7px 18px;background:#7A1F1F;color:#fff;border-radius:var(--radius);font-size:12px;font-weight:600;text-decoration:none;border:1px solid rgba(204,21,21,0.4)">';
+      html += '<i class="ti ti-file-spreadsheet" style="font-size:13px;color:#FF8080"></i> Deschide analiză</a>';
+    } else {
+      html += '<a href="#" onclick="alert(\'Link în pregătire.\');return false;" style="display:inline-flex;align-items:center;gap:6px;padding:7px 18px;background:#7A1F1F;color:#fff;border-radius:var(--radius);font-size:12px;font-weight:600;text-decoration:none;border:1px solid rgba(204,21,21,0.4)"><i class="ti ti-file-spreadsheet" style="font-size:13px;color:#FF8080"></i> Deschide analiză</a>';
+    }
     html += '</div></div>';
   });
+  html += '</div>';
+  html += '<div class="page-footer">PM Hub · EREN CONS SRL · 2026</div>';
+  document.getElementById('main').innerHTML = html;
+}
 
-  if (list.length === 0) {
-    html += '<div class="coming-soon"><i class="ti ti-file-analytics"></i><h3>Nicio analiză disponibilă</h3><p>Analizele comparative vor apărea aici pe măsură ce capitolele sunt procesate.</p></div>';
-  }
+function renderSinteza(proj) {
+  var p = DATA[proj];
+  var html = '';
+  html += '<div class="proj-header"><div class="proj-title">Acțiuni / Riscuri / Recomandări</div><div class="proj-meta">' + p.title + ' · Cap.1, Cap.2, Cap.3, Cap.4 analizate · actualizat Iun 2026</div></div>';
+  html += '<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:14px">';
+  html += '<div class="module-badge" style="background:#EEF2FF;color:#4338CA;margin-bottom:0"><i class="ti ti-clipboard-list" style="font-size:13px"></i> Riscuri · Recomandări PM · Acțiuni necesare</div>';
+  html += '<a href="https://docs.google.com/spreadsheets/d/1RGhscilN3v3e67GWaq1WfROrGTFEuoD0QmeWHJkRu-Q/edit?gid=2144939836#gid=2144939836" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:7px 14px;background:#1A5276;color:#fff;border-radius:var(--radius);font-size:12px;font-weight:600;text-decoration:none;flex-shrink:0"><i class="ti ti-table" style="font-size:13px"></i> Editează Acțiuni / Riscuri / Recomandări</a>';
+  html += '</div>';
+
+  var KPI_S = [
+    {label:"Grad fund. global",val:"29,5%",sub:"5.043.550 lei OP / 17.075.952 lei buget intern"},
+    {label:"Riscuri deschise",val:"14",sub:"4 Critice · 6 Medii · 4 Mici"},
+    {label:"Economie identificată",val:"419.053 lei",sub:"ADN pahare+stalpi 206.180 + Cap.4 vs DO 212.873"},
+    {label:"Nedocumentat (4 cap.)",val:"4.426.830 lei",sub:"Cap.5-13 neanaliz. ~9,77 mil lei extra"}
+  ];
+  html += '<div class="kpi-grid">';
+  KPI_S.forEach(function(k){
+    html += '<div class="kpi"><div class="kpi-label">'+k.label+'</div><div class="kpi-val">'+k.val+'</div><div class="kpi-sub">'+k.sub+'</div></div>';
+  });
+  html += '</div>';
+
+  var CAPS = [
+    {
+      id:'cap1', label:'Cap.1 — Demolări', buget:'382.137 lei', op:'372.356 lei', grad:'97,4%', gradCls:'ok',
+      riscuri:[
+        {cod:'R-1.1',prio:'Mic',text:'Tâmplării Art.4 + Săpătură Art.8 fără ofertă (9.781 lei)',term:'10 iul'},
+        {cod:'R-1.3',prio:'Mediu',text:'Cantitate deviz 1.2: ofertă 708 mc vs contract 683 mc (+3,8%)',term:'15 iul'}
+      ],
+      rec:[
+        {cod:'REC-1.1',text:'TAB CONSTRUCT — ofertă completă, sub buget (-2% beton), valorificare fier 7.000 EUR'}
+      ],
+      act:[
+        {cod:'ACT-1.1',text:'Contractare TAB CONSTRUCT + negociere cantitate + clarificare Art.4+8',term:'10 iul',resp:'GSP'}
+      ]
+    },
+    {
+      id:'cap2', label:'Cap.2 — Amenajare Platformă', buget:'1.267.787 lei', op:'689.129 lei', grad:'54,4%', gradCls:'warn',
+      riscuri:[
+        {cod:'R-2.1',prio:'Mare',text:'COMPREST piatră spartă +23,8% vs buget — singurul ofertant',term:'10 iul'},
+        {cod:'R-2.2',prio:'Mare',text:'Balast sort 0-40mm (133.226 lei) — zero oferte din piață',term:'10 iul'},
+        {cod:'R-2.3',prio:'Mediu',text:'Manoperă turnare beton BCR (83.272 lei) neacoperită de niciun ofertant',term:'10 iul'},
+        {cod:'R-2.4',prio:'Mediu',text:'Rosturi silicon + marcaje rutiere (~100.419 lei) — zero oferte',term:'31 iul'}
+      ],
+      rec:[
+        {cod:'REC-2.1',text:'WOPFINGER — dala BCR, cel mai competitiv (181,23 lei/mp, +2,2% vs buget)'},
+        {cod:'REC-2.2',text:'CARMEUSE + ALESOL — stabilizări Art.5+10, ofertă completă M+L+U, sub buget'}
+      ],
+      act:[
+        {cod:'ACT-2.1',text:'Ofertă alternativă piatră spartă + renegociere COMPREST',term:'10 iul',resp:'GSP'},
+        {cod:'ACT-2.2',text:'Inițiere achiziție balast sort 0-40mm (min 3 ofertanți)',term:'10 iul',resp:'GSP'},
+        {cod:'ACT-2.3',text:'Clarificare manoperă turnare BCR cu WOPFINGER',term:'10 iul',resp:'GSP'},
+        {cod:'ACT-2.4',text:'Solicitare oferte rosturi silicon + marcaje rutiere',term:'31 iul',resp:'GSP'}
+      ]
+    },
+    {
+      id:'cap3', label:'Cap.3 — Structură Hangar', buget:'3.787.359 lei', op:'1.831.092 lei', grad:'48,3%', gradCls:'warn',
+      riscuri:[
+        {cod:'R-3.1',prio:'Critic',text:'Structură metalică 109.000 kg (1.586.706 lei = 37,9% buget) — ZERO oferte comparative',term:'10 iul'},
+        {cod:'R-3.2',prio:'Mediu',text:'GAP F2 vs F3: −400.338 lei — rezervor pompe incendiu în alt capitol?',term:'30 iun'},
+        {cod:'R-3.3',prio:'Mediu',text:'Grinzi GPP01 ADN (241.132 lei, 14 buc 22m) nu se regăsesc în F3 deviz',term:'15 iul'}
+      ],
+      rec:[
+        {cod:'REC-3.1',text:'ADN Prefabricate — pahare+stalpi 339.890 lei vs deviz 546.070 lei · economie 206.180 lei (−37,8%). Deviz stalpi supra-evaluat 74%.'},
+        {cod:'REC-3.2',text:'MBS Metal Building Systems V3 (travee 6,76m, zincat) — 1.051.100 lei BEST. Confirmare includere montaj.'}
+      ],
+      act:[
+        {cod:'ACT-3.1',text:'Clarificare GAP F2 vs F3 (+400k lei) cu proiectantul',term:'30 iun',resp:'GSP/Contracte'},
+        {cod:'ACT-3.2',text:'Solicitare URGENTĂ ofertă structură metalică 109.000 kg (min 2 ofertanți)',term:'10 iul',resp:'GSP'},
+        {cod:'ACT-3.3',text:'Confirmare ADN Prefabricate + verificare compatibilitate cu PT',term:'15 iul',resp:'GSP'},
+        {cod:'ACT-3.4',text:'Solicitare oferte subantreprenor lucrări civile (min 3 ofertanți)',term:'15 iul',resp:'GSP/IVA'}
+      ]
+    },
+    {
+      id:'cap4', label:'Cap.4 — Arhitectură Hangar', buget:'4.033.077 lei (F3)', op:'2.204.711 lei', grad:'51,7%', gradCls:'warn',
+      riscuri:[
+        {cod:'R-4.1',prio:'Critic',text:'Specificație panouri: DO a declarat 200mm vată în contract vs F3 bugetează 150mm',term:'10 iul'},
+        {cod:'R-4.2',prio:'Mare',text:'Curs valutar pod rulant DO: 5,496 lei/EUR vs BNR 4,97 → supraevaluare 20.457 lei (+10,6%)',term:'10 iul'},
+        {cod:'R-4.3',prio:'Mediu',text:'Panouri DO supraprețuite: +10,7% acoperis, +13,5% perete vs JORISIDE (economie 52.976 lei)',term:'10 iul'},
+        {cod:'R-4.4',prio:'Mediu',text:'Uși armonică (711.649 lei/2 buc) — justificare tehnică necesară; tâmplărie+trape parțial fără ofertă',term:'31 iul'}
+      ],
+      rec:[
+        {cod:'REC-4.1',text:'MERCOR FPS — trape fum BEST 139.825 lei (vs SUNLIGHT 247.860 / VELUX 227.235 ⚠dimensiuni greșite)'},
+        {cod:'REC-4.2',text:'JORISIDE — panouri sandwich cel mai competitiv (−10,7% acoperis, −13,5% perete vs DO)'},
+        {cod:'REC-4.3',text:'POLISOL — pardoseală epoxidică 266.642 lei (+4,7% vs DO, IBUILDING +27% mai scump). KONECRANES — pod rulant 193.433 lei (vs ELMAS 223.660 lei).'},
+        {cod:'REC-4.4',text:'EMI — uși metalice industriale 829.080 lei (−14% vs DO). MBS — tâmplărie aluminiu 214.652 lei. Economie totală vs DO: 212.873 lei.'}
+      ],
+      act:[
+        {cod:'ACT-4.1',text:'Clarificare DO: curs valutar pod rulant + spec. panouri 150mm vs 200mm + justificare uși armonică 711k lei',term:'10 iul',resp:'GSP'},
+        {cod:'ACT-4.2',text:'Contractare MERCOR FPS trape fum + volete + luminator MCR',term:'15 iul',resp:'GSP/IVA'},
+        {cod:'ACT-4.3',text:'Contractare JORISIDE panouri sandwich acoperis + perete',term:'15 iul',resp:'GSP/IVA'},
+        {cod:'ACT-4.4',text:'Confirmare POLISOL pardoseală + KONECRANES pod rulant',term:'31 iul',resp:'GSP/IVA'},
+        {cod:'ACT-4.5',text:'Solicitare oferte manoperă montaj tavane GK (MENATWORK = materiale only)',term:'31 iul',resp:'GSP'}
+      ]
+    }
+  ];
+
+  var PRIO_COL = {Critic:'#C0392B',Mare:'#E67E22',Mediu:'#D4AC0D',Mic:'#27AE60'};
+  var PRIO_BG  = {Critic:'#FDEDEC',Mare:'#FDEBD0',Mediu:'#FEFDE7',Mic:'#EAFAF1'};
+
+  CAPS.forEach(function(cap){
+    html += '<div style="margin-bottom:20px">';
+    // Capitol header
+    html += '<div style="background:#2C3E50;border-radius:8px 8px 0 0;padding:10px 16px;display:flex;align-items:center;justify-content:space-between">';
+    html += '<div style="font-size:13px;font-weight:600;color:#fff">' + cap.label + '</div>';
+    html += '<div style="display:flex;gap:12px;align-items:center">';
+    html += '<span style="font-size:11px;color:rgba(255,255,255,0.6)">Buget: <b style="color:#fff">' + cap.buget + '</b></span>';
+    html += '<span style="font-size:11px;color:rgba(255,255,255,0.6)">OP: <b style="color:#fff">' + cap.op + '</b></span>';
+    var gradCol = cap.gradCls === 'ok' ? '#27AE60' : '#E67E22';
+    html += '<span style="background:' + gradCol + ';color:#fff;border-radius:99px;padding:2px 10px;font-size:11px;font-weight:700">' + cap.grad + '</span>';
+    html += '</div></div>';
+
+    html += '<div style="background:#fff;border:1px solid var(--border);border-top:none;border-radius:0 0 8px 8px;overflow:hidden">';
+
+    // RISCURI
+    html += '<div style="background:#FDEDEC;padding:7px 16px;border-bottom:1px solid #F7C1C1;display:flex;align-items:center;gap:7px">';
+    html += '<i class="ti ti-alert-triangle" style="color:#C0392B;font-size:14px"></i>';
+    html += '<span style="font-size:10px;font-weight:700;color:#C0392B;letter-spacing:.06em;text-transform:uppercase">Riscuri identificate</span></div>';
+    cap.riscuri.forEach(function(r){
+      var pc = PRIO_COL[r.prio] || '#95A5A6';
+      var pb = PRIO_BG[r.prio] || '#F8F9FA';
+      html += '<div class="alert-row" style="background:#fff">';
+      html += '<div class="alert-dot" style="background:' + pc + '"></div>';
+      html += '<div class="alert-body">';
+      html += '<div style="font-size:11px;font-weight:600;color:var(--text-tertiary);margin-bottom:2px">' + r.cod + ' &nbsp;·&nbsp; <span style="background:' + pb + ';color:' + pc + ';border-radius:4px;padding:1px 6px;font-weight:700">' + r.prio + '</span></div>';
+      html += '<div class="alert-title">' + r.text + '</div></div>';
+      html += '<div class="alert-date risk">' + r.term + '</div></div>';
+    });
+
+    // RECOMANDĂRI PM
+    html += '<div style="background:#E9F7EF;padding:7px 16px;border-top:1px solid #D5E8D4;border-bottom:1px solid #D5E8D4;display:flex;align-items:center;gap:7px">';
+    html += '<i class="ti ti-star" style="color:#1E8449;font-size:14px"></i>';
+    html += '<span style="font-size:10px;font-weight:700;color:#1E8449;letter-spacing:.06em;text-transform:uppercase">Recomandări PM</span></div>';
+    cap.rec.forEach(function(r){
+      html += '<div class="alert-row" style="background:#F9FEF9">';
+      html += '<div class="alert-dot" style="background:#1E8449"></div>';
+      html += '<div class="alert-body">';
+      html += '<div style="font-size:11px;font-weight:600;color:var(--text-tertiary);margin-bottom:2px">' + r.cod + '</div>';
+      html += '<div class="alert-title">' + r.text + '</div></div></div>';
+    });
+
+    // ACȚIUNI
+    html += '<div style="background:#D6EAF8;padding:7px 16px;border-top:1px solid #AED6F1;border-bottom:1px solid #AED6F1;display:flex;align-items:center;gap:7px">';
+    html += '<i class="ti ti-circle-check" style="color:#1A5276;font-size:14px"></i>';
+    html += '<span style="font-size:10px;font-weight:700;color:#1A5276;letter-spacing:.06em;text-transform:uppercase">Acțiuni necesare</span></div>';
+    cap.act.forEach(function(a){
+      html += '<div class="alert-row">';
+      html += '<div class="alert-dot" style="background:#1A5276"></div>';
+      html += '<div class="alert-body">';
+      html += '<div style="font-size:11px;font-weight:600;color:var(--text-tertiary);margin-bottom:2px">' + a.cod + ' &nbsp;·&nbsp; ' + a.resp + '</div>';
+      html += '<div class="alert-title">' + a.text + '</div></div>';
+      html += '<div class="alert-date warn">' + a.term + '</div></div>';
+    });
+
+    html += '</div></div>'; // end card
+  });
 
   html += '<div class="page-footer">PM Hub · EREN CONS SRL · 2026</div>';
   document.getElementById('main').innerHTML = html;
-  window.scrollTo(0, 0);
+}
+
+function renderPowerBI(proj) {
+  var p = DATA[proj];
+  document.getElementById('main').innerHTML =
+    '<div class="proj-header"><div class="proj-title">' + p.title + '</div><div class="proj-meta">' + p.meta + '</div></div>' +
+    '<div class="module-badge" style="background:var(--blue-light);color:var(--blue)"><i class="ti ti-presentation-analytics" style="font-size:13px"></i> Power BI</div>' +
+    '<div class="sec-card" style="padding:32px;text-align:center;color:var(--text-tertiary)">' +
+    '<i class="ti ti-chart-bar" style="font-size:40px;margin-bottom:12px;display:block"></i>' +
+    '<div style="font-size:14px;font-weight:500">Raportare Power BI</div>' +
+    '<div style="font-size:12px;margin-top:6px">În pregătire · Disponibil după finalizarea analizelor</div>' +
+    '</div>' +
+    '<div class="page-footer">PM Hub · EREN CONS SRL · 2026</div>';
+}
+
+function renderProductie(proj) {
+  var p = DATA[proj];
+  document.getElementById('main').innerHTML =
+    '<div class="proj-header"><div class="proj-title">' + p.title + '</div><div class="proj-meta">' + p.meta + '</div></div>' +
+    '<div class="module-badge productie"><i class="ti ti-hammer" style="font-size:13px"></i> Raportări Producție</div>' +
+    '<div class="sec-card" style="padding:32px;text-align:center;color:var(--text-tertiary)">' +
+    '<i class="ti ti-hammer" style="font-size:40px;margin-bottom:12px;display:block"></i>' +
+    '<div style="font-size:14px;font-weight:500">Raportări Producție</div>' +
+    '<div style="font-size:12px;margin-top:6px">În pregătire · Disponibil după începerea execuției</div>' +
+    '</div>' +
+    '<div class="page-footer">PM Hub · EREN CONS SRL · 2026</div>';
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-  document.getElementById('inp-pass').addEventListener('keydown', function(e) { if (e.key === 'Enter') doLogin(); });
-  document.getElementById('inp-user').addEventListener('keydown', function(e) { if (e.key === 'Enter') document.getElementById('inp-pass').focus(); });
-  var saved = window._pmhub_user || null;
-  // auto-login disabled for local file compatibility
+  document.getElementById('inp-pass').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') doLogin();
+  });
+  document.getElementById('inp-user').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') document.getElementById('inp-pass').focus();
+  });
 });
 </script>
 </body>

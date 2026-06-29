@@ -426,18 +426,18 @@ var DATA = {
     kpis:[
       {label:"Buget total contract",val:"19,3 mil lei",sub:"Fără TVA · Fără lucrări suplimentare"},
       {label:"Buget intern eDevize",val:"17,1 mil lei",sub:"−11,4% față de contract · Completat Cap.1-13"},
-      {label:"Grad fundamentare (OP)",val:"29,5%",sub:"Cap.1 97,4% + Cap.2 54,4% + Cap.3 48,3% + Cap.4 51,7% · 4 capitole analizate"},
-      {label:"Valoare nedocumentată",val:"14,2 mil lei",sub:"Cap.5-13 + Proiectare fără ofertă · Cap.3+4 parțial acoperite"}
+      {label:"Grad fundamentare (OP)",val:"32,3%",sub:"Cap.1 97,4% + Cap.2 54,4% + Cap.3 48,3% + Cap.4 51,7% + Cap.6 41,2% · 5 capitole analizate"},
+      {label:"Valoare nedocumentată",val:"13,8 mil lei",sub:"Cap.7-13 + Proiectare fără ofertă · Cap.3+4+6 parțial acoperite"}
     ],
     n1:[
-      {label:"Fundamentare cu oferte din piață (OP)",badge:"warn",text:"29,5%"},
+      {label:"Fundamentare cu oferte din piață (OP)",badge:"warn",text:"32,3%"},
       {label:"Buget intern eDevize",badge:"ok",text:"COMPLET — 17,1 mil lei (Cap.1-13)"},
-      {label:"Valoare nedocumentată (fără ofertă)",badge:"warn",text:"14,2 mil lei"},
+      {label:"Valoare nedocumentată (fără ofertă)",badge:"warn",text:"13,8 mil lei"},
       {label:"RISC Cap.5 Org.Șantier",badge:"risk",text:"+120% vs contract — deviz 5.1.3 nou (1,22 mil lei)"}
     ],
     bars:[
-      {label:"Oferte din piață (OP)",pct:29.5,cls:"bar-blue"},
-      {label:"Nedocumentat / Estimare proprie DO",pct:70.5,cls:"bar-red"}
+      {label:"Oferte din piață (OP)",pct:32.3,cls:"bar-blue"},
+      {label:"Nedocumentat / Estimare proprie DO",pct:67.7,cls:"bar-red"}
     ],
     n2:[
       {label:"Export ERP încărcat",badge:"risk",text:"LIPSĂ"},
@@ -452,7 +452,7 @@ var DATA = {
       {cap:"2. Amenajare Platformă",   buget:"1.267.781 lei", doc:"689.129 lei", nedoc:"578.652 lei",   pct:54, bar:"#EF9F27", contractat:"—",            status:"warn", statusLabel:"54,4%"},
       {cap:"3. Structură Hangar",      buget:"3.787.359 lei", doc:"1.831.092 lei", nedoc:"1.956.267 lei", pct:48, bar:"#EF9F27", contractat:"—",            status:"warn", statusLabel:"48,3%"},
       {cap:"4. Arhitectură Hangar",    buget:"4.033.077 lei", doc:"2.204.711 lei", nedoc:"1.828.366 lei", pct:52, bar:"#EF9F27", contractat:"—",            status:"warn", statusLabel:"51,7%"},
-      {cap:"6. Rețele ext. sanitare",  buget:"447.531 lei",   doc:"—",           nedoc:"447.531 lei",   pct:0,  bar:"#E24B4A", contractat:"—",            status:"risk", statusLabel:"Lipsă"},
+      {cap:"6. Rețele ext. sanitare",  buget:"1.023.749 lei", doc:"422.257 lei",  nedoc:"601.492 lei",   pct:41, bar:"#EF9F27", contractat:"—",            status:"warn", statusLabel:"41,2%"},
       {cap:"7. Rețele electrice ext.", buget:"722.999 lei",   doc:"—",           nedoc:"722.999 lei",   pct:0,  bar:"#E24B4A", contractat:"—",            status:"risk", statusLabel:"Lipsă"},
       {cap:"8. Inst. sanitare int.",   buget:"616.244 lei",   doc:"—",           nedoc:"616.244 lei",   pct:0,  bar:"#E24B4A", contractat:"—",            status:"risk", statusLabel:"Lipsă"},
       {cap:"9. HVAC",                  buget:"232.787 lei",   doc:"—",           nedoc:"232.787 lei",   pct:0,  bar:"#E24B4A", contractat:"—",            status:"risk", statusLabel:"Lipsă"},
@@ -472,6 +472,8 @@ var DATA = {
     alerts:[
       {title:"Structură metalică hală URGENT", meta:"Cap.3 · 1.586.706 lei fără ofertă · Cap.3 total 48,3% fund.", date:"10 iul", cls:"risk"},
       {title:"Cap.4 pod rulant + echipamente (F4)", meta:"Cap.4 · 213.790 lei buget F4 — oferte în așteptare", date:"15 iul", cls:"warn"},
+      {title:"Cap.6 GP Agent Spumant fără ofertă", meta:"Cap.6 · 188.832 lei (18,4%) — KSB fișe tehnice, zero preț · RISC CRITIC", date:"15 iul", cls:"risk"},
+      {title:"Cap.6 separator standard material", meta:"Cap.6 · beton armat vs polietilenă — diferență 14.165 lei · clarificare proiectant", date:"10 iul", cls:"warn"},
       {title:"Ofertă alternativă piatră spartă", meta:"Cap.2 · COMPREST +23,8% vs buget",        date:"10 iul", cls:"risk"},
       {title:"Clarificare deviz 5.1.3",          meta:"Cap.5 · +120% față de contract",          date:"10 iul", cls:"risk"},
       {title:"Încărcare buget ERP",              meta:"17,1 mil lei neîncărcați",                date:"10 iul", cls:"risk"},
@@ -526,7 +528,7 @@ function renderProjHome(proj) {
     html += '<div class="proj-card-body">';
     html += '<button class="open-fisa-btn" onclick="goModule(\'hangar\',\'validare\')"><i class="ti ti-layout-dashboard"></i> Deschide tabloul de bord</button>';
     html += '<div style="display:flex;gap:8px;flex-wrap:wrap">';
-    html += '<button class="open-fisa-btn" style="flex:1;min-width:140px" onclick="window.open(\'https://docs.google.com/spreadsheets/d/1zNxiwjknXO7MuPfCHeiQbNIUUIT10ROH/edit?gid=1691462389#gid=1691462389\',\'_blank\')"><i class="ti ti-table"></i> Fișa Validare Buget</button>';
+    html += '<button class="open-fisa-btn" style="flex:1;min-width:140px" onclick="window.open(\'https://docs.google.com/spreadsheets/d/1eQLcNgjtbtYQ0aIzG91wQCTphpvynDjmjOV5sAhP-RY/edit?gid=344964466#gid=344964466\',\'_blank\')"><i class="ti ti-table"></i> Fișa Validare Buget</button>';
     html += '<button class="open-fisa-btn" style="flex:1;min-width:140px" onclick="window.open(\'https://drive.google.com/file/d/1pUQjk1pk7JsXk8cXdLShgpbqSMYh2JFj/view?usp=drive_link\',\'_blank\')"><i class="ti ti-chart-gantt"></i> Gantt implementare</button>';
     html += '<button class="open-fisa-btn" style="flex:1;min-width:140px" onclick="goModule(\'hangar\',\'analize\')"><i class="ti ti-file-analytics"></i> Analiză pe capitole contract</button>';
     html += '</div></div></div>';
@@ -666,12 +668,12 @@ function renderHome() {
         '<div style="font-size:10px;color:rgba(255,255,255,0.6)">În validare · Start: 19.06.2026</div></div>' +
       '</div>' +
       '<div class="proj-card-body">' +
-        '<button class="open-fisa-btn" onclick="goModule(\'hangar\',\'validare\');toggleSub(\'hangar\')"><i class="ti ti-chart-bar"></i> Validare Bugete</button>' +
+        '<button class="open-fisa-btn" onclick="goModule(\'hangar\',\'validare\')"><i class="ti ti-chart-bar"></i> Validare Bugete</button>' +
         '<div style="display:flex;gap:8px;flex-wrap:wrap">' +
-          '<button class="open-fisa-btn" style="flex:1;min-width:140px" onclick="window.open(\'https://docs.google.com/spreadsheets/d/1zNxiwjknXO7MuPfCHeiQbNIUUIT10ROH/edit?gid=1691462389#gid=1691462389\',\'_blank\')"><i class="ti ti-table"></i> Fișa Validare Buget</button>' +
+          '<button class="open-fisa-btn" style="flex:1;min-width:140px" onclick="window.open(\'https://docs.google.com/spreadsheets/d/1eQLcNgjtbtYQ0aIzG91wQCTphpvynDjmjOV5sAhP-RY/edit?gid=344964466#gid=344964466\',\'_blank\')"><i class="ti ti-table"></i> Fișa Validare Buget</button>' +
           '<button class="open-fisa-btn" style="flex:1;min-width:140px" onclick="window.open(\'https://drive.google.com/file/d/1pUQjk1pk7JsXk8cXdLShgpbqSMYh2JFj/view?usp=drive_link\',\'_blank\')"><i class="ti ti-chart-gantt"></i> Gantt implementare</button>' +
           '<button class="open-fisa-btn" style="flex:1;min-width:140px" onclick="goModule(\'hangar\',\'analize\')"><i class="ti ti-file-analytics"></i> Analiză pe capitole contract</button>' +
-          '<button class="open-fisa-btn" style="flex:1;min-width:140px" onclick="goModule(\'hangar\',\'sinteza\');toggleSub(\'hangar\')"><i class="ti ti-clipboard-list"></i> Acțiuni / Riscuri / Rec.</button>' +
+          '<button class="open-fisa-btn" style="flex:1;min-width:140px" onclick="goModule(\'hangar\',\'sinteza\')"><i class="ti ti-clipboard-list"></i> Acțiuni / Riscuri / Rec.</button>' +
         '</div>' +
       '</div>' +
     '</div>' +
@@ -700,7 +702,7 @@ function renderValidare(proj) {
   html += '<div class="module-badge validare"><i class="ti ti-chart-bar" style="font-size:13px"></i> Validare Bugete</div>';
   html += '<div style="display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap">';
   if (proj === 'hangar') {
-    html += '<button class="open-fisa-btn" style="flex:1;min-width:160px" onclick="window.open(\'https://docs.google.com/spreadsheets/d/1zNxiwjknXO7MuPfCHeiQbNIUUIT10ROH/edit?gid=1691462389#gid=1691462389\',\'_blank\')"><i class="ti ti-table"></i>Fișa de Validare Buget</button>';
+    html += '<button class="open-fisa-btn" style="flex:1;min-width:160px" onclick="window.open(\'https://docs.google.com/spreadsheets/d/1eQLcNgjtbtYQ0aIzG91wQCTphpvynDjmjOV5sAhP-RY/edit?gid=344964466#gid=344964466\',\'_blank\')"><i class="ti ti-table"></i>Fișa de Validare Buget</button>';
     html += '<button class="open-fisa-btn" style="flex:1;min-width:160px" onclick="window.open(\'https://drive.google.com/file/d/1pUQjk1pk7JsXk8cXdLShgpbqSMYh2JFj/view?usp=drive_link\',\'_blank\')"><i class="ti ti-chart-gantt"></i>Gantt de implementare</button>';
     html += '<button class="open-fisa-btn" style="flex:1;min-width:160px" onclick="goModule(\'hangar\',\'analize\')"><i class="ti ti-file-analytics"></i>Analiză pe capitole contract</button>';
     html += '<button class="open-fisa-btn" style="flex:1;min-width:160px" onclick="goModule(\'hangar\',\'sinteza\')"><i class="ti ti-clipboard-list"></i>Acțiuni / Riscuri / Rec.</button>';
@@ -795,6 +797,24 @@ function renderAnalize(proj) {
         date:"Iun 2026",
         buget:"4.033.077 lei",
         desc:"11 oferte: JORISIDE, POLISOL, IBUILDING, KONECRANES, ELMAS, EMI, MBS, MENATWORK, MERCOR, SUNLIGHT, VELUX · OP=2.204.711 lei (51,7% fund.) · Economie vs buget: 212.873 lei"
+      },
+      {
+        cap:"Cap.6 — Rețele Exterioare Sanitare",
+        url:"https://docs.google.com/spreadsheets/d/1DeSzD8lpvk6tkCMxYQ6y5dGr9lUsKReOhPAsTIznUkk/edit?gid=466935211#gid=466935211",
+        status:"warn",
+        label:"Finalizată",
+        date:"Iun 2026",
+        buget:"1.023.749 lei (F3+F4)",
+        desc:"6 ofertanți: Grundfos (GP Hi+He+Pompă Basa), Genmod (rezervor 81mc), Bomar (separator NS80), Profimat (bazin vid.+rigole), ACO, SWU · OP=422.257 lei (41,2% fund.) · GP Agent Spumant (188.832 lei) fără ofertă · Economie: 94.762 lei"
+      },
+      {
+        cap:"Cap.7 — Rețele Electrice Exterioare",
+        url:"PLACEHOLDER_CAP7",
+        status:"risk",
+        label:"În pregătire",
+        date:"Iun 2026",
+        buget:"722.999 lei",
+        desc:"Analiză în curs · Oferte în colectare"
       }
     ]
   };
@@ -802,7 +822,7 @@ function renderAnalize(proj) {
   var list = analyses[proj] || [];
   var p = DATA[proj];
   var html = '';
-  html += '<div class="proj-header"><div class="proj-title">Analiză pe capitole contract</div><div class="proj-meta">' + p.title + ' · ' + list.length + ' analize disponibile · actualizat Iun 2026 · v5 Cap.4 + v4 Cap.3</div></div>';
+  html += '<div class="proj-header"><div class="proj-title">Analiză pe capitole contract</div><div class="proj-meta">' + p.title + ' · ' + list.length + ' analize disponibile · actualizat Iun 2026 · v2 Cap.6 + v5 Cap.4 + v4 Cap.3</div></div>';
   html += '<div class="module-badge" style="background:#EEF2FF;color:#4338CA"><i class="ti ti-file-analytics" style="font-size:13px"></i> Analize Comparative Oferte</div>';
 
   list.forEach(function(a) {
@@ -838,17 +858,17 @@ function renderAnalize(proj) {
 function renderSinteza(proj) {
   var p = DATA[proj];
   var html = '';
-  html += '<div class="proj-header"><div class="proj-title">Acțiuni / Riscuri / Recomandări</div><div class="proj-meta">' + p.title + ' · Cap.1, Cap.2, Cap.3, Cap.4 analizate · actualizat Iun 2026</div></div>';
+  html += '<div class="proj-header"><div class="proj-title">Acțiuni / Riscuri / Recomandări</div><div class="proj-meta">' + p.title + ' · Cap.1, Cap.2, Cap.3, Cap.4, Cap.6 analizate · actualizat Iun 2026</div></div>';
   html += '<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:14px">';
   html += '<div class="module-badge" style="background:#EEF2FF;color:#4338CA;margin-bottom:0"><i class="ti ti-clipboard-list" style="font-size:13px"></i> Riscuri · Recomandări PM · Acțiuni necesare</div>';
-  html += '<a href="https://docs.google.com/spreadsheets/d/1RGhscilN3v3e67GWaq1WfROrGTFEuoD0QmeWHJkRu-Q/edit?gid=2144939836#gid=2144939836" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:7px 14px;background:#1A5276;color:#fff;border-radius:var(--radius);font-size:12px;font-weight:600;text-decoration:none;flex-shrink:0"><i class="ti ti-table" style="font-size:13px"></i> Editează Acțiuni / Riscuri / Recomandări</a>';
+  html += '<a href="https://docs.google.com/spreadsheets/d/1rFXYSuWXCbTFomL0AH0Zia7DUJ074EUnaCw47IsiGGs/edit?gid=802059400#gid=802059400" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:7px 14px;background:#1A5276;color:#fff;border-radius:var(--radius);font-size:12px;font-weight:600;text-decoration:none;flex-shrink:0"><i class="ti ti-table" style="font-size:13px"></i> Editează Acțiuni / Riscuri / Recomandări</a>';
   html += '</div>';
 
   var KPI_S = [
-    {label:"Grad fund. global",val:"29,5%",sub:"5.043.550 lei OP / 17.075.952 lei buget intern"},
-    {label:"Riscuri deschise",val:"14",sub:"4 Critice · 6 Medii · 4 Mici"},
-    {label:"Economie identificată",val:"419.053 lei",sub:"ADN pahare+stalpi 206.180 + Cap.4 vs DO 212.873"},
-    {label:"Nedocumentat (4 cap.)",val:"4.426.830 lei",sub:"Cap.5-13 neanaliz. ~9,77 mil lei extra"}
+    {label:"Grad fund. global",val:"32,3%",sub:"5.519.546 lei OP / 17.075.952 lei buget intern · 5 capitole analizate"},
+    {label:"Riscuri deschise",val:"17",sub:"5 Critice · 8 Medii · 4 Mici"},
+    {label:"Economie identificată",val:"513.815 lei",sub:"Cap.1-4: 419.053 + Cap.6: 94.762 lei (rigole+GP+echip.)"},
+    {label:"Nedocumentat (5 cap.)",val:"4.974.583 lei",sub:"Cap.6 601.492 + Cap.1-4 ramas · Cap.7-13 neanaliz. ~11,56 mil lei extra"}
   ];
   html += '<div class="kpi-grid">';
   KPI_S.forEach(function(k){
@@ -927,6 +947,29 @@ function renderSinteza(proj) {
         {cod:'ACT-4.3',text:'Contractare JORISIDE panouri sandwich acoperis + perete',term:'15 iul',resp:'GSP/IVA'},
         {cod:'ACT-4.4',text:'Confirmare POLISOL pardoseală + KONECRANES pod rulant',term:'31 iul',resp:'GSP/IVA'},
         {cod:'ACT-4.5',text:'Solicitare oferte manoperă montaj tavane GK (MENATWORK = materiale only)',term:'31 iul',resp:'GSP'}
+      ]
+    },
+    {
+      id:'cap6', label:'Cap.6 — Rețele Exterioare Sanitare', buget:'1.023.749 lei (F3+F4)', op:'422.257 lei', grad:'41,2%', gradCls:'warn',
+      riscuri:[
+        {cod:'R-6.1',prio:'Critic',text:'GP Amestec Agent Spumant (188.832 lei = 18,4% buget cap6) — zero oferte cu preț. KSB: fișe tehnice CAD fără preț. Grundfos nu a ofertat acest grup.',term:'15 iul'},
+        {cod:'R-6.2',prio:'Mediu',text:'Separator hidrocarburi NS80: standard material neclarifiat — beton armat (Profimat 48.780 lei) vs polietilenă (Bomar 34.615 lei). Diferență: +14.165 lei dacă se impune beton.',term:'10 iul'},
+        {cod:'R-6.3',prio:'Mediu',text:'Profil rigole neconfirmat: Profimat ofertat Profil II-1 DN30×30; deviz prevede Profil I-1 DN20×30. Prețul de referință nu e valid fără confirmare.',term:'10 iul'},
+        {cod:'R-6.4',prio:'Mic',text:'Cămine canalizare DN800 (SWU): 31.340 lei buget — SWU a trimis configurație tehnică, fără preț unitar.',term:'15 iul'}
+      ],
+      rec:[
+        {cod:'REC-6.1',text:'Grundfos — GP Hidranti interiori Hydro FR CM15-3A: 36.143 lei (vs buget 39.944 lei, −9,5%). Alternativă KSB.'},
+        {cod:'REC-6.2',text:'Grundfos — GP Hidranti exteriori HUNI 2 NB 40-160/172: 66.468 lei (vs buget 73.458 lei, −9,5%). Alternativă KSB.'},
+        {cod:'REC-6.3',text:'Genmod — Rezervor stocare apă 81mc vitrificat: 125.000 lei (vs buget 177.331 lei, −29,5%). Economie: 52.331 lei.'},
+        {cod:'REC-6.4',text:'Bomar — Separator hidrocarburi NS80 polietilenă: 34.615 lei (vs buget 38.256 lei). Cel mai bun preț, sub rezerva confirmării materialului cu proiectantul/beneficiarul.'},
+        {cod:'REC-6.5',text:'Profimat — Bazin vidanjabil Tubus 23 (21mc): 45.500 lei (vs buget 50.286 lei). Rigole 3.866 lei/buc, confirmare profil DN30×30 vs DN20×30.'}
+      ],
+      act:[
+        {cod:'ACT-6.1',text:'Solicitare ofertă preț KSB pentru GP Agent Spumant Q=155 mc/h, H=50mCA, 2×25kW sau alternativă Grundfos SurpressFire / Ebara / Wilo Fire',term:'15 iul',resp:'GSP'},
+        {cod:'ACT-6.2',text:'Clarificare proiectant/beneficiar: standard separator hidrocarburi (beton armat vs polietilenă NS80)',term:'10 iul',resp:'GSP'},
+        {cod:'ACT-6.3',text:'Confirmare proiectant compatibilitate profil rigolă Profimat II-1 DN30×30 vs deviz I-1 DN20×30',term:'10 iul',resp:'GSP'},
+        {cod:'ACT-6.4',text:'Solicitare preț SWU pentru cămine canalizare DN800 (7 buc, Ad=0,9-1,4m)',term:'15 iul',resp:'GSP'},
+        {cod:'ACT-6.5',text:'Confirmare Grundfos: defalcare ofertă per articol deviz (GP poz.1, poz.2, poz.4 separate)',term:'10 iul',resp:'GSP'}
       ]
     }
   ];

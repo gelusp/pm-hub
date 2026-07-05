@@ -260,6 +260,12 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
         <div class="submenu-item" id="item-hangar-validare" onclick="goModule('hangar','validare')">
           <i class="ti ti-chart-bar"></i> Validare Bugete
         </div>
+        <div class="submenu-item" id="item-hangar-erp" onclick="goModule('hangar','erp')">
+          <i class="ti ti-receipt" style="color:#854F0B"></i> Validare Rețete Contract
+        </div>
+        <div class="submenu-item" id="item-hangar-doccontract" onclick="goModule('hangar','doccontract')">
+          <i class="ti ti-files" style="color:#1A5276"></i> Documente Contract
+        </div>
         <div class="submenu-item" id="item-hangar-sinteza" onclick="goModule('hangar','sinteza')">
           <i class="ti ti-clipboard-list"></i> Acțiuni / Riscuri / Rec.
         </div>
@@ -271,9 +277,6 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
         </div>
         <div class="submenu-item" id="item-hangar-powerbi" onclick="goModule('hangar','powerbi')">
           <i class="ti ti-presentation-analytics" style="color:#7B2D8B"></i> Power BI
-        </div>
-        <div class="submenu-item" id="item-hangar-erp" onclick="goModule('hangar','erp')">
-          <i class="ti ti-receipt" style="color:#854F0B"></i> Validare Rețete Contract
         </div>
       </div>
 
@@ -289,6 +292,9 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
       <div class="submenu" id="sub-campus">
         <div class="submenu-item" id="item-campus-validare" onclick="goModule('campus','validare')">
           <i class="ti ti-chart-bar"></i> Validare Bugete
+        </div>
+        <div class="submenu-item" id="item-campus-erp" onclick="goModule('campus','erp')">
+          <i class="ti ti-receipt" style="color:#854F0B"></i> Validare Rețete Contract
         </div>
         <div class="submenu-item" id="item-campus-plan" onclick="openLink('https://docs.google.com/spreadsheets/d/12MRUPuu_AUNogKQolIAumsQpMYBjB15V39vU1QDusUE/edit?gid=803862891#gid=803862891','item-campus-plan')">
           <i class="ti ti-layout-list"></i> Plan Proiect
@@ -307,9 +313,6 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
         </div>
         <div class="submenu-item" id="item-campus-powerbi" onclick="goModule('campus','powerbi')">
           <i class="ti ti-presentation-analytics" style="color:#7B2D8B"></i> Power BI
-        </div>
-        <div class="submenu-item" id="item-campus-erp" onclick="goModule('campus','erp')">
-          <i class="ti ti-receipt" style="color:#854F0B"></i> Validare Rețete Contract
         </div>
       </div>
 
@@ -411,6 +414,7 @@ function goModule(proj, module) {
   else if (module === 'sinteza') renderSinteza(proj);
   else if (module === 'powerbi') renderPowerBI(proj);
   else if (module === 'erp') renderERP(proj);
+  else if (module === 'doccontract') renderDocContract(proj);
   else renderProductie(proj);
 }
 
@@ -540,6 +544,7 @@ function renderProjHome(proj) {
     html += '<button class="open-fisa-btn" style="flex:1;min-width:140px" onclick="goModule(\'hangar\',\'analize\')"><i class="ti ti-file-analytics"></i> Analiză pe capitole contract</button>';
     html += '<button class="open-fisa-btn" style="flex:1;min-width:140px" onclick="goModule(\'hangar\',\'sinteza\')"><i class="ti ti-alert-triangle"></i> Acțiuni / Riscuri / Rec.</button>';
     html += '<button class="open-fisa-btn" style="flex:1;min-width:140px" onclick="goModule(\'hangar\',\'erp\')"><i class="ti ti-receipt"></i> Validare Rețete Contract / ERP</button>';
+    html += '<button class="open-fisa-btn" style="flex:1;min-width:140px" onclick="goModule(\'hangar\',\'doccontract\')"><i class="ti ti-files"></i> Documente Contract</button>';
     html += '</div></div></div>';
     html += '<div class="proj-card">';
     html += '<div class="proj-card-header" style="background:#2C4A6E;border-bottom:1px solid var(--border)">';
@@ -676,6 +681,156 @@ function renderSintezaCOO() {
 
     '<div class="page-footer">PM Hub · EREN CONS SRL · 2026</div>';
 }
+
+function renderDocContract(proj) {
+  var p = DATA[proj] || DATA['hangar'];
+  document.getElementById('main').innerHTML =
+    '<div class="proj-header"><div class="proj-title">Documente Contract</div>' +
+    '<div class="proj-meta">' + p.title + ' \xb7 Contract A997/01.08.2025 \xb7 Clauza 50</div></div>' +
+    '<div class="module-badge" style="background:#D6EAF8;color:#1A5276">' +
+      '<i class="ti ti-files" style="font-size:13px"></i> Documente Contract</div>' +
+
+    // === ORDIN ADMINISTRATIV NR. 2 ===
+    '<div class="nivel-card" style="margin-bottom:16px;border-left:4px solid #1A5276">' +
+      '<div class="nivel-title" style="color:#1A5276"><i class="ti ti-file-certificate"></i>' +
+        ' Ordin Administrativ Nr. 2 — Modalități \xeentocmire Situații de Lucrări' +
+      '</div>' +
+      '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">' +
+        '<span style="font-size:10px;background:#D6EAF8;color:#1A5276;padding:2px 10px;border-radius:99px;font-weight:600">Nr. 45-946 / 25.06.2026</span>' +
+        '<span style="font-size:10px;background:#EAF3DE;color:#3B6D11;padding:2px 10px;border-radius:99px;font-weight:600">Contract A997 / 01.08.2025</span>' +
+        '<span style="font-size:10px;background:#FAEEDA;color:#854F0B;padding:2px 10px;border-radius:99px;font-weight:600">Clauza 50 \xb7 50.1 \xb7 48 \xb7 47 \xb7 50.2</span>' +
+        '<span style="font-size:10px;background:#FDEDEC;color:#C0392B;padding:2px 10px;border-radius:99px;font-weight:600">UM 02311 Constanța</span>' +
+      '</div>' +
+      '<a href="Documente relevante/20260625_N_A5-976_Ordin_Administrativ_nr2_HangarJ-[02311].pdf" target="_blank" ' +
+        'style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:#1A5276;color:#fff;border-radius:6px;' +
+        'font-size:12px;font-weight:600;text-decoration:none;margin-bottom:16px">' +
+        '<i class="ti ti-file-type-pdf"></i> Vizualizează Ordinul Administrativ Nr. 2' +
+      '</a>' +
+
+      // Cerinte principale
+      '<div style="font-size:11px;font-weight:700;color:#2C3E50;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.05em">' +
+        '<i class="ti ti-alert-circle"></i> Cerințe principale (obligatorii)</div>' +
+      '<div style="display:flex;flex-direction:column;gap:6px;margin-bottom:16px">' +
+        '<div style="display:flex;gap:10px;align-items:center;padding:8px 12px;background:#FDEDEC;border-radius:6px;border-left:3px solid #C0392B">' +
+          '<i class="ti ti-copy" style="color:#C0392B;font-size:16px;flex-shrink:0"></i>' +
+          '<div style="font-size:12px;font-weight:600;color:#2C3E50"><strong style="color:#C0392B">4 exemplare</strong> — SL se transmite Supervizorului \xeen 4 exemplare cu adresă de \xeenaintare</div>' +
+        '</div>' +
+        '<div style="display:flex;gap:10px;align-items:center;padding:8px 12px;background:#FDEDEC;border-radius:6px;border-left:3px solid #C0392B">' +
+          '<i class="ti ti-pencil" style="color:#C0392B;font-size:16px;flex-shrink:0"></i>' +
+          '<div style="font-size:12px;font-weight:600;color:#2C3E50"><strong style="color:#C0392B">Semnătură obligatorie</strong> — Reprezentantul Antreprenorului (lipsă = nulă şi fără efect)</div>' +
+        '</div>' +
+        '<div style="display:flex;gap:10px;align-items:center;padding:8px 12px;background:#EBF5FB;border-radius:6px;border-left:3px solid #2E86C1">' +
+          '<i class="ti ti-list-check" style="color:#2E86C1;font-size:16px;flex-shrink:0"></i>' +
+          '<div style="font-size:12px;color:#2C3E50">Conținut SL: toate elementele din <strong>subclauza 50.1 lit. a) — f)</strong></div>' +
+        '</div>' +
+      '</div>' +
+
+      // CHECKLIST documente justificative
+      '<div style="font-size:11px;font-weight:700;color:#2C3E50;margin-bottom:10px;text-transform:uppercase;letter-spacing:0.05em">' +
+        '<i class="ti ti-checklist"></i> Checklist documente justificative obligatorii</div>' +
+
+      // Financiar
+      '<div style="margin-bottom:10px">' +
+        '<div style="font-size:10px;font-weight:700;color:#854F0B;background:#FAEEDA;padding:4px 10px;border-radius:4px;margin-bottom:6px;display:inline-block">FINANCIAR</div>' +
+        '<div style="display:flex;flex-direction:column;gap:4px">' +
+          '<div style="display:flex;gap:8px;align-items:flex-start;font-size:11px;color:#2C3E50;padding:6px 10px;background:#FFFDF7;border:1px solid #FAE5C3;border-radius:4px">' +
+            '<i class="ti ti-square" style="color:#854F0B;flex-shrink:0;margin-top:1px"></i>' +
+            '<div><strong>Anexă ajustare prețuri luna „n”</strong> — cf. Clauza 48. Include indicii INS din Buletinele Statistice de Prețuri (subclauza 48.5)</div>' +
+          '</div>' +
+          '<div style="display:flex;gap:8px;align-items:flex-start;font-size:11px;color:#2C3E50;padding:6px 10px;background:#FFFDF7;border:1px solid #FAE5C3;border-radius:4px">' +
+            '<i class="ti ti-square" style="color:#854F0B;flex-shrink:0;margin-top:1px"></i>' +
+            '<div><strong>Anexă calcul Sume Reținute</strong> — cf. Clauza 47</div>' +
+          '</div>' +
+          '<div style="display:flex;gap:8px;align-items:flex-start;font-size:11px;color:#2C3E50;padding:6px 10px;background:#FFFDF7;border:1px solid #FAE5C3;border-radius:4px">' +
+            '<i class="ti ti-square" style="color:#854F0B;flex-shrink:0;margin-top:1px"></i>' +
+            '<div><strong>Anexă calcul sume Echipamente şi Materiale</strong> — cf. subclauza 50.2</div>' +
+          '</div>' +
+          '<div style="display:flex;gap:8px;align-items:flex-start;font-size:11px;color:#2C3E50;padding:6px 10px;background:#FFFDF7;border:1px solid #FAE5C3;border-radius:4px">' +
+            '<i class="ti ti-square" style="color:#854F0B;flex-shrink:0;margin-top:1px"></i>' +
+            '<div><strong>Anexă calcul sume subcontractare</strong> — procente aferente</div>' +
+          '</div>' +
+          '<div style="display:flex;gap:8px;align-items:flex-start;font-size:11px;color:#2C3E50;padding:6px 10px;background:#FFFDF7;border:1px solid #FAE5C3;border-radius:4px">' +
+            '<i class="ti ti-square" style="color:#854F0B;flex-shrink:0;margin-top:1px"></i>' +
+            '<div><strong>Borderou valoric + situații de plată defalcate</strong> pe antreprenor şi subcontractanți</div>' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+
+      // Tehnic/Cantitativ
+      '<div style="margin-bottom:10px">' +
+        '<div style="font-size:10px;font-weight:700;color:#1A5276;background:#D6EAF8;padding:4px 10px;border-radius:4px;margin-bottom:6px;display:inline-block">TEHNIC / CANTITATIV</div>' +
+        '<div style="display:flex;flex-direction:column;gap:4px">' +
+          '<div style="display:flex;gap:8px;align-items:flex-start;font-size:11px;color:#2C3E50;padding:6px 10px;background:#F0F7FF;border:1px solid #C8DEFA;border-radius:4px">' +
+            '<i class="ti ti-square" style="color:#1A5276;flex-shrink:0;margin-top:1px"></i>' +
+            '<div><strong>Anexă cantități lucrări/servicii luna „n”</strong> — total PT, executate anterior (%), luna n (%), cumulat (%), rest de executat (%), pe categorii</div>' +
+          '</div>' +
+          '<div style="display:flex;gap:8px;align-items:flex-start;font-size:11px;color:#2C3E50;padding:6px 10px;background:#F0F7FF;border:1px solid #C8DEFA;border-radius:4px">' +
+            '<i class="ti ti-square" style="color:#1A5276;flex-shrink:0;margin-top:1px"></i>' +
+            '<div><strong>Măsurătoarea lucrărilor</strong> — cf. Anexă 16 Ord. M.151/2017, toate articolele SL, verificată de diriginții de şantier pe domenii</div>' +
+          '</div>' +
+          '<div style="display:flex;gap:8px;align-items:flex-start;font-size:11px;color:#2C3E50;padding:6px 10px;background:#F0F7FF;border:1px solid #C8DEFA;border-radius:4px">' +
+            '<i class="ti ti-square" style="color:#1A5276;flex-shrink:0;margin-top:1px"></i>' +
+            '<div><strong>Situații de plată</strong> — \xeentocmite pe baza măsurătorilor verificate/certificate de diriginții autorizati pe domenii</div>' +
+          '</div>' +
+          '<div style="display:flex;gap:8px;align-items:flex-start;font-size:11px;color:#2C3E50;padding:6px 10px;background:#F0F7FF;border:1px solid #C8DEFA;border-radius:4px">' +
+            '<i class="ti ti-square" style="color:#1A5276;flex-shrink:0;margin-top:1px"></i>' +
+            '<div><strong>Planuri, profile longitudinale/transversale postexecuție</strong> — din care să reiasă volumele executate</div>' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+
+      // Calitate
+      '<div style="margin-bottom:10px">' +
+        '<div style="font-size:10px;font-weight:700;color:#1E6E2D;background:#EAF3DE;padding:4px 10px;border-radius:4px;margin-bottom:6px;display:inline-block">CALITATE</div>' +
+        '<div style="display:flex;flex-direction:column;gap:4px">' +
+          '<div style="display:flex;gap:8px;align-items:flex-start;font-size:11px;color:#2C3E50;padding:6px 10px;background:#F4FBF4;border:1px solid #C8E6C9;border-radius:4px">' +
+            '<i class="ti ti-square" style="color:#1E6E2D;flex-shrink:0;margin-top:1px"></i>' +
+            '<div><strong>Proces-verbal de recepție provizorie</strong> — cf. Anexele 8 şi 8A din Ord. MApN M.151/2017 (MO 979 bis / 11.12.2017), semnat de toți factorii</div>' +
+          '</div>' +
+          '<div style="display:flex;gap:8px;align-items:flex-start;font-size:11px;color:#2C3E50;padding:6px 10px;background:#F4FBF4;border:1px solid #C8E6C9;border-radius:4px">' +
+            '<i class="ti ti-square" style="color:#1E6E2D;flex-shrink:0;margin-top:1px"></i>' +
+            '<div><strong>Certificate de calitate, PV lucrări ascunse, buletine probe şi \xeencercări</strong> — pentru lucrările din programul de control pe şantier, \xeen copie</div>' +
+          '</div>' +
+          '<div style="display:flex;gap:8px;align-items:flex-start;font-size:11px;color:#2C3E50;padding:6px 10px;background:#F4FBF4;border:1px solid #C8E6C9;border-radius:4px">' +
+            '<i class="ti ti-square" style="color:#1E6E2D;flex-shrink:0;margin-top:1px"></i>' +
+            '<div><strong>Documente calitate materiale/utilaje puse \xeen operă</strong> — \xeen copie</div>' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+
+      // Monitorizare
+      '<div style="margin-bottom:16px">' +
+        '<div style="font-size:10px;font-weight:700;color:#6C3483;background:#F5EEF8;padding:4px 10px;border-radius:4px;margin-bottom:6px;display:inline-block">MONITORIZARE GRAFIC</div>' +
+        '<div style="display:flex;flex-direction:column;gap:4px">' +
+          '<div style="display:flex;gap:8px;align-items:flex-start;font-size:11px;color:#2C3E50;padding:6px 10px;background:#F9F2FC;border:1px solid #D7BDE2;border-radius:4px">' +
+            '<i class="ti ti-square" style="color:#6C3483;flex-shrink:0;margin-top:1px"></i>' +
+            '<div><strong>Situație comparativă</strong> — grafic execuție propus vs. realizări efective (monitorizare Antreprenor)</div>' +
+          '</div>' +
+          '<div style="display:flex;gap:8px;align-items:flex-start;font-size:11px;color:#2C3E50;padding:6px 10px;background:#F9F2FC;border:1px solid #D7BDE2;border-radius:4px">' +
+            '<i class="ti ti-square" style="color:#6C3483;flex-shrink:0;margin-top:1px"></i>' +
+            '<div><strong>Grafic de execuție actualizat</strong> cu realizările efective — cf. Anexă 10 Ord. MApN M.151/2017 (MO 979 bis / 11.12.2017)</div>' +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+
+      '<div style="padding:8px 12px;background:#FDFEFE;border:1px solid var(--border);border-radius:6px;font-size:11px;color:var(--text-secondary)">' +
+        '<i class="ti ti-info-circle" style="color:#2E86C1"></i> ' +
+        '<strong>Bază legală:</strong> Ord. MApN nr. M.151/2017 — MO nr. 979 bis / 11.12.2017 (Anexele 8, 8A, 10, 16)' +
+      '</div>' +
+    '</div>' +
+
+    // Placeholder alte documente
+    '<div class="nivel-card" style="margin-bottom:16px;border-left:4px solid var(--border);opacity:0.7">' +
+      '<div class="nivel-title" style="color:var(--text-secondary)"><i class="ti ti-file-plus"></i> Alte documente contract</div>' +
+      '<div class="coming-soon" style="padding:16px">' +
+        '<i class="ti ti-file-plus" style="font-size:24px;margin-bottom:8px;color:var(--text-tertiary)"></i>' +
+        '<p style="font-size:12px;color:var(--text-secondary)">Adaugă: ordine administrative suplimentare \xb7 acte adiționale \xb7 decizii supervizor \xb7 note de şanțer</p>' +
+      '</div>' +
+    '</div>' +
+
+    '<div class="page-footer">PM Hub \xb7 EREN CONS SRL \xb7 2026</div>';
+}
+
 
 function renderERP(proj) {
   var p = DATA[proj] || DATA['hangar'];
@@ -1027,46 +1182,48 @@ function renderSinteza(proj) {
       ]
     },
     {
-      id:'cap7', label:'Cap.7 — Rețele Electrice Exterioare', buget:'1.007.582 lei (F3+F4)', op:'257.500 lei (F4 KOHLER)', grad:'26%', gradCls:'warn',
+      id:'cap7', label:'Cap.7 — Rețele Electrice Exterioare', buget:'1.007.582 lei (F3+F4)', op:'257.500 lei (F4 KOHLER)', grad:'25,5%', gradCls:'risk',
       riscuri:[
-        {cod:'R-7.1',prio:'Critic',text:'F3 lucrări 100% nedocumentate — zero oferte pentru 722.999 lei (priză pământ, degivrare, cabluri, montaj)',term:'Urgent'},
-        {cod:'R-7.2',prio:'Critic',text:'Cabluri aviație CABL3+4+5 (624.994 lei = 85,6% F3) — prețuri deviz 545-748 lei/m neconfirmate din piață',term:'2 săpt.'},
-        {cod:'R-7.3',prio:'Critic',text:'GPU 400Hz Dynell DSF030 — livrare 20-24 săpt. EXW Austria (5-6 luni!) — dacă nu comandăm acum, nu avem echipament la termen',term:'1 săpt.'},
-        {cod:'R-7.4',prio:'Mare',text:'Grup electrogen — KOHLER D550 fără detalii complete (rezervor, livrare). Un singur ofertant per variantă',term:'1 săpt.'},
-        {cod:'R-7.5',prio:'Mare',text:'GPU 400Hz — un singur ofertant (Dynell via Business Plus) — zero alternative identificate',term:'3 săpt.'}
+        {cod:'R-7.1',prio:'Critic',text:'F3 lucrari electrice 722.999 lei — ZERO oferte comerciale pentru toate subcapitolele',term:'11 iul'},
+        {cod:'R-7.2',prio:'Critic',text:'Cabluri aviatice CABL3+ 633.053 lei — specificatii tehnice fara pret',term:'11 iul'},
+        {cod:'R-7.3',prio:'Critic',text:'GPU 400Hz Dynell DSF030 — livrare 20-24 saptamani EXW Austria. Comanda URGENTA',term:'URGENT'},
+        {cod:'R-7.4',prio:'Mare',text:'Grup electrogen — KOHLER vs CAT, decizie tehnica fara documentare completa'},
+        {cod:'R-7.5',prio:'Mare',text:'GPU 400Hz — un singur ofertant (Dynell/Business Plus), risc putere negociere'},
+        {cod:'R-7.6',prio:'Mediu',text:'Cuple + prize aviatie — valoare incerta, preturi unitare disponibile dar cantitati la proiectare'},
+        {cod:'R-7.7',prio:'Mediu',text:'F4 echipamente fara deviz detaliat — grad fundamentare incomplet'}
       ],
       rec:[
-        {cod:'REC-7.1',text:'KOHLER D550 (550kVA, 257.500 lei) recomandat vs CAT DE500GC (500kVA, 323.000 lei) — mai puternic, cu 65.500 lei mai ieftin'},
-        {cod:'REC-7.2',text:'Dynell DSF030 var.A (400A DC, 186.500 lei) recomandat pentru GPU 400Hz vs var.B (600A, 199.500 lei) — suficient pentru single aircraft operation'},
-        {cod:'REC-7.3',text:'Includere montaj grup electrogen (7.4 = 9.987 lei manoperă) în contractul de furnizare — negociere cu KOHLER la contractare'}
+        {cod:'REC-7.1',text:'Grup electrogen: KOHLER D550 recomandat (257.500 lei vs 323.000 lei CAT) — economie 65.500 lei'},
+        {cod:'REC-7.2',text:'GPU 400Hz: Dynell DSF030 Var.A recomandat (186.500 lei, 30kVA, 400Hz+28VDC/400A)'},
+        {cod:'REC-7.3',text:'Includere montaj grup electrogen in contract KOHLER sau negociere separata'}
       ],
       act:[
-        {cod:'ACT-7.1',text:'Lansare URGENTĂ comandă GPU 400Hz Dynell DSF030 var.A (186.500 lei, avans 50% = 93.250 lei) — livrare 20-24 săpt.!',term:'1 săpt.',resp:'PM/CEO'},
-        {cod:'ACT-7.2',text:'Decizie furnizor grup electrogen: KOHLER D550 vs CAT DE500GC (recomandat KOHLER — economie 65.500 lei)',term:'1 săpt.',resp:'PM/CEO'},
-        {cod:'ACT-7.3',text:'Solicitare min. 3 oferte firme specializate pentru F3 lucrări electrice (722.999 lei total neacoperite)',term:'2 săpt.',resp:'GSP'},
-        {cod:'ACT-7.4',text:'Clarificare cantități cuple + prize aviație cu proiectantul electric (prețuri: 1.400+1.390 EUR/buc, cantități lipsesc)',term:'10 zile',resp:'GSP'},
-        {cod:'ACT-7.5',text:'Solicitare deviz F4 complet Cap.7 la proiectant (GPU 400Hz + cuple fără buget definit)',term:'2 săpt.',resp:'GSP'}
+        {cod:'ACT-7.1',text:'Lansare URGENTA comanda GPU 400Hz Dynell DSF030 — livrare 20-24 saptamani EXW Austria',term:'URGENT',resp:'GSP / Achizitii'},
+        {cod:'ACT-7.2',text:'Decizie furnizor grup electrogen: KOHLER D550 recomandat (economie 65.500 lei)',term:'11 iul',resp:'GSP / Director'},
+        {cod:'ACT-7.3',text:'Solicitare min. 3 oferte pentru F3 lucrari electrice (722.999 lei expusi)',term:'18 iul',resp:'Achizitii'},
+        {cod:'ACT-7.4',text:'Clarificare cantitati cuple + prize aviatie cu proiectantul',term:'18 iul',resp:'GSP'},
+        {cod:'ACT-7.5',text:'Solicitare deviz F4 complet cu detaliere echipamente electrice',term:'11 iul',resp:'GSP'}
       ]
     },
     {
-      id:'cap8', label:'Cap.8 — Instalații Sanitare Interioare', buget:'898.778 lei (F3+F4)', op:'0 lei — ZERO oferte comerciale', grad:'0%', gradCls:'risk',
+      id:'cap8', label:'Cap.8 — Instalații Sanitare Interioare', buget:'898.778 lei (F3+F4)', op:'0 lei', grad:'0%', gradCls:'risk',
       riscuri:[
-        {cod:'R-8.1',prio:'Critic',text:'F3 100% nedocumentat — ZERO oferte comerciale pentru toate 6 subcapitolele (616.244 lei expuși)',term:'Urgent 2 săpt.'},
-        {cod:'R-8.2',prio:'Critic',text:'Rezervor 370mc stocare apă incendiu (Hidroserv 144.500 lei) NEBUGETAT în deviz F4 — item lipsă din deviz!',term:'Urgent 1 săpt.'},
-        {cod:'R-8.3',prio:'Critic',text:'Sistem stingere spumă aeromecanică (8.5) = 378.519 lei (61% F3) — zero oferte, sistem special hangar aeronave',term:'2 săpt.'},
-        {cod:'R-8.4',prio:'Mare',text:'KSB — ofertă spec. tehnice fără preț comercial pentru grupurile de pompare hidranți (100.904 lei F3 + 269.974 lei F4)',term:'1 săpt.'},
-        {cod:'R-8.5',prio:'Mare',text:'F4 echipamente 269.974 lei — zero prețuri confirmate (rezervoare agent spumant + generatoare spumă dublă Dn80)',term:'2 săpt.'}
+        {cod:'R-8.1',prio:'Critic',text:'F3 100% nedocumentat — ZERO oferte comerciale pentru toate subcapitolele instalatii sanitare',term:'11 iul'},
+        {cod:'R-8.2',prio:'Critic',text:'Rezervor 370mc stocare apa incendiu (Hidroserv 144.500 lei) — NEBUGETAT in deviz F4',term:'11 iul'},
+        {cod:'R-8.3',prio:'Critic',text:'Sistem stingere cu spuma aeromecanica (8.5) = 378.519 lei (61% din F3 Cap.8) — zero oferte',term:'11 iul'},
+        {cod:'R-8.4',prio:'Mare',text:'KSB — oferta spec. tehnice fara pret comercial pentru grupurile de pompare hidrant'},
+        {cod:'R-8.5',prio:'Mare',text:'F4 echipamente 269.974 lei — zero preturi confirmate (rezervor+generator spuma)'}
       ],
       rec:[
-        {cod:'REC-8.1',text:'Prioritate ABSOLUTĂ: clarificare rezervor 370mc apă incendiu (Hidroserv 144.500 lei) — nebugetat în deviz F4'},
-        {cod:'REC-8.2',text:'Lansare simultană cereri ofertă pentru toate subcapitolele F3 (nu secvențial) — lot unic sau 3 loturi'},
-        {cod:'REC-8.3',text:'Sistem stingere spumă: implicare proiectant + specialist PSI în evaluarea ofertelor (echipament PSI critic)'}
+        {cod:'REC-8.1',text:'Prioritate ABSOLUTA: clarificare rezervor 370mc apa incendiu (Hidroserv 144.500 lei) — item nebugetat'},
+        {cod:'REC-8.2',text:'Lansare simultana cereri oferta pentru toate subcapitolele F3 (nu secvential) — lot unic sau 3 loturi'},
+        {cod:'REC-8.3',text:'Sistem stingere spuma: implicare proiectant + specialist PSI in evaluarea ofertelor (echipament PSI critic)'}
       ],
       act:[
-        {cod:'ACT-8.1',text:'Clarificare proiectant: unde este bugetat rezervorul 370mc stocare apă incendiu? Include în deviz F4.',term:'11 iul',resp:'GSP + Proiectant'},
-        {cod:'ACT-8.2',text:'Lansare cereri ofertă F3 instalații sanitare interioare — min. 3 ofertanți per lot (sanitare + hidranți + sistem spumă)',term:'18 iul',resp:'GSP / Achiziții'},
-        {cod:'ACT-8.3',text:'Solicitare ofertă comercială cu prețuri de la KSB pentru grupurile de pompare hidranți și amestec spumant',term:'11 iul',resp:'GSP'},
-        {cod:'ACT-8.4',text:'Min. 2 oferte comparative echipamente F4: rezervoare 1mc agent spumant + generatoare spumă dublă Dn80',term:'18 iul',resp:'Achiziții'}
+        {cod:'ACT-8.1',text:'Clarificare proiectant: unde este bugetat rezervorul 370mc stocare apa incendiu? Include in deviz F4.',term:'11 iul',resp:'GSP + Proiectant'},
+        {cod:'ACT-8.2',text:'Lansare cereri oferta F3 instalatii sanitare interioare — min. 3 ofertanti per lot (sanitare + hidranti + sistem spuma)',term:'18 iul',resp:'GSP / Achizitii'},
+        {cod:'ACT-8.3',text:'Solicitare oferta comerciala cu preturi de la KSB pentru grupurile de pompare hidranti si amestec spumant',term:'11 iul',resp:'GSP'},
+        {cod:'ACT-8.4',text:'Min. 2 oferte comparative echipamente F4: rezervoare 1mc agent spumant + generatoare spuma dubla Dn80',term:'18 iul',resp:'Achizitii'}
       ]
     }
   ];
@@ -1076,9 +1233,9 @@ function renderSinteza(proj) {
 
   CAPS.forEach(function(cap){
     html += '<div style="margin-bottom:20px">';
-    // Capitol header
+    html += '<div style="background:#2C3E50;border-radius:8px 8px 0 0;padding:10px 16px;display:flex;align-items:center;justify-content:space-between">';
     html += '<div style="font-size:13px;font-weight:600;color:#fff">' + cap.label + '</div>';
-     html += '<div style="font-size:11px;color:rgba(255,255,255,0.7)">Buget: ' + cap.buget + ' · OP: ' + cap.op + ' · Grad: <strong style="color:' + (cap.gradCls==='risk'?'#FF8080':cap.gradCls==='warn'?'#FFD580':'#80FF99') + '">'+ cap.grad + '</strong></div>';
+    html += '<div style="font-size:11px;color:rgba(255,255,255,0.7)">Buget: ' + cap.buget + ' · OP: ' + cap.op + ' · Grad: <strong style="color:' + (cap.gradCls==='risk'?'#FF8080':cap.gradCls==='warn'?'#FFD580':'#80FF99') + '">' + cap.grad + '</strong></div>';
     html += '</div>';
     if (cap.riscuri && cap.riscuri.length) {
       html += '<div style="padding:0 16px 8px">';

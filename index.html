@@ -453,18 +453,18 @@ var DATA = {
     kpis:[
       {label:"Buget total contract",val:"19,3 mil lei",sub:"Fără TVA · Fără lucrări suplimentare"},
       {label:"Buget intern eDevize",val:"17,1 mil lei",sub:"−11,4% față de contract · Completat Cap.1-13"},
-      {label:"Grad fundamentare (OP)",val:"33,8%",sub:"Cap.1 97,4% · Cap.2 54,4% · Cap.3 48,3% · Cap.4 51,7% · Cap.6 41,2% · Cap.7 F4 90,6% · Cap.8 0% · 7 capitole"},
-      {label:"Valoare nedocumentată",val:"~11,3 mil lei",sub:"Cap.8 0% (898.778 lei) · Cap.7 F3 722.999 · Cap.9-13 neanaliz. ~9,25 mil lei"}
+      {label:"Grad fundamentare (OP+VP+DO)",val:"49,8%",sub:"Cap.1 97,4% · Cap.2 54,4% · Cap.3 48,3% · Cap.4 51,7% · Cap.6 41,2% · Cap.7 26% · Cap.8 0% · Cap.9 28,4% · Cap.10 58,7% ⚠ · Cap.11 75% · Cap.12 0% · Cap.13 0% · Org.Șant. 100% (DO)"},
+      {label:"Valoare nedocumentată",val:"~8,6 mil lei",sub:"Cap.8: 898.778 lei (0%) · Cap.7 F3: 722.999 · Cap.9 F3+F4: 595.419 · Cap.10 F3: 788.116 · Cap.11 F3: 78.381 · Cap.12+13: 10.486"}
     ],
     n1:[
-      {label:"Fundamentare cu oferte din piață (OP)",badge:"warn",text:"33,8%"},
+      {label:"Fundamentare OP+VP (față de eDevize 17,1 mil)",badge:"ok",text:"40,3%"},
       {label:"Buget intern eDevize",badge:"ok",text:"COMPLET — 17,1 mil lei (Cap.1-13)"},
-      {label:"Valoare nedocumentată (fără ofertă)",badge:"warn",text:"13,8 mil lei"},
-      {label:"RISC Cap.5 Org.Șantier",badge:"risk",text:"+120% vs contract — deviz 5.1.3 nou (1,22 mil lei)"}
+      {label:"Valoare nedocumentată (fără ofertă)",badge:"warn",text:"~8,6 mil lei"},
+      {label:"Org.Șantier 1,6 mil lei",badge:"ok",text:"Documentat intern DO — 100%"}
     ],
     bars:[
-      {label:"Oferte din piață (OP)",pct:33.8,cls:"bar-blue"},
-      {label:"Nedocumentat / Estimare proprie DO",pct:66.2,cls:"bar-red"}
+      {label:"Oferte din piață (OP)",pct:49.8,cls:"bar-blue"},
+      {label:"Nedocumentat / Estimare proprie DO",pct:50.2,cls:"bar-red"}
     ],
     n2:[
       {label:"Export ERP încărcat",badge:"risk",text:"LIPSĂ"},
@@ -482,11 +482,12 @@ var DATA = {
       {cap:"6. Rețele ext. sanitare",  buget:"1.023.749 lei", doc:"422.257 lei",  nedoc:"601.492 lei",   pct:41, bar:"#EF9F27", contractat:"—",            status:"warn", statusLabel:"41,2%"},
       {cap:"7. Rețele electrice ext.", buget:"1.007.582 lei (F3+F4)", doc:"257.500 lei (F4)", nedoc:"750.082 lei", pct:26, bar:"#EF9F27", contractat:"—", status:"warn", statusLabel:"26%"},
       {cap:"8. Inst. sanitare int.",   buget:"616.244 lei",   doc:"0 lei",        nedoc:"616.244 lei",   pct:0,  bar:"#E24B4A", contractat:"—",            status:"risk", statusLabel:"0%"},
-      {cap:"9. HVAC",                  buget:"232.787 lei",   doc:"—",           nedoc:"232.787 lei",   pct:0,  bar:"#E24B4A", contractat:"—",            status:"risk", statusLabel:"Lipsă"},
-      {cap:"10. Curenți tari",         buget:"788.116 lei",   doc:"—",           nedoc:"788.116 lei",   pct:0,  bar:"#E24B4A", contractat:"—",            status:"risk", statusLabel:"Lipsă"},
-      {cap:"11. Curenți slabi",        buget:"281.652 lei",   doc:"—",           nedoc:"281.652 lei",   pct:0,  bar:"#E24B4A", contractat:"—",            status:"risk", statusLabel:"Lipsă"},
-      {cap:"4.3 Utilaje",              buget:"2.132.377 lei", doc:"—",           nedoc:"2.132.377 lei", pct:0,  bar:"#E24B4A", contractat:"—",            status:"risk", statusLabel:"Lipsă"},
-      {cap:"5.1 Org. Șantier",         buget:"1.600.888 lei", doc:"—",           nedoc:"1.600.888 lei", pct:0,  bar:"#E24B4A", contractat:"—",            status:"risk", statusLabel:"+120% vs ctrt"}
+      {cap:"9. HVAC (F3+F4)",           buget:"506.915 lei",   doc:"144.283 lei (F4 parțial)", nedoc:"362.632 lei", pct:28, bar:"#EF9F27", contractat:"—", status:"warn", statusLabel:"28,4%"},
+      {cap:"10. Curenți tari (F3+F4)",  buget:"1.270.288 lei", doc:"746.000 lei (F4 Dynell)", nedoc:"788.116 lei (F3)", pct:59, bar:"#EF9F27", contractat:"—", status:"warn", statusLabel:"58,7% ⚠"},
+      {cap:"11. Curenți slabi",        buget:"313.164 lei",   doc:"234.783 lei (Honeywell)", nedoc:"78.381 lei",  pct:75, bar:"#EF9F27", contractat:"—", status:"warn", statusLabel:"75,0%"},
+      {cap:"12. Probe tehnologice",    buget:"10.189 lei",    doc:"0 lei",        nedoc:"10.189 lei",    pct:0,  bar:"#E24B4A", contractat:"—",            status:"risk", statusLabel:"Lipsă"},
+      {cap:"13. Pregătire personal",   buget:"297 lei",       doc:"0 lei",        nedoc:"297 lei",       pct:0,  bar:"#E24B4A", contractat:"—",            status:"risk", statusLabel:"Lipsă"},
+      {cap:"5.1 Org. Șantier",         buget:"1.600.888 lei", doc:"1.600.888 lei (DO)", nedoc:"0 lei",  pct:100, bar:"#639922", contractat:"Documentat intern", status:"ok", statusLabel:"100% (DO)"}
     ],
     docs:[
       {name:"Studiu geotehnic",    sub:"Primit",           status:"ok"},
@@ -497,6 +498,9 @@ var DATA = {
       {name:"Export ERP",          sub:"Lipsă",            status:"risk"}
     ],
     alerts:[
+      {title:"Cap.10 — GPU 400Hz: ofertă +54,7% față de buget (supracost major)", meta:"Cap.10 · Dynell Tip A 746.000 lei vs buget F4 482.171 lei (+263.829 lei) · F3 788.116 lei fără ofertă", date:"15 iul", cls:"risk"},
+      {title:"Cap.11 — CCTV și Control acces nelipsite din deviz", meta:"Cap.11 · Honeywell include CCTV+CtrlAcc={122.000 lei} nebugetate explicit în deviz curent", date:"15 iul", cls:"warn"},
+      {title:"Cap.9 HVAC — Rezervor ingropat 20.000L fără ofertă", meta:"Cap.9 · 101.351 lei (37% din F4) nevalidat · VRF +67% supracost față de buget", date:"15 iul", cls:"risk"},
       {title:"Structură metalică hală URGENT", meta:"Cap.3 · 1.586.706 lei fără ofertă · Cap.3 total 48,3% fund.", date:"10 iul", cls:"risk"},
       {title:"Cap.4 pod rulant + echipamente (F4)", meta:"Cap.4 · 213.790 lei buget F4 — oferte în așteptare", date:"15 iul", cls:"warn"},
       {title:"Cap.6 GP Agent Spumant fără ofertă", meta:"Cap.6 · 188.832 lei (18,4%) — KSB fișe tehnice, zero preț · RISC CRITIC", date:"15 iul", cls:"risk"},
@@ -555,7 +559,7 @@ function renderProjHome(proj) {
     html += '<div class="proj-card-body">';
     html += '<button class="open-fisa-btn" onclick="goModule(\'hangar\',\'validare\')"><i class="ti ti-layout-dashboard"></i> Deschide tabloul de bord</button>';
     html += '<div style="display:flex;gap:8px;flex-wrap:wrap">';
-    html += '<button class="open-fisa-btn" style="flex:1;min-width:140px" onclick="window.open(\'https://docs.google.com/spreadsheets/d/1F64pPcDRBYO8ylB3-AqoWHoCjeM_7AMHOSN85BZHNDA/edit?gid=1978232409#gid=1978232409\',\'_blank\')"><i class="ti ti-table"></i> Fișa Validare Buget</button>';
+    html += '<button class="open-fisa-btn" style="flex:1;min-width:140px" onclick="window.open(\'https://docs.google.com/spreadsheets/d/1ig6CWwlstJfb1j3Rhs1OFkaa262vv_3EBEY8KzKiIrY/edit?gid=480459710#gid=480459710\',\'_blank\')"><i class="ti ti-table"></i> Fișa Validare Buget</button>';
     html += '<button class="open-fisa-btn" style="flex:1;min-width:140px" onclick="window.open(\'https://drive.google.com/file/d/1pUQjk1pk7JsXk8cXdLShgpbqSMYh2JFj/view?usp=drive_link\',\'_blank\')"><i class="ti ti-chart-gantt"></i> Gantt implementare</button>';
     html += '<button class="open-fisa-btn" style="flex:1;min-width:140px" onclick="goModule(\'hangar\',\'analize\')"><i class="ti ti-file-analytics"></i> Analiză pe capitole contract</button>';
     html += '<button class="open-fisa-btn" style="flex:1;min-width:140px" onclick="goModule(\'hangar\',\'sinteza\')"><i class="ti ti-alert-triangle"></i> Acțiuni / Riscuri / Rec.</button>';
@@ -587,13 +591,14 @@ function renderProjHome(proj) {
     html += '<div class="coming-soon" style="padding:20px"><i class="ti ti-presentation-analytics" style="font-size:28px;margin-bottom:8px;color:#7B2D8B"></i><h3 style="font-size:13px">Modul în dezvoltare</h3></div>';
     html += '</div></div>';
     html += '<div class="proj-card">';
-    html += '<div class="proj-card-header" style="background:var(--amber-light);border-bottom:1px solid var(--border)">';
-    html += '<i class="ti ti-receipt" style="font-size:16px;color:var(--amber)"></i>';
-    html += '<span style="font-size:13px;font-weight:600;color:var(--amber)">Validare Rețete Contract / ERP</span>';
+    html += '<div class="proj-card-header" style="background:#EAF2FB;border-bottom:1px solid var(--border)">';
+    html += '<i class="ti ti-file-invoice" style="font-size:16px;color:#1A5276"></i>';
+    html += '<span style="font-size:13px;font-weight:600;color:#1A5276">Situații de Lucrări</span>';
     html += '</div>';
     html += '<div class="proj-card-body">';
-    html += '<button class="open-fisa-btn" onclick="goModule(\'hangar\',\'erp\')"><i class="ti ti-receipt"></i> Deschide modulul ERP</button>';
+    html += '<button class="open-fisa-btn" onclick="goModule(\'hangar\',\'sl1\')"><i class="ti ti-file-invoice"></i> SL1 — Proiectare &amp; Asistență Tehnică</button>';
     html += '</div></div>';
+
   } else {
     html += '<div class="proj-card">';
     html += '<div class="proj-card-header" style="background:var(--blue-light);border-bottom:1px solid var(--border)">';
@@ -883,7 +888,7 @@ function renderHome() {
       '<div class="proj-card-body">' +
         '<button class="open-fisa-btn" onclick="goModule(\'hangar\',\'validare\')"><i class="ti ti-chart-bar"></i> Validare Bugete</button>' +
         '<div style="display:flex;gap:8px;flex-wrap:wrap">' +
-          '<button class="open-fisa-btn" style="flex:1;min-width:140px" onclick="window.open(\'https://docs.google.com/spreadsheets/d/1F64pPcDRBYO8ylB3-AqoWHoCjeM_7AMHOSN85BZHNDA/edit?gid=1978232409#gid=1978232409\',\'_blank\')"><i class="ti ti-table"></i> Fișa Validare Buget</button>' +
+          '<button class="open-fisa-btn" style="flex:1;min-width:140px" onclick="window.open(\'https://docs.google.com/spreadsheets/d/1ig6CWwlstJfb1j3Rhs1OFkaa262vv_3EBEY8KzKiIrY/edit?gid=480459710#gid=480459710\',\'_blank\')"><i class="ti ti-table"></i> Fișa Validare Buget</button>' +
           '<button class="open-fisa-btn" style="flex:1;min-width:140px" onclick="window.open(\'https://drive.google.com/file/d/1pUQjk1pk7JsXk8cXdLShgpbqSMYh2JFj/view?usp=drive_link\',\'_blank\')"><i class="ti ti-chart-gantt"></i> Gantt implementare</button>' +
           '<button class="open-fisa-btn" style="flex:1;min-width:140px" onclick="goModule(\'hangar\',\'analize\')"><i class="ti ti-file-analytics"></i> Analiză pe capitole contract</button>' +
           '<button class="open-fisa-btn" style="flex:1;min-width:140px" onclick="goModule(\'hangar\',\'sinteza\')"><i class="ti ti-clipboard-list"></i> Acțiuni / Riscuri / Rec.</button>' +
@@ -917,7 +922,7 @@ function renderValidare(proj) {
   html += '<div class="module-badge validare"><i class="ti ti-chart-bar" style="font-size:13px"></i> Validare Bugete</div>';
   html += '<div style="display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap">';
   if (proj === 'hangar') {
-    html += '<button class="open-fisa-btn" style="flex:1;min-width:160px" onclick="window.open(\'https://docs.google.com/spreadsheets/d/1F64pPcDRBYO8ylB3-AqoWHoCjeM_7AMHOSN85BZHNDA/edit?gid=1978232409#gid=1978232409\',\'_blank\')"><i class="ti ti-table"></i>Fișa de Validare Buget</button>';
+    html += '<button class="open-fisa-btn" style="flex:1;min-width:160px" onclick="window.open(\'https://docs.google.com/spreadsheets/d/1ig6CWwlstJfb1j3Rhs1OFkaa262vv_3EBEY8KzKiIrY/edit?gid=480459710#gid=480459710\',\'_blank\')"><i class="ti ti-table"></i>Fișa de Validare Buget</button>';
     html += '<button class="open-fisa-btn" style="flex:1;min-width:160px" onclick="window.open(\'https://drive.google.com/file/d/1pUQjk1pk7JsXk8cXdLShgpbqSMYh2JFj/view?usp=drive_link\',\'_blank\')"><i class="ti ti-chart-gantt"></i>Gantt de implementare</button>';
     html += '<button class="open-fisa-btn" style="flex:1;min-width:160px" onclick="goModule(\'hangar\',\'analize\')"><i class="ti ti-file-analytics"></i>Analiză pe capitole contract</button>';
     html += '<button class="open-fisa-btn" style="flex:1;min-width:160px" onclick="goModule(\'hangar\',\'sinteza\')"><i class="ti ti-clipboard-list"></i>Acțiuni / Riscuri / Rec.</button>';
@@ -1083,17 +1088,17 @@ function renderAnalize(proj) {
 function renderSinteza(proj) {
   var p = DATA[proj];
   var html = '';
-  html += '<div class="proj-header"><div class="proj-title">Acțiuni / Riscuri / Recomandări</div><div class="proj-meta">' + p.title + ' · Cap.1, Cap.2, Cap.3, Cap.4, Cap.6, Cap.7, Cap.8 analizate · actualizat Iul 2026</div></div>';
+  html += '<div class="proj-header"><div class="proj-title">Acțiuni / Riscuri / Recomandări</div><div class="proj-meta">' + p.title + ' · Cap.1-4, Cap.6, Cap.7, Cap.8, Cap.9 analizate · actualizat Iul 2026</div></div>';
   html += '<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:14px">';
   html += '<div class="module-badge" style="background:#EEF2FF;color:#4338CA;margin-bottom:0"><i class="ti ti-clipboard-list" style="font-size:13px"></i> Riscuri · Recomandări PM · Acțiuni necesare</div>';
   html += '<a href="https://docs.google.com/spreadsheets/d/17gGVZ97CMPlGobpO9J_b8B5YQ7jYzv9ELV3oeWISL70/edit?gid=1652832364#gid=1652832364" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:7px 14px;background:#1A5276;color:#fff;border-radius:var(--radius);font-size:12px;font-weight:600;text-decoration:none;flex-shrink:0"><i class="ti ti-table" style="font-size:13px"></i> Editează Acțiuni / Riscuri / Recomandări</a>';
   html += '</div>';
 
   var KPI_S = [
-    {label:"Grad fund. global",val:"33,8%",sub:"5.777.046 lei OP / 17.075.952 lei buget intern · 7 capitole analizate"},
-    {label:"Riscuri deschise",val:"32",sub:"11 Critice · 14 Medii/Mari · 7 Mici · +7 Cap.8"},
-    {label:"Economie identificată",val:"579.315 lei",sub:"Cap.1-4: 419.053 + Cap.6: 94.762 + Cap.7: 65.500 lei · Cap.8: 0 lei"},
-    {label:"Nedocumentat (7 cap.)",val:"~11,3 mil lei",sub:"Cap.8: 898.778 lei 0% + F3 Cap.7: 722.999 + Cap.9-13 neanaliz."}
+    {label:"Grad fund. global",val:"49,8%",sub:"8.502.999 lei OP / 17.075.952 lei buget intern · 12 cap. + Org. Șantier"},
+    {label:"Riscuri deschise",val:"47",sub:"14 Critice · 16 Medii/Mari · 8 Mici · +6 Cap.9 · +5 Cap.10 · +4 Cap.11"},
+    {label:"Economie identificată",val:"583.199 lei",sub:"Cap.1-4: 419.053 + Cap.6: 94.762 + Cap.7: 65.500 + Cap.9: 3.884 lei (CAIROX)"},
+    {label:"Nedocumentat",val:"~8,6 mil lei",sub:"Cap.8: 898.778 lei 0% · Cap.9 F3: 232.787 · Cap.10 F3: 788.116 · Cap.11: 78.381 · Cap.12+13: 10.486 · 5.1 Org. Șant. 0 (100% DO)"}
   ];
   html += '<div class="kpi-grid">';
   KPI_S.forEach(function(k){
@@ -1240,6 +1245,69 @@ function renderSinteza(proj) {
         {cod:'ACT-8.2',text:'Lansare cereri oferta F3 instalatii sanitare interioare — min. 3 ofertanti per lot (sanitare + hidranti + sistem spuma)',term:'18 iul',resp:'GSP / Achizitii'},
         {cod:'ACT-8.3',text:'Solicitare oferta comerciala cu preturi de la KSB pentru grupurile de pompare hidranti si amestec spumant',term:'11 iul',resp:'GSP'},
         {cod:'ACT-8.4',text:'Min. 2 oferte comparative echipamente F4: rezervoare 1mc agent spumant + generatoare spuma dubla Dn80',term:'18 iul',resp:'Achizitii'}
+      ]
+    },
+    {
+      id:'cap9', label:'Cap.9 — HVAC', buget:'506.915 lei (F3+F4)', op:'144.283 lei (F4 parțial)', grad:'28,4%', gradCls:'warn',
+      riscuri:[
+        {cod:'R-9.1',prio:'Critic',text:'Rezervor metalic ingropat 20.000L (combustibil) = 101.351 lei (37% din F4) — ZERO ofertă primită',term:'10 iul'},
+        {cod:'R-9.2',prio:'Critic',text:'F3 instalare HVAC 232.787 lei — nicio ofertă de la instalator. Toate ofertele acoperă exclusiv echipamente (F4)',term:'10 iul'},
+        {cod:'R-9.3',prio:'Critic',text:'VRF sistem: ROMSTAL Midea 132.960 lei vs buget F4 79.766 lei (+67% supracost). Buget subevaluat.',term:'15 iul'},
+        {cod:'R-9.4',prio:'Mare',text:'Pompe circulare Wilo: ofertă 23.029 lei vs buget 14.091 lei (+63%). Poz.5 ACM: buget 1.628 lei vs ofertă 7.285 lei (+348%).',term:'15 iul'},
+        {cod:'R-9.5',prio:'Mare',text:'Cazane termice 37.416 lei — ofertă ECOFLAM (boiler LAM 750L) incompatibilă (tip ACM ≠ cazan gaz/motorină)',term:'15 iul'},
+        {cod:'R-9.6',prio:'Mediu',text:'Ventilatoare mici 100+300 mc/h: ROSENBERG +165-235% față de buget (3.702 lei vs buget 1.398 lei)',term:'15 iul'}
+      ],
+      rec:[
+        {cod:'REC-9.1',text:'ROMSTAL Midea VRF complet — 132.960 lei recomandat, sub rezerva confirmării specificațiilor cu proiectantul. Supracost +67% față de buget F4.'},
+        {cod:'REC-9.2',text:'CAIROX: sistem ventilare vopsitorie ATEX 9.875 lei (vs buget 13.759 lei, economie 3.884 lei) + ventilator Ø90 335 lei (vs buget 699 lei)'},
+        {cod:'REC-9.3',text:'ECOFLAM: vase de expansiune 1.113 lei (sub buget 1.383 lei). Pompele Wilo — necesită renegociere sau alternativă.'}
+      ],
+      act:[
+        {cod:'ACT-9.1',text:'Solicitare URGENTĂ 3 oferte rezervor metalic ingropat 20.000L (combustibil motorină) — item 101.351 lei fără fundament',term:'10 iul',resp:'Achiziții'},
+        {cod:'ACT-9.2',text:'Solicitare URGENTĂ ofertă instalator HVAC pentru F3 complet (232.787 lei lucrări montaj)',term:'10 iul',resp:'Achiziții'},
+        {cod:'ACT-9.3',text:'Solicitare ofertă cazan termic gaz/motorină 70kW 2 buc — nu boiler ACM (ECOFLAM ofertă incompatibilă)',term:'10 iul',resp:'Achiziții'},
+        {cod:'ACT-9.4',text:'Analiză alternativă pompe circulare (buget vs Wilo +63%) — clarificare specificații cu proiectantul',term:'15 iul',resp:'PM + Proiectant'},
+        {cod:'ACT-9.5',text:'Confirmare specificații tehnice VRF Midea ROMSTAL cu proiectantul (putere, tip, nr. unități)',term:'15 iul',resp:'PM + Proiectant'}
+      ]
+    },
+    {
+      id:'cap10', label:'Cap.10 — Curenți Tari (Inst. Electrice)', buget:'1.270.288 lei (F3+F4)', op:'746.000 lei (F4 Dynell VP)', grad:'58,7%', gradCls:'warn',
+      riscuri:[
+        {cod:'R-10.1',prio:'Critic',text:'Buget F4 GPU 400Hz subdimensionat: ofertă Dynell Tip A=746.000 lei vs buget 482.171 lei (+54,7% supracost, delta +263.829 lei)',term:'15 iul'},
+        {cod:'R-10.2',prio:'Critic',text:'F3 lucrări electrice 788.116 lei — ZERO oferte de piață (41 articole, 6 subcapitole fără confirmare)',term:'15 iul'},
+        {cod:'R-10.3',prio:'Mare',text:'Corpuri iluminat (10.2): 419.910 lei — 53% din F3, cel mai mare risc. Specificații LED neconfirmate piață.',term:'15 iul'},
+        {cod:'R-10.4',prio:'Mare',text:'Cabluri energie (10.4): 206.858 lei fără ofertă. Prețuri cupru fluctuante — risc deviere.',term:'15 iul'},
+        {cod:'R-10.5',prio:'Mediu',text:'1 singură ofertă GPU (Dynell). Necesită min. 2 oferte comparative pentru decizie de achiziție.',term:'15 iul'}
+      ],
+      rec:[
+        {cod:'REC-10.1',text:'Solicita min. 2 oferte GPU alternative la Dynell (verifică și echipament 50Hz vs 400Hz conform specificație)'},
+        {cod:'REC-10.2',text:'Prioritizează oferte F3 pentru 10.2 Corpuri iluminat (419.910 lei) și 10.4 Cabluri (206.858 lei) — 79% din F3'},
+        {cod:'REC-10.3',text:'Dynell Tip A (37.300 EUR/buc) recomandat condiționat — sub rezerva confirmării specificațiilor și obținere ofertă alternativă'}
+      ],
+      act:[
+        {cod:'ACT-10.1',text:'Solicita URGENT min. 2 oferte alternative GPU 400Hz (verifică Phoenix Contact, Hitzinger, Philips PE)',term:'18 iul',resp:'Achiziții'},
+        {cod:'ACT-10.2',text:'Lansare cerere ofertă F3 lucrări electrice — electrician autorizat ANRE (tablouri + iluminat + cabluri)',term:'18 iul',resp:'Achiziții'},
+        {cod:'ACT-10.3',text:'Clarificare proiectant: specificație GPU — putere, tip curent (400Hz?), nr. prize, autonomie',term:'11 iul',resp:'PM + Proiectant'}
+      ]
+    },
+    {
+      id:'cap11', label:'Cap.11 — Curenți Slabi', buget:'313.164 lei (F3+F4)', op:'234.783 lei (Honeywell)', grad:'75,0%', gradCls:'warn',
+      riscuri:[
+        {cod:'R-11.1',prio:'Critic',text:'CCTV și Control acces: sisteme oferite de Nibaco/Honeywell dar ABSENTE ca subcapitol în deviz — risc omisiune bugetară!',term:'15 iul'},
+        {cod:'R-11.2',prio:'Critic',text:'Centrala trape desfumare (F4 poz.2): 0 lei în deviz — preț nespecificat. Necesită clarificare proiectant.',term:'11 iul'},
+        {cod:'R-11.3',prio:'Mare',text:'Nibaco (+19,7% față de buget): 374.708 lei vs buget 313.164 lei. Honeywell (-25%) mai avantajos.',term:'15 iul'},
+        {cod:'R-11.4',prio:'Mediu',text:'F3 montaj echipamente (11.3): 2.944 lei — verifică dacă montajul rack-urilor și cablajului structurat e inclus complet',term:'15 iul'}
+      ],
+      rec:[
+        {cod:'REC-11.1',text:'Honeywell (234.783 lei) recomandat față de Nibaco (374.708 lei) — diferență 139.925 lei. Verificare tehnică specificații obligatorie.'},
+        {cod:'REC-11.2',text:'Clarificare urgentă: CCTV și Control acces — există buget în alt capitol sau sunt omise? Impactul e estimat la 27.000-60.000 lei.'},
+        {cod:'REC-11.3',text:'Solicitare preț centrala trape desfumare (F4 poz.2 = 0 lei) — posibil inclus în Cap.9 HVAC (verifică cu proiectantul)'}
+      ],
+      act:[
+        {cod:'ACT-11.1',text:'Clarificare proiectant: CCTV și Control acces sunt bugetate în deviz curent sau omise? Identifică capitolul.',term:'11 iul',resp:'PM + Proiectant'},
+        {cod:'ACT-11.2',text:'Clarificare preț centrala trape desfumare (F4 poz.2 = 0 lei)',term:'11 iul',resp:'PM + Proiectant'},
+        {cod:'ACT-11.3',text:'Analiza tehnică comparativă Honeywell vs Nibaco — specificații ECS, detectori, centrale. Decizie achiziție.',term:'18 iul',resp:'PM + Achiziții'},
+        {cod:'ACT-11.4',text:'Solicitare deviz actualizat cu CCTV și Control acces incluse explicit',term:'18 iul',resp:'Proiectant'}
       ]
     }
   ];

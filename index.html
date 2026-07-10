@@ -263,8 +263,14 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
         <div class="submenu-item" id="item-hangar-erp" onclick="goModule('hangar','erp')">
           <i class="ti ti-receipt" style="color:#854F0B"></i> Validare Rețete Contract
         </div>
-        <div class="submenu-item" id="item-hangar-doccontract" onclick="goModule('hangar','doccontract')">
+        <div class="submenu-item" id="item-hangar-doccontract" onclick="toggleSubSub('hangar-doccontract')">
           <i class="ti ti-files" style="color:#1A5276"></i> Documente Contract
+          <i class="ti ti-chevron-down chevron" id="chev-hangar-doccontract" style="font-size:11px"></i>
+        </div>
+        <div class="submenu" id="sub-hangar-doccontract" style="margin-left:14px;border-left:2px solid var(--grey-200)">
+          <div class="submenu-item" id="item-hangar-ordin2" onclick="goModule('hangar','doccontract')">
+            <i class="ti ti-file-certificate" style="color:#1A5276"></i> Ordin Administrativ Nr. 2
+          </div>
         </div>
         <div class="submenu-item" id="item-hangar-sinteza" onclick="goModule('hangar','sinteza')">
           <i class="ti ti-clipboard-list"></i> Acțiuni / Riscuri / Rec.
@@ -277,6 +283,15 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
         </div>
         <div class="submenu-item" id="item-hangar-powerbi" onclick="goModule('hangar','powerbi')">
           <i class="ti ti-presentation-analytics" style="color:#7B2D8B"></i> Power BI
+        </div>
+        <div class="submenu-item" id="item-hangar-sl" onclick="toggleSubSub('hangar-sl')">
+          <i class="ti ti-file-analytics" style="color:#6C3483"></i> Situații de Lucrări
+          <i class="ti ti-chevron-down chevron" id="chev-hangar-sl" style="font-size:11px"></i>
+        </div>
+        <div class="submenu" id="sub-hangar-sl" style="margin-left:14px;border-left:2px solid var(--grey-200)">
+          <div class="submenu-item" id="item-hangar-sl1" onclick="goModule('hangar','sl1')">
+            <i class="ti ti-file-invoice" style="color:#1A5276"></i> SL1 — Proiectare
+          </div>
         </div>
       </div>
 
@@ -415,6 +430,7 @@ function goModule(proj, module) {
   else if (module === 'powerbi') renderPowerBI(proj);
   else if (module === 'erp') renderERP(proj);
   else if (module === 'doccontract') renderDocContract(proj);
+  else if (module === 'sl1') renderSL1(proj);
   else renderProductie(proj);
 }
 
@@ -1263,18 +1279,193 @@ function renderSinteza(proj) {
       html += '<div style="font-size:10px;font-weight:600;color:#1E6E2D;padding:8px 0 4px"><i class="ti ti-checklist" style="font-size:10px"></i> ACȚIUNI NECESARE</div>';
       cap.act.forEach(function(a){
         html += '<div style="display:flex;gap:10px;align-items:flex-start;padding:4px 0;border-bottom:1px solid #C8E6C9">';
-        html += '<div style="flex:1"><span style="font-size:11px;font-weight:600;color:#1E6E2D">' + a.cod + '</span> <span style="font-size:11px;color:var(--text)">' + a.text + '</span></div>';
-        html += '<div style="font-size:10px;color:var(--text-tertiary);white-space:nowrap;flex-shrink:0">' + (a.term||'') + (a.resp?' · '+a.resp:'') + '</div>';
-        html += '</div>';
+        html += '<div style="flex:1"><span style="font-size:11px;font-weight:600;color:#1E6E2D">' + a.cod + '</span> <span style="font-size:11px;color:var(--text)">' + a.text + '</span>';
+        if (a.term) html += '<div style="font-size:10px;color:var(--text-tertiary);margin-top:2px"><i class="ti ti-clock" style="font-size:10px"></i> ' + a.term + (a.resp ? ' · ' + a.resp : '') + '</div>';
+        html += '</div></div>';
       });
       html += '</div>';
     }
     html += '</div>';
   });
   html += '</div>';
-  html += '<div class="page-footer">PM Hub · EREN CONS SRL · 2026</div>';
   document.getElementById('main').innerHTML = html;
 }
+function renderSL1(proj) {
+  var p = DATA[proj] || DATA['hangar'];
+  document.getElementById('main').innerHTML =
+    '<div class="proj-header">' +
+      '<div class="proj-title">Situație de Lucrări Nr. 1 — Proiectare</div>' +
+      '<div class="proj-meta">Contract A-997 / 01.08.2025 \xb7 Hangar Kogălniceanu \xb7 UM 0187</div>' +
+    '</div>' +
+    '<div class="module-badge" style="background:#F5EEF8;color:#6C3483">' +
+      '<i class="ti ti-file-analytics" style="font-size:13px"></i> SL1 — Proiectare &amp; Asistență Tehnică' +
+    '</div>' +
+
+    // ── HEADER INFO + PDF BUTTON ──────────────────────────────────────────
+    '<div class="nivel-card" style="margin-bottom:16px;border-left:4px solid #6C3483">' +
+      '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px">' +
+        '<span style="font-size:10px;background:#F5EEF8;color:#6C3483;padding:2px 10px;border-radius:99px;font-weight:600">SL Nr. 1</span>' +
+        '<span style="font-size:10px;background:#D6EAF8;color:#1A5276;padding:2px 10px;border-radius:99px;font-weight:600">Proiectare</span>' +
+        '<span style="font-size:10px;background:#EAF3DE;color:#1E6E2D;padding:2px 10px;border-radius:99px;font-weight:600">Contract A-997 / 01.08.2025</span>' +
+        '<span style="font-size:10px;background:#FAEEDA;color:#854F0B;padding:2px 10px;border-radius:99px;font-weight:600">Proiectant: TRIPTIC A&amp;E</span>' +
+      '</div>' +
+      '<a href="https://drive.google.com/file/d/1JH3nOMoFT7qtvlf1YzuzhMdjXhxqR8V2/view?usp=sharing" target="_blank" ' +
+        'style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:#6C3483;color:#fff;border-radius:6px;font-size:12px;font-weight:600;text-decoration:none;margin-bottom:16px">' +
+        '<i class="ti ti-file-type-pdf"></i> Vizualizează SL1 PDF' +
+      '</a>' +
+
+      // ── KPI CARDS ─────────────────────────────────────────────────────
+      '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:16px">' +
+
+        '<div style="background:#F5EEF8;border-radius:8px;padding:12px;text-align:center">' +
+          '<div style="font-size:10px;color:#6C3483;font-weight:700;margin-bottom:4px">VALOARE CONTRACT (AA2)</div>' +
+          '<div style="font-size:16px;font-weight:700;color:#2C3E50">19.305.332</div>' +
+          '<div style="font-size:10px;color:var(--text-secondary)">lei fără TVA</div>' +
+        '</div>' +
+
+        '<div style="background:#EAF3DE;border-radius:8px;padding:12px;text-align:center">' +
+          '<div style="font-size:10px;color:#1E6E2D;font-weight:700;margin-bottom:4px">DECONTAT SL1</div>' +
+          '<div style="font-size:16px;font-weight:700;color:#1E6E2D">628.000</div>' +
+          '<div style="font-size:10px;color:var(--text-secondary)">lei fără TVA</div>' +
+        '</div>' +
+
+        '<div style="background:#D6EAF8;border-radius:8px;padding:12px;text-align:center">' +
+          '<div style="font-size:10px;color:#1A5276;font-weight:700;margin-bottom:4px">TVA 21% (SL1)</div>' +
+          '<div style="font-size:16px;font-weight:700;color:#1A5276">131.880</div>' +
+          '<div style="font-size:10px;color:var(--text-secondary)">lei</div>' +
+        '</div>' +
+
+        '<div style="background:#FAEEDA;border-radius:8px;padding:12px;text-align:center">' +
+          '<div style="font-size:10px;color:#854F0B;font-weight:700;margin-bottom:4px">TOTAL CU TVA (SL1)</div>' +
+          '<div style="font-size:16px;font-weight:700;color:#854F0B">759.880</div>' +
+          '<div style="font-size:10px;color:var(--text-secondary)">lei</div>' +
+        '</div>' +
+
+        '<div style="background:#FDEDEC;border-radius:8px;padding:12px;text-align:center">' +
+          '<div style="font-size:10px;color:#C0392B;font-weight:700;margin-bottom:4px">REST DE DECONTAT</div>' +
+          '<div style="font-size:16px;font-weight:700;color:#C0392B">18.677.332</div>' +
+          '<div style="font-size:10px;color:var(--text-secondary)">lei fără TVA</div>' +
+        '</div>' +
+
+        '<div style="background:#F5EEF8;border-radius:8px;padding:12px;text-align:center">' +
+          '<div style="font-size:10px;color:#6C3483;font-weight:700;margin-bottom:4px">PROGRES GLOBAL</div>' +
+          '<div style="font-size:20px;font-weight:700;color:#6C3483">3,25%</div>' +
+          '<div style="font-size:10px;color:var(--text-secondary)">din valoare totală</div>' +
+        '</div>' +
+
+      '</div>' +
+
+      // ── PROGRESS BAR ─────────────────────────────────────────────────
+      '<div style="margin-bottom:16px">' +
+        '<div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text-secondary);margin-bottom:4px">' +
+          '<span>Progres decontare</span><span>3,25%</span>' +
+        '</div>' +
+        '<div style="background:var(--grey-200);border-radius:4px;height:8px">' +
+          '<div style="background:#6C3483;border-radius:4px;height:8px;width:3.25%"></div>' +
+        '</div>' +
+      '</div>' +
+
+      // ── CAPITOL 3 DETALIAT ────────────────────────────────────────────
+      '<div style="font-size:11px;font-weight:700;color:#2C3E50;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.05em">' +
+        '<i class="ti ti-calculator"></i> Cap.3 — Proiectare &amp; Asistență Tehnică (decontat în SL1)' +
+      '</div>' +
+      '<div style="border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-bottom:12px">' +
+
+        // Header tabel
+        '<div style="display:grid;grid-template-columns:2.5fr 1fr 1fr 1fr 0.8fr;gap:4px;background:#2C3E50;padding:6px 10px">' +
+          '<div style="font-size:10px;font-weight:600;color:#fff">Subcapitol</div>' +
+          '<div style="font-size:10px;font-weight:600;color:#fff;text-align:right">Val.act.AA2</div>' +
+          '<div style="font-size:10px;font-weight:600;color:#fff;text-align:right">Decontat SL1</div>' +
+          '<div style="font-size:10px;font-weight:600;color:#fff;text-align:right">Rest</div>' +
+          '<div style="font-size:10px;font-weight:600;color:#fff;text-align:right">Progres</div>' +
+        '</div>' +
+
+        // Row 3.5.4
+        '<div style="display:grid;grid-template-columns:2.5fr 1fr 1fr 1fr 0.8fr;gap:4px;padding:7px 10px;background:#F0F7FF;border-bottom:1px solid var(--border)">' +
+          '<div style="font-size:11px;color:var(--text)"><span style="font-weight:600;color:#1A5276">3.5.4</span> Doc. avize/AC</div>' +
+          '<div style="font-size:11px;text-align:right;color:var(--text)">357.500</div>' +
+          '<div style="font-size:11px;text-align:right;font-weight:600;color:#1E6E2D">312.500</div>' +
+          '<div style="font-size:11px;text-align:right;color:#C0392B">45.000</div>' +
+          '<div style="font-size:11px;text-align:right;font-weight:600;color:#1A5276">87,41%</div>' +
+        '</div>' +
+
+        // Row 3.5.5
+        '<div style="display:grid;grid-template-columns:2.5fr 1fr 1fr 1fr 0.8fr;gap:4px;padding:7px 10px;background:#F4FBF4;border-bottom:1px solid var(--border)">' +
+          '<div style="font-size:11px;color:var(--text)"><span style="font-weight:600;color:#1E6E2D">3.5.5</span> Verificare calitate PT</div>' +
+          '<div style="font-size:11px;text-align:right;color:var(--text)">42.000</div>' +
+          '<div style="font-size:11px;text-align:right;font-weight:600;color:#1E6E2D">42.000</div>' +
+          '<div style="font-size:11px;text-align:right;color:var(--text-secondary)">—</div>' +
+          '<div style="font-size:11px;text-align:right;font-weight:700;color:#1E6E2D">100%</div>' +
+        '</div>' +
+
+        // Row 3.5.6
+        '<div style="display:grid;grid-template-columns:2.5fr 1fr 1fr 1fr 0.8fr;gap:4px;padding:7px 10px;background:#F0F7FF;border-bottom:1px solid var(--border)">' +
+          '<div style="font-size:11px;color:var(--text)"><span style="font-weight:600;color:#1A5276">3.5.6</span> PT + Detalii execuție</div>' +
+          '<div style="font-size:11px;text-align:right;color:var(--text)">297.500</div>' +
+          '<div style="font-size:11px;text-align:right;font-weight:600;color:#1E6E2D">273.500</div>' +
+          '<div style="font-size:11px;text-align:right;color:#C0392B">24.000</div>' +
+          '<div style="font-size:11px;text-align:right;font-weight:600;color:#1A5276">91,93%</div>' +
+        '</div>' +
+
+        // Row 3.8 AT (0%)
+        '<div style="display:grid;grid-template-columns:2.5fr 1fr 1fr 1fr 0.8fr;gap:4px;padding:7px 10px;background:#FFFDF7;border-bottom:1px solid var(--border)">' +
+          '<div style="font-size:11px;color:var(--text)"><span style="font-weight:600;color:#854F0B">3.8</span> Asistență tehnică proiectant</div>' +
+          '<div style="font-size:11px;text-align:right;color:var(--text)">75.000</div>' +
+          '<div style="font-size:11px;text-align:right;color:var(--text-secondary)">—</div>' +
+          '<div style="font-size:11px;text-align:right;color:#C0392B">75.000</div>' +
+          '<div style="font-size:11px;text-align:right;font-weight:600;color:#C0392B">0%</div>' +
+        '</div>' +
+
+        // Row 3.4 (0%)
+        '<div style="display:grid;grid-template-columns:2.5fr 1fr 1fr 1fr 0.8fr;gap:4px;padding:7px 10px;background:#FFFDF7;border-bottom:1px solid var(--border)">' +
+          '<div style="font-size:11px;color:var(--text)"><span style="font-weight:600;color:#854F0B">3.4</span> Certificare energetică</div>' +
+          '<div style="font-size:11px;text-align:right;color:var(--text)">12.000</div>' +
+          '<div style="font-size:11px;text-align:right;color:var(--text-secondary)">—</div>' +
+          '<div style="font-size:11px;text-align:right;color:#C0392B">12.000</div>' +
+          '<div style="font-size:11px;text-align:right;font-weight:600;color:#C0392B">0%</div>' +
+        '</div>' +
+
+        // TOTAL Cap.3
+        '<div style="display:grid;grid-template-columns:2.5fr 1fr 1fr 1fr 0.8fr;gap:4px;padding:8px 10px;background:#2C3E50">' +
+          '<div style="font-size:11px;font-weight:700;color:#fff">TOTAL CAP. 3</div>' +
+          '<div style="font-size:11px;text-align:right;font-weight:600;color:#fff">784.000</div>' +
+          '<div style="font-size:11px;text-align:right;font-weight:700;color:#80FF99">628.000</div>' +
+          '<div style="font-size:11px;text-align:right;font-weight:600;color:#FF8080">156.000</div>' +
+          '<div style="font-size:11px;text-align:right;font-weight:700;color:#FFD580">80,10%</div>' +
+        '</div>' +
+
+      '</div>' +
+
+      // ── CAP.4 + CAP.5 STATUS ─────────────────────────────────────────
+      '<div style="font-size:11px;font-weight:700;color:#2C3E50;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.05em">' +
+        '<i class="ti ti-building"></i> Cap.4 &amp; Cap.5 — Status în SL1' +
+      '</div>' +
+      '<div style="display:flex;flex-direction:column;gap:6px;margin-bottom:16px">' +
+
+        '<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:#FDEDEC;border-radius:6px;border-left:3px solid #C0392B">' +
+          '<div style="font-size:11px;font-weight:600;color:#2C3E50"><i class="ti ti-hammer" style="color:#C0392B"></i> Cap.4 — Investiție de bază (C+I+Utilaje+Dotări)</div>' +
+          '<div style="font-size:13px;font-weight:700;color:#C0392B">0% / 18.041.377 lei</div>' +
+        '</div>' +
+
+        '<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 12px;background:#FDEDEC;border-radius:6px;border-left:3px solid #C0392B">' +
+          '<div style="font-size:11px;font-weight:600;color:#2C3E50"><i class="ti ti-building-community" style="color:#C0392B"></i> Cap.5 — Organizare de șantier</div>' +
+          '<div style="font-size:13px;font-weight:700;color:#C0392B">0% / 479.956 lei</div>' +
+        '</div>' +
+
+      '</div>' +
+
+      // ── NOTE ──────────────────────────────────────────────────────────
+      '<div style="padding:8px 12px;background:#FDFEFE;border:1px solid var(--border);border-radius:6px;font-size:11px;color:var(--text-secondary)">' +
+        '<i class="ti ti-info-circle" style="color:#6C3483"></i> ' +
+        'SL1 include exclusiv Cap.3 — Proiectare. Execuția fizică (Cap.4) și organizarea de șantier (Cap.5) = 0% decontat.' +
+        ' Ajustare prețuri: +43.500 lei prin AA2.' +
+      '</div>' +
+
+    '</div>' +
+    '<div class="page-footer">PM Hub \xb7 EREN CONS SRL \xb7 2026</div>';
+}
+
+
 </script>
 </body>
 </html>

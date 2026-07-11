@@ -293,6 +293,15 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
             <i class="ti ti-file-invoice" style="color:#1A5276"></i> SL1 — Proiectare
           </div>
         </div>
+        <div class="submenu-item" id="item-hangar-analize" onclick="toggleSubSub('hangar-analize')">
+          <i class="ti ti-file-analytics" style="color:#2E7D32"></i> Analize Comparative
+          <i class="ti ti-chevron-down chevron" id="chev-hangar-analize" style="font-size:11px"></i>
+        </div>
+        <div class="submenu" id="sub-hangar-analize" style="margin-left:14px;border-left:2px solid var(--grey-200)">
+          <div class="submenu-item" id="item-hangar-an21" onclick="goModule('hangar','an21')">
+            <i class="ti ti-file-spreadsheet" style="color:#1A5276"></i> 2.1 — Amenajare Platformă
+          </div>
+        </div>
       </div>
 
       <div class="proj-item" id="proj-campus" onclick="toggleSub('campus')">
@@ -431,6 +440,7 @@ function goModule(proj, module) {
   else if (module === 'erp') renderERP(proj);
   else if (module === 'doccontract') renderDocContract(proj);
   else if (module === 'sl1') renderSL1(proj);
+  else if (module === 'an21') renderAn21(proj);
   else renderProductie(proj);
 }
 
@@ -544,110 +554,15 @@ var DATA = {
 
 function renderProjHome(proj) {
   var p = DATA[proj];
-  var isHangar = proj === 'hangar';
   var btn = document.getElementById('back-btn');
   if (btn) { btn.style.display = 'flex'; btn.onclick = function() { goHome(); }; }
   var html = '';
   html += '<div class="proj-header"><div class="proj-title">' + p.title + '</div><div class="proj-meta">' + p.meta + '</div></div>';
-
-  if (isHangar) {
-    html += '<div class="proj-card">';
-    html += '<div class="proj-card-header" style="background:var(--blue-light);border-bottom:1px solid var(--border)">';
-    html += '<i class="ti ti-chart-bar" style="font-size:16px;color:var(--blue)"></i>';
-    html += '<span style="font-size:13px;font-weight:600;color:var(--navy)">Validare Bugete</span>';
-    html += '</div>';
-    html += '<div class="proj-card-body">';
-    html += '<button class="open-fisa-btn" onclick="goModule(\'hangar\',\'validare\')"><i class="ti ti-layout-dashboard"></i> Deschide tabloul de bord</button>';
-    html += '<div style="display:flex;gap:8px;flex-wrap:wrap">';
-    html += '<button class="open-fisa-btn" style="flex:1;min-width:140px" onclick="window.open(\'https://docs.google.com/spreadsheets/d/1ig6CWwlstJfb1j3Rhs1OFkaa262vv_3EBEY8KzKiIrY/edit?gid=480459710#gid=480459710\',\'_blank\')"><i class="ti ti-table"></i> Fișa Validare Buget</button>';
-    html += '<button class="open-fisa-btn" style="flex:1;min-width:140px" onclick="window.open(\'https://drive.google.com/file/d/1pUQjk1pk7JsXk8cXdLShgpbqSMYh2JFj/view?usp=drive_link\',\'_blank\')"><i class="ti ti-chart-gantt"></i> Gantt implementare</button>';
-    html += '<button class="open-fisa-btn" style="flex:1;min-width:140px" onclick="goModule(\'hangar\',\'analize\')"><i class="ti ti-file-analytics"></i> Analiză pe capitole contract</button>';
-    html += '<button class="open-fisa-btn" style="flex:1;min-width:140px" onclick="goModule(\'hangar\',\'sinteza\')"><i class="ti ti-alert-triangle"></i> Acțiuni / Riscuri / Rec.</button>';
-    html += '<button class="open-fisa-btn" style="flex:1;min-width:140px" onclick="goModule(\'hangar\',\'erp\')"><i class="ti ti-receipt"></i> Validare Rețete Contract / ERP</button>';
-    html += '<button class="open-fisa-btn" style="flex:1;min-width:140px" onclick="goModule(\'hangar\',\'doccontract\')"><i class="ti ti-files"></i> Documente Contract</button>';
-    html += '</div></div></div>';
-    html += '<div class="proj-card">';
-    html += '<div class="proj-card-header" style="background:#2C4A6E;border-bottom:1px solid var(--border)">';
-    html += '<i class="ti ti-layout-list" style="font-size:16px;color:#fff"></i>';
-    html += '<span style="font-size:13px;font-weight:600;color:#fff">Plan Proiect</span>';
-    html += '</div>';
-    html += '<div class="proj-card-body">';
-    html += '<button class="open-fisa-btn" onclick="window.open(\'https://docs.google.com/spreadsheets/d/1ZTLxiHNHZSoIqa3BoH7MNvyArLelJpGm/edit?gid=514226828#gid=514226828\',\'_blank\')"><i class="ti ti-layout-list"></i> Deschide planul de proiect</button>';
-    html += '</div></div>';
-    html += '<div class="proj-card">';
-    html += '<div class="proj-card-header" style="background:var(--green-light);border-bottom:1px solid var(--border)">';
-    html += '<i class="ti ti-hammer" style="font-size:16px;color:var(--green)"></i>';
-    html += '<span style="font-size:13px;font-weight:600;color:var(--navy)">Raportări Producție</span>';
-    html += '</div>';
-    html += '<div class="proj-card-body">';
-    html += '<div class="coming-soon" style="padding:20px"><i class="ti ti-hammer" style="font-size:28px;margin-bottom:8px"></i><h3 style="font-size:13px">Modul în dezvoltare</h3></div>';
-    html += '</div></div>';
-    html += '<div class="proj-card">';
-    html += '<div class="proj-card-header" style="background:#F3EEF8;border-bottom:1px solid var(--border)">';
-    html += '<i class="ti ti-presentation-analytics" style="font-size:16px;color:#7B2D8B"></i>';
-    html += '<span style="font-size:13px;font-weight:600;color:#4A1260">Power BI</span>';
-    html += '</div>';
-    html += '<div class="proj-card-body">';
-    html += '<div class="coming-soon" style="padding:20px"><i class="ti ti-presentation-analytics" style="font-size:28px;margin-bottom:8px;color:#7B2D8B"></i><h3 style="font-size:13px">Modul în dezvoltare</h3></div>';
-    html += '</div></div>';
-    html += '<div class="proj-card">';
-    html += '<div class="proj-card-header" style="background:#EAF2FB;border-bottom:1px solid var(--border)">';
-    html += '<i class="ti ti-file-invoice" style="font-size:16px;color:#1A5276"></i>';
-    html += '<span style="font-size:13px;font-weight:600;color:#1A5276">Situații de Lucrări</span>';
-    html += '</div>';
-    html += '<div class="proj-card-body">';
-    html += '<button class="open-fisa-btn" onclick="goModule(\'hangar\',\'sl1\')"><i class="ti ti-file-invoice"></i> SL1 — Proiectare &amp; Asistență Tehnică</button>';
-    html += '</div></div>';
-
-  } else {
-    html += '<div class="proj-card">';
-    html += '<div class="proj-card-header" style="background:var(--blue-light);border-bottom:1px solid var(--border)">';
-    html += '<i class="ti ti-chart-bar" style="font-size:16px;color:var(--blue)"></i>';
-    html += '<span style="font-size:13px;font-weight:600;color:var(--navy)">Validare Bugete</span>';
-    html += '<span style="font-size:9px;background:var(--amber-light);color:var(--amber);border-radius:99px;padding:1px 8px;margin-left:8px;font-weight:500">demonstrativ</span>';
-    html += '</div>';
-    html += '<div class="proj-card-body">';
-    html += '<button class="open-fisa-btn" onclick="goModule(\'campus\',\'validare\')"><i class="ti ti-layout-dashboard"></i> Deschide tabloul de bord</button>';
-    html += '</div></div>';
-    html += '<div class="proj-card">';
-    html += '<div class="proj-card-header" style="background:#2C4A6E;border-bottom:1px solid var(--border)">';
-    html += '<i class="ti ti-layout-list" style="font-size:16px;color:#fff"></i>';
-    html += '<span style="font-size:13px;font-weight:600;color:#fff">Plan Proiect</span>';
-    html += '</div>';
-    html += '<div class="proj-card-body">';
-    html += '<button class="open-fisa-btn" onclick="window.open(\'https://docs.google.com/spreadsheets/d/12MRUPuu_AUNogKQolIAumsQpMYBjB15V39vU1QDusUE/edit?gid=803862891#gid=803862891\',\'_blank\')"><i class="ti ti-layout-list"></i> Deschide planul de proiect</button>';
-    html += '</div></div>';
-    html += '<div class="proj-card">';
-    html += '<div class="proj-card-header" style="background:var(--green-light);border-bottom:1px solid var(--border)">';
-    html += '<i class="ti ti-hammer" style="font-size:16px;color:var(--green)"></i>';
-    html += '<span style="font-size:13px;font-weight:600;color:var(--navy)">Raportări Producție</span>';
-    html += '<span style="font-size:9px;background:var(--green-light);color:var(--green);border-radius:99px;padding:1px 8px;margin-left:8px;font-weight:600;border:1px solid var(--green-mid)">date reale</span>';
-    html += '</div>';
-    html += '<div class="proj-card-body">';
-    html += '<button class="open-fisa-btn" onclick="window.open(\'https://drive.google.com/file/d/1yoPPZ7XhBklfjDqzUdujQnmI5SnhR-r2/view?usp=sharing\',\'_blank\')"><i class="ti ti-file-analytics"></i> Raport producție SL11</button>';
-    html += '<button class="open-fisa-btn" onclick="renderSintezaCOO()"><i class="ti ti-calendar-stats"></i> Raport lunar</button>';
-    html += '</div></div>';
-    html += '<div class="proj-card">';
-    html += '<div class="proj-card-header" style="background:#F3EEF8;border-bottom:1px solid var(--border)">';
-    html += '<i class="ti ti-presentation-analytics" style="font-size:16px;color:#7B2D8B"></i>';
-    html += '<span style="font-size:13px;font-weight:600;color:#4A1260">Power BI</span>';
-    html += '</div>';
-    html += '<div class="proj-card-body">';
-    html += '<div class="coming-soon" style="padding:20px"><i class="ti ti-presentation-analytics" style="font-size:28px;margin-bottom:8px;color:#7B2D8B"></i><h3 style="font-size:13px">Modul în dezvoltare</h3></div>';
-    html += '</div></div>';
-    html += '<div class="proj-card">';
-    html += '<div class="proj-card-header" style="background:var(--amber-light);border-bottom:1px solid var(--border)">';
-    html += '<i class="ti ti-receipt" style="font-size:16px;color:var(--amber)"></i>';
-    html += '<span style="font-size:13px;font-weight:600;color:var(--amber)">Validare Rețete Contract / ERP</span>';
-    html += '</div>';
-    html += '<div class="proj-card-body">';
-    html += '<button class="open-fisa-btn" onclick="goModule(\'campus\',\'erp\')"><i class="ti ti-receipt"></i> Deschide modulul ERP</button>';
-    html += '</div></div>';
-  }
-
+  html += '<div style="padding:10px 14px;background:#EEF2FF;border:1px solid #C7D2FE;border-radius:6px;font-size:12px;color:#3730A3;margin-bottom:12px"><i class="ti ti-info-circle"></i> Navigați din meniul lateral pentru a accesa modulele.</div>';
   html += '<div class="page-footer">PM Hub · EREN CONS SRL · 2026</div>';
   document.getElementById('main').innerHTML = html;
 }
+
 
 function renderSintezaCOO() {
   document.querySelectorAll('.submenu-item').forEach(function(i){ i.classList.remove('active'); });
@@ -885,16 +800,6 @@ function renderHome() {
         '<div><div style="font-size:13px;font-weight:600;color:#fff">Hangar Kogălniceanu</div>' +
         '<div style="font-size:10px;color:rgba(255,255,255,0.6)">În validare · Start: 19.06.2026</div></div>' +
       '</div>' +
-      '<div class="proj-card-body">' +
-        '<button class="open-fisa-btn" onclick="goModule(\'hangar\',\'validare\')"><i class="ti ti-chart-bar"></i> Validare Bugete</button>' +
-        '<div style="display:flex;gap:8px;flex-wrap:wrap">' +
-          '<button class="open-fisa-btn" style="flex:1;min-width:140px" onclick="window.open(\'https://docs.google.com/spreadsheets/d/1ig6CWwlstJfb1j3Rhs1OFkaa262vv_3EBEY8KzKiIrY/edit?gid=480459710#gid=480459710\',\'_blank\')"><i class="ti ti-table"></i> Fișa Validare Buget</button>' +
-          '<button class="open-fisa-btn" style="flex:1;min-width:140px" onclick="window.open(\'https://drive.google.com/file/d/1pUQjk1pk7JsXk8cXdLShgpbqSMYh2JFj/view?usp=drive_link\',\'_blank\')"><i class="ti ti-chart-gantt"></i> Gantt implementare</button>' +
-          '<button class="open-fisa-btn" style="flex:1;min-width:140px" onclick="goModule(\'hangar\',\'analize\')"><i class="ti ti-file-analytics"></i> Analiză pe capitole contract</button>' +
-          '<button class="open-fisa-btn" style="flex:1;min-width:140px" onclick="goModule(\'hangar\',\'sinteza\')"><i class="ti ti-clipboard-list"></i> Acțiuni / Riscuri / Rec.</button>' +
-          '<button class="open-fisa-btn" style="flex:1;min-width:140px" onclick="goModule(\'hangar\',\'erp\')"><i class="ti ti-receipt"></i> Validare Rețete Contract / ERP</button>' +
-        '</div>' +
-      '</div>' +
     '</div>' +
 
     '<div class="proj-card">' +
@@ -904,25 +809,19 @@ function renderHome() {
         '<div style="font-size:10px;color:rgba(255,255,255,0.6)">În execuție · Corp C1</div></div>' +
         '<span style="font-size:9px;background:rgba(255,255,255,0.2);color:#fff;border-radius:99px;padding:2px 8px;font-weight:500">parțial real</span>' +
       '</div>' +
-      '<div class="proj-card-body">' +
-        '<button class="open-fisa-btn" onclick="goModule(\'campus\',\'validare\');toggleSub(\'campus\')"><i class="ti ti-chart-bar"></i> Validare Bugete <span style="font-size:10px;color:var(--text-tertiary);margin-left:4px">demonstrativ</span></button>' +
-        '<button class="open-fisa-btn" onclick="window.open(\'https://drive.google.com/file/d/1yoPPZ7XhBklfjDqzUdujQnmI5SnhR-r2/view?usp=sharing\',\'_blank\')"><i class="ti ti-file-analytics"></i> Raport producție SL11 <span style="font-size:10px;background:var(--green-light);color:var(--green);border-radius:99px;padding:1px 6px;margin-left:4px;font-weight:600">date reale</span></button>' +
-        '<button class="open-fisa-btn" onclick="renderSintezaCOO()"><i class="ti ti-calendar-stats"></i> Raport lunar</button>' +
-        '<button class="open-fisa-btn" onclick="goModule(\'campus\',\'erp\')"><i class="ti ti-receipt"></i> Validare Rețete Contract / ERP</button>' +
-      '</div>' +
     '</div>' +
 
     '<div class="page-footer">PM Hub · EREN CONS SRL · 2026</div>';
 }
-
 function renderValidare(proj) {
   var p = DATA[proj];
+
   var html = '';
   html += '<div class="proj-header"><div class="proj-title">' + p.title + '</div><div class="proj-meta">' + p.meta + '</div></div>';
   html += '<div class="module-badge validare"><i class="ti ti-chart-bar" style="font-size:13px"></i> Validare Bugete</div>';
   html += '<div style="display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap">';
   if (proj === 'hangar') {
-    html += '<button class="open-fisa-btn" style="flex:1;min-width:160px" onclick="window.open(\'https://docs.google.com/spreadsheets/d/1ig6CWwlstJfb1j3Rhs1OFkaa262vv_3EBEY8KzKiIrY/edit?gid=480459710#gid=480459710\',\'_blank\')"><i class="ti ti-table"></i>Fișa de Validare Buget</button>';
+    html += '<button class="open-fisa-btn" style="flex:1;min-width:160px" onclick="window.open(\'https://docs.google.com/spreadsheets/d/13o-En0T5ifVOCYI0dl4fAm3U6u2AmJ_HKsUn-72e_Ic/edit?gid=1390250028#gid=1390250028\',\'_blank\')"><i class="ti ti-table"></i>Fișa de Validare Buget</button>';
     html += '<button class="open-fisa-btn" style="flex:1;min-width:160px" onclick="window.open(\'https://drive.google.com/file/d/1pUQjk1pk7JsXk8cXdLShgpbqSMYh2JFj/view?usp=drive_link\',\'_blank\')"><i class="ti ti-chart-gantt"></i>Gantt de implementare</button>';
     html += '<button class="open-fisa-btn" style="flex:1;min-width:160px" onclick="goModule(\'hangar\',\'analize\')"><i class="ti ti-file-analytics"></i>Analiză pe capitole contract</button>';
     html += '<button class="open-fisa-btn" style="flex:1;min-width:160px" onclick="goModule(\'hangar\',\'sinteza\')"><i class="ti ti-clipboard-list"></i>Acțiuni / Riscuri / Rec.</button>';
@@ -994,7 +893,7 @@ function renderAnalize(proj) {
       },
       {
         cap:"Cap.2 — Amenajare Platformă",
-        url:"https://docs.google.com/spreadsheets/d/1nReO_wKqFKi70VWo0YZDs68MVukERYWS/edit?gid=1301857850#gid=1301857850",
+        url:"https://docs.google.com/spreadsheets/d/1y18ESQRyIeKBEO2tY57mqHtNZsQqZqtMhXyPMUL7ylw/edit?usp=drive_link",
         status:"ok",
         label:"Finalizată",
         date:"Iun 2026",
@@ -1045,6 +944,51 @@ function renderAnalize(proj) {
         date:"Iul 2026",
         buget:"898.778 lei (F3: 616.244 + F4: 282.534)",
         desc:"ZERO oferte comerciale — F3 100% nedocumentat · KSB spec. tehnice fără preț (pompe hidranți) · Hidroserv rezervor 370mc NEBUGETAT în deviz (144.500 lei) · Sistem stingere spumă (61% din F3 = 378.519 lei) — RISC CRITIC · 3 riscuri CRITICE + 2 MARI + 2 MEDII/MICI"
+      },
+      {
+        cap:"Cap.9 — HVAC (Instalații Termice + Ventilație)",
+        url:"https://docs.google.com/spreadsheets/d/13aUDoKJGD906hFgVgde8CiJ6ZapA83uriBgxGfbN50E/edit?usp=sharing",
+        status:"warn",
+        label:"Finalizată (parțial) — 28,4%",
+        date:"Iul 2026",
+        buget:"506.915 lei (F3+F4)",
+        desc:"F4 echipamente: Ecoflam 144.283 lei (REC.) · F3 instalare: 232.787 lei fără ofertă · Rezervor îngrropat 20.000L = 101.351 lei ZERO ofertă · VRF Midea ROMSTAL +67% vs buget F4 · Grad F4: 46,3% · 6 riscuri (3 CRITICE)"
+      },
+      {
+        cap:"Cap.10 — Curenți Tari (Instalații Electrice)",
+        url:"https://docs.google.com/spreadsheets/d/1DJptWgBPYo0RX5rhCG2__8dbkkesqAuy04GJo17mDRE/edit?usp=sharing",
+        status:"warn",
+        label:"Finalizată (parțial) — 58,7%",
+        date:"Iul 2026",
+        buget:"1.270.288 lei (F3+F4)",
+        desc:"F4 echipamente: Dynell DSF030 GPU 400Hz = 746.000 lei VP (4 buc × 186.500 lei) · +54,7% vs buget F4 (282.171 lei) — supracost 263.829 lei · F3 lucrări electrice: 788.116 lei fără ofertă · Grad F4: 100% VP · 5 riscuri (2 CRITICE)"
+      },
+      {
+        cap:"Cap.11 — Curenți Slabi (Fire detection, CCTV, Control acces)",
+        url:"https://docs.google.com/spreadsheets/d/1MKGKGXo2ocT6tN689weByqTQDCerubuTtsiUF13P4OQ/edit?gid=1185107595#gid=1185107595",
+        status:"warn",
+        label:"Finalizată (parțial) — 75,0%",
+        date:"Iul 2026",
+        buget:"313.164 lei (F3+F4)",
+        desc:"VP Honeywell: 234.783 lei (−25% vs Nibaco) · CCTV + Control Acces absente din deviz (~122.000 lei nebugetate) — RISC CRITIC · Centrala trape desfumare F4: 0 lei — clarificare proiectant · F3 lucrări: 78.381 lei fără ofertă · 4 riscuri"
+      },
+      {
+        cap:"Cap.12 — Probe Tehnologice și Verificări",
+        url:"https://docs.google.com/spreadsheets/d/1wyyn8bfRIedQ469TXOTO2gbJAHzUbgT3kbqdCU-VNFQ/edit?usp=sharing",
+        status:"risk",
+        label:"Finalizată — 0% documentat",
+        date:"Iul 2026",
+        buget:"10.189 lei (F3)",
+        desc:"F3: 8 articole probe PRAM, ISCIR, verificări — 10.188,86 lei total · F4: 0 lei · Zero oferte comerciale · Valoare mică — clarificare necesară cu proiectantul dacă sunt incluse în ofertele subcontractorilor"
+      },
+      {
+        cap:"Cap.13 — Pregătire Personal Exploatare",
+        url:"https://docs.google.com/spreadsheets/d/1TGvQaUJkHTTWsyNoi1MPESqzZZsGMVXYjjh3yIBVRkk/edit?usp=sharing",
+        status:"risk",
+        label:"Finalizată — 0% documentat",
+        date:"Iul 2026",
+        buget:"297 lei (F3)",
+        desc:"F3: 1 articol — instruire personal 296,63 lei · F4: 0 lei · Zero oferte comerciale · Valoare neglijabilă — de inclus în contractul subcontractorului de exploatare/service"
       }
     ]
   };
@@ -1052,7 +996,7 @@ function renderAnalize(proj) {
   var list = analyses[proj] || [];
   var p = DATA[proj];
   var html = '';
-  html += '<div class="proj-header"><div class="proj-title">Analiză pe capitole contract</div><div class="proj-meta">' + p.title + ' · ' + list.length + ' analize disponibile · actualizat Iul 2026 · v1 Cap.8 + v1 Cap.7 + v2 Cap.6 + v5 Cap.4 + v4 Cap.3</div></div>';
+  html += '<div class="proj-header"><div class="proj-title">Analiză pe capitole contract</div><div class="proj-meta">' + p.title + ' · ' + list.length + ' analize disponibile · actualizat Iul 2026 · v2 Cap.10 + v3 Cap.11 + v1 Cap.12 + v1 Cap.13 + v2 Cap.9 + v1 Cap.8 + v1 Cap.7 + v2 Cap.6 + v5 Cap.4 + v4 Cap.3</div></div>';
   html += '<div class="module-badge" style="background:#EEF2FF;color:#4338CA"><i class="ti ti-file-analytics" style="font-size:13px"></i> Analize Comparative Oferte</div>';
 
   list.forEach(function(a) {
@@ -1091,7 +1035,7 @@ function renderSinteza(proj) {
   html += '<div class="proj-header"><div class="proj-title">Acțiuni / Riscuri / Recomandări</div><div class="proj-meta">' + p.title + ' · Cap.1-4, Cap.6, Cap.7, Cap.8, Cap.9 analizate · actualizat Iul 2026</div></div>';
   html += '<div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:14px">';
   html += '<div class="module-badge" style="background:#EEF2FF;color:#4338CA;margin-bottom:0"><i class="ti ti-clipboard-list" style="font-size:13px"></i> Riscuri · Recomandări PM · Acțiuni necesare</div>';
-  html += '<a href="https://docs.google.com/spreadsheets/d/17gGVZ97CMPlGobpO9J_b8B5YQ7jYzv9ELV3oeWISL70/edit?gid=1652832364#gid=1652832364" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:7px 14px;background:#1A5276;color:#fff;border-radius:var(--radius);font-size:12px;font-weight:600;text-decoration:none;flex-shrink:0"><i class="ti ti-table" style="font-size:13px"></i> Editează Acțiuni / Riscuri / Recomandări</a>';
+  html += '<a href="https://docs.google.com/spreadsheets/d/1p-irJRHulwtRjgMCPfOwrKmBT6A0aWADz3JSl7_DqH4/edit?usp=sharing" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:7px 14px;background:#1A5276;color:#fff;border-radius:var(--radius);font-size:12px;font-weight:600;text-decoration:none;flex-shrink:0"><i class="ti ti-table" style="font-size:13px"></i> Editează Acțiuni / Riscuri / Recomandări</a>';
   html += '</div>';
 
   var KPI_S = [
@@ -1308,6 +1252,30 @@ function renderSinteza(proj) {
         {cod:'ACT-11.2',text:'Clarificare preț centrala trape desfumare (F4 poz.2 = 0 lei)',term:'11 iul',resp:'PM + Proiectant'},
         {cod:'ACT-11.3',text:'Analiza tehnică comparativă Honeywell vs Nibaco — specificații ECS, detectori, centrale. Decizie achiziție.',term:'18 iul',resp:'PM + Achiziții'},
         {cod:'ACT-11.4',text:'Solicitare deviz actualizat cu CCTV și Control acces incluse explicit',term:'18 iul',resp:'Proiectant'}
+      ]
+    },
+    {
+      id:'cap12', label:'Cap.12 — Probe Tehnologice și Verificări', buget:'10.189 lei (F3)', op:'0 lei', grad:'0%', gradCls:'risk',
+      riscuri:[
+        {cod:'R-12.1',prio:'Mediu',text:'10.189 lei probe PRAM + ISCIR + verificări — zero oferte. Neclarificat dacă sunt incluse în ofertele subcontractorilor.',term:'20 iul'}
+      ],
+      rec:[
+        {cod:'REC-12.1',text:'Verificare cu fiecare subcontractor dacă probele din Cap.12 sunt incluse în ofertele lor. Dacă nu — lansare cerere ofertă separată.'}
+      ],
+      act:[
+        {cod:'ACT-12.1',text:'Clarificare proiectant: lista probe Cap.12 — cine le execută și cine le bugetează.',term:'20 iul',resp:'PM Gelu + Proiectant'}
+      ]
+    },
+    {
+      id:'cap13', label:'Cap.13 — Pregătire Personal Exploatare', buget:'297 lei (F3)', op:'0 lei', grad:'0%', gradCls:'risk',
+      riscuri:[
+        {cod:'R-13.1',prio:'Mic',text:'296,63 lei instruire personal exploatare — valoare neglijabilă, fără ofertă. De clarificat dacă e inclusă în contractul service.',term:'30 iul'}
+      ],
+      rec:[
+        {cod:'REC-13.1',text:'Includere instruire personal în contractul subcontractorului de service/exploatare — valoare mică, nu necesită achiziție separată.'}
+      ],
+      act:[
+        {cod:'ACT-13.1',text:'Includere clauză instruire personal în contractul de service/exploatare al instalației.',term:'30 iul',resp:'PM Gelu'}
       ]
     }
   ];
@@ -1533,6 +1501,67 @@ function renderSL1(proj) {
     '<div class="page-footer">PM Hub \xb7 EREN CONS SRL \xb7 2026</div>';
 }
 
+
+
+function renderAn21(proj) {
+  var html = '';
+  html += '<div class="proj-header"><div class="proj-title">Analiză Comparativă — 2.1 Amenajare Platformă Exterioară</div><div class="proj-meta">eDevize F3 vs Ofertă Mithras MTH-B 525 · 11.07.2026 · Curs 5,2337 lei/EUR</div></div>';
+  html += '<div class="module-badge" style="background:#EEF2FF;color:#4338CA"><i class="ti ti-file-analytics" style="font-size:13px"></i> Analiză Comparativă Oferte Piață</div>';
+  html += '<div style="margin-bottom:12px"><a href="https://docs.google.com/spreadsheets/d/1liwRVVXSqLkHmHzW1Rjqi59G8mHzTJhv2YrIXLH4-A8/edit?usp=sharing" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 18px;background:#1A5276;color:#fff;border-radius:var(--radius);font-size:12px;font-weight:600;text-decoration:none"><i class="ti ti-table"></i> Deschide analiza comparativă</a></div>';
+  // KPIs
+  html += '<div class="kpi-grid" style="margin-bottom:14px">';
+  html += '<div class="kpi"><div class="kpi-label">Buget eDevize (total)</div><div class="kpi-val">1.267.781 lei</div><div class="kpi-sub">21 articole · F3 listă cant.</div></div>';
+  html += '<div class="kpi"><div class="kpi-label">Ofertă Mithras (total)</div><div class="kpi-val" style="color:#C0392B">2.143.535 lei</div><div class="kpi-sub">409.563 EUR × 5,2337</div></div>';
+  html += '<div class="kpi"><div class="kpi-label">Depăşire totală</div><div class="kpi-val" style="color:#C0392B">+875.754 lei</div><div class="kpi-sub">+69,1% față de buget</div></div>';
+  html += '<div class="kpi"><div class="kpi-label">Transport lipsă Mithras</div><div class="kpi-val" style="color:#856404">121.473 lei</div><div class="kpi-sub">Art.7+9+13 absente din ofertă</div></div>';
+  html += '</div>';
+  // Tabel articole critice
+  html += '<div class="proj-card" style="margin-bottom:12px">';
+  html += '<div class="proj-card-header" style="background:#7B1818"><span style="font-size:13px;font-weight:600;color:#fff">Articole cu abateri semnificative</span></div>';
+  html += '<div class="proj-card-body" style="padding:0;overflow-x:auto">';
+  html += '<table style="width:100%;border-collapse:collapse;font-size:11px">';
+  html += '<tr style="background:#2E5090;color:#fff"><th style="padding:7px 10px;text-align:left">Articol</th><th style="padding:7px 8px;text-align:right;white-space:nowrap">Buget (lei)</th><th style="padding:7px 8px;text-align:right;white-space:nowrap">Mithras (lei)</th><th style="padding:7px 8px;text-align:right">Abatere</th><th style="padding:7px 8px;text-align:left">Observații</th></tr>';
+  var rows = [
+    {art:"Art.12 Dală BCR 5.0 t=30cm",b:"576.152",m:"1.445.365",ab:"+869.213",pct:"+150,9%",bg:"#FCE4D6",obs:"⚠ CRITIC · Mithras incl. gujoane+rosturi+emulsie"},
+    {art:"Art.6 Piatră spartă 40cm",b:"120.548",m:"269.991",ab:"+149.443",pct:"+124,0%",bg:"#FCE4D6",obs:"⚠ Preț unitar 2× mai mare"},
+    {art:"Art.8 Balast 20cm",b:"86.377",m:"134.375",ab:"+47.998",pct:"+55,6%",bg:"#FFEB9C",obs:"Depăşire semnificativă"},
+    {art:"Art.10 Stabilizare balast",b:"74.799",m:"80.115",ab:"+5.316",pct:"+7,1%",bg:"#F5F5F5",obs:"Diferență minoră"},
+    {art:"Art.7 Transport piatră spartă",b:"35.654",m:"—",ab:"LIPSĂ",pct:"—",bg:"#FFF8E1",obs:"Absent din oferta Mithras"},
+    {art:"Art.9 Transport balast",b:"46.847",m:"—",ab:"LIPSĂ",pct:"—",bg:"#FFF8E1",obs:"Absent din oferta Mithras"},
+    {art:"Art.13 Transport beton rutier",b:"38.972",m:"—",ab:"LIPSĂ",pct:"—",bg:"#FFF8E1",obs:"Absent · posibil inclus în BCR"},
+    {art:"Art.20-21 Marcaje",b:"27.492",m:"2.809",ab:"-24.683",pct:"-46,5%",bg:"#E2EFDA",obs:"Vopsea monocomponentă · favorabil"},
+  ];
+  rows.forEach(function(r){
+    var abcolor = r.ab.charAt(0)==="-"?"#1E6E2D":(r.ab==="LIPSĂ"?"#856404":"#C0392B");
+    html += '<tr style="background:'+r.bg+'">';
+    html += '<td style="padding:6px 10px;border-bottom:1px solid #eee;font-weight:500">'+r.art+'</td>';
+    html += '<td style="padding:6px 8px;border-bottom:1px solid #eee;text-align:right">'+r.b+'</td>';
+    html += '<td style="padding:6px 8px;border-bottom:1px solid #eee;text-align:right;color:'+( r.m==="—"?"#888":"inherit")+'">'+r.m+'</td>';
+    html += '<td style="padding:6px 8px;border-bottom:1px solid #eee;text-align:right;font-weight:700;color:'+abcolor+'">'+r.ab+' <span style="font-size:10px;font-weight:400">'+r.pct+'</span></td>';
+    html += '<td style="padding:6px 8px;border-bottom:1px solid #eee;font-size:10px;color:#444">'+r.obs+'</td>';
+    html += '</tr>';
+  });
+  html += '</table></div></div>';
+  // Concluzii M/Man/U/T
+  html += '<div class="proj-card" style="margin-bottom:12px">';
+  html += '<div class="proj-card-header" style="background:#2C4A6E"><span style="font-size:13px;font-weight:600;color:#fff">Concluzii structurale — Material / Manoperă / Utilaj / Transport</span></div>';
+  html += '<div class="proj-card-body" style="display:flex;flex-direction:column;gap:6px">';
+  var concluzii = [
+    {tag:"MATERIAL",bg:"#FFF3CD",tc:"#856404",txt:"Mithras 1.079.610 lei vs buget 736.815 lei (+46,5%). Principală diferență: BCR 5.0 +38,6% şi piatră spartă +124%."},
+    {tag:"MANOPERĂ",bg:"#FCE4D6",tc:"#C0392B",txt:"Mithras 1.063.925 lei vs buget 123.757 lei (+760%). Mithras include în manoperă finisorul de beton, utilajele, gujoarelor+rosturilor. Bugetul F3 are utilaj=0 la Art.12 — lacună în deviz."},
+    {tag:"UTILAJ",bg:"#E8F5E9",tc:"#1E6E2D",txt:"Buget F3: 191.344 lei (inclus în terasamente+straturi). Mithras: 0 lei separat — absorbit în manoperă."},
+    {tag:"TRANSPORT",bg:"#FFF8E1",tc:"#856404",txt:"Buget F3: 215.889 lei. Mithras: 0 lei (Art.7, 9, 13 absente). Comparație incompletă — costul real Mithras este mai mare decât apare în ofertă."},
+  ];
+  concluzii.forEach(function(c){
+    html += '<div style="background:'+c.bg+';border-radius:6px;padding:8px 12px;font-size:12px;display:flex;gap:10px;align-items:flex-start">';
+    html += '<span style="font-weight:700;color:'+c.tc+';white-space:nowrap;min-width:80px">'+c.tag+'</span>';
+    html += '<span>'+c.txt+'</span></div>';
+  });
+  html += '</div></div>';
+  html += '<button class="open-fisa-btn" onclick="renderProjHome(\'hangar\')"><i class="ti ti-arrow-left"></i> Înapoi la proiect</button>';
+  html += '<div class="page-footer">PM Hub · EREN CONS SRL · 2026</div>';
+  document.getElementById('main').innerHTML = html;
+}
 
 </script>
 </body>

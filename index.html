@@ -789,27 +789,54 @@ function renderERP(proj) {
 }
 
 
-// ── Alert management ──────────────────────────────────────────
-function getAlerts() {
+// ── Alert management (sync cu Google Apps Script) ─────────────
+var ALERTS_API = 'https://script.google.com/macros/s/AKfycbwju_Ejmr3_n1ma2T5XKDldETxg5SzgMEk3MsZMCi0FwNeL2kVyIT6LeEay_3qpm3ka7w/exec'; // <-- pune aici URL-ul de deploy Apps Script
+
+var _alertsCache = null;
+
+function _alertsLocal() {
   try { return JSON.parse(localStorage.getItem('pm_alerts') || '[]'); } catch(e) { return []; }
 }
-function saveAlerts(arr) {
-  localStorage.setItem('pm_alerts', JSON.stringify(arr));
+function _saveLocal(arr) {
+  _alertsCache = arr;
+  try { localStorage.setItem('pm_alerts', JSON.stringify(arr)); } catch(e) {}
+}
+function getAlerts() {
+  return _alertsCache !== null ? _alertsCache : _alertsLocal();
+}
+function loadAlerts() {
+  if (!ALERTS_API) { renderAlerts(); return; }
+  var el = document.getElementById('alerts-list');
+  if (el) el.innerHTML = '<div style="font-size:11px;color:var(--text-tertiary);padding:4px 0">Se încarcă...</div>';
+  fetch(ALERTS_API)
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      if (Array.isArray(data)) { _saveLocal(data); }
+      renderAlerts();
+    })
+    .catch(function(){ renderAlerts(); });
 }
 function addAlert() {
   var txtEl = document.getElementById('alert-text');
   var dtEl  = document.getElementById('alert-date');
   if (!txtEl || !txtEl.value.trim()) return;
-  var alerts = getAlerts();
-  alerts.push({id: Date.now(), text: txtEl.value.trim(), date: dtEl.value});
-  alerts.sort(function(a, b){ return a.date.localeCompare(b.date); });
-  saveAlerts(alerts);
+  var a = {id: String(Date.now()), text: txtEl.value.trim(), date: dtEl.value};
+  var arr = getAlerts();
+  arr.push(a);
+  arr.sort(function(x,y){ return String(x.date).localeCompare(String(y.date)); });
+  _saveLocal(arr);
   txtEl.value = '';
   renderAlerts();
+  if (ALERTS_API) {
+    fetch(ALERTS_API, {method:'POST', body:JSON.stringify({action:'add', id:a.id, text:a.text, date:a.date})}).catch(function(){});
+  }
 }
 function deleteAlert(id) {
-  saveAlerts(getAlerts().filter(function(a){ return a.id != id; }));
+  _saveLocal(getAlerts().filter(function(a){ return a.id != id; }));
   renderAlerts();
+  if (ALERTS_API) {
+    fetch(ALERTS_API, {method:'POST', body:JSON.stringify({action:'delete', id:String(id)})}).catch(function(){});
+  }
 }
 function renderAlerts() {
   var el = document.getElementById('alerts-list');
@@ -838,7 +865,8 @@ function renderAlerts() {
   });
   el.innerHTML = html;
 }
-// ─────────────────────────────────────────────────────────────
+// ──────────────────────────────────────────────────────────────
+
 function renderHome() {
   document.getElementById('main').innerHTML =
     '<div class="home-hero">' +
@@ -884,7 +912,7 @@ function renderHome() {
   var pad = function(n){ return n<10?'0'+n:''+n; };
   var dtEl = document.getElementById('alert-date');
   if (dtEl) dtEl.value = tmw.getFullYear()+'-'+pad(tmw.getMonth()+1)+'-'+pad(tmw.getDate());
-  renderAlerts();
+  loadAlerts();
 }
 
 function renderValidare(proj) {

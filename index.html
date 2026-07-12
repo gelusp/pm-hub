@@ -828,14 +828,14 @@ function addAlert() {
   txtEl.value = '';
   renderAlerts();
   if (ALERTS_API) {
-    fetch(ALERTS_API, {method:'POST', body:JSON.stringify({action:'add', id:a.id, text:a.text, date:a.date})}).catch(function(){});
+    fetch(ALERTS_API + '?action=add&id=' + a.id + '&text=' + encodeURIComponent(a.text) + '&date=' + a.date).catch(function(){});
   }
 }
 function deleteAlert(id) {
   _saveLocal(getAlerts().filter(function(a){ return a.id != id; }));
   renderAlerts();
   if (ALERTS_API) {
-    fetch(ALERTS_API, {method:'POST', body:JSON.stringify({action:'delete', id:String(id)})}).catch(function(){});
+    fetch(ALERTS_API + '?action=delete&id=' + String(id)).catch(function(){});
   }
 }
 function renderAlerts() {

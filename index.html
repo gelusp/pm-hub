@@ -850,12 +850,13 @@ function renderAlerts() {
   var tomorrow = new Date(Date.now()+86400000).toISOString().slice(0,10);
   var html = '';
   alerts.forEach(function(a) {
-    var isPast  = a.date < today;
-    var isToday = a.date === today;
-    var isTmw   = a.date === tomorrow;
+    var d = (a.date || '').slice(0,10);
+    var isPast  = d < today;
+    var isToday = d === today;
+    var isTmw   = d === tomorrow;
     var bg  = isPast ? '#FEF2F2' : isToday ? '#FEF3C7' : 'var(--grey-100)';
     var dot = isPast ? '#C0392B' : isToday ? '#D97706' : '#6B7280';
-    var lbl = isPast ? 'Expirat' : isToday ? 'Azi' : isTmw ? 'Mâine' : a.date.split('-').reverse().join('.');
+    var lbl = isPast ? 'Expirat' : isToday ? 'Azi' : isTmw ? 'Mâine' : d.split('-').reverse().join('.');
     html += '<div style="display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:6px;background:' + bg + ';margin-bottom:4px">';
     html += '<span style="width:8px;height:8px;border-radius:50%;background:' + dot + ';flex-shrink:0"></span>';
     html += '<span style="flex:1;font-size:12px;color:var(--text)">' + a.text + '</span>';

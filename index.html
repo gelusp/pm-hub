@@ -393,8 +393,10 @@ function closeMenu() {
 
 function goHome() {
   closeMenu();
+  document.querySelectorAll('.submenu').forEach(function(s){ s.classList.remove('open'); });
+  document.querySelectorAll('.chevron').forEach(function(c){ c.classList.remove('open'); });
   document.querySelectorAll('.submenu-item').forEach(function(i){ i.classList.remove('active'); });
-  document.getElementById('menu-btn').style.display = 'flex';
+  document.getElementById('menu-btn').style.display = '';
   document.getElementById('back-btn').style.display = 'none';
   renderHome();
 }
@@ -554,6 +556,7 @@ var DATA = {
 
 function renderProjHome(proj) {
   var p = DATA[proj];
+  document.getElementById('menu-btn').style.display = '';
   var btn = document.getElementById('back-btn');
   if (btn) { btn.style.display = 'flex'; btn.onclick = function() { goHome(); }; }
   var html = '';

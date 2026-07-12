@@ -788,6 +788,57 @@ function renderERP(proj) {
     '<div class="page-footer">PM Hub · EREN CONS SRL · 2026</div>';
 }
 
+
+// ── Alert management ──────────────────────────────────────────
+function getAlerts() {
+  try { return JSON.parse(localStorage.getItem('pm_alerts') || '[]'); } catch(e) { return []; }
+}
+function saveAlerts(arr) {
+  localStorage.setItem('pm_alerts', JSON.stringify(arr));
+}
+function addAlert() {
+  var txtEl = document.getElementById('alert-text');
+  var dtEl  = document.getElementById('alert-date');
+  if (!txtEl || !txtEl.value.trim()) return;
+  var alerts = getAlerts();
+  alerts.push({id: Date.now(), text: txtEl.value.trim(), date: dtEl.value});
+  alerts.sort(function(a, b){ return a.date.localeCompare(b.date); });
+  saveAlerts(alerts);
+  txtEl.value = '';
+  renderAlerts();
+}
+function deleteAlert(id) {
+  saveAlerts(getAlerts().filter(function(a){ return a.id != id; }));
+  renderAlerts();
+}
+function renderAlerts() {
+  var el = document.getElementById('alerts-list');
+  if (!el) return;
+  var alerts = getAlerts();
+  if (!alerts.length) {
+    el.innerHTML = '<div style="font-size:11px;color:var(--text-tertiary);padding:4px 0">Nicio alertă adăugată.</div>';
+    return;
+  }
+  var today    = new Date().toISOString().slice(0,10);
+  var tomorrow = new Date(Date.now()+86400000).toISOString().slice(0,10);
+  var html = '';
+  alerts.forEach(function(a) {
+    var isPast  = a.date < today;
+    var isToday = a.date === today;
+    var isTmw   = a.date === tomorrow;
+    var bg  = isPast ? '#FEF2F2' : isToday ? '#FEF3C7' : 'var(--grey-100)';
+    var dot = isPast ? '#C0392B' : isToday ? '#D97706' : '#6B7280';
+    var lbl = isPast ? 'Expirat' : isToday ? 'Azi' : isTmw ? 'Mâine' : a.date.split('-').reverse().join('.');
+    html += '<div style="display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:6px;background:' + bg + ';margin-bottom:4px">';
+    html += '<span style="width:8px;height:8px;border-radius:50%;background:' + dot + ';flex-shrink:0"></span>';
+    html += '<span style="flex:1;font-size:12px;color:var(--text)">' + a.text + '</span>';
+    html += '<span style="font-size:10px;color:' + dot + ';font-weight:600;white-space:nowrap;margin-right:4px">' + lbl + '</span>';
+    html += '<button onclick="deleteAlert(' + a.id + ')" style="background:none;border:none;cursor:pointer;color:var(--text-tertiary);font-size:16px;padding:0 2px;line-height:1">×</button>';
+    html += '</div>';
+  });
+  el.innerHTML = html;
+}
+// ─────────────────────────────────────────────────────────────
 function renderHome() {
   document.getElementById('main').innerHTML =
     '<div class="home-hero">' +
@@ -801,7 +852,7 @@ function renderHome() {
       '<div class="proj-card-header" style="background:#A03535;border-left:3px solid #CC1515">' +
         '<div class="proj-icon" style="background:rgba(204,21,21,0.25)"><i class="ti ti-building" style="color:#CC1515"></i></div>' +
         '<div><div style="font-size:13px;font-weight:600;color:#fff">Hangar Kogălniceanu</div>' +
-        '<div style="font-size:10px;color:rgba(255,255,255,0.6)">În validare · Start: 19.06.2026</div></div>' +
+        '<div style="font-size:10px;color:rgba(255,255,255,0.6)">Îîn validare · Start: 19.06.2026</div></div>' +
       '</div>' +
     '</div>' +
 
@@ -809,13 +860,33 @@ function renderHome() {
       '<div class="proj-card-header" style="background:#1F5C1F;border-left:3px solid #3B8A3B">' +
         '<div class="proj-icon" style="background:rgba(59,138,59,0.3)"><i class="ti ti-school" style="color:#7DC87D"></i></div>' +
         '<div style="flex:1"><div style="font-size:13px;font-weight:600;color:#fff">Campus DUAL Politehnica</div>' +
-        '<div style="font-size:10px;color:rgba(255,255,255,0.6)">În execuție · Corp C1</div></div>' +
+        '<div style="font-size:10px;color:rgba(255,255,255,0.6)">Îîn execuție · Corp C1</div></div>' +
         '<span style="font-size:9px;background:rgba(255,255,255,0.2);color:#fff;border-radius:99px;padding:2px 8px;font-weight:500">parțial real</span>' +
       '</div>' +
     '</div>' +
 
+    '<div style="margin-bottom:12px">' +
+      '<div style="display:flex;align-items:center;gap:6px;margin-bottom:8px">' +
+        '<i class="ti ti-bell-ringing" style="color:#CC1515;font-size:14px"></i>' +
+        '<span style="font-size:12px;font-weight:600;color:var(--text)">Alerte</span>' +
+      '</div>' +
+      '<div style="display:flex;gap:6px;margin-bottom:8px">' +
+        '<input type="text" id="alert-text" placeholder="Descrie alerta..." onkeydown="if(event.key===\'Enter\')addAlert()" style="flex:1;min-width:0;padding:7px 10px;border:1px solid var(--border);border-radius:var(--radius);font-size:12px;font-family:\'Inter\',sans-serif;outline:none;background:var(--white)">' +
+        '<input type="date" id="alert-date" style="padding:7px 8px;border:1px solid var(--border);border-radius:var(--radius);font-size:12px;outline:none;background:var(--white)">' +
+        '<button onclick="addAlert()" title="Adaugă" style="padding:7px 16px;background:#CC1515;color:#fff;border:none;border-radius:var(--radius);font-size:16px;font-weight:700;cursor:pointer">+</button>' +
+      '</div>' +
+      '<div id="alerts-list"></div>' +
+    '</div>' +
+
     '<div class="page-footer">PM Hub · EREN CONS SRL · 2026</div>';
+
+  var tmw = new Date(Date.now()+86400000);
+  var pad = function(n){ return n<10?'0'+n:''+n; };
+  var dtEl = document.getElementById('alert-date');
+  if (dtEl) dtEl.value = tmw.getFullYear()+'-'+pad(tmw.getMonth()+1)+'-'+pad(tmw.getDate());
+  renderAlerts();
 }
+
 function renderValidare(proj) {
   var p = DATA[proj];
 

@@ -331,6 +331,9 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
           <div class="submenu-item" id="item-campus-sl11" onclick="openLink('https://drive.google.com/file/d/1yoPPZ7XhBklfjDqzUdujQnmI5SnhR-r2/view?usp=sharing','item-campus-sl11')">
             <i class="ti ti-file-analytics"></i> Raport producție SL11
           </div>
+          <div class="submenu-item" id="item-campus-sl12" onclick="renderSL12()">
+            <i class="ti ti-file-analytics"></i> Raport producție SL12
+          </div>
           <div class="submenu-item" id="item-campus-lunar" onclick="renderSintezaCOO()">
             <i class="ti ti-calendar-stats"></i> Raport lunar
           </div>
@@ -567,6 +570,67 @@ function renderProjHome(proj) {
 }
 
 
+function renderSL12() {
+  document.querySelectorAll('.submenu-item').forEach(function(i){ i.classList.remove('active'); });
+  var item = document.getElementById('item-campus-sl12');
+  if (item) item.classList.add('active');
+  closeMenu();
+  document.getElementById('menu-btn').style.display = 'none';
+  var btn = document.getElementById('back-btn');
+  btn.style.display = 'flex';
+  btn.onclick = function() { renderProjHome('campus'); };
+  document.getElementById('main').innerHTML =
+    '<div class="proj-header"><div class="proj-title">Campus DUAL Politehnica</div>' +
+    '<div class="proj-meta">PM: Gelu Spătaru · Corp C1 · Raport producție · SL12 · 25.06.2026</div></div>' +
+    '<div class="module-badge productie"><i class="ti ti-file-analytics" style="font-size:13px"></i> Raport Producție — SL12</div>' +
+    '<div style="display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap">' +
+      '<button class="open-fisa-btn" style="flex:1;min-width:160px" onclick="window.open(\'https://docs.google.com/spreadsheets/d/1-cfj0m_XHI7qWwIYUmyB71L6T9TmmS9EnfAVNdtyk78/edit?gid=1154485814#gid=1154485814\',\'_blank\')"><i class="ti ti-table"></i> Deschide raportul complet</button>' +
+    '</div>' +
+    '<div class="nivel-grid">' +
+      '<div class="nivel-card">' +
+        '<div class="nivel-title"><i class="ti ti-chart-bar"></i>A. Indicatori SL12</div>' +
+        '<div class="ind-row"><span class="ind-label">Valoare contract actualizat</span><span style="font-size:12px;font-weight:600;color:var(--navy)">27.224.116 lei</span></div>' +
+        '<div class="ind-row"><span class="ind-label">Realizat anterior (SL1–SL11)</span><span style="font-size:12px;font-weight:500">18.666.448 lei</span></div>' +
+        '<div class="ind-row"><span class="ind-label">Realizat SL12</span><span style="font-size:12px;font-weight:600;color:var(--green)">3.109.911 lei</span></div>' +
+        '<div class="ind-row"><span class="ind-label">Realizat cumulat</span><span style="font-size:12px;font-weight:600;color:var(--navy)">21.776.359 lei</span></div>' +
+        '<div class="ind-row"><span class="ind-label">Rest de realizat</span><span style="font-size:12px;font-weight:500;color:#C0392B">5.447.757 lei</span></div>' +
+        '<div class="ind-row"><span class="ind-label">Grad realizare cumulat</span><span class="badge ok">79,99%</span></div>' +
+      '</div>' +
+      '<div class="nivel-card">' +
+        '<div class="nivel-title"><i class="ti ti-trending-up"></i>B. Evoluție față de SL11</div>' +
+        '<div class="ind-row"><span class="ind-label">Progres SL11</span><span class="badge warn">68,57%</span></div>' +
+        '<div class="ind-row"><span class="ind-label">Progres SL12</span><span class="badge ok">79,99%</span></div>' +
+        '<div class="ind-row"><span class="ind-label">Creștere lunară</span><span style="font-size:12px;font-weight:600;color:var(--green)">+11,42 pp</span></div>' +
+        '<div class="ind-row"><span class="ind-label">Producție SL12 vs SL11</span><span style="font-size:12px;font-weight:500">3.109.911 vs 3.458.816 lei</span></div>' +
+        '<div class="ind-row"><span class="ind-label">Indexare inclusă SL12</span><span class="badge">Nu — la SL13</span></div>' +
+      '</div>' +
+    '</div>' +
+    '<div class="nivel-card" style="margin-bottom:16px">' +
+      '<div class="nivel-title"><i class="ti ti-list-details"></i>C. Realizat SL12 pe capitole</div>' +
+      '<table style="width:100%;border-collapse:collapse;font-size:11px">' +
+        '<thead><tr style="color:var(--text-tertiary);text-align:left;border-bottom:1px solid var(--grey-200)">' +
+          '<th style="padding:4px 6px;font-weight:600">Capitol</th>' +
+          '<th style="padding:4px 6px;font-weight:600;text-align:right">Realizat SL12</th>' +
+          '<th style="padding:4px 6px;font-weight:600;text-align:right">Cumulat</th>' +
+          '<th style="padding:4px 6px;font-weight:600;text-align:right">Grad</th>' +
+        '</tr></thead>' +
+        '<tbody>' +
+          '<tr style="border-bottom:1px solid var(--grey-100)"><td style="padding:4px 6px">Amenajare teren</td><td style="padding:4px 6px;text-align:right;color:var(--text-tertiary)">—</td><td style="padding:4px 6px;text-align:right">1.701.014</td><td style="padding:4px 6px;text-align:right"><span class="badge ok" style="font-size:9px">98,07%</span></td></tr>' +
+          '<tr style="border-bottom:1px solid var(--grey-100)"><td style="padding:4px 6px">Structură</td><td style="padding:4px 6px;text-align:right;color:var(--text-tertiary)">—</td><td style="padding:4px 6px;text-align:right">6.513.862</td><td style="padding:4px 6px;text-align:right"><span class="badge ok" style="font-size:9px">99,21%</span></td></tr>' +
+          '<tr style="border-bottom:1px solid var(--grey-100)"><td style="padding:4px 6px">Arhitectură</td><td style="padding:4px 6px;text-align:right;font-weight:600">1.921.028</td><td style="padding:4px 6px;text-align:right">7.172.263</td><td style="padding:4px 6px;text-align:right"><span class="badge warn" style="font-size:9px">85,14%</span></td></tr>' +
+          '<tr style="border-bottom:1px solid var(--grey-100)"><td style="padding:4px 6px">Instalații electrice</td><td style="padding:4px 6px;text-align:right;font-weight:600">431.389</td><td style="padding:4px 6px;text-align:right">1.516.910</td><td style="padding:4px 6px;text-align:right"><span class="badge warn" style="font-size:9px">70,60%</span></td></tr>' +
+          '<tr style="border-bottom:1px solid var(--grey-100)"><td style="padding:4px 6px">Instalații sanitare</td><td style="padding:4px 6px;text-align:right;font-weight:600">119.539</td><td style="padding:4px 6px;text-align:right">479.511</td><td style="padding:4px 6px;text-align:right"><span class="badge warn" style="font-size:9px">62,37%</span></td></tr>' +
+          '<tr style="border-bottom:1px solid var(--grey-100)"><td style="padding:4px 6px">HVAC</td><td style="padding:4px 6px;text-align:right;font-weight:600">547.913</td><td style="padding:4px 6px;text-align:right">1.840.103</td><td style="padding:4px 6px;text-align:right"><span class="badge warn" style="font-size:9px">64,79%</span></td></tr>' +
+          '<tr style="border-bottom:1px solid var(--grey-100)"><td style="padding:4px 6px">Montaj echipamente</td><td style="padding:4px 6px;text-align:right;color:var(--text-tertiary)">—</td><td style="padding:4px 6px;text-align:right">154.809</td><td style="padding:4px 6px;text-align:right"><span class="badge warn" style="font-size:9px">69,84%</span></td></tr>' +
+          '<tr style="border-bottom:1px solid var(--grey-100)"><td style="padding:4px 6px">Echipamente și dotări</td><td style="padding:4px 6px;text-align:right;color:var(--text-tertiary)">—</td><td style="padding:4px 6px;text-align:right">1.360.876</td><td style="padding:4px 6px;text-align:right"><span class="badge risk" style="font-size:9px">41,59%</span></td></tr>' +
+          '<tr style="border-bottom:1px solid var(--grey-100)"><td style="padding:4px 6px">Organizare șantier</td><td style="padding:4px 6px;text-align:right;font-weight:600">90.042</td><td style="padding:4px 6px;text-align:right">1.037.010</td><td style="padding:4px 6px;text-align:right"><span class="badge warn" style="font-size:9px">83,04%</span></td></tr>' +
+          '<tr style="background:var(--grey-100);font-weight:700"><td style="padding:5px 6px">TOTAL</td><td style="padding:5px 6px;text-align:right">3.109.911</td><td style="padding:5px 6px;text-align:right">21.776.359</td><td style="padding:5px 6px;text-align:right"><span class="badge ok" style="font-size:9px">79,99%</span></td></tr>' +
+        '</tbody>' +
+      '</table>' +
+    '</div>' +
+    '<div class="page-footer">PM Hub · EREN CONS SRL · 2026</div>';
+}
+
 function renderSintezaCOO() {
   document.querySelectorAll('.submenu-item').forEach(function(i){ i.classList.remove('active'); });
   var item = document.getElementById('item-campus-lunar');
@@ -578,33 +642,32 @@ function renderSintezaCOO() {
   btn.onclick = function() { renderProjHome('campus'); };
 
   document.getElementById('main').innerHTML =
-    '<div class="proj-header"><div class="proj-title">Campus DUAL Politehnica</div><div class="proj-meta">PM: Gelu Spătaru · Corp C1 · Raport lunar · Mai 2026</div></div>' +
-    '<div class="module-badge productie"><i class="ti ti-calendar-stats" style="font-size:13px"></i> Sinteză COO</div>' +
+    '<div class="proj-header"><div class="proj-title">Campus DUAL Politehnica</div><div class="proj-meta">PM: Gelu Spătaru · Corp C1 · Raport lunar · Iunie 2026</div></div>' +
+    '<div class="module-badge productie"><i class="ti ti-calendar-stats" style="font-size:13px"></i> Sinteză COO — SL12</div>' +
 
     '<div style="display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap">' +
-      '<button class="open-fisa-btn" style="flex:1;min-width:160px" onclick="window.open(\'https://docs.google.com/spreadsheets/d/1-MAuuToO9vThEAfm9dP24oGHOJNVRL5ht7s3tDr83Zc/edit?usp=sharing\',\'_blank\')"><i class="ti ti-table"></i> Deschide raportul complet</button>' +
+      '<button class="open-fisa-btn" style="flex:1;min-width:160px" onclick="window.open(\'https://docs.google.com/spreadsheets/d/1-cfj0m_XHI7qWwIYUmyB71L6T9TmmS9EnfAVNdtyk78/edit?gid=1154485814#gid=1154485814\',\'_blank\')"><i class="ti ti-table"></i> Deschide raportul complet</button>' +
     '</div>' +
 
     '<div class="nivel-grid">' +
 
       '<div class="nivel-card">' +
         '<div class="nivel-title"><i class="ti ti-chart-bar"></i>A. Indicatori principali</div>' +
-        '<div class="ind-row"><span class="ind-label">Valoare contract</span><span style="font-size:12px;font-weight:600;color:var(--navy)">27.959.116 lei</span></div>' +
-        '<div class="ind-row"><span class="ind-label">Progres planificat</span><span class="badge ok">81,3%</span></div>' +
-        '<div class="ind-row"><span class="ind-label">Progres realizat</span><span class="badge warn">68,6%</span></div>' +
-        '<div class="ind-row"><span class="ind-label">CA lună — buget</span><span style="font-size:12px;font-weight:500">3.354.452 lei</span></div>' +
-        '<div class="ind-row"><span class="ind-label">CA lună — realizat</span><span style="font-size:12px;font-weight:500;color:var(--green)">3.893.712 lei</span></div>' +
-        '<div class="ind-row"><span class="ind-label">CA YTD — buget</span><span style="font-size:12px;font-weight:500">0 lei</span></div>' +
-        '<div class="ind-row"><span class="ind-label">CA YTD — realizat</span><span style="font-size:12px;font-weight:500;color:var(--green)">18.666.448 lei</span></div>' +
+        '<div class="ind-row"><span class="ind-label">Valoare contract actualizat</span><span style="font-size:12px;font-weight:600;color:var(--navy)">27.224.116 lei</span></div>' +
+        '<div class="ind-row"><span class="ind-label">Progres realizat SL11</span><span class="badge warn">68,57%</span></div>' +
+        '<div class="ind-row"><span class="ind-label">Progres realizat SL12</span><span class="badge ok">79,99%</span></div>' +
+        '<div class="ind-row"><span class="ind-label">CA lună SL12 — realizat</span><span style="font-size:12px;font-weight:600;color:var(--green)">3.109.911 lei</span></div>' +
+        '<div class="ind-row"><span class="ind-label">CA lună SL11 — realizat</span><span style="font-size:12px;font-weight:500">3.458.816 lei</span></div>' +
+        '<div class="ind-row"><span class="ind-label">CA cumulat SL12</span><span style="font-size:12px;font-weight:600;color:var(--navy)">21.776.359 lei</span></div>' +
+        '<div class="ind-row"><span class="ind-label">Rest de realizat</span><span style="font-size:12px;font-weight:500;color:#C0392B">5.447.757 lei</span></div>' +
       '</div>' +
 
       '<div class="nivel-card">' +
         '<div class="nivel-title"><i class="ti ti-trending-up"></i>B. Indicatori suplimentari</div>' +
-        '<div class="ind-row"><span class="ind-label">Zile întârziere estimate</span><span class="badge risk">13 zile</span></div>' +
-        '<div class="ind-row"><span class="ind-label">Producție previzionată M+1</span><span style="font-size:12px;font-weight:500">3.843.834 lei</span></div>' +
-        '<div class="ind-row"><span class="ind-label">Producție previzionată M+2</span><span style="font-size:12px;font-weight:500">4.713.834 lei</span></div>' +
-        '<div class="ind-row"><span class="ind-label">Capacitate necesară M+1</span><span style="font-size:12px;font-weight:500">65 persoane</span></div>' +
-        '<div class="ind-row"><span class="ind-label">SUBA executat luna curentă</span><span style="font-size:12px;font-weight:500">0 lei</span></div>' +
+        '<div class="ind-row"><span class="ind-label">Zile întârziere estimate</span><span class="badge risk">24 zile</span></div>' +
+        '<div class="ind-row"><span class="ind-label">Producție previzionată SL13</span><span style="font-size:12px;font-weight:500">5.447.757 lei</span></div>' +
+        '<div class="ind-row"><span class="ind-label">SL13</span><span style="font-size:12px;font-weight:600;color:var(--green)">Situație finală — închidere contract</span></div>' +
+        '<div class="ind-row"><span class="ind-label">SUBA executat SL12</span><span style="font-size:12px;font-weight:500;color:#854F0B">— de completat</span></div>' +
         '<div class="ind-row"><span class="ind-label">Claimuri aprobate</span><span style="font-size:12px;font-weight:500">0 lei</span></div>' +
       '</div>' +
 
@@ -612,10 +675,10 @@ function renderSintezaCOO() {
 
     '<div class="nivel-card" style="margin-bottom:20px">' +
       '<div class="nivel-title"><i class="ti ti-alert-triangle"></i>C. Autoverificare praguri escaladare</div>' +
-      '<div class="ind-row"><span class="ind-label">Abatere CA lună</span><span class="badge ok">+16,1% — OK</span></div>' +
+      '<div class="ind-row"><span class="ind-label">Abatere CA lună vs SL11</span><span class="badge warn">-7,3% față de luna precedentă</span></div>' +
+      '<div class="ind-row"><span class="ind-label">Întârziere față de grafic</span><span class="badge risk">24 zile — monitorizat</span></div>' +
       '<div class="ind-row"><span class="ind-label">Deviații înregistrate în lună</span><span class="badge ok">0</span></div>' +
       '<div class="ind-row"><span class="ind-label">Impact financiar deviații</span><span class="badge ok">0 lei</span></div>' +
-      '<div class="ind-row"><span class="ind-label">Impact termen deviații</span><span class="badge ok">0 zile</span></div>' +
     '</div>' +
 
     '<div class="page-footer">PM Hub · EREN CONS SRL · 2026</div>';
@@ -856,7 +919,14 @@ function renderAlerts() {
     var isTmw   = d === tomorrow;
     var bg  = isPast ? '#FEF2F2' : isToday ? '#FEF3C7' : 'var(--grey-100)';
     var dot = isPast ? '#C0392B' : isToday ? '#D97706' : '#6B7280';
-    var lbl = isPast ? 'Expirat' : isToday ? 'Azi' : isTmw ? 'Mâine' : d.split('-').reverse().join('.');
+    var diffDays = 0;
+    if (isPast && d) {
+      var msDay = 86400000;
+      var dDate = new Date(d + 'T00:00:00');
+      var tDate = new Date(today + 'T00:00:00');
+      diffDays = Math.round((tDate - dDate) / msDay);
+    }
+    var lbl = isPast ? '+' + diffDays + ' zi' + (diffDays === 1 ? '' : 'le') : isToday ? 'Azi' : isTmw ? 'Mâine' : d.split('-').reverse().join('.');
     html += '<div style="display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:6px;background:' + bg + ';margin-bottom:4px">';
     html += '<span style="width:8px;height:8px;border-radius:50%;background:' + dot + ';flex-shrink:0"></span>';
     html += '<span style="flex:1;font-size:12px;color:var(--text)">' + a.text + '</span>';

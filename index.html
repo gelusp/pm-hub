@@ -260,8 +260,14 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
         <div class="submenu-item" id="item-hangar-validare" onclick="goModule('hangar','validare')">
           <i class="ti ti-chart-bar"></i> Validare Bugete
         </div>
-        <div class="submenu-item" id="item-hangar-erp" onclick="goModule('hangar','erp')">
+        <div class="submenu-item" id="item-hangar-erp" onclick="toggleSubSub('hangar-erp')">
           <i class="ti ti-receipt" style="color:#854F0B"></i> Validare Rețete Contract
+          <i class="ti ti-chevron-down chevron" id="chev-hangar-erp" style="font-size:11px"></i>
+        </div>
+        <div class="submenu" id="sub-hangar-erp" style="margin-left:14px;border-left:2px solid var(--grey-200)">
+          <div class="submenu-item" id="item-hangar-demo" onclick="renderAnalizaDemo()">
+            <i class="ti ti-building-factory" style="color:#854F0B"></i> Demolări — Deviz 1.1 + 1.2
+          </div>
         </div>
         <div class="submenu-item" id="item-hangar-doccontract" onclick="toggleSubSub('hangar-doccontract')">
           <i class="ti ti-files" style="color:#1A5276"></i> Documente Contract
@@ -837,6 +843,108 @@ function renderDocContract(proj) {
     '<div class="page-footer">PM Hub \xb7 EREN CONS SRL \xb7 2026</div>';
 }
 
+
+function renderAnalizaDemo() {
+  document.querySelectorAll('.submenu-item').forEach(function(i){ i.classList.remove('active'); });
+  var itm = document.getElementById('item-hangar-demo');
+  if (itm) itm.classList.add('active');
+  closeMenu();
+  document.getElementById('menu-btn').style.display = 'none';
+  var bb = document.getElementById('back-btn');
+  bb.style.display = 'flex';
+  bb.onclick = function() { renderProjHome('hangar'); };
+  var tS  = 'width:100%;border-collapse:collapse;font-size:11px;margin-top:8px';
+  var thS = 'text-align:left;padding:5px 8px;background:var(--grey-100);color:var(--text-secondary);font-weight:600;border-bottom:1px solid var(--border)';
+  var thR = 'text-align:right;padding:5px 8px;background:var(--grey-100);color:var(--text-secondary);font-weight:600;border-bottom:1px solid var(--border)';
+  var tdS = 'padding:5px 8px;border-bottom:1px solid var(--border);color:var(--text-primary)';
+  var tdR = 'padding:5px 8px;border-bottom:1px solid var(--border);text-align:right;color:var(--text-primary)';
+  function tbH() {
+    return '<thead><tr>'+
+      '<th style="'+thS+'">Cod</th><th style="'+thS+'">Denumire</th><th style="'+thS+'">UM</th>'+
+      '<th style="'+thR+'">Contract</th><th style="'+thR+'">Buget</th><th style="'+thR+'">ERP</th>'+
+      '<th style="'+thR+'">Dif.</th><th style="'+thS+'">Status</th>'+
+    '</tr></thead>';
+  }
+  function tbRow(r,i) {
+    var bg=i%2===1?'background:var(--grey-50)':'';
+    return '<tr style="'+bg+'">'+
+      '<td style="'+tdS+';font-family:monospace;font-size:10px">'+r[0]+'</td>'+
+      '<td style="'+tdS+'">'+r[1]+'</td><td style="'+tdS+'">'+r[2]+'</td>'+
+      '<td style="'+tdR+'">'+r[3]+'</td><td style="'+tdR+'">'+r[4]+'</td><td style="'+tdR+'">'+r[5]+'</td>'+
+      '<td style="'+tdR+';color:'+(r[6]==='0'?'inherit':'#C0392B')+'">'+r[6]+'</td>'+
+      '<td style="'+tdS+'"><span class=\"badge '+r[7]+'\" style=\"font-size:10px\">'+r[8]+'</span></td>'+
+    '</tr>';
+  }
+  function tbTotal(c,b,e,d) {
+    return '<tr style=\"background:var(--grey-100)\">'+
+      '<td style="'+tdS+';font-weight:700" colspan=\"3\">TOTAL</td>'+
+      '<td style="'+tdR+';font-weight:700;color:var(--navy)">'+c+'</td>'+
+      '<td style="'+tdR+';font-weight:700">'+b+'</td>'+
+      '<td style="'+tdR+';font-weight:700">'+e+'</td>'+
+      '<td style="'+tdR+';font-weight:700;color:#C0392B">'+d+'</td>'+
+      '<td style="'+tdS+'"></td></tr>';
+  }
+  var r11=[
+    ['1_Dem','Dezechipare echipamente instalații','ans','9.132,78','8.516,45','8.516,45','0','ok','Identic'],
+    ['2_Dem','Demolare tâmplării','mp','3.888,00','3.888,00','3.888,00','0','ok','Identic'],
+    ['3_Dem','Dem. structuri metalice acoperiș','kg','162.468,91','143.303,77','143.301,11','−2,66','warn','Dif. rotunjire'],
+    ['4_Dem','Dem. tablă acoperiș + frontoane','mp','9.722,66','9.400,02','9.399,78','−0,24','warn','Dif. rotunjire'],
+    ['5_Dem','Demolare zidării','mc','3.226,75','2.885,81','2.885,80','−0,01','warn','Dif. rotunjire'],
+    ['NR-035254','Subtotal beton armat (3→1 normă ERP)','mc','63.067,45','55.959,24','55.959,24','0','ok','Identic (cumulat)'],
+    ['1_Sap','Săpătură îngustă fundații','mc','6.529,27','5.892,80','5.892,80','0','ok','Identic'],
+    ['1_Tra','Transport moloz demolări beton','t','43.187,23','38.083,98','38.083,98','0','ok','Identic']
+  ];
+  var r12=[
+    ['8_Dem','Demolare platformă BCR, gr. 0,21 m','mc','91.150,82','81.333,23','81.332,90','−0,33','warn','Dif. rotunjire'],
+    ['1_Tra','Transport moloz demolări beton','t','37.231,27','32.831,81','32.831,81','0','ok','Identic']
+  ];
+  var rows11='',rows12='';
+  r11.forEach(function(r,i){rows11+=tbRow(r,i);});
+  r12.forEach(function(r,i){rows12+=tbRow(r,i);});
+  var html='';
+  html+='<div class="proj-header"><div class="proj-title">Hangar Aeronave — Kogălniceanu</div>'+
+    '<div class="proj-meta">PM: Gelu Spătaru · Validare Rețete Contract · 18.07.2026</div></div>';
+  html+='<div class="module-badge" style="background:#FEF3C7;color:#854F0B">'+
+    '<i class="ti ti-receipt" style="font-size:13px"></i> Analiză comparativă — Demolări Deviz 1.1 + 1.2</div>';
+  html+='<div style="margin-bottom:12px"><a href="https://docs.google.com/spreadsheets/d/1bIUu-LW7ylZbPewHe0tVvVCFzaTPe4__bu9CSYLTA8s/edit?gid=1258875891#gid=1258875891" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 18px;background:#1A5276;color:#fff;border-radius:var(--radius);font-size:12px;font-weight:600;text-decoration:none"><i class="ti ti-table"></i> Deschide Analiza Comparativă</a></div>';
+  html+='<div class="nivel-grid" style="margin-bottom:12px">';
+  html+='<div class="nivel-card"><div class="nivel-title"><i class="ti ti-chart-bar"></i>A. Valori totale</div>'+
+    '<div class="ind-row"><span class="ind-label">Val. contract (1.1+1.2)</span><span style="font-size:12px;font-weight:700;color:var(--navy)">429.605,14 lei</span></div>'+
+    '<div class="ind-row"><span class="ind-label">Val. buget eDevize</span><span style="font-size:12px">382.095,11 lei</span></div>'+
+    '<div class="ind-row"><span class="ind-label">Val. ERP (CH54)</span><span style="font-size:12px">382.091,87 lei</span></div>'+
+    '<div class="ind-row"><span class="ind-label">Marjă contract − buget</span><span style="font-size:12px;font-weight:700;color:var(--green)">47.510,03 lei (11,06%)</span></div></div>';
+  html+='<div class="nivel-card"><div class="nivel-title"><i class="ti ti-shield-check"></i>B. Verificare ERP vs buget</div>'+
+    '<div class="ind-row"><span class="ind-label">Diferență ERP − buget</span><span class="badge ok">−3,24 lei (−0,001%)</span></div>'+
+    '<div class="ind-row"><span class="ind-label">Cauza</span><span style="font-size:12px">Rotunjiri de calcul</span></div>'+
+    '<div class="ind-row"><span class="ind-label">Articole cu rotunjire</span><span style="font-size:12px">4 din 10</span></div>'+
+    '<div class="ind-row"><span class="ind-label">Validare ERP</span><span class="badge ok">IDENTIC</span></div></div>';
+  html+='</div>';
+  html+='<div class="nivel-card" style="margin-bottom:12px"><div class="nivel-title"><i class="ti ti-list-details"></i>Deviz 1.1 — Demolări Hangar Existent</div>'+
+    '<div style="overflow-x:auto"><table style="'+tS+'">'+tbH()+'<tbody>'+rows11+tbTotal('301.223,05','267.930,07','267.927,16','−2,91')+'</tbody></table></div></div>';
+  html+='<div class="nivel-card" style="margin-bottom:12px"><div class="nivel-title"><i class="ti ti-list-details"></i>Deviz 1.2 — Demolări Platformă Exterioară</div>'+
+    '<div style="overflow-x:auto"><table style="'+tS+'">'+tbH()+'<tbody>'+rows12+tbTotal('128.382,09','114.165,04','114.164,71','−0,33')+'</tbody></table></div></div>';
+  html+='<div class="nivel-card" style="margin-bottom:12px;background:var(--navy);color:#fff">'+
+    '<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">'+
+    '<div style="font-size:13px;font-weight:700">TOTAL GENERAL (1.1 + 1.2)</div>'+
+    '<div style="display:flex;gap:20px;flex-wrap:wrap">'+
+    '<div style="text-align:center"><div style="font-size:10px;color:rgba(255,255,255,0.7)">Contract</div><div style="font-size:14px;font-weight:700">429.605,14 lei</div></div>'+
+    '<div style="text-align:center"><div style="font-size:10px;color:rgba(255,255,255,0.7)">Buget eDevize</div><div style="font-size:14px;font-weight:700">382.095,11 lei</div></div>'+
+    '<div style="text-align:center"><div style="font-size:10px;color:rgba(255,255,255,0.7)">ERP (CH54)</div><div style="font-size:14px;font-weight:700">382.091,87 lei</div></div>'+
+    '<div style="text-align:center"><div style="font-size:10px;color:rgba(255,255,255,0.7)">Marjă</div><div style="font-size:14px;font-weight:700;color:#4ADE80">47.510,03 lei</div></div>'+
+    '</div></div></div>';
+  html+='<div class="nivel-card" style="margin-bottom:16px"><div class="nivel-title"><i class="ti ti-check"></i>Concluzii</div>'+
+    '<div style="font-size:12px;line-height:1.7">'+
+    '<p style="margin:4px 0"><b>1.</b> Bugetul eDevize este încărcat corect în ERP. Diferența totală: <b>−3,24 lei (−0,001%)</b> — exclusiv rotunjiri de calcul.</p>'+
+    '<p style="margin:4px 0"><b>2.</b> 4 articole cu dif. de rotunjire: structuri metalice −2,66 lei · tablă −0,24 lei · zidării −0,01 lei · platformă BCR −0,33 lei. Nesemnificative.</p>'+
+    '<p style="margin:4px 0"><b>3.</b> Comasare ERP: 3 articole beton (stâlpi/grinzi, fundații, pardoseală) → 1 normă NR-035254, 548 mc, 55.959,24 lei. Valoare cumulată identică.</p>'+
+    '<p style="margin:4px 0"><b>4.</b> Marjă contract vs buget: <b>47.510,03 lei (11,06%)</b>. Cantitățile corespund integral pe toate 3 surse.</p>'+
+    '</div></div>';
+  html+='<div class="page-footer">PM Hub · EREN CONS SRL · 2026</div>';
+  document.getElementById('main').innerHTML = html;
+}
+function openAnalizaDemoLink() {
+  window.open('https://docs.google.com/spreadsheets/d/1bIUu-LW7ylZbPewHe0tVvVCFzaTPe4__bu9CSYLTA8s/edit?gid=1258875891#gid=1258875891', '_blank');
+}
 
 function renderERP(proj) {
   var p = DATA[proj] || DATA['hangar'];

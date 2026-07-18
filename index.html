@@ -530,6 +530,7 @@ var DATA = {
       {name:"Export ERP",          sub:"Lipsă",            status:"risk"}
     ],
     alerts:[
+      {title:"Cap.2.1 — Ofertă Mithras REVIZUITĂ: −144.791 lei, dar rămâne +58,0% peste buget", meta:"Cap.2.1 · MTH-B 545: 381.947 € = 2.002.512 lei vs buget 1.267.781 lei (+734.731 lei) · manoperă BCR 43,85→35,35 €/mp · expiră 22.07", date:"18 iul", cls:"risk"},
       {title:"Cap.10 — GPU 400Hz: ofertă +54,7% față de buget (supracost major)", meta:"Cap.10 · Dynell Tip A 746.000 lei vs buget F4 482.171 lei (+263.829 lei) · F3 788.116 lei fără ofertă", date:"15 iul", cls:"risk"},
       {title:"Cap.11 — CCTV și Control acces nelipsite din deviz", meta:"Cap.11 · Honeywell include CCTV+CtrlAcc={122.000 lei} nebugetate explicit în deviz curent", date:"15 iul", cls:"warn"},
       {title:"Cap.9 HVAC — Rezervor ingropat 20.000L fără ofertă", meta:"Cap.9 · 101.351 lei (37% din F4) nevalidat · VRF +67% supracost față de buget", date:"15 iul", cls:"risk"},
@@ -1954,31 +1955,32 @@ function renderSL1(proj) {
 
 function renderAn21(proj) {
   var html = '';
-  html += '<div class="proj-header"><div class="proj-title">Analiză Comparativă — 2.1 Amenajare Platformă Exterioară</div><div class="proj-meta">eDevize F3 vs Ofertă Mithras MTH-B 525 · 11.07.2026 · Curs 5,2337 lei/EUR</div></div>';
+  html += '<div class="proj-header"><div class="proj-title">Analiză Comparativă — 2.1 Amenajare Platformă Exterioară</div><div class="proj-meta">eDevize F3 vs Mithras MTH-B 525 (10.07) și REVIZUITĂ MTH-B 545 (17.07) · Actualizat 18.07.2026 · Curs BNR 5,2429 lei/EUR</div></div>';
   html += '<div class="module-badge" style="background:#EEF2FF;color:#4338CA"><i class="ti ti-file-analytics" style="font-size:13px"></i> Analiză Comparativă Oferte Piață</div>';
-  html += '<div style="margin-bottom:12px"><a href="https://docs.google.com/spreadsheets/d/1liwRVVXSqLkHmHzW1Rjqi59G8mHzTJhv2YrIXLH4-A8/edit?usp=sharing" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 18px;background:#1A5276;color:#fff;border-radius:var(--radius);font-size:12px;font-weight:600;text-decoration:none"><i class="ti ti-table"></i> Deschide analiza comparativă</a></div>';
+  html += '<div style="margin-bottom:12px"><a href="https://docs.google.com/spreadsheets/d/1zTuEs1li8AkkQVDdtnUWeymZQwBOKcvO7R5U5XYpxVM/edit?gid=2059546820#gid=2059546820" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 18px;background:#1A5276;color:#fff;border-radius:var(--radius);font-size:12px;font-weight:600;text-decoration:none"><i class="ti ti-table"></i> Deschide analiza comparativă v3 · REV MTH-B 545 · curs 5,2429</a></div>';
   // KPIs
   html += '<div class="kpi-grid" style="margin-bottom:14px">';
   html += '<div class="kpi"><div class="kpi-label">Buget eDevize (total)</div><div class="kpi-val">1.267.781 lei</div><div class="kpi-sub">21 articole · F3 listă cant.</div></div>';
-  html += '<div class="kpi"><div class="kpi-label">Ofertă Mithras (total)</div><div class="kpi-val" style="color:#C0392B">2.143.535 lei</div><div class="kpi-sub">409.563 EUR × 5,2337</div></div>';
-  html += '<div class="kpi"><div class="kpi-label">Depăşire totală</div><div class="kpi-val" style="color:#C0392B">+875.754 lei</div><div class="kpi-sub">+69,1% față de buget</div></div>';
-  html += '<div class="kpi"><div class="kpi-label">Transport lipsă Mithras</div><div class="kpi-val" style="color:#856404">121.473 lei</div><div class="kpi-sub">Art.7+9+13 absente din ofertă</div></div>';
+  html += '<div class="kpi"><div class="kpi-label">Ofertă inițială MTH-B 525</div><div class="kpi-val" style="color:#C0392B">2.147.303 lei</div><div class="kpi-sub">409.564 EUR × 5,2429 · +69,4%</div></div>';
+  html += '<div class="kpi"><div class="kpi-label">Ofertă REVIZUITĂ MTH-B 545</div><div class="kpi-val" style="color:#C0392B">2.002.512 lei</div><div class="kpi-sub">381.947 EUR × 5,2429 · +58,0% vs buget (+734.731 lei)</div></div>';
+  html += '<div class="kpi"><div class="kpi-label">Economie negociere REV</div><div class="kpi-val" style="color:#1E6E2D">−144.791 lei</div><div class="kpi-sub">−27.617 EUR · manoperă BCR 43,85→35,35 €/mp</div></div>';
+  html += '<div class="kpi"><div class="kpi-label">Transport lipsă Mithras</div><div class="kpi-val" style="color:#856404">121.473 lei</div><div class="kpi-sub">Art.7+9+13 absente · scope comparabil: +74,7%</div></div>';
   html += '</div>';
   // Tabel articole critice
   html += '<div class="proj-card" style="margin-bottom:12px">';
   html += '<div class="proj-card-header" style="background:#7B1818"><span style="font-size:13px;font-weight:600;color:#fff">Articole cu abateri semnificative</span></div>';
   html += '<div class="proj-card-body" style="padding:0;overflow-x:auto">';
   html += '<table style="width:100%;border-collapse:collapse;font-size:11px">';
-  html += '<tr style="background:#2E5090;color:#fff"><th style="padding:7px 10px;text-align:left">Articol</th><th style="padding:7px 8px;text-align:right;white-space:nowrap">Buget (lei)</th><th style="padding:7px 8px;text-align:right;white-space:nowrap">Mithras (lei)</th><th style="padding:7px 8px;text-align:right">Abatere</th><th style="padding:7px 8px;text-align:left">Observații</th></tr>';
+  html += '<tr style="background:#2E5090;color:#fff"><th style="padding:7px 10px;text-align:left">Articol</th><th style="padding:7px 8px;text-align:right;white-space:nowrap">Buget (lei)</th><th style="padding:7px 8px;text-align:right;white-space:nowrap">Mithras inițial (lei)</th><th style="padding:7px 8px;text-align:right;white-space:nowrap">Mithras REV (lei)</th><th style="padding:7px 8px;text-align:right">Abatere REV</th><th style="padding:7px 8px;text-align:left">Observații</th></tr>';
   var rows = [
-    {art:"Art.12 Dală BCR 5.0 t=30cm",b:"576.152",m:"1.445.365",ab:"+869.213",pct:"+150,9%",bg:"#FCE4D6",obs:"⚠ CRITIC · Mithras incl. gujoane+rosturi+emulsie"},
-    {art:"Art.6 Piatră spartă 40cm",b:"120.548",m:"269.991",ab:"+149.443",pct:"+124,0%",bg:"#FCE4D6",obs:"⚠ Preț unitar 2× mai mare"},
-    {art:"Art.8 Balast 20cm",b:"86.377",m:"134.375",ab:"+47.998",pct:"+55,6%",bg:"#FFEB9C",obs:"Depăşire semnificativă"},
-    {art:"Art.10 Stabilizare balast",b:"74.799",m:"80.115",ab:"+5.316",pct:"+7,1%",bg:"#F5F5F5",obs:"Diferență minoră"},
-    {art:"Art.7 Transport piatră spartă",b:"35.654",m:"—",ab:"LIPSĂ",pct:"—",bg:"#FFF8E1",obs:"Absent din oferta Mithras"},
-    {art:"Art.9 Transport balast",b:"46.847",m:"—",ab:"LIPSĂ",pct:"—",bg:"#FFF8E1",obs:"Absent din oferta Mithras"},
-    {art:"Art.13 Transport beton rutier",b:"38.972",m:"—",ab:"LIPSĂ",pct:"—",bg:"#FFF8E1",obs:"Absent · posibil inclus în BCR"},
-    {art:"Art.20-21 Marcaje",b:"27.492",m:"2.809",ab:"-24.683",pct:"-46,5%",bg:"#E2EFDA",obs:"Vopsea monocomponentă · favorabil"},
+    {art:"Art.12+14-19 Grup dală BCR + rosturi",b:"617.035",m:"1.447.905",rev:"1.303.115",ab:"+686.080",pct:"+111,2%",bg:"#FCE4D6",obs:"⚠ CRITIC · REV: manoperă 43,85→35,35 €/mp (−144.791 lei) · incl. gujoane+rosturi+emulsie"},
+    {art:"Art.6 Piatră spartă 40cm",b:"120.548",m:"270.466",rev:"270.466",ab:"+149.918",pct:"+124,4%",bg:"#FCE4D6",obs:"⚠ Preț unitar 2× mai mare · nemodificat în REV"},
+    {art:"Art.8 Balast 20cm",b:"86.377",m:"134.611",rev:"134.611",ab:"+48.235",pct:"+55,8%",bg:"#FFEB9C",obs:"Depăşire semnificativă · nemodificat în REV"},
+    {art:"Art.10 Stabilizare balast",b:"74.799",m:"80.256",rev:"80.256",ab:"+5.457",pct:"+7,3%",bg:"#F5F5F5",obs:"Diferență minoră"},
+    {art:"Art.7 Transport piatră spartă",b:"35.654",m:"—",rev:"—",ab:"LIPSĂ",pct:"—",bg:"#FFF8E1",obs:"Absent și din oferta REV"},
+    {art:"Art.9 Transport balast",b:"46.847",m:"—",rev:"—",ab:"LIPSĂ",pct:"—",bg:"#FFF8E1",obs:"Absent și din oferta REV"},
+    {art:"Art.13 Transport beton rutier",b:"38.972",m:"—",rev:"—",ab:"LIPSĂ",pct:"—",bg:"#FFF8E1",obs:"Absent · posibil inclus în BCR"},
+    {art:"Art.20-21 Marcaje",b:"27.492",m:"14.727",rev:"14.727",ab:"-12.765",pct:"-46,4%",bg:"#E2EFDA",obs:"Vopsea monocomponentă · favorabil"},
   ];
   rows.forEach(function(r){
     var abcolor = r.ab.charAt(0)==="-"?"#1E6E2D":(r.ab==="LIPSĂ"?"#856404":"#C0392B");
@@ -1986,6 +1988,7 @@ function renderAn21(proj) {
     html += '<td style="padding:6px 10px;border-bottom:1px solid #eee;font-weight:500">'+r.art+'</td>';
     html += '<td style="padding:6px 8px;border-bottom:1px solid #eee;text-align:right">'+r.b+'</td>';
     html += '<td style="padding:6px 8px;border-bottom:1px solid #eee;text-align:right;color:'+( r.m==="—"?"#888":"inherit")+'">'+r.m+'</td>';
+    html += '<td style="padding:6px 8px;border-bottom:1px solid #eee;text-align:right;font-weight:600;color:'+( r.rev==="—"?"#888":"inherit")+'">'+r.rev+'</td>';
     html += '<td style="padding:6px 8px;border-bottom:1px solid #eee;text-align:right;font-weight:700;color:'+abcolor+'">'+r.ab+' <span style="font-size:10px;font-weight:400">'+r.pct+'</span></td>';
     html += '<td style="padding:6px 8px;border-bottom:1px solid #eee;font-size:10px;color:#444">'+r.obs+'</td>';
     html += '</tr>';
@@ -1996,10 +1999,11 @@ function renderAn21(proj) {
   html += '<div class="proj-card-header" style="background:#2C4A6E"><span style="font-size:13px;font-weight:600;color:#fff">Concluzii structurale — Material / Manoperă / Utilaj / Transport</span></div>';
   html += '<div class="proj-card-body" style="display:flex;flex-direction:column;gap:6px">';
   var concluzii = [
-    {tag:"MATERIAL",bg:"#FFF3CD",tc:"#856404",txt:"Mithras 1.079.610 lei vs buget 736.815 lei (+46,5%). Principală diferență: BCR 5.0 +38,6% şi piatră spartă +124%."},
-    {tag:"MANOPERĂ",bg:"#FCE4D6",tc:"#C0392B",txt:"Mithras 1.063.925 lei vs buget 123.757 lei (+760%). Mithras include în manoperă finisorul de beton, utilajele, gujoarelor+rosturilor. Bugetul F3 are utilaj=0 la Art.12 — lacună în deviz."},
+    {tag:"MATERIAL",bg:"#FFF3CD",tc:"#856404",txt:"Mithras 1.081.508 lei vs buget 736.815 lei (+46,8%). Nemodificat în REV. Principală diferență: BCR 5.0 şi piatră spartă +124%."},
+    {tag:"MANOPERĂ",bg:"#FCE4D6",tc:"#C0392B",txt:"Mithras REV 921.004 lei (inițial 1.065.795 lei) vs buget 123.749 lei (+644%). Singura reducere din REV: manopera dalei BCR 43,85→35,35 €/mp. Mithras include în manoperă finisorul de beton, utilajele, gujoanele+rosturile. Bugetul F3 are utilaj=0 la Art.12 — lacună în deviz."},
     {tag:"UTILAJ",bg:"#E8F5E9",tc:"#1E6E2D",txt:"Buget F3: 191.344 lei (inclus în terasamente+straturi). Mithras: 0 lei separat — absorbit în manoperă."},
-    {tag:"TRANSPORT",bg:"#FFF8E1",tc:"#856404",txt:"Buget F3: 215.889 lei. Mithras: 0 lei (Art.7, 9, 13 absente). Comparație incompletă — costul real Mithras este mai mare decât apare în ofertă."},
+    {tag:"TRANSPORT",bg:"#FFF8E1",tc:"#856404",txt:"Buget F3: 215.889 lei. Mithras: 0 lei (Art.7, 9, 13 absente — şi în REV). Comparație incompletă — costul real Mithras este mai mare decât apare în ofertă."},
+    {tag:"CONDIŢIE NOUĂ",bg:"#FCE4D6",tc:"#C0392B",txt:"REV MTH-B 545: o singură mobilizare inclusă. Mobilizări suplimentare finisor de beton = 1.000 €/buc — corelare obligatorie cu graficul de turnare. Valabilitate REV: expiră 22.07.2026."},
   ];
   concluzii.forEach(function(c){
     html += '<div style="background:'+c.bg+';border-radius:6px;padding:8px 12px;font-size:12px;display:flex;gap:10px;align-items:flex-start">';

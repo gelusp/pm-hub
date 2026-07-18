@@ -261,7 +261,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
           <i class="ti ti-chart-bar"></i> Validare Bugete
         </div>
         <div class="submenu-item" id="item-hangar-erp" onclick="toggleSubSub('hangar-erp')">
-          <i class="ti ti-receipt" style="color:#854F0B"></i> Validare Rețete Contract
+          <i class="ti ti-receipt" style="color:#854F0B"></i> Validare Contract / Buget / ERP - Saving
           <i class="ti ti-chevron-down chevron" id="chev-hangar-erp" style="font-size:11px"></i>
         </div>
         <div class="submenu" id="sub-hangar-erp" style="margin-left:14px;border-left:2px solid var(--grey-200)">
@@ -327,7 +327,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
           <i class="ti ti-chart-bar"></i> Validare Bugete
         </div>
         <div class="submenu-item" id="item-campus-erp" onclick="goModule('campus','erp')">
-          <i class="ti ti-receipt" style="color:#854F0B"></i> Validare Rețete Contract
+          <i class="ti ti-receipt" style="color:#854F0B"></i> Validare Contract / Buget / ERP - Saving
         </div>
         <div class="submenu-item" id="item-campus-plan" onclick="openLink('https://docs.google.com/spreadsheets/d/12MRUPuu_AUNogKQolIAumsQpMYBjB15V39vU1QDusUE/edit?gid=803862891#gid=803862891','item-campus-plan')">
           <i class="ti ti-layout-list"></i> Plan Proiect
@@ -903,7 +903,7 @@ function renderAnalizaDemo() {
   r12.forEach(function(r,i){rows12+=tbRow(r,i);});
   var html='';
   html+='<div class="proj-header"><div class="proj-title">Hangar Aeronave — Kogălniceanu</div>'+
-    '<div class="proj-meta">PM: Gelu Spătaru · Validare Rețete Contract · 18.07.2026</div></div>';
+    '<div class="proj-meta">PM: Gelu Spătaru · Validare Contract / Buget / ERP - Saving · 18.07.2026</div></div>';
   html+='<div class="module-badge" style="background:#FEF3C7;color:#854F0B">'+
     '<i class="ti ti-receipt" style="font-size:13px"></i> Analiză comparativă — Demolări Deviz 1.1 + 1.2</div>';
   html+='<div style="margin-bottom:12px"><a href="https://docs.google.com/spreadsheets/d/1bIUu-LW7ylZbPewHe0tVvVCFzaTPe4__bu9CSYLTA8s/edit?gid=1258875891#gid=1258875891" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 18px;background:#1A5276;color:#fff;border-radius:var(--radius);font-size:12px;font-weight:600;text-decoration:none"><i class="ti ti-table"></i> Deschide Analiza Comparativă</a></div>';
@@ -950,7 +950,7 @@ function openAnalizaDemoLink() {
 function renderERP(proj) {
   var p = DATA[proj] || DATA['hangar'];
   document.getElementById('main').innerHTML =
-    '<div class="proj-header"><div class="proj-title">Validare Rețete Contract / ERP</div>' +
+    '<div class="proj-header"><div class="proj-title">Validare Contract / Buget / ERP - Saving / ERP</div>' +
     '<div class="proj-meta">' + p.title + ' · Modul în pregătire</div></div>' +
     '<div class="module-badge" style="background:var(--amber-light);color:var(--amber)">' +
       '<i class="ti ti-receipt" style="font-size:13px"></i> ERP</div>' +
@@ -1111,7 +1111,7 @@ function renderValidare(proj) {
     html += '<button class="open-fisa-btn" style="flex:1;min-width:160px" onclick="window.open(\'https://drive.google.com/file/d/1pUQjk1pk7JsXk8cXdLShgpbqSMYh2JFj/view?usp=drive_link\',\'_blank\')"><i class="ti ti-chart-gantt"></i>Gantt de implementare</button>';
     html += '<button class="open-fisa-btn" style="flex:1;min-width:160px" onclick="goModule(\'hangar\',\'analize\')"><i class="ti ti-file-analytics"></i>Analiză pe capitole contract</button>';
     html += '<button class="open-fisa-btn" style="flex:1;min-width:160px" onclick="goModule(\'hangar\',\'sinteza\')"><i class="ti ti-clipboard-list"></i>Acțiuni / Riscuri / Rec.</button>';
-    html += '<button class="open-fisa-btn" style="flex:1;min-width:160px" onclick="goModule(\'hangar\',\'erp\')"><i class="ti ti-receipt"></i>Validare Rețete Contract / ERP</button>';
+    html += '<button class="open-fisa-btn" style="flex:1;min-width:160px" onclick="goModule(\'hangar\',\'erp\')"><i class="ti ti-receipt"></i>Validare Contract / Buget / ERP - Saving / ERP</button>';
   }
   html += '</div>';
   if (p.demo) {

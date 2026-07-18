@@ -1203,6 +1203,14 @@ function renderHome() {
       '<div class="home-pmhub-label"><i class="ti ti-layout-dashboard" style="font-size:13px;color:#CC1515"></i> PM Hub <span style="font-weight:400;color:var(--text-tertiary)">· EREN CONS SRL · Gelu Spătaru</span></div>' +
     '</div>' +
 
+    (new Date() <= new Date('2026-07-23T23:59:59') ?
+    '<div style="margin-bottom:12px;display:flex;gap:10px">' +
+      '<button onclick="startTour()" style="flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:11px 16px;background:#FEF7F7;color:#CC1515;border:1px solid #F2C9C9;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit"><i class="ti ti-player-play" style="font-size:15px"></i> DEMO — tur ghidat' +
+      '<span style="font-size:10px;font-weight:400;background:rgba(204,21,21,0.08);color:#A03535;border-radius:99px;padding:2px 8px;margin-left:4px">încă ' + Math.max(1, Math.ceil((new Date('2026-07-23T23:59:59') - new Date())/86400000)) + ' zile</span></button>' +
+      '<a href="PM_Hub_Prezentare_Management_v3.pptx" style="flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:11px 16px;background:#F7F9FE;color:#1F3864;border:1px solid #C9D6F2;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;text-decoration:none;font-family:inherit"><i class="ti ti-presentation" style="font-size:15px"></i> Prezentare PM Hub (PPTX)' +
+      '<span style="font-size:10px;font-weight:400;background:rgba(31,56,100,0.08);color:#2E5090;border-radius:99px;padding:2px 8px;margin-left:4px">încă ' + Math.max(1, Math.ceil((new Date('2026-07-23T23:59:59') - new Date())/86400000)) + ' zile</span></a>' +
+    '</div>' : '') +
+
     '<div class="proj-card">' +
       '<div class="proj-card-header" style="background:#A03535;border-left:3px solid #CC1515">' +
         '<div class="proj-icon" style="background:rgba(204,21,21,0.25)"><i class="ti ti-building" style="color:#CC1515"></i></div>' +
@@ -2282,6 +2290,93 @@ function renderPolitaCAR(proj) {
       '</div>' +
     '</div>';
 }
+
+/* ══════════ TUR GHIDAT DEMO (buton pe prima pagină) ══════════ */
+var TOUR_STEP_MS = 21000;
+var _tourIdx = -1, _tourTimer = null;
+var TOUR_STEPS = [
+  { t:'Pagina principală', d:'Toate proiectele EREN într-un singur loc, cu alertele active în față — punctul zero al fiecărei zile.',
+    run:function(){ goHome(); } },
+  { t:'Proiectul Hangar Kogălniceanu — modulele lui', d:'În meniul lateral: Validare Bugete, Contract/ERP, Documente, Acțiuni/Riscuri, Plan Proiect, Raportări, Power BI, Situații de Lucrări, Analize Comparative.',
+    run:function(){ _tourNav();
+      document.querySelectorAll('.submenu').forEach(function(x){ x.classList.remove('open'); });
+      document.querySelectorAll('.chevron').forEach(function(x){ x.classList.remove('open'); });
+      var sb = document.getElementById('sub-hangar'); if (sb) sb.classList.add('open');
+      var cv = document.getElementById('chev-hangar'); if (cv) cv.classList.add('open');
+      renderProjHome('hangar'); } },
+  { t:'Validare Contract / Buget / ERP', d:'Contract vs eDevize vs ERP: articole conforme, abateri majore și articole lipsă — totul reconciliat.',
+    run:function(){ _tourNav(); goModule('hangar','validare'); } },
+  { t:'Saving marcat explicit — Demolări, Deviz 1.1 + 1.2', d:'Fiecare deviz contractat arată marja și savingul față de buget (aici: −37% vs buget), plus verificarea ERP — identic, la zecimală.',
+    run:function(){ _tourNav();
+      var se = document.getElementById('sub-hangar-erp'); if (se) se.classList.add('open');
+      var ce = document.getElementById('chev-hangar-erp'); if (ce) ce.classList.add('open');
+      renderAnalizaDemo(); } },
+  { t:'Analize comparative pe capitole', d:'Fiecare capitol: buget vs oferte din piață, furnizor recomandat și link direct la calculul-sursă.',
+    run:function(){ _tourNav(); goModule('hangar','analize'); } },
+  { t:'Analiză Comparativă — 2.1 Platformă', d:'Studiu de caz: ofertă mult peste buget, punctul de negociere identificat, ofertă revizuită urmărită pas cu pas.',
+    run:function(){ _tourNav(); goModule('hangar','an21'); } },
+  { t:'Situația de Lucrări — cu toate documentele în spate', d:'SL1 Proiectare: PDF-ul situației, graficul fizic-valoric, adresa de înaintare, maparea și PV-ul de predare — vizualizabile direct, dintr-un singur ecran.',
+    run:function(){ _tourNav();
+      var ss = document.getElementById('sub-hangar-sl'); if (ss) ss.classList.add('open');
+      var cs = document.getElementById('chev-hangar-sl'); if (cs) cs.classList.add('open');
+      goModule('hangar','sl1'); } },
+  { t:'Acțiuni · Riscuri · Recomandări', d:'Registrul viu al proiectului: fiecare risc are prioritate, responsabil și termen.',
+    run:function(){ _tourNav(); goModule('hangar','sinteza'); } },
+  { t:'Tur încheiat', d:'Bugete · Oferte · Riscuri · Decizii — o singură sursă de adevăr. Întrebări?',
+    run:function(){ goHome(); } }
+];
+function _tourNav(){
+  document.getElementById('menu-btn').style.display = 'none';
+  document.getElementById('back-btn').style.display = 'flex';
+}
+function startTour(){
+  stopTour(true);
+  var bar = document.createElement('div');
+  bar.id = 'tour-bar';
+  bar.style.cssText = 'position:fixed;left:0;right:0;bottom:0;z-index:9999;background:#1F3864;color:#fff;padding:12px 16px;box-shadow:0 -4px 16px rgba(0,0,0,0.3);font-family:inherit';
+  bar.innerHTML =
+    '<div style="max-width:960px;margin:0 auto;display:flex;align-items:center;gap:14px">' +
+      '<div style="flex-shrink:0;width:34px;height:34px;border-radius:50%;background:#CC1515;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px" id="tour-num">1</div>' +
+      '<div style="flex:1;min-width:0">' +
+        '<div id="tour-title" style="font-size:13px;font-weight:700"></div>' +
+        '<div id="tour-desc" style="font-size:11.5px;color:#CADCFC;line-height:1.4"></div>' +
+        '<div style="height:3px;background:rgba(255,255,255,0.2);border-radius:2px;margin-top:6px"><div id="tour-prog" style="height:3px;width:0%;background:#CC1515;border-radius:2px;transition:width 0.4s"></div></div>' +
+      '</div>' +
+      '<button onclick="tourNext()" style="flex-shrink:0;padding:8px 14px;background:#fff;color:#1F3864;border:none;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit">Următorul <i class="ti ti-arrow-right" style="font-size:12px"></i></button>' +
+      '<button onclick="stopTour()" style="flex-shrink:0;padding:8px 12px;background:transparent;color:#CADCFC;border:1px solid rgba(255,255,255,0.35);border-radius:6px;font-size:12px;cursor:pointer;font-family:inherit">Oprește</button>' +
+    '</div>';
+  document.body.appendChild(bar);
+  document.addEventListener('keydown', _tourEsc);
+  _tourIdx = -1;
+  tourNext();
+}
+function tourNext(){
+  if (_tourTimer) { clearTimeout(_tourTimer); _tourTimer = null; }
+  _tourIdx++;
+  if (_tourIdx >= TOUR_STEPS.length) { stopTour(); return; }
+  var st = TOUR_STEPS[_tourIdx];
+  try { st.run(); } catch(e) {}
+  window.scrollTo(0,0);
+  var m = document.getElementById('main'); if (m) m.scrollTop = 0;
+  var bar = document.getElementById('tour-bar');
+  if (!bar) return;
+  document.getElementById('tour-num').textContent = (_tourIdx+1);
+  document.getElementById('tour-title').textContent = st.t;
+  document.getElementById('tour-desc').textContent = st.d;
+  document.getElementById('tour-prog').style.width = Math.round(((_tourIdx+1)/TOUR_STEPS.length)*100) + '%';
+  var isLast = (_tourIdx === TOUR_STEPS.length-1);
+  _tourTimer = setTimeout(tourNext, isLast ? 9000 : TOUR_STEP_MS);
+}
+function stopTour(silent){
+  if (_tourTimer) { clearTimeout(_tourTimer); _tourTimer = null; }
+  var bar = document.getElementById('tour-bar');
+  if (bar) bar.parentNode.removeChild(bar);
+  document.removeEventListener('keydown', _tourEsc);
+  var wasRunning = (_tourIdx >= 0);
+  _tourIdx = -1;
+  if (!silent && wasRunning) goHome();
+}
+function _tourEsc(e){ if (e.key === 'Escape') stopTour(); }
 
 </script>
 </body>

@@ -350,6 +350,9 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
         <div class="submenu-item" id="item-campus-powerbi" onclick="goModule('campus','powerbi')">
           <i class="ti ti-presentation-analytics" style="color:#7B2D8B"></i> Power BI
         </div>
+        <div class="submenu-item" id="item-campus-finantare" onclick="renderFinantareDotari()">
+          <i class="ti ti-coin-euro" style="color:#1A5276"></i> Posibile surse de finanțare - Dotări
+        </div>
       </div>
 
       <button class="sidebar-add" onclick="alert('Funcționalitate în dezvoltare.')">
@@ -945,6 +948,141 @@ function renderAnalizaDemo() {
 }
 function openAnalizaDemoLink() {
   window.open('https://docs.google.com/spreadsheets/d/1bIUu-LW7ylZbPewHe0tVvVCFzaTPe4__bu9CSYLTA8s/edit?gid=1258875891#gid=1258875891', '_blank');
+}
+
+function renderFinantareDotari() {
+  document.querySelectorAll('.submenu-item').forEach(function(i){ i.classList.remove('active'); });
+  var item = document.getElementById('item-campus-finantare');
+  if (item) item.classList.add('active');
+  closeMenu();
+  document.getElementById('menu-btn').style.display = 'none';
+  var btn = document.getElementById('back-btn');
+  btn.style.display = 'flex';
+  btn.onclick = function() { renderProjHome('campus'); };
+  var thS = 'padding:6px 10px;background:var(--grey-100);color:var(--text-secondary);font-weight:600;border-bottom:1px solid var(--border);font-size:11px';
+  var thR = 'padding:6px 10px;background:var(--grey-100);color:var(--text-secondary);font-weight:600;border-bottom:1px solid var(--border);font-size:11px;text-align:right';
+  var tdS = 'padding:6px 10px;border-bottom:1px solid var(--border);font-size:11px;color:var(--text-primary)';
+  var tdR = 'padding:6px 10px;border-bottom:1px solid var(--border);font-size:11px;text-align:right;color:var(--text-primary)';
+  var tdB = 'padding:6px 10px;border-bottom:1px solid var(--border);font-size:11px;text-align:right;font-weight:700;color:var(--navy)';
+  var tdRed = 'padding:6px 10px;border-bottom:1px solid var(--border);font-size:11px;text-align:right;font-weight:700;color:#C0392B';
+  var tdGreen = 'padding:6px 10px;border-bottom:1px solid var(--border);font-size:11px;text-align:right;font-weight:700;color:#1E6E2D';
+  var html = '';
+  html += '<div class="proj-header"><div class="proj-title">Campus DUAL Politehnica</div>' +
+    '<div class="proj-meta">PM: Gelu Spătaru · Corp C1 · Posibile surse de finanțare - Dotări · 18.07.2026</div></div>';
+  html += '<div class="module-badge" style="background:#D6EAF8;color:#1A5276">' +
+    '<i class="ti ti-coin-euro" style="font-size:13px"></i> Posibile surse de finanțare — Dotări Campus DUAL</div>';
+  html += '<div style="margin-bottom:16px"><a href="https://docs.google.com/spreadsheets/d/1KX27AlX7ENiR25gTQX_XDGrm9vQphL4w/edit?gid=1455085802#gid=1455085802" target="_blank" ' +
+    'style="display:inline-flex;align-items:center;gap:6px;padding:8px 18px;background:#1A5276;color:#fff;' +
+    'border-radius:var(--radius);font-size:12px;font-weight:600;text-decoration:none">' +
+    '<i class="ti ti-table"></i> Deschide Centralizator Lucrări Neexecutate</a></div>';
+  html += '<div style="background:#EBF5FB;border-left:4px solid #1A5276;border-radius:6px;padding:12px 16px;margin-bottom:16px;font-size:11px;color:#1A5276;line-height:1.6">' +
+    '<i class="ti ti-info-circle" style="font-size:13px;margin-right:6px"></i>' +
+    '<b>Notă:</b> Valorile neexecutate din capitolele de instalații nu sunt incluse în prezenta analiză — vor fi evaluate și integrate ulterior, cu impact pozitiv asupra GAP-ului rezidual.' +
+    '</div>';
+
+  // A. Situatie dotari
+  html += '<div class="nivel-card" style="margin-bottom:12px">' +
+    '<div class="nivel-title"><i class="ti ti-shopping-cart"></i>A. Situație dotări — Buget / Contract / Oferte furnizori</div>' +
+    '<div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:11px;margin-top:8px">' +
+    '<thead><tr>' +
+    '<th style="'+thS+'">Categorie</th>' +
+    '<th style="'+thR+'">Buget intern</th>' +
+    '<th style="'+thR+'">Contract beneficiar</th>' +
+    '<th style="'+thR+'">Ofertă furnizor</th>' +
+    '<th style="'+thS+'">Furnizor / Situație</th>' +
+    '</tr></thead><tbody>' +
+    '<tr>' +
+    '<td style="'+tdS+'">Mobilier + scaune + table</td>' +
+    '<td style="'+tdR+'">761.402,12 lei</td>' +
+    '<td style="'+tdR+'">872.708,00 lei<br><span style=\"font-size:9px;color:var(--text-secondary)\">din care F3: 17.500 (chelt. suplim. manoperă)</span></td>' +
+    '<td style="'+tdR+'">1.150.293,67 lei</td>' +
+    '<td style="'+tdS+'"><span class=\"badge warn\" style=\"font-size:10px\">Ovo Design — revizie juridică</span></td>' +
+    '</tr>' +
+    '<tr style="background:var(--grey-50)">' +
+    '<td style="'+tdS+'">Jaluzele</td>' +
+    '<td style="'+tdR+'">76.896,00 lei</td>' +
+    '<td style="'+tdR+'">86.400,00 lei<br><span style=\"font-size:9px;color:var(--text-secondary)\">F4</span></td>' +
+    '<td style="'+tdR+'">98.739,00 lei</td>' +
+    '<td style="'+tdS+'"><span class=\"badge warn\" style=\"font-size:10px\">Lotexco — FT în aprobare</span></td>' +
+    '</tr>' +
+    '<tr style="background:var(--grey-100)">' +
+    '<td style="'+tdS+';font-weight:700">TOTAL</td>' +
+    '<td style="'+tdB+'">838.298,12 lei</td>' +
+    '<td style="'+tdB+'">959.108,00 lei</td>' +
+    '<td style="'+tdB+'">1.249.032,67 lei</td>' +
+    '<td style="'+tdS+'"></td>' +
+    '</tr>' +
+    '</tbody></table></div></div>';
+
+  // B. Gap analysis
+  html += '<div class="nivel-grid" style="margin-bottom:12px">';
+  html += '<div class="nivel-card">' +
+    '<div class="nivel-title"><i class="ti ti-trending-down"></i>B. GAP față de buget intern</div>' +
+    '<div class="ind-row"><span class="ind-label">Oferte furnizori</span><span style="font-size:12px">1.249.032,67 lei</span></div>' +
+    '<div class="ind-row"><span class="ind-label">Buget intern</span><span style="font-size:12px">838.298,12 lei</span></div>' +
+    '<div class="ind-row"><span class="ind-label">GAP oferte vs buget</span><span style="font-size:13px;font-weight:700;color:#C0392B">−410.734,55 lei</span></div>' +
+    '<div class="ind-row"><span class="ind-label">Sursă finanțare NRZ</span><span style="font-size:12px;color:#1E6E2D">+262.510,24 lei</span></div>' +
+    '<div class="ind-row"><span class="ind-label">GAP rezidual vs buget</span><span class="badge" style="background:#FDECEA;color:#C0392B;font-size:11px">−148.224,31 lei</span></div>' +
+    '</div>';
+  html += '<div class="nivel-card">' +
+    '<div class="nivel-title"><i class="ti ti-trending-down"></i>B. GAP față de contract beneficiar</div>' +
+    '<div class="ind-row"><span class="ind-label">Oferte furnizori</span><span style="font-size:12px">1.249.032,67 lei</span></div>' +
+    '<div class="ind-row"><span class="ind-label">Contract beneficiar</span><span style="font-size:12px">959.108,00 lei</span></div>' +
+    '<div class="ind-row"><span class="ind-label">GAP oferte vs contract</span><span style="font-size:13px;font-weight:700;color:#C0392B">−289.924,67 lei</span></div>' +
+    '<div class="ind-row"><span class="ind-label">Sursă finanțare NRZ</span><span style="font-size:12px;color:#1E6E2D">+262.510,24 lei</span></div>' +
+    '<div class="ind-row"><span class="ind-label">GAP rezidual vs contract</span><span class="badge" style="background:#FDECEA;color:#C0392B;font-size:11px">−27.414,43 lei</span></div>' +
+    '</div>';
+  html += '</div>';
+
+  // C. Sursa finantare - breakdown
+  html += '<div class="nivel-card" style="margin-bottom:12px;border-left:4px solid #1A5276">' +
+    '<div class="nivel-title"><i class="ti ti-coin-euro" style="color:#1A5276"></i>C. Sursă finanțare GAP — Lucrări neexecutate (NRZ 15.07.2026)</div>' +
+    '<div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:11px;margin-top:8px">' +
+    '<thead><tr>' +
+    '<th style="'+thS+'">Capitol / Obiect</th>' +
+    '<th style="'+thR+'">Valoare rest neexecutat</th>' +
+    '</tr></thead><tbody>' +
+    '<tr><td style="'+tdS+'">Infrastructura Corp Școală</td><td style="'+tdR+'">24.630,02 lei</td></tr>' +
+    '<tr style="background:var(--grey-50)"><td style="'+tdS+'">Infrastructura Corp Cantină</td><td style="'+tdR+'">14.086,43 lei</td></tr>' +
+    '<tr><td style="'+tdS+'">Suprastructura Corp Școală</td><td style="'+tdR+'">5.838,78 lei</td></tr>' +
+    '<tr style="background:var(--grey-50)"><td style="'+tdS+'">Suprastructura Corp Cantină</td><td style="'+tdR+'">18,81 lei</td></tr>' +
+    '<tr><td style="'+tdS+'">Pereți Exteriori</td><td style="'+tdR+'">114.808,01 lei</td></tr>' +
+    '<tr style="background:var(--grey-50)"><td style="'+tdS+'">Organizare de șantier</td><td style="'+tdR+'">103.128,20 lei</td></tr>' +
+    '<tr style="background:var(--grey-100)">' +
+    '<td style="'+tdS+';font-weight:700">TOTAL sursă finanțare</td>' +
+    '<td style="'+tdGreen+'">262.510,24 lei</td>' +
+    '</tr>' +
+    '</tbody></table></div></div>';
+
+  // D. Bilant final
+  html += '<div class="nivel-card" style="margin-bottom:12px;background:var(--navy);color:#fff">' +
+    '<div style="font-size:13px;font-weight:700;margin-bottom:12px">D. Bilanț final — acoperire GAP</div>' +
+    '<div style="display:flex;gap:16px;flex-wrap:wrap">' +
+    '<div style="flex:1;min-width:180px;background:rgba(255,255,255,0.08);border-radius:8px;padding:12px">' +
+    '<div style="font-size:10px;color:rgba(255,255,255,0.7);margin-bottom:4px">GAP vs Buget intern</div>' +
+    '<div style="font-size:13px;font-weight:700;color:#F1948A">−410.734,55 lei</div>' +
+    '<div style="font-size:10px;color:rgba(255,255,255,0.7);margin:6px 0 2px">Acoperit prin NRZ</div>' +
+    '<div style="font-size:12px;font-weight:600;color:#4ADE80">+262.510,24 lei</div>' +
+    '<div style="border-top:1px solid rgba(255,255,255,0.2);margin-top:8px;padding-top:8px">' +
+    '<div style="font-size:10px;color:rgba(255,255,255,0.7)">GAP rezidual</div>' +
+    '<div style="font-size:14px;font-weight:700;color:#F1948A">−148.224,31 lei</div>' +
+    '</div></div>' +
+    '<div style="flex:1;min-width:180px;background:rgba(255,255,255,0.08);border-radius:8px;padding:12px">' +
+    '<div style="font-size:10px;color:rgba(255,255,255,0.7);margin-bottom:4px">GAP vs Contract beneficiar</div>' +
+    '<div style="font-size:13px;font-weight:700;color:#F1948A">−289.924,67 lei</div>' +
+    '<div style="font-size:10px;color:rgba(255,255,255,0.7);margin:6px 0 2px">Acoperit prin NRZ</div>' +
+    '<div style="font-size:12px;font-weight:600;color:#4ADE80">+262.510,24 lei</div>' +
+    '<div style="border-top:1px solid rgba(255,255,255,0.2);margin-top:8px;padding-top:8px">' +
+    '<div style="font-size:10px;color:rgba(255,255,255,0.7)">GAP rezidual</div>' +
+    '<div style="font-size:14px;font-weight:700;color:#F1948A">−27.414,43 lei</div>' +
+    '</div></div>' +
+    '</div></div>';
+
+  // Nota finala
+
+
+  html += '<div class="page-footer">PM Hub · EREN CONS SRL · 2026</div>';
+  document.getElementById('main').innerHTML = html;
 }
 
 function renderERP(proj) {

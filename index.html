@@ -356,6 +356,9 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
         <div class="submenu-item" id="item-campus-finantare" onclick="renderFinantareDotari()">
           <i class="ti ti-coin-euro" style="color:#1A5276"></i> Posibile surse de finanțare - Dotări
         </div>
+        <div class="submenu-item" id="item-campus-nrncs" onclick="renderCentralizatorNRNCS()">
+          <i class="ti ti-table" style="color:#1A5276"></i> Centralizator NR-NCS final
+        </div>
       </div>
 
       <button class="sidebar-add" onclick="alert('Funcționalitate în dezvoltare.')">
@@ -2377,6 +2380,124 @@ function stopTour(silent){
   if (!silent && wasRunning) goHome();
 }
 function _tourEsc(e){ if (e.key === 'Escape') stopTour(); }
+
+
+function renderCentralizatorNRNCS() {
+  document.querySelectorAll('.submenu-item').forEach(function(i){ i.classList.remove('active'); });
+  var item = document.getElementById('item-campus-nrncs');
+  if (item) item.classList.add('active');
+  closeMenu();
+  document.getElementById('menu-btn').style.display = 'none';
+  var btn = document.getElementById('back-btn');
+  btn.style.display = 'flex';
+  btn.onclick = function() { renderProjHome('campus'); };
+
+  var arts = [
+    {nr:1, desc:'Cablu HF UTP cat.7, 4\xd72x23AWG', brand:'Schrack', um:'ml', cant:3307, mat:13459.49, man:16468.86, tot:29928.35},
+    {nr:2, desc:'Cablu UTP cat.7 — modificări/neprevăzute', brand:'Schrack', um:'ml', cant:502, mat:2043.14, man:2499.96, tot:4543.10},
+    {nr:3, desc:'UPS Legrand KEOR DK 2000VA On-Line', brand:'Legrand', um:'buc', cant:4, mat:2472.76, man:128.64, tot:2601.40},
+    {nr:4, desc:'Pat cablu 200\xd760mm tablă perforată', brand:'Schrack', um:'ml', cant:20, mat:2142.40, man:448.00, tot:2590.40},
+    {nr:5, desc:'Switch 28P Gigabit PoE+ (24\xd7PoE+, 2\xd7SFP)', brand:'Tp-Link', um:'buc', cant:2, mat:551.98, man:60.74, tot:612.72},
+    {nr:6, desc:'Materiale mărunte şi accesorii montaj', brand:'—', um:'set', cant:1, mat:151.24, man:50.21, tot:201.45}
+  ];
+  var totFaraTVA=40477.42, totCuTVA=48977.68, totEch=20821.01, totMan=19656.41;
+  function fmt(v){return v.toLocaleString('ro-RO',{minimumFractionDigits:2,maximumFractionDigits:2});}
+  function pct(v){return (v/totFaraTVA*100).toFixed(1)+'%';}
+  var cols=['#C0392B','#E67E22','#2980B9','#2980B9','#7F8C8D','#7F8C8D'];
+
+  var rows='';
+  arts.forEach(function(a,i){
+    var p=(a.tot/totFaraTVA*100).toFixed(1);
+    rows+='<tr style="background:'+(i%2?'#fff':'#F9F9F9')+';border-bottom:1px solid #EEE">'+
+      '<td style="padding:7px 8px;font-size:11px;font-weight:600">'+a.nr+'</td>'+
+      '<td style="padding:7px 8px;font-size:11px;color:#2C3E50">'+a.desc+'</td>'+
+      '<td style="padding:7px 8px;font-size:11px;text-align:center;color:#555">'+a.brand+'</td>'+
+      '<td style="padding:7px 8px;font-size:11px;text-align:center">'+a.cant+' '+a.um+'</td>'+
+      '<td style="padding:7px 8px;font-size:11px;text-align:right;color:#1A5276;font-weight:600">'+fmt(a.mat)+' €</td>'+
+      '<td style="padding:7px 8px;font-size:11px;text-align:right;color:#27AE60;font-weight:600">'+fmt(a.man)+' €</td>'+
+      '<td style="padding:7px 8px;font-size:12px;text-align:right;font-weight:700;color:'+cols[i]+'">'+fmt(a.tot)+' €</td>'+
+      '<td style="padding:7px 12px;min-width:90px">'+
+        '<div style="display:flex;align-items:center;gap:6px">'+
+          '<div style="flex:1;height:8px;background:#EEE;border-radius:4px;overflow:hidden">'+
+            '<div style="width:'+p+'%;height:100%;background:'+cols[i]+';border-radius:4px"></div>'+
+          '</div>'+
+          '<span style="font-size:10px;font-weight:700;color:'+cols[i]+'">'+p+'%</span>'+
+        '</div>'+
+      '</td>'+
+    '</tr>';
+  });
+
+  document.getElementById('main').innerHTML =
+    '<div class="proj-header"><div class="proj-title">Centralizator NR-NCS final</div>'+
+    '<div class="proj-meta">Campus DUAL UPB \xb7 Nibaco SRL \xb7 Ofertă 26.06.2026</div></div>'+
+    '<div class="module-badge" style="background:#D6EAF8;color:#1A5276">'+
+      '<i class="ti ti-table" style="font-size:13px"></i> Centralizator Suplimentări NR-NCS \xb7 UPB C1</div>'+
+
+    '<a href="#" onclick="openCentralizatorNRNCS();return false;" '+
+      'style="display:inline-flex;align-items:center;gap:6px;padding:8px 18px;background:#1A5276;color:#fff;'+
+      'border-radius:6px;font-size:12px;font-weight:600;text-decoration:none;margin-bottom:20px">'+
+      '<i class="ti ti-file-spreadsheet"></i> Deschide Centralizator complet'+
+    '</a>'+
+
+    '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:10px;margin-bottom:20px">'+
+      '<div style="background:#EBF5FB;border-radius:8px;padding:12px;border-top:3px solid #1A5276">'+
+        '<div style="font-size:10px;color:#1A5276;font-weight:700;text-transform:uppercase;letter-spacing:.04em">Total fără TVA</div>'+
+        '<div style="font-size:18px;font-weight:700;color:#1A5276;margin-top:4px">'+fmt(totFaraTVA)+' €</div>'+
+      '</div>'+
+      '<div style="background:#EAFAF1;border-radius:8px;padding:12px;border-top:3px solid #27AE60">'+
+        '<div style="font-size:10px;color:#1E8449;font-weight:700;text-transform:uppercase;letter-spacing:.04em">Total cu TVA (21%)</div>'+
+        '<div style="font-size:18px;font-weight:700;color:#1E8449;margin-top:4px">'+fmt(totCuTVA)+' €</div>'+
+      '</div>'+
+      '<div style="background:#F9F0FF;border-radius:8px;padding:12px;border-top:3px solid #8E44AD">'+
+        '<div style="font-size:10px;color:#8E44AD;font-weight:700;text-transform:uppercase;letter-spacing:.04em">Echipamente</div>'+
+        '<div style="font-size:18px;font-weight:700;color:#8E44AD;margin-top:4px">'+fmt(totEch)+' €</div>'+
+        '<div style="font-size:10px;color:#888;margin-top:2px">'+pct(totEch)+' din total</div>'+
+      '</div>'+
+      '<div style="background:#FAEEDA;border-radius:8px;padding:12px;border-top:3px solid #E67E22">'+
+        '<div style="font-size:10px;color:#E67E22;font-weight:700;text-transform:uppercase;letter-spacing:.04em">Manoperă</div>'+
+        '<div style="font-size:18px;font-weight:700;color:#E67E22;margin-top:4px">'+fmt(totMan)+' €</div>'+
+        '<div style="font-size:10px;color:#888;margin-top:2px">'+pct(totMan)+' din total</div>'+
+      '</div>'+
+    '</div>'+
+
+    '<div class="nivel-card" style="margin-bottom:16px;border-left:4px solid #1A5276">'+
+      '<div class="nivel-title" style="color:#1A5276"><i class="ti ti-sort-descending"></i> Articole ordonate după impact valoric</div>'+
+      '<div style="overflow-x:auto;margin-top:10px">'+
+        '<table style="width:100%;border-collapse:collapse;font-size:12px">'+
+          '<thead><tr style="background:#1A5276;color:#fff">'+
+            '<th style="padding:8px;text-align:left">#</th>'+
+            '<th style="padding:8px;text-align:left">Descriere</th>'+
+            '<th style="padding:8px;text-align:center">Brand</th>'+
+            '<th style="padding:8px;text-align:center">Cant.</th>'+
+            '<th style="padding:8px;text-align:right">Mat. (€)</th>'+
+            '<th style="padding:8px;text-align:right">Man. (€)</th>'+
+            '<th style="padding:8px;text-align:right">Total (€)</th>'+
+            '<th style="padding:8px;text-align:left;min-width:100px">Pondere</th>'+
+          '</tr></thead>'+
+          '<tbody>'+rows+'</tbody>'+
+          '<tfoot><tr style="background:#1A5276;color:#fff;font-weight:700">'+
+            '<td colspan="4" style="padding:8px">TOTAL GENERAL</td>'+
+            '<td style="padding:8px;text-align:right">'+fmt(totEch)+' €</td>'+
+            '<td style="padding:8px;text-align:right">'+fmt(totMan)+' €</td>'+
+            '<td style="padding:8px;text-align:right">'+fmt(totFaraTVA)+' €</td>'+
+            '<td style="padding:8px">100%</td>'+
+          '</tr></tfoot>'+
+        '</table>'+
+      '</div>'+
+    '</div>'+
+
+    '<div style="font-size:11px;color:#555;background:#F8F9FA;border-radius:6px;padding:10px 14px;border-left:3px solid #BDC3C7">'+
+      '<i class="ti ti-info-circle" style="color:#7F8C8D"></i> '+
+      '<strong>Ofertant:</strong> NIBACO SRL \xb7 '+
+      '<strong>Garanție:</strong> 24 luni \xb7 '+
+      '<strong>Valabilitate:</strong> 30 zile de la 26.06.2026 \xb7 '+
+      'Prețuri fără TVA \xb7 Nu include săpături / umplere Şanțuri'+
+    '</div>';
+}
+
+function openCentralizatorNRNCS() {
+  window.open('https://docs.google.com/spreadsheets/d/19b3Q8j24OW6gvjaXf-Auv2nX53KE3QAPwJDNfy34x5g/edit?gid=186958195#gid=186958195', '_blank');
+}
 
 </script>
 </body>

@@ -301,6 +301,9 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
           <div class="submenu-item" id="item-hangar-sl1" onclick="goModule('hangar','sl1')">
             <i class="ti ti-file-invoice" style="color:#1A5276"></i> SL1 — Proiectare
           </div>
+          <div class="submenu-item" id="item-hangar-sl2" onclick="goModule('hangar','sl2')">
+            <i class="ti ti-file-invoice" style="color:#6C3483"></i> SL2 — Execuție
+          </div>
         </div>
         <div class="submenu-item" id="item-hangar-analize" onclick="toggleSubSub('hangar-analize')">
           <i class="ti ti-file-analytics" style="color:#2E7D32"></i> Analize Comparative
@@ -464,6 +467,7 @@ function goModule(proj, module) {
   else if (module === 'doccontract') renderDocContract(proj);
   else if (module === 'politacar') renderPolitaCAR(proj);
   else if (module === 'sl1') renderSL1(proj);
+  else if (module === 'sl2') renderSL2(proj);
   else if (module === 'an21') renderAn21(proj);
   else if (module === 'anpref') renderAnPref(proj);
   else renderProductie(proj);
@@ -1460,6 +1464,12 @@ function renderHome() {
         '<div style="font-size:11px;color:#5D4037;line-height:1.5">A fost adăugat un dashboard important privind finanțarea dotărilor.<br>' +
         '<b>Cale:</b> <span style="font-family:monospace;background:rgba(0,0,0,0.06);padding:1px 6px;border-radius:4px">Campus DUAL → Posibile surse de finanțare - Dotări</span></div>' +
       '</div>' +
+    '</div>' : '') +
+
+    (new Date() <= new Date('2026-07-25') ? '<div style="background:#F5EEF8;border:1px solid #D2B4DE;border-left:4px solid #6C3483;border-radius:6px;padding:10px 14px;margin-bottom:12px">' +
+      '<div style="font-size:11px;font-weight:700;color:#6C3483;margin-bottom:4px"><i class="ti ti-file-invoice" style="margin-right:4px"></i>Kogălniceanu — SL2 Execuție disponibil</div>' +
+      '<div style="font-size:12px;font-weight:700;color:#2C3E50">Total fără TVA: <span style="color:#6C3483">544.032 lei</span> · Total cu TVA: <span style="color:#6C3483">658.278 lei</span></div>' +
+      '<div style="font-size:10px;color:#888;margin-top:3px">Demolări: 482.712 lei · Org. șantier: 61.319 lei · Data: 25.07.2026</div>' +
     '</div>' : '') +
 
     (new Date() <= new Date('2026-07-24') ? '<div style="background:#EAFAF1;border:1px solid #A9DFBF;border-left:4px solid #27AE60;border-radius:6px;padding:10px 14px;margin-bottom:12px">' +
@@ -2729,6 +2739,259 @@ function renderCentralizatorNRNCS() {
 
 function openCentralizatorNRNCS() {
   window.open('https://docs.google.com/spreadsheets/d/19b3Q8j24OW6gvjaXf-Auv2nX53KE3QAPwJDNfy34x5g/edit?gid=186958195#gid=186958195', '_blank');
+}
+
+
+function renderSL2(proj) {
+  document.querySelectorAll('.submenu-item').forEach(function(i){ i.classList.remove('active'); });
+  var item = document.getElementById('item-hangar-sl2');
+  if (item) item.classList.add('active');
+  closeMenu();
+  document.getElementById('menu-btn').style.display = 'none';
+  var btn = document.getElementById('back-btn');
+  btn.style.display = 'flex';
+  btn.onclick = function() { renderProjHome('hangar'); };
+
+  document.getElementById('main').innerHTML =
+    '<div class="proj-header">' +
+      '<div class="proj-title">Situație de Lucrări Nr. 2 — Execuție</div>' +
+      '<div class="proj-meta">Contract A-997 / 01.08.2025 \xb7 Hangar Kogălniceanu \xb7 UM 0187 \xb7 25.07.2026</div>' +
+    '</div>' +
+    '<div class="module-badge" style="background:#F5EEF8;color:#6C3483">' +
+      '<i class="ti ti-file-analytics" style="font-size:13px"></i> SL2 — Execuție' +
+    '</div>' +
+
+    '<div class="nivel-card" style="margin-bottom:16px;border-left:4px solid #6C3483">' +
+      '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px">' +
+        '<span style="font-size:10px;background:#F5EEF8;color:#6C3483;padding:2px 10px;border-radius:99px;font-weight:600">SL Nr. 2</span>' +
+        '<span style="font-size:10px;background:#D6EAF8;color:#1A5276;padding:2px 10px;border-radius:99px;font-weight:600">Execuție</span>' +
+        '<span style="font-size:10px;background:#EAF3DE;color:#1E6E2D;padding:2px 10px;border-radius:99px;font-weight:600">Contract A-997 / 01.08.2025</span>' +
+        '<span style="font-size:10px;background:#FAEEDA;color:#854F0B;padding:2px 10px;border-radius:99px;font-weight:600">UM 0187 Mihai Kogălniceanu</span>' +
+      '</div>' +
+
+      '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">' +
+        '<a href="#" onclick="openVizualizareSL2();return false;" ' +
+          'style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:#6C3483;color:#fff;border-radius:6px;font-size:12px;font-weight:600;text-decoration:none">' +
+          '<i class="ti ti-file-type-pdf"></i> Vizualizează SL2' +
+        '</a>' +
+      '</div>' +
+
+      '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:16px">' +
+        '<div style="background:#F5EEF8;border-radius:8px;padding:12px;text-align:center">' +
+          '<div style="font-size:10px;color:#6C3483;font-weight:700;margin-bottom:4px">TOTAL FĂRĂ TVA</div>' +
+          '<div style="font-size:18px;font-weight:700;color:#6C3483">544.032</div>' +
+          '<div style="font-size:10px;color:var(--text-secondary)">lei</div>' +
+        '</div>' +
+        '<div style="background:#EAF3DE;border-radius:8px;padding:12px;text-align:center">' +
+          '<div style="font-size:10px;color:#1E6E2D;font-weight:700;margin-bottom:4px">TVA 21%</div>' +
+          '<div style="font-size:18px;font-weight:700;color:#1E6E2D">114.247</div>' +
+          '<div style="font-size:10px;color:var(--text-secondary)">lei</div>' +
+        '</div>' +
+        '<div style="background:#D6EAF8;border-radius:8px;padding:12px;text-align:center">' +
+          '<div style="font-size:10px;color:#1A5276;font-weight:700;margin-bottom:4px">TOTAL CU TVA</div>' +
+          '<div style="font-size:18px;font-weight:700;color:#1A5276">658.278</div>' +
+          '<div style="font-size:10px;color:var(--text-secondary)">lei</div>' +
+        '</div>' +
+        '<div style="background:#FAEEDA;border-radius:8px;padding:12px;text-align:center">' +
+          '<div style="font-size:10px;color:#854F0B;font-weight:700;margin-bottom:4px">DATA SL</div>' +
+          '<div style="font-size:16px;font-weight:700;color:#854F0B">25.07.2026</div>' +
+          '<div style="font-size:10px;color:var(--text-secondary)">ver. 20.07.2026</div>' +
+        '</div>' +
+      '</div>' +
+    '</div>' +
+
+    '<div class="nivel-card" style="margin-bottom:16px;border-left:4px solid #1A5276">' +
+      '<div class="nivel-title" style="color:#1A5276"><i class="ti ti-list-details"></i> F1 — Centralizator pe obiectiv</div>' +
+      '<div style="overflow-x:auto;margin-top:10px">' +
+        '<table style="width:100%;border-collapse:collapse;font-size:12px">' +
+          '<thead><tr style="background:#1A5276;color:#fff">' +
+            '<th style="padding:8px;text-align:left">Capitol</th>' +
+            '<th style="padding:8px;text-align:right">Valoare fără TVA (lei)</th>' +
+            '<th style="padding:8px;text-align:right">Din care C+M (lei)</th>' +
+          '</tr></thead>' +
+          '<tbody>' +
+            '<tr style="background:#F9F9F9;border-bottom:1px solid #EEE">' +
+              '<td style="padding:8px">Cap. 1.1 — Demolări</td>' +
+              '<td style="padding:8px;text-align:right;font-weight:600">482.712,30</td>' +
+              '<td style="padding:8px;text-align:right">482.712,30</td>' +
+            '</tr>' +
+            '<tr style="background:#fff;border-bottom:1px solid #EEE">' +
+              '<td style="padding:8px">Cap. 5.1.1 — Organizare de șantier</td>' +
+              '<td style="padding:8px;text-align:right;font-weight:600">61.319,43</td>' +
+              '<td style="padding:8px;text-align:right">61.319,43</td>' +
+            '</tr>' +
+          '</tbody>' +
+          '<tfoot>' +
+            '<tr style="background:#EBF5FB;border-top:2px solid #1A5276">' +
+              '<td style="padding:8px;font-weight:700">TOTAL fără TVA</td>' +
+              '<td style="padding:8px;text-align:right;font-weight:700;font-size:13px;color:#1A5276">544.031,73</td>' +
+              '<td style="padding:8px;text-align:right;font-weight:700">544.031,73</td>' +
+            '</tr>' +
+            '<tr style="background:#F9F9F9">' +
+              '<td style="padding:8px;color:#555">TVA 21%</td>' +
+              '<td style="padding:8px;text-align:right;color:#555">114.246,66</td>' +
+              '<td style="padding:8px;text-align:right;color:#555">114.246,66</td>' +
+            '</tr>' +
+            '<tr style="background:#1A5276;color:#fff;font-weight:700">' +
+              '<td style="padding:8px">TOTAL cu TVA</td>' +
+              '<td style="padding:8px;text-align:right;font-size:14px">658.278,39</td>' +
+              '<td style="padding:8px;text-align:right">658.278,39</td>' +
+            '</tr>' +
+          '</tfoot>' +
+        '</table>' +
+      '</div>' +
+    '</div>' +
+
+    '<div class="nivel-card" style="margin-bottom:16px;border-left:4px solid #6C3483">' +
+      '<div class="nivel-title" style="color:#6C3483"><i class="ti ti-hammer"></i> F2 — Centralizator pe obiect: Cap. 1 Demolări</div>' +
+      '<div style="overflow-x:auto;margin-top:10px">' +
+        '<table style="width:100%;border-collapse:collapse;font-size:12px">' +
+          '<thead><tr style="background:#6C3483;color:#fff">' +
+            '<th style="padding:8px;text-align:left">Stadiu fizic</th>' +
+            '<th style="padding:8px;text-align:right">Materiale (lei)</th>' +
+            '<th style="padding:8px;text-align:right">Manoperă (lei)</th>' +
+            '<th style="padding:8px;text-align:right">Utilaj (lei)</th>' +
+            '<th style="padding:8px;text-align:right">Transport (lei)</th>' +
+            '<th style="padding:8px;text-align:right">Total fără TVA (lei)</th>' +
+          '</tr></thead>' +
+          '<tbody>' +
+            '<tr style="background:#F9F9F9;border-bottom:1px solid #EEE">' +
+              '<td style="padding:8px">1.1 Demolări Hangar existent</td>' +
+              '<td style="padding:8px;text-align:right;color:#888">—</td>' +
+              '<td style="padding:8px;text-align:right">22.342,42</td>' +
+              '<td style="padding:8px;text-align:right">267.665,43</td>' +
+              '<td style="padding:8px;text-align:right">48.456,08</td>' +
+              '<td style="padding:8px;text-align:right;font-weight:700;color:#6C3483">338.463,92</td>' +
+            '</tr>' +
+            '<tr style="background:#fff;border-bottom:1px solid #EEE">' +
+              '<td style="padding:8px">1.2 Demolări platformă beton exterioară</td>' +
+              '<td style="padding:8px;text-align:right;color:#888">—</td>' +
+              '<td style="padding:8px;text-align:right">9.255,51</td>' +
+              '<td style="padding:8px;text-align:right">93.219,38</td>' +
+              '<td style="padding:8px;text-align:right">41.773,49</td>' +
+              '<td style="padding:8px;text-align:right;font-weight:700;color:#6C3483">144.248,38</td>' +
+            '</tr>' +
+          '</tbody>' +
+          '<tfoot>' +
+            '<tr style="background:#EEE;border-top:2px solid #6C3483">' +
+              '<td style="padding:8px;font-weight:700">TOTAL Demolări fără TVA</td>' +
+              '<td style="padding:8px;text-align:right;color:#888">—</td>' +
+              '<td style="padding:8px;text-align:right;font-weight:600">31.597,93</td>' +
+              '<td style="padding:8px;text-align:right;font-weight:600">360.884,81</td>' +
+              '<td style="padding:8px;text-align:right;font-weight:600">90.229,57</td>' +
+              '<td style="padding:8px;text-align:right;font-weight:700;font-size:13px;color:#6C3483">482.712,30</td>' +
+            '</tr>' +
+            '<tr style="background:#F9F9F9">' +
+              '<td style="padding:8px;color:#555">TVA 21%</td>' +
+              '<td colspan="4" style="padding:8px;text-align:right;color:#555">101.369,58</td>' +
+              '<td style="padding:8px;text-align:right;color:#555">101.369,58</td>' +
+            '</tr>' +
+            '<tr style="background:#6C3483;color:#fff;font-weight:700">' +
+              '<td style="padding:8px">TOTAL Demolări cu TVA</td>' +
+              '<td colspan="4" style="padding:8px"></td>' +
+              '<td style="padding:8px;text-align:right;font-size:14px">584.081,89</td>' +
+            '</tr>' +
+          '</tfoot>' +
+        '</table>' +
+      '</div>' +
+    '</div>' +
+    '<div class="nivel-card" style="margin-bottom:16px;border-left:4px solid #2C3E50">' +
+      '<div class="nivel-title" style="color:#2C3E50"><i class="ti ti-chart-bar"></i> Stadiu decontare — SL1 + SL2 (cumulat)</div>' +
+      '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:10px;margin:12px 0">' +
+        '<div style="background:#EAF3DE;border-radius:8px;padding:12px;text-align:center;border-top:3px solid #1E6E2D">' +
+          '<div style="font-size:10px;color:#1E6E2D;font-weight:700;margin-bottom:4px">VALOARE CONTRACT</div>' +
+          '<div style="font-size:15px;font-weight:700;color:#1E6E2D">19.305.332</div>' +
+          '<div style="font-size:10px;color:var(--text-secondary)">lei fără TVA</div>' +
+        '</div>' +
+        '<div style="background:#F5EEF8;border-radius:8px;padding:12px;text-align:center;border-top:3px solid #6C3483">' +
+          '<div style="font-size:10px;color:#6C3483;font-weight:700;margin-bottom:4px">DECONTAT SL1</div>' +
+          '<div style="font-size:15px;font-weight:700;color:#6C3483">628.000</div>' +
+          '<div style="font-size:10px;color:var(--text-secondary)">lei · Proiectare</div>' +
+        '</div>' +
+        '<div style="background:#F5EEF8;border-radius:8px;padding:12px;text-align:center;border-top:3px solid #6C3483">' +
+          '<div style="font-size:10px;color:#6C3483;font-weight:700;margin-bottom:4px">DECONTAT SL2</div>' +
+          '<div style="font-size:15px;font-weight:700;color:#6C3483">544.032</div>' +
+          '<div style="font-size:10px;color:var(--text-secondary)">lei · Execuție</div>' +
+        '</div>' +
+        '<div style="background:#D6EAF8;border-radius:8px;padding:12px;text-align:center;border-top:3px solid #1A5276">' +
+          '<div style="font-size:10px;color:#1A5276;font-weight:700;margin-bottom:4px">CUMULAT SL1+SL2</div>' +
+          '<div style="font-size:16px;font-weight:700;color:#1A5276">1.172.032</div>' +
+          '<div style="font-size:10px;color:var(--text-secondary)">lei fără TVA</div>' +
+        '</div>' +
+        '<div style="background:#FDEDEC;border-radius:8px;padding:12px;text-align:center;border-top:3px solid #C0392B">' +
+          '<div style="font-size:10px;color:#C0392B;font-weight:700;margin-bottom:4px">REST DE DECONTAT</div>' +
+          '<div style="font-size:15px;font-weight:700;color:#C0392B">18.133.300</div>' +
+          '<div style="font-size:10px;color:var(--text-secondary)">lei fără TVA</div>' +
+        '</div>' +
+        '<div style="background:#2C3E50;border-radius:8px;padding:12px;text-align:center;border-top:3px solid #566573">' +
+          '<div style="font-size:10px;color:#AAB7B8;font-weight:700;margin-bottom:4px">PROGRES GLOBAL</div>' +
+          '<div style="font-size:22px;font-weight:700;color:#fff">6,07%</div>' +
+          '<div style="font-size:10px;color:#AAB7B8">din valoare totală</div>' +
+        '</div>' +
+      '</div>' +
+      '<div style="margin-bottom:12px">' +
+        '<div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text-secondary);margin-bottom:4px">' +
+          '<span>Progres decontare cumulat</span><span>6,07%</span>' +
+        '</div>' +
+        '<div style="background:var(--grey-200);border-radius:4px;height:10px;position:relative">' +
+          '<div style="background:#6C3483;border-radius:4px 0 0 4px;height:10px;width:3.25%;display:inline-block;vertical-align:top"></div>' +
+          '<div style="background:#8E44AD;border-radius:0 4px 4px 0;height:10px;width:2.82%;display:inline-block;vertical-align:top"></div>' +
+        '</div>' +
+        '<div style="display:flex;gap:12px;margin-top:4px">' +
+          '<span style="font-size:10px;color:#6C3483">&#9632; SL1: 3,25%</span>' +
+          '<span style="font-size:10px;color:#8E44AD">&#9632; SL2: +2,82%</span>' +
+        '</div>' +
+      '</div>' +
+      '<div style="overflow-x:auto">' +
+        '<table style="width:100%;border-collapse:collapse;font-size:11px">' +
+          '<thead><tr style="background:#2C3E50;color:#fff">' +
+            '<th style="padding:7px 8px;text-align:left">SL</th>' +
+            '<th style="padding:7px 8px;text-align:left">Tip</th>' +
+            '<th style="padding:7px 8px;text-align:left">Capitol</th>' +
+            '<th style="padding:7px 8px;text-align:right">Fără TVA (lei)</th>' +
+            '<th style="padding:7px 8px;text-align:right">TVA (lei)</th>' +
+            '<th style="padding:7px 8px;text-align:right">Cu TVA (lei)</th>' +
+          '</tr></thead>' +
+          '<tbody>' +
+            '<tr style="background:#F5EEF8;border-bottom:1px solid #EEE">' +
+              '<td style="padding:7px 8px;font-weight:700;color:#6C3483">SL1</td>' +
+              '<td style="padding:7px 8px">Proiectare</td>' +
+              '<td style="padding:7px 8px;color:#555">Cap.3 — Proiectare &amp; AT</td>' +
+              '<td style="padding:7px 8px;text-align:right;font-weight:600">628.000,00</td>' +
+              '<td style="padding:7px 8px;text-align:right">131.880,00</td>' +
+              '<td style="padding:7px 8px;text-align:right;font-weight:600">759.880,00</td>' +
+            '</tr>' +
+            '<tr style="background:#EDE7F6;border-bottom:1px solid #EEE">' +
+              '<td style="padding:7px 8px;font-weight:700;color:#6C3483">SL2</td>' +
+              '<td style="padding:7px 8px">Execuție</td>' +
+              '<td style="padding:7px 8px;color:#555">Cap.1 Demolări + Cap.5 OS</td>' +
+              '<td style="padding:7px 8px;text-align:right;font-weight:600">544.031,73</td>' +
+              '<td style="padding:7px 8px;text-align:right">114.246,66</td>' +
+              '<td style="padding:7px 8px;text-align:right;font-weight:600">658.278,39</td>' +
+            '</tr>' +
+          '</tbody>' +
+          '<tfoot>' +
+            '<tr style="background:#2C3E50;color:#fff;font-weight:700">' +
+              '<td colspan="3" style="padding:8px">TOTAL DECONTAT CUMULAT</td>' +
+              '<td style="padding:8px;text-align:right;font-size:13px">1.172.031,73</td>' +
+              '<td style="padding:8px;text-align:right">246.126,66</td>' +
+              '<td style="padding:8px;text-align:right;font-size:13px">1.418.158,39</td>' +
+            '</tr>' +
+            '<tr style="background:#FDEDEC">' +
+              '<td colspan="3" style="padding:7px 8px;font-weight:600;color:#C0392B">Rest de decontat</td>' +
+              '<td style="padding:7px 8px;text-align:right;font-weight:700;color:#C0392B">18.133.300,27</td>' +
+              '<td style="padding:7px 8px;text-align:right;color:#C0392B">3.807.993,06</td>' +
+              '<td style="padding:7px 8px;text-align:right;font-weight:700;color:#C0392B">21.941.293,33</td>' +
+            '</tr>' +
+          '</tfoot>' +
+        '</table>' +
+      '</div>' +
+    '</div>' +
+    '<div class="page-footer">PM Hub · EREN CONS SRL · 2026</div>';
+}
+
+function openVizualizareSL2() {
+  window.open('https://drive.google.com/file/d/1KsW_QuLjQJKzSFy8xb0xRy9ylJMidHoc/view?usp=sharing', '_blank');
 }
 
 </script>

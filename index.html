@@ -1577,6 +1577,16 @@ function renderAlerts() {
 }
 // ──────────────────────────────────────────────────────────────
 
+function _zileRamase(dateStr){
+  var azi = new Date(); azi.setHours(0,0,0,0);
+  var d = new Date(dateStr); d.setHours(0,0,0,0);
+  return Math.round((d - azi) / 86400000);
+}
+function _badgeTimp(dateStr, bg){
+  var n = _zileRamase(dateStr);
+  var txt = n > 1 ? ('încă ' + n + ' zile') : (n === 1 ? 'ultima zi' : (n === 0 ? 'expiră azi' : 'expirat'));
+  return '<span style="background:' + (bg || '#1A5276') + ';color:#fff;border-radius:99px;padding:2px 8px;font-size:10px;font-weight:600;white-space:nowrap;margin-left:6px"><i class="ti ti-clock-hour-4" style="font-size:10px;margin-right:3px"></i>' + txt + '</span>';
+}
 function renderHome() {
   document.getElementById('main').innerHTML =
     '<div class="home-hero">' +
@@ -1614,20 +1624,29 @@ function renderHome() {
     (new Date() <= new Date('2026-07-25') ? '<div style="background:#FFF8E1;border:1px solid #F9A825;border-left:4px solid #F9A825;border-radius:6px;padding:10px 14px;margin-bottom:12px;display:flex;align-items:flex-start;gap:10px">' +
       '<i class="ti ti-sparkles" style="color:#F9A825;font-size:16px;flex-shrink:0;margin-top:1px"></i>' +
       '<div>' +
-        '<div style="font-size:12px;font-weight:700;color:#7B5200;margin-bottom:3px"><span style="background:#F9A825;color:#fff;border-radius:4px;padding:1px 7px;font-size:10px;margin-right:6px;letter-spacing:0.5px">HIGH PRIORITY</span>Dotări Campus DUAL — analiză financiară disponibilă</div>' +
+        '<div style="font-size:12px;font-weight:700;color:#7B5200;margin-bottom:3px"><span style="background:#F9A825;color:#fff;border-radius:4px;padding:1px 7px;font-size:10px;margin-right:6px;letter-spacing:0.5px">HIGH PRIORITY</span>Dotări Campus DUAL — analiză financiară disponibilă' + _badgeTimp('2026-07-25','#F9A825') + '</div>' +
         '<div style="font-size:11px;color:#5D4037;line-height:1.5">A fost adăugat un dashboard important privind finanțarea dotărilor.<br>' +
         '<b>Cale:</b> <span style="font-family:monospace;background:rgba(0,0,0,0.06);padding:1px 6px;border-radius:4px">Campus DUAL → Posibile surse de finanțare - Dotări</span></div>' +
       '</div>' +
     '</div>' : '') +
 
+    (new Date() <= new Date('2026-07-26') ? '<div style="background:#E8F0FE;border:1px solid #1A5276;border-left:4px solid #1A5276;border-radius:6px;padding:10px 14px;margin-bottom:12px;display:flex;align-items:flex-start;gap:10px">' +
+      '<i class="ti ti-building-factory-2" style="color:#1A5276;font-size:16px;flex-shrink:0;margin-top:1px"></i>' +
+      '<div style="flex:1">' +
+        '<div style="font-size:12px;font-weight:700;color:#154360;margin-bottom:3px"><span style="background:#1A5276;color:#fff;border-radius:4px;padding:1px 7px;font-size:10px;margin-right:6px;letter-spacing:0.5px">NOU</span>Kogălniceanu — Analiză comparativă Prefabricate disponibilă' + _badgeTimp('2026-07-26','#1A5276') + '</div>' +
+        '<div style="font-size:11px;color:#2C3E50;line-height:1.5">Buget deviz vs SOMACO rev6 vs ASA CONS (+ADN ref.). <b>Decizie:</b> pachet complet la SOMACO — <b>114.129 € ≈ 597.852 lei</b> fără TVA.<br>' +
+        '<b>Cale:</b> <span style="font-family:monospace;background:rgba(0,0,0,0.06);padding:1px 6px;border-radius:4px">Hangar Kogălniceanu → Analize Comparative → Prefabricate</span></div>' +
+      '</div>' +
+    '</div>' : '') +
+
     (new Date() <= new Date('2026-07-25') ? '<div style="background:#F5EEF8;border:1px solid #D2B4DE;border-left:4px solid #6C3483;border-radius:6px;padding:10px 14px;margin-bottom:12px">' +
-      '<div style="font-size:11px;font-weight:700;color:#6C3483;margin-bottom:4px"><i class="ti ti-file-invoice" style="margin-right:4px"></i>Kogălniceanu — SL2 Execuție disponibil</div>' +
+      '<div style="font-size:11px;font-weight:700;color:#6C3483;margin-bottom:4px"><i class="ti ti-file-invoice" style="margin-right:4px"></i>Kogălniceanu — SL2 Execuție disponibil' + _badgeTimp('2026-07-25','#6C3483') + '</div>' +
       '<div style="font-size:12px;font-weight:700;color:#2C3E50">Total fără TVA: <span style="color:#6C3483">544.032 lei</span> · Total cu TVA: <span style="color:#6C3483">658.278 lei</span></div>' +
       '<div style="font-size:10px;color:#888;margin-top:3px">Demolări: 482.712 lei · Org. șantier: 61.319 lei · Data: 25.07.2026</div>' +
     '</div>' : '') +
 
     (new Date() <= new Date('2026-07-24') ? '<div style="background:#EAFAF1;border:1px solid #A9DFBF;border-left:4px solid #27AE60;border-radius:6px;padding:10px 14px;margin-bottom:12px">' +
-      '<div style="font-size:11px;font-weight:700;color:#1E8449;margin-bottom:6px"><i class="ti ti-file-percent" style="margin-right:4px"></i>Ajustări prețuri Campus DUAL — calculate</div>' +
+      '<div style="font-size:11px;font-weight:700;color:#1E8449;margin-bottom:6px"><i class="ti ti-file-percent" style="margin-right:4px"></i>Ajustări prețuri Campus DUAL — calculate' + _badgeTimp('2026-07-24','#27AE60') + '</div>' +
       '<div style="display:flex;gap:16px;flex-wrap:wrap">' +
         '<div style="font-size:11px;color:#2C3E50"><span style="font-weight:600;color:#1E8449">Ajustare SL12</span> = <span style="font-weight:700">273.324 lei</span> <span style="color:#888">(coef. 1,0939)</span></div>' +
         '<div style="font-size:11px;color:#2C3E50"><span style="font-weight:600;color:#8E44AD">Simulare ajustare SL13</span> = <span style="font-weight:700">419.784 lei</span> <span style="color:#888">(coef. 1,0883)</span></div>' +
@@ -2424,11 +2443,11 @@ function renderAn21(proj) {
 }
 
 // Link Google Sheets Prefabricate
-var PREFAB_SHEET_URL = 'https://docs.google.com/spreadsheets/d/1wWszC0qNcuOKYfbY-Xvbh0rODZ9Txgz2WsxbkmnzNck/edit?gid=135280287#gid=135280287';
+var PREFAB_SHEET_URL = 'https://docs.google.com/spreadsheets/d/12KrATRLcZnC8Ddp130XcwsCjLLe8XnBwX3nRzToVRck/edit?usp=sharing';
 
 function renderAnPref(proj) {
   var html = '';
-  html += '<div class="proj-header"><div class="proj-title">Analiză Comparativă — Cap.3 Prefabricate Hangar</div><div class="proj-meta">Buget deviz F3 (17.07.2026) vs SOMACO rev4 (08.07.2026) vs ASA CONS/Consolis (16.01.2026) · Curs BNR 5,2411 lei/EUR (15.07.2026)</div></div>';
+  html += '<div class="proj-header"><div class="proj-title">Analiză Comparativă — Cap.3 Prefabricate Hangar</div><div class="proj-meta">Buget deviz F3 (17.07.2026) vs SOMACO rev6 (20.07.2026) vs ASA CONS/Consolis (16.01.2026) · Curs BNR 5,2384 lei/EUR (21.07.2026)</div></div>';
   html += '<div class="module-badge" style="background:#EEF2FF;color:#4338CA"><i class="ti ti-file-analytics" style="font-size:13px"></i> Analiză Comparativă Oferte Prefabricate</div>';
   // Buton link (placeholder până la link Google Sheets)
   if (PREFAB_SHEET_URL) {
@@ -2438,44 +2457,73 @@ function renderAnPref(proj) {
   }
   // KPIs
   html += '<div class="kpi-grid" style="margin-bottom:14px">';
-  html += '<div class="kpi"><div class="kpi-label">Buget deviz F3 (M+L)</div><div class="kpi-val">524.915 lei</div><div class="kpi-sub">Pahare + stâlpi + parapete · fără TVA</div></div>';
-  html += '<div class="kpi"><div class="kpi-label">ASA CONS (Consolis)</div><div class="kpi-val" style="color:#C0392B">540.541 lei</div><div class="kpi-sub">103.136 EUR · +3,0% vs buget</div></div>';
-  html += '<div class="kpi"><div class="kpi-label">SOMACO (rev4)</div><div class="kpi-val" style="color:#C0392B">572.048 lei</div><div class="kpi-sub">109.147 EUR · +9,0% vs buget</div></div>';
-  html += '<div class="kpi"><div class="kpi-label">ADN (ref. Cap.3 v4)</div><div class="kpi-val" style="color:#1E6E2D">339.890 lei</div><div class="kpi-sub">doar pahare+stâlpi · −30,7% · de reconfirmat</div></div>';
+  html += '<div class="kpi"><div class="kpi-label">Buget corectat (elem + monolit)</div><div class="kpi-val">564.814 lei</div><div class="kpi-sub">524.915 elemente + 39.900 manoperă monolit · fără TVA</div></div>';
+  html += '<div class="kpi"><div class="kpi-label">SOMACO contract (elem + monolit)</div><div class="kpi-val" style="color:#C0392B">597.852 lei</div><div class="kpi-sub">114.129 EUR · +5,9% vs buget corectat · DECIS</div></div>';
+  html += '<div class="kpi"><div class="kpi-label">SOMACO — doar elemente</div><div class="kpi-val" style="color:#1E6E2D">523.840 lei</div><div class="kpi-sub">100.000 EUR · −0,2% vs buget elemente (524.915)</div></div>';
+  html += '<div class="kpi"><div class="kpi-label">ASA CONS (ref. · doar elemente)</div><div class="kpi-val" style="color:#C0392B">540.262 lei</div><div class="kpi-sub">103.136 EUR · +2,9% · cu proiectare · fără monolit</div></div>';
   html += '</div>';
+  html += '<div style="background:#E8F0FE;border-left:3px solid #1A5276;border-radius:6px;padding:8px 12px;font-size:11px;color:#1A5276;margin-bottom:14px"><strong>DECIZIE PM:</strong> pachet complet (elemente prefabricate + parte monolită fundații izolate) contractat la SOMACO pentru responsabilitate unică de execuție. <strong>Valoare contract = 114.129 € ≈ 597.852 lei</strong> fără TVA (curs BNR 5,2384). Reper: rev6 a scăzut elementele de la 109.147 € (rev4) la 100.000 €, dar a scos proiectarea din preț.</div>';
   // Tabel comparativ pe elemente
   html += '<div class="proj-card" style="margin-bottom:12px">';
-  html += '<div class="proj-card-header" style="background:#2C4A6E"><span style="font-size:13px;font-weight:600;color:#fff">Comparativ pe elemente (lei, fără TVA · curs BNR 5,2411)</span></div>';
+  html += '<div class="proj-card-header" style="background:#2C4A6E"><span style="font-size:13px;font-weight:600;color:#fff">Comparativ pe elemente (lei, fără TVA · curs BNR 5,2384)</span></div>';
   html += '<div class="proj-card-body" style="padding:0;overflow-x:auto">';
   html += '<table style="width:100%;border-collapse:collapse;font-size:11px">';
-  html += '<tr style="background:#2E5090;color:#fff"><th style="padding:7px 10px;text-align:left">Element</th><th style="padding:7px 8px;text-align:right">Buget</th><th style="padding:7px 8px;text-align:right">ASA CONS</th><th style="padding:7px 8px;text-align:right">SOMACO</th><th style="padding:7px 8px;text-align:right">ADN ref.</th><th style="padding:7px 8px;text-align:left">Observații</th></tr>';
+  html += '<tr style="background:#2E5090;color:#fff"><th style="padding:7px 10px;text-align:left">Element</th><th style="padding:7px 8px;text-align:right">Buget</th><th style="padding:7px 8px;text-align:right">SOMACO rev6</th><th style="padding:7px 8px;text-align:right">ASA CONS</th><th style="padding:7px 8px;text-align:right">ADN ref.</th><th style="padding:7px 8px;text-align:left">Observații</th></tr>';
   var rows = [
-    {el:"Pahare / gulere (21 buc)",b:"96.818",a:"99.665",ap:"+2,9%",s:"137.902",sp:"+42,4%",d:"88.386",obs:"SOMACO necompetitiv la pahare; ADN cel mai ieftin",bg:"#FCE4D6"},
-    {el:"Stâlpi prefabricați (21 buc)",b:"393.463",a:"405.205",ap:"+3,0%",s:"392.594",sp:"-0,2%",d:"251.504",obs:"ASA≈SOMACO; ADN −36% sub buget",bg:"#F5F5F5"},
-    {el:"Parapete tristrat (8 buc)",b:"34.634",a:"35.671",ap:"+3,0%",s:"41.552",sp:"+20,0%",d:"—",obs:"ADN nu a ofertat; ASA cel mai competitiv",bg:"#F5F5F5"},
-    {el:"TOTAL prefabricate",b:"524.915",a:"540.541",ap:"+3,0%",s:"572.048",sp:"+9,0%",d:"—",obs:"Ambele includ proiectare+fabricare+transport+montaj",bg:"#FFF2CC",tot:true},
-    {el:"Subtotal pahare+stâlpi (comp. ADN)",b:"490.281",a:"504.870",ap:"+3,0%",s:"530.496",sp:"+8,2%",d:"339.890",obs:"ADN −30,7% vs buget pe acest scope",bg:"#E2EFDA",tot:true},
+    {el:"Pahare / gulere (21 buc)",b:"96.818",s:"127.241",sp:"+31,4%",a:"99.613",ap:"+2,9%",d:"88.386",obs:"SOMACO încă peste buget; ADN cel mai ieftin",bg:"#FCE4D6"},
+    {el:"Stâlpi prefabricați (21 buc)",b:"393.463",s:"358.070",sp:"-9,0%",a:"404.996",ap:"+2,9%",d:"251.504",obs:"SOMACO acum sub buget și sub ASA; ADN −36%",bg:"#E2EFDA"},
+    {el:"Parapete tristrat (8 buc)",b:"34.634",s:"38.529",sp:"+11,3%",a:"35.653",ap:"+2,9%",d:"—",obs:"ADN nu a ofertat; ASA cel mai competitiv",bg:"#F5F5F5"},
+    {el:"TOTAL prefabricate",b:"524.915",s:"523.840",sp:"-0,2%",a:"540.262",ap:"+2,9%",d:"—",obs:"SOMACO rev6 fără proiectare; ASA cu proiectare — nu integral comparabile",bg:"#FFF2CC",tot:true},
+    {el:"Subtotal pahare+stâlpi (comp. ADN)",b:"490.281",s:"485.311",sp:"-1,0%",a:"504.610",ap:"+2,9%",d:"339.890",obs:"ADN −30,7% vs buget pe acest scope",bg:"#E2EFDA",tot:true},
   ];
   rows.forEach(function(r){
     html += '<tr style="background:'+r.bg+'">';
     html += '<td style="padding:6px 10px;border-bottom:1px solid #eee;'+(r.tot?"font-weight:700":"font-weight:500")+'">'+r.el+'</td>';
     html += '<td style="padding:6px 8px;border-bottom:1px solid #eee;text-align:right">'+r.b+'</td>';
-    html += '<td style="padding:6px 8px;border-bottom:1px solid #eee;text-align:right">'+r.a+' <span style="font-size:9px;color:#C0392B">'+r.ap+'</span></td>';
     html += '<td style="padding:6px 8px;border-bottom:1px solid #eee;text-align:right">'+r.s+' <span style="font-size:9px;color:'+(r.sp.charAt(0)==="-"?"#1E6E2D":"#C0392B")+'">'+r.sp+'</span></td>';
+    html += '<td style="padding:6px 8px;border-bottom:1px solid #eee;text-align:right">'+r.a+' <span style="font-size:9px;color:'+(r.ap.charAt(0)==="-"?"#1E6E2D":"#C0392B")+'">'+r.ap+'</span></td>';
     html += '<td style="padding:6px 8px;border-bottom:1px solid #eee;text-align:right;color:'+(r.d==="—"?"#888":"#1E6E2D")+';font-weight:'+(r.d==="—"?"400":"600")+'">'+r.d+'</td>';
     html += '<td style="padding:6px 8px;border-bottom:1px solid #eee;font-size:10px;color:#444">'+r.obs+'</td>';
     html += '</tr>';
   });
   html += '</table></div></div>';
+  // Card corectie buget / parte monolita
+  html += '<div class="proj-card" style="margin-bottom:12px">';
+  html += '<div class="proj-card-header" style="background:#7B4B18"><span style="font-size:13px;font-weight:600;color:#fff">Parte monolită fundații izolate — corecție buget (acum în scope SOMACO)</span></div>';
+  html += '<div class="proj-card-body" style="padding:0;overflow-x:auto">';
+  html += '<table style="width:100%;border-collapse:collapse;font-size:11px">';
+  html += '<tr style="background:#2E5090;color:#fff"><th style="padding:7px 10px;text-align:left">Poziție (manoperă)</th><th style="padding:7px 8px;text-align:right">Manoperă deviz</th><th style="padding:7px 8px;text-align:right">SOMACO</th><th style="padding:7px 8px;text-align:right">Δ</th><th style="padding:7px 8px;text-align:left">Bază</th></tr>';
+  var mrows = [
+    {p:"Turnare beton fundații izolate",d:"11.507",s:"22.251",delta:"+93%",b:"R16 tălpi hangar + R18 fronton · 226,11 mc × 50,89 lei/mc",bg:"#F5F5F5"},
+    {p:"P.o. armătură fundații izolate",d:"28.393",s:"51.761",delta:"+82%",b:"R22 alocat proporțional 68,70% (vol. izolate/total fundații)",bg:"#F5F5F5"},
+    {p:"SUBTOTAL manoperă monolită",d:"39.900",s:"74.012",delta:"+85%",b:"SOMACO tarifează manopera cu ~85% peste deviz",bg:"#FCE4D6",tot:true},
+  ];
+  mrows.forEach(function(m){
+    html += '<tr style="background:'+m.bg+'">';
+    html += '<td style="padding:6px 10px;border-bottom:1px solid #eee;'+(m.tot?"font-weight:700":"")+'">'+m.p+'</td>';
+    html += '<td style="padding:6px 8px;border-bottom:1px solid #eee;text-align:right">'+m.d+'</td>';
+    html += '<td style="padding:6px 8px;border-bottom:1px solid #eee;text-align:right">'+m.s+'</td>';
+    html += '<td style="padding:6px 8px;border-bottom:1px solid #eee;text-align:right;font-weight:700;color:#C0392B">'+m.delta+'</td>';
+    html += '<td style="padding:6px 8px;border-bottom:1px solid #eee;font-size:10px;color:#444">'+m.b+'</td>';
+    html += '</tr>';
+  });
+  html += '</table>';
+  html += '<div style="padding:10px 12px;font-size:11px;background:#FFF8E1;border-top:1px solid #eee">';
+  html += '<strong>Buget corectat:</strong> 524.915 lei (elemente) + 39.900 lei (manoperă monolită preluată de SOMACO) = <strong>564.814 lei</strong>.<br>';
+  html += '<strong>Valoare contract SOMACO</strong> (elemente 100.000 € + monolit 14.129 €) = 114.129 € ≈ <strong>597.852 lei</strong> → <span style="color:#C0392B;font-weight:600">+33.037 lei (+5,9%) peste bugetul corectat</span>.<br>';
+  html += '<span style="color:#1A5276;font-weight:600">DECIZIE PM:</span> pachet complet (elemente + monolit) la SOMACO — responsabilitate unică de execuție pe interfața fundație izolată–pahar–stâlp. Costul deciziei ≈ 33.037 lei provine integral din premium-ul manoperei de monolit (+85% vs deviz) → <span style="font-weight:600">de negociat</span>.';
+  html += '</div></div></div>';
   // Concluzii
   html += '<div class="proj-card" style="margin-bottom:12px">';
   html += '<div class="proj-card-header" style="background:#2C4A6E"><span style="font-size:13px;font-weight:600;color:#fff">Concluzii & sensibilitate curs</span></div>';
   html += '<div class="proj-card-body" style="display:flex;flex-direction:column;gap:6px">';
   var concl = [
-    {tag:"IERARHIE PREȚ",bg:"#E8F5E9",tc:"#1E6E2D",txt:"Pe scope comparabil (pahare+stâlpi): ADN 339.890 < ASA 504.870 < SOMACO 530.496 lei. ADN rămâne cel mai avantajos, dar oferta trebuie reconfirmată."},
-    {tag:"IMPACT CURS",bg:"#FFF3CD",tc:"#856404",txt:"La curs BNR 5,2411 ambele oferte depășesc bugetul (ASA +3,0%, SOMACO +9,0%). La convenția 5,00 lei/EUR a analizelor Cap.3/Cap.7, ASA ar fi −1,8% sub buget. Depășirea vine din curs, nu din preț."},
-    {tag:"PE ELEMENTE",bg:"#FCE4D6",tc:"#C0392B",txt:"SOMACO necompetitiv la pahare (+42% vs buget, +38% vs ASA). La stâlpi cele două oferte sunt apropiate. La parapete ASA mai ieftină cu ~14% decât SOMACO."},
-    {tag:"RISC VALABILITATE",bg:"#FFF8E1",tc:"#856404",txt:"SOMACO rev4 valabilă 15 zile (expiră ~23.07.2026), clauză revizuire preț. ASA din 16.01.2026 — valabilitate 30 zile, EXPIRATĂ, revizuibilă integral la semnare. Cere rost seismic între anexe monolite și structura prefabricată."},
+    {tag:"SOMACO LA BUGET",bg:"#E8F5E9",tc:"#1E6E2D",txt:"rev6 aduce elementele la 100.000 € = 523.840 lei (−0,2% vs buget), de la 109.147 € în rev4. Devine mai ieftină decât ASA cu ~16.400 lei — DAR a scos proiectarea din preț, iar ASA o include. Comparație corectă doar după cuantificarea proiectării separate."},
+    {tag:"ADN CEL MAI IEFTIN",bg:"#E8F5E9",tc:"#1E6E2D",txt:"Pe scope comparabil (pahare+stâlpi) ADN rămâne cel mai avantajos: 339.890 lei, cu ~145.000–150.000 lei sub SOMACO/ASA. Prioritatea: reconfirmarea validității ofertei ADN."},
+    {tag:"DECIZIE — PACHET LA SOMACO",bg:"#E8F0FE",tc:"#1A5276",txt:"Pachet complet (elemente + monolit) contractat la SOMACO pentru responsabilitate unică de execuție. Valoare contract = 114.129 € = 597.852 lei. Cost decizie ≈ 33.037 lei (+5,9% vs buget corectat 564.814 lei), integral din premium manoperă monolit (+85% vs deviz) — de negociat."},
+    {tag:"PE ELEMENTE",bg:"#FFF3CD",tc:"#856404",txt:"La pahare SOMACO încă peste buget (+31%) și peste ASA. La stâlpi SOMACO acum sub buget (−9%) și sub ASA. La parapete ASA cel mai ieftin, SOMACO apropiat."},
+    {tag:"IMPACT CURS",bg:"#FFF3CD",tc:"#856404",txt:"Efectul cursului aproape a dispărut: la 5,2384 SOMACO e practic la buget. La convenția 5,00 lei/EUR ambele oferte ar coborî cu ~4–5% sub buget."},
+    {tag:"RISC VALABILITATE",bg:"#FFF8E1",tc:"#856404",txt:"SOMACO rev6 valabilă 15 zile (expiră ~04.08.2026), clauză revizuire preț, exclude proiectarea și betonul de monolitizare (AG). ASA din 16.01.2026 EXPIRATĂ, revizuibilă integral la semnare; cere rost seismic între anexe monolite și structura prefabricată."},
   ];
   concl.forEach(function(c){
     html += '<div style="background:'+c.bg+';border-radius:6px;padding:8px 12px;font-size:12px;display:flex;gap:10px;align-items:flex-start">';
@@ -2490,18 +2538,19 @@ function renderAnPref(proj) {
   html += '<table style="width:100%;border-collapse:collapse;font-size:11px">';
   html += '<tr style="background:#2E5090;color:#fff"><th style="padding:7px 10px;text-align:left">Acțiune</th><th style="padding:7px 8px;text-align:left;white-space:nowrap">Responsabil</th><th style="padding:7px 8px;text-align:center">Termen</th></tr>';
   var acts = [
-    {a:"Reconfirmare ofertă ADN (preț + valabilitate + termen livrare)",r:"G. Spătaru / Achiziții",t:"21.07"},
-    {a:"Revalidare ofertă ASA CONS (expirată din 15.02.2026)",r:"Achiziții (C. Trif)",t:"21.07"},
-    {a:"Clarificare SOMACO: montaj plase sudate + beton monolitizare + corniere",r:"G. Spătaru",t:"21.07"},
-    {a:"Decizie furnizor prefabricate înainte de expirarea SOMACO rev4",r:"G. Spătaru + Management",t:"23.07"},
-    {a:"Verificare impact rost seismic (cerință ASA) cu proiectantul de structură",r:"Proiectant / G. Spătaru",t:"24.07"},
+    {a:"DECIS: pachet complet (elemente + monolit) la SOMACO — responsabilitate unică",r:"G. Spătaru + Management",t:"DECIS"},
+    {a:"Negociere manoperă monolit SOMACO (+85% vs deviz) — țintă recuperare ~17.000 lei",r:"G. Spătaru / Achiziții",t:"28.07"},
+    {a:"Semnare contract SOMACO înainte de expirarea rev6 (valab. 15 zile)",r:"G. Spătaru + Management",t:"04.08"},
+    {a:"Cerere SOMACO: cost proiectare prefabricate separat (scos din rev6)",r:"G. Spătaru / Achiziții",t:"28.07"},
+    {a:"Confirmare în contract: beton+oțel monolit + beton monolitizare pahare rămân la AG",r:"G. Spătaru",t:"28.07"},
+    {a:"Verificare impact rost seismic (anexe monolite/structură prefabricată) cu proiectantul",r:"Proiectant / G. Spătaru",t:"28.07"},
   ];
   acts.forEach(function(x){
     html += '<tr><td style="padding:6px 10px;border-bottom:1px solid #eee">'+x.a+'</td><td style="padding:6px 8px;border-bottom:1px solid #eee;color:#444">'+x.r+'</td><td style="padding:6px 8px;border-bottom:1px solid #eee;text-align:center;white-space:nowrap;font-weight:600">'+x.t+'</td></tr>';
   });
   html += '</table></div></div>';
   html += '<button class="open-fisa-btn" onclick="renderProjHome(\'hangar\')"><i class="ti ti-arrow-left"></i> Înapoi la proiect</button>';
-  html += '<div class="page-footer">PM Hub · EREN CONS SRL · 2026 · Surse: Deviz 17.07.2026, Oferte SOMACO/ASA CONS, Analiza Cap.3 v4, Curs BNR 15.07.2026</div>';
+  html += '<div class="page-footer">PM Hub · EREN CONS SRL · 2026 · Surse: Deviz 17.07.2026, SOMACO rev6 20.07.2026, ASA CONS 16.01.2026, Analiza Cap.3 v4, Curs BNR 21.07.2026</div>';
   document.getElementById('main').innerHTML = html;
 }
 

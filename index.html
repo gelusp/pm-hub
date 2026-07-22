@@ -173,6 +173,9 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 .doc-ico.na{background:var(--grey-100);color:var(--text-tertiary)}
 .doc-name{font-size:11px;font-weight:500;color:var(--text);line-height:1.3}
 .doc-sub{font-size:10px;color:var(--text-tertiary);margin-top:1px}
+/* blink badge NOU */
+@keyframes blinkNou{0%,49%{opacity:1}50%,100%{opacity:0.15}}
+.blink-nou{animation:blinkNou 1s step-start infinite}
 /* alerts */
 .alert-row{display:flex;align-items:flex-start;gap:9px;padding:9px 12px;border-bottom:1px solid var(--grey-100)}
 .alert-row:last-child{border-bottom:none}
@@ -1633,8 +1636,8 @@ function renderHome() {
     (new Date() <= new Date('2026-07-26') ? '<div style="background:#E8F0FE;border:1px solid #1A5276;border-left:4px solid #1A5276;border-radius:6px;padding:10px 14px;margin-bottom:12px;display:flex;align-items:flex-start;gap:10px">' +
       '<i class="ti ti-building-factory-2" style="color:#1A5276;font-size:16px;flex-shrink:0;margin-top:1px"></i>' +
       '<div style="flex:1">' +
-        '<div style="font-size:12px;font-weight:700;color:#154360;margin-bottom:3px"><span style="background:#1A5276;color:#fff;border-radius:4px;padding:1px 7px;font-size:10px;margin-right:6px;letter-spacing:0.5px">NOU</span>Kogălniceanu — Analiză comparativă Prefabricate disponibilă' + _badgeTimp('2026-07-26','#1A5276') + '</div>' +
-        '<div style="font-size:11px;color:#2C3E50;line-height:1.5">Buget deviz vs SOMACO rev6 vs ASA CONS (+ADN ref.). <b>Decizie:</b> pachet complet la SOMACO — <b>114.129 € ≈ 597.852 lei</b> fără TVA.<br>' +
+        '<div style="font-size:12px;font-weight:700;color:#154360;margin-bottom:3px"><span class="blink-nou" style="background:#1A5276;color:#fff;border-radius:4px;padding:1px 7px;font-size:10px;margin-right:6px;letter-spacing:0.5px">NOU</span>Kogălniceanu — Analiză comparativă Prefabricate disponibilă' + _badgeTimp('2026-07-26','#1A5276') + '</div>' +
+        '<div style="font-size:11px;color:#2C3E50;line-height:1.5">4 ofertanți: SOMACO, ASA CONS, Bauelemente/Ferrobeton (+ADN ref.). <b>Nou (22.07):</b> Bauelemente cel mai ieftin — <b>448.623 lei</b> (−14,5% vs buget); decizia SOMACO se reevaluează.<br>' +
         '<b>Cale:</b> <span style="font-family:monospace;background:rgba(0,0,0,0.06);padding:1px 6px;border-radius:4px">Hangar Kogălniceanu → Analize Comparative → Prefabricate</span></div>' +
       '</div>' +
     '</div>' : '') +
@@ -2443,11 +2446,11 @@ function renderAn21(proj) {
 }
 
 // Link Google Sheets Prefabricate
-var PREFAB_SHEET_URL = 'https://docs.google.com/spreadsheets/d/12KrATRLcZnC8Ddp130XcwsCjLLe8XnBwX3nRzToVRck/edit?usp=sharing';
+var PREFAB_SHEET_URL = 'https://docs.google.com/spreadsheets/d/1GbsE-F8a5T8V1dmhf2ae3XTqEoyrcKwQJpqqzTZV25M/edit?usp=sharing';
 
 function renderAnPref(proj) {
   var html = '';
-  html += '<div class="proj-header"><div class="proj-title">Analiză Comparativă — Cap.3 Prefabricate Hangar</div><div class="proj-meta">Buget deviz F3 (17.07.2026) vs SOMACO rev6 (20.07.2026) vs ASA CONS/Consolis (16.01.2026) · Curs BNR 5,2384 lei/EUR (21.07.2026)</div></div>';
+  html += '<div class="proj-header"><div class="proj-title">Analiză Comparativă — Cap.3 Prefabricate Hangar</div><div class="proj-meta">Buget deviz F3 (17.07) vs SOMACO rev6 (20.07) vs ASA CONS (21.07) vs Bauelemente/Ferrobeton (22.07) · Curs BNR 5,2384 lei/EUR</div></div>';
   html += '<div class="module-badge" style="background:#EEF2FF;color:#4338CA"><i class="ti ti-file-analytics" style="font-size:13px"></i> Analiză Comparativă Oferte Prefabricate</div>';
   // Buton link (placeholder până la link Google Sheets)
   if (PREFAB_SHEET_URL) {
@@ -2457,32 +2460,35 @@ function renderAnPref(proj) {
   }
   // KPIs
   html += '<div class="kpi-grid" style="margin-bottom:14px">';
-  html += '<div class="kpi"><div class="kpi-label">Buget corectat (elem + monolit)</div><div class="kpi-val">564.814 lei</div><div class="kpi-sub">524.915 elemente + 39.900 manoperă monolit · fără TVA</div></div>';
-  html += '<div class="kpi"><div class="kpi-label">SOMACO contract (elem + monolit)</div><div class="kpi-val" style="color:#C0392B">597.852 lei</div><div class="kpi-sub">114.129 EUR · +5,9% vs buget corectat · DECIS</div></div>';
-  html += '<div class="kpi"><div class="kpi-label">SOMACO — doar elemente</div><div class="kpi-val" style="color:#1E6E2D">523.840 lei</div><div class="kpi-sub">100.000 EUR · −0,2% vs buget elemente (524.915)</div></div>';
-  html += '<div class="kpi"><div class="kpi-label">ASA CONS (ref. · doar elemente)</div><div class="kpi-val" style="color:#C0392B">540.262 lei</div><div class="kpi-sub">103.136 EUR · +2,9% · cu proiectare · fără monolit</div></div>';
+  html += '<div class="kpi"><div class="kpi-label">Buget deviz (elemente, M+L)</div><div class="kpi-val">524.915 lei</div><div class="kpi-sub">pahare + stâlpi + parapete · fără TVA · reper</div></div>';
+  html += '<div class="kpi"><div class="kpi-label">Bauelemente / Ferrobeton</div><div class="kpi-val" style="color:#1E6E2D">448.623 lei</div><div class="kpi-sub">−14,5% · în lei · cu proiectare · fără montaj pahare/monolit</div></div>';
+  html += '<div class="kpi"><div class="kpi-label">SOMACO rev6 (elemente)</div><div class="kpi-val" style="color:#1E6E2D">523.840 lei</div><div class="kpi-sub">100.000 EUR · −0,2% · fără proiectare · oferă monolit</div></div>';
+  html += '<div class="kpi"><div class="kpi-label">ASA CONS 21.07</div><div class="kpi-val" style="color:#C0392B">552.291 lei</div><div class="kpi-sub">105.431 EUR · +5,2% · cu proiectare · crescut de la 103.136 €</div></div>';
   html += '</div>';
-  html += '<div style="background:#E8F0FE;border-left:3px solid #1A5276;border-radius:6px;padding:8px 12px;font-size:11px;color:#1A5276;margin-bottom:14px"><strong>DECIZIE PM:</strong> pachet complet (elemente prefabricate + parte monolită fundații izolate) contractat la SOMACO pentru responsabilitate unică de execuție. <strong>Valoare contract = 114.129 € ≈ 597.852 lei</strong> fără TVA (curs BNR 5,2384). Reper: rev6 a scăzut elementele de la 109.147 € (rev4) la 100.000 €, dar a scos proiectarea din preț.</div>';
+  html += '<div style="background:#FFF3CD;border-left:3px solid #856404;border-radius:6px;padding:8px 12px;font-size:11px;color:#7B5200;margin-bottom:14px"><strong>ATENȚIE — ecuația s-a schimbat (22.07):</strong> oferta <strong>Bauelemente/Ferrobeton = 448.623 lei</strong> este cea mai ieftină ofertă completă (−14,5% vs buget, ~75.000 lei sub SOMACO), în lei și cu proiectare — dar fără montaj pahare și fără monolit. ASA s-a scumpit la 105.431 € (552.291 lei). Decizia anterioară pro-SOMACO (responsabilitate unică + monolit) se reevaluează în funcție de trade-off cost vs risc de interfață.</div>';
   // Tabel comparativ pe elemente
   html += '<div class="proj-card" style="margin-bottom:12px">';
   html += '<div class="proj-card-header" style="background:#2C4A6E"><span style="font-size:13px;font-weight:600;color:#fff">Comparativ pe elemente (lei, fără TVA · curs BNR 5,2384)</span></div>';
   html += '<div class="proj-card-body" style="padding:0;overflow-x:auto">';
   html += '<table style="width:100%;border-collapse:collapse;font-size:11px">';
-  html += '<tr style="background:#2E5090;color:#fff"><th style="padding:7px 10px;text-align:left">Element</th><th style="padding:7px 8px;text-align:right">Buget</th><th style="padding:7px 8px;text-align:right">SOMACO rev6</th><th style="padding:7px 8px;text-align:right">ASA CONS</th><th style="padding:7px 8px;text-align:right">ADN ref.</th><th style="padding:7px 8px;text-align:left">Observații</th></tr>';
+  html += '<tr style="background:#2E5090;color:#fff"><th style="padding:7px 8px;text-align:left">Element</th><th style="padding:7px 6px;text-align:right">Buget</th><th style="padding:7px 6px;text-align:right">Bauelem.</th><th style="padding:7px 6px;text-align:right">SOMACO</th><th style="padding:7px 6px;text-align:right">ASA 21.07</th><th style="padding:7px 6px;text-align:right">ADN ref.</th><th style="padding:7px 8px;text-align:left">Observații</th></tr>';
   var rows = [
-    {el:"Pahare / gulere (21 buc)",b:"96.818",s:"127.241",sp:"+31,4%",a:"99.613",ap:"+2,9%",d:"88.386",obs:"SOMACO încă peste buget; ADN cel mai ieftin",bg:"#FCE4D6"},
-    {el:"Stâlpi prefabricați (21 buc)",b:"393.463",s:"358.070",sp:"-9,0%",a:"404.996",ap:"+2,9%",d:"251.504",obs:"SOMACO acum sub buget și sub ASA; ADN −36%",bg:"#E2EFDA"},
-    {el:"Parapete tristrat (8 buc)",b:"34.634",s:"38.529",sp:"+11,3%",a:"35.653",ap:"+2,9%",d:"—",obs:"ADN nu a ofertat; ASA cel mai competitiv",bg:"#F5F5F5"},
-    {el:"TOTAL prefabricate",b:"524.915",s:"523.840",sp:"-0,2%",a:"540.262",ap:"+2,9%",d:"—",obs:"SOMACO rev6 fără proiectare; ASA cu proiectare — nu integral comparabile",bg:"#FFF2CC",tot:true},
-    {el:"Subtotal pahare+stâlpi (comp. ADN)",b:"490.281",s:"485.311",sp:"-1,0%",a:"504.610",ap:"+2,9%",d:"339.890",obs:"ADN −30,7% vs buget pe acest scope",bg:"#E2EFDA",tot:true},
+    {el:"Pahare / gulere (21 buc)",b:"96.818",u:"83.651",up:"−13,6%",s:"127.241",sp:"+31,4%",a:"102.856",ap:"+6,2%",d:"88.386",obs:"ASA & Bauelemente ieftine; SOMACO scump. Bauelemente fără montaj pahare.",bg:"#F5F5F5"},
+    {el:"Stâlpi prefabricați (21 buc)",b:"393.463",u:"331.281",up:"−15,8%",s:"358.070",sp:"−9,0%",a:"413.137",ap:"+5,0%",d:"251.504",obs:"Bauelemente cel mai ieftin (ofertă completă); ADN −36% de reconfirmat.",bg:"#E2EFDA"},
+    {el:"Parapete / pereți soclu",b:"34.634",u:"33.690",up:"−2,7%",s:"38.529",sp:"+11,3%",a:"36.297",ap:"+4,8%",d:"—",obs:"Bauelemente & ASA sub buget; ADN nu a ofertat.",bg:"#F5F5F5"},
+    {el:"TOTAL elemente",b:"524.915",u:"448.623",up:"−14,5%",s:"523.840",sp:"−0,2%",a:"552.291",ap:"+5,2%",d:"—",obs:"Bauelemente cel mai ieftin. Scope diferă — vezi banner + monolit.",bg:"#FFF2CC",tot:true},
+    {el:"Subtotal pahare+stâlpi (comp. ADN)",b:"490.281",u:"414.933",up:"−15,4%",s:"485.311",sp:"−1,0%",a:"515.993",ap:"+5,2%",d:"339.890",obs:"ADN cel mai ieftin pe acest scope; Bauelemente al doilea.",bg:"#E2EFDA",tot:true},
   ];
+  var pc = function(p){ return (p.charAt(0)==="−"||p.charAt(0)==="-") ? "#1E6E2D" : "#C0392B"; };
+  var cel = function(v,p){ return '<td style="padding:6px 6px;border-bottom:1px solid #eee;text-align:right">'+v+' <span style="font-size:9px;color:'+pc(p)+'">'+p+'</span></td>'; };
   rows.forEach(function(r){
     html += '<tr style="background:'+r.bg+'">';
-    html += '<td style="padding:6px 10px;border-bottom:1px solid #eee;'+(r.tot?"font-weight:700":"font-weight:500")+'">'+r.el+'</td>';
-    html += '<td style="padding:6px 8px;border-bottom:1px solid #eee;text-align:right">'+r.b+'</td>';
-    html += '<td style="padding:6px 8px;border-bottom:1px solid #eee;text-align:right">'+r.s+' <span style="font-size:9px;color:'+(r.sp.charAt(0)==="-"?"#1E6E2D":"#C0392B")+'">'+r.sp+'</span></td>';
-    html += '<td style="padding:6px 8px;border-bottom:1px solid #eee;text-align:right">'+r.a+' <span style="font-size:9px;color:'+(r.ap.charAt(0)==="-"?"#1E6E2D":"#C0392B")+'">'+r.ap+'</span></td>';
-    html += '<td style="padding:6px 8px;border-bottom:1px solid #eee;text-align:right;color:'+(r.d==="—"?"#888":"#1E6E2D")+';font-weight:'+(r.d==="—"?"400":"600")+'">'+r.d+'</td>';
+    html += '<td style="padding:6px 8px;border-bottom:1px solid #eee;'+(r.tot?"font-weight:700":"font-weight:500")+'">'+r.el+'</td>';
+    html += '<td style="padding:6px 6px;border-bottom:1px solid #eee;text-align:right">'+r.b+'</td>';
+    html += cel(r.u,r.up);
+    html += cel(r.s,r.sp);
+    html += cel(r.a,r.ap);
+    html += '<td style="padding:6px 6px;border-bottom:1px solid #eee;text-align:right;color:'+(r.d==="—"?"#888":"#1E6E2D")+';font-weight:'+(r.d==="—"?"400":"600")+'">'+r.d+'</td>';
     html += '<td style="padding:6px 8px;border-bottom:1px solid #eee;font-size:10px;color:#444">'+r.obs+'</td>';
     html += '</tr>';
   });
@@ -2511,19 +2517,19 @@ function renderAnPref(proj) {
   html += '<div style="padding:10px 12px;font-size:11px;background:#FFF8E1;border-top:1px solid #eee">';
   html += '<strong>Buget corectat:</strong> 524.915 lei (elemente) + 39.900 lei (manoperă monolită preluată de SOMACO) = <strong>564.814 lei</strong>.<br>';
   html += '<strong>Valoare contract SOMACO</strong> (elemente 100.000 € + monolit 14.129 €) = 114.129 € ≈ <strong>597.852 lei</strong> → <span style="color:#C0392B;font-weight:600">+33.037 lei (+5,9%) peste bugetul corectat</span>.<br>';
-  html += '<span style="color:#1A5276;font-weight:600">DECIZIE PM:</span> pachet complet (elemente + monolit) la SOMACO — responsabilitate unică de execuție pe interfața fundație izolată–pahar–stâlp. Costul deciziei ≈ 33.037 lei provine integral din premium-ul manoperei de monolit (+85% vs deviz) → <span style="font-weight:600">de negociat</span>.';
+  html += '<span style="color:#856404;font-weight:600">De reevaluat:</span> monolitul e ofertat doar de SOMACO (avantaj responsabilitate unică), dar apariția Bauelemente (−75k pe elemente) reschimbă ecuația. Premium-ul monolit SOMACO (+85% vs deviz) rămâne lever de negociere. Decizia finală după clarificarea scope-ului Bauelemente (montaj pahare) și renegociere SOMACO.';
   html += '</div></div></div>';
   // Concluzii
   html += '<div class="proj-card" style="margin-bottom:12px">';
   html += '<div class="proj-card-header" style="background:#2C4A6E"><span style="font-size:13px;font-weight:600;color:#fff">Concluzii & sensibilitate curs</span></div>';
   html += '<div class="proj-card-body" style="display:flex;flex-direction:column;gap:6px">';
   var concl = [
-    {tag:"SOMACO LA BUGET",bg:"#E8F5E9",tc:"#1E6E2D",txt:"rev6 aduce elementele la 100.000 € = 523.840 lei (−0,2% vs buget), de la 109.147 € în rev4. Devine mai ieftină decât ASA cu ~16.400 lei — DAR a scos proiectarea din preț, iar ASA o include. Comparație corectă doar după cuantificarea proiectării separate."},
-    {tag:"ADN CEL MAI IEFTIN",bg:"#E8F5E9",tc:"#1E6E2D",txt:"Pe scope comparabil (pahare+stâlpi) ADN rămâne cel mai avantajos: 339.890 lei, cu ~145.000–150.000 lei sub SOMACO/ASA. Prioritatea: reconfirmarea validității ofertei ADN."},
-    {tag:"DECIZIE — PACHET LA SOMACO",bg:"#E8F0FE",tc:"#1A5276",txt:"Pachet complet (elemente + monolit) contractat la SOMACO pentru responsabilitate unică de execuție. Valoare contract = 114.129 € = 597.852 lei. Cost decizie ≈ 33.037 lei (+5,9% vs buget corectat 564.814 lei), integral din premium manoperă monolit (+85% vs deviz) — de negociat."},
-    {tag:"PE ELEMENTE",bg:"#FFF3CD",tc:"#856404",txt:"La pahare SOMACO încă peste buget (+31%) și peste ASA. La stâlpi SOMACO acum sub buget (−9%) și sub ASA. La parapete ASA cel mai ieftin, SOMACO apropiat."},
-    {tag:"IMPACT CURS",bg:"#FFF3CD",tc:"#856404",txt:"Efectul cursului aproape a dispărut: la 5,2384 SOMACO e practic la buget. La convenția 5,00 lei/EUR ambele oferte ar coborî cu ~4–5% sub buget."},
-    {tag:"RISC VALABILITATE",bg:"#FFF8E1",tc:"#856404",txt:"SOMACO rev6 valabilă 15 zile (expiră ~04.08.2026), clauză revizuire preț, exclude proiectarea și betonul de monolitizare (AG). ASA din 16.01.2026 EXPIRATĂ, revizuibilă integral la semnare; cere rost seismic între anexe monolite și structura prefabricată."},
+    {tag:"BAUELEMENTE — CEL MAI IEFTIN",bg:"#E8F5E9",tc:"#1E6E2D",txt:"Bauelemente/Ferrobeton (22.07) = 448.623 lei, cea mai ieftină ofertă completă: ~75.000 lei sub SOMACO și ~104.000 lei sub ASA. În lei (fără risc valutar) și cu proiectare. Schimbă semnificativ ecuația față de decizia anterioară pro-SOMACO."},
+    {tag:"SCOPE BAUELEMENTE",bg:"#FFF3CD",tc:"#856404",txt:"ATENȚIE: NU include montajul gulerelor/paharelor (doar producție+transport) și NU oferă monolitul. Trebuie estimat cine montează paharele și cine face fundațiile izolate — poate eroda o parte din avantajul de preț."},
+    {tag:"ASA S-A SCUMPIT",bg:"#FCE4E4",tc:"#C0392B",txt:"ASA CONS a crescut de la 103.136 € (16.01) la 105.431 € (21.07) = 552.291 lei, +5,2% peste buget. Cel mai scump dintre cele trei active, deși are scope complet (proiectare+montaj)."},
+    {tag:"SOMACO — MONOLIT",bg:"#E8F0FE",tc:"#1A5276",txt:"Singura ofertă care acoperă monolitul (responsabilitate unică fundație-pahar-stâlp) — motivul preferinței. Pe elemente e la buget (−0,2%), dar monolitul e cu +85% peste deviz (74.012 vs 39.900 lei)."},
+    {tag:"ADN (REFERINȚĂ)",bg:"#E8F5E9",tc:"#1E6E2D",txt:"Pe pahare+stâlpi ADN rămâne cel mai ieftin nominal (339.890 lei), urmat de Bauelemente (414.933 lei). De reconfirmat validitatea ofertei ADN."},
+    {tag:"TRADE-OFF DECIZIE",bg:"#FFF8E1",tc:"#856404",txt:"SOMACO = responsabilitate unică + monolit, dar ~75k mai scump. Bauelemente = cel mai ieftin, dar scope fragmentat (fără montaj pahare, fără monolit, fundații la alt executant). De pus în balanță cost vs risc de interfață. Recomandat: lever de negociere cu SOMACO + clarificare Bauelemente."},
   ];
   concl.forEach(function(c){
     html += '<div style="background:'+c.bg+';border-radius:6px;padding:8px 12px;font-size:12px;display:flex;gap:10px;align-items:flex-start">';
@@ -2538,19 +2544,18 @@ function renderAnPref(proj) {
   html += '<table style="width:100%;border-collapse:collapse;font-size:11px">';
   html += '<tr style="background:#2E5090;color:#fff"><th style="padding:7px 10px;text-align:left">Acțiune</th><th style="padding:7px 8px;text-align:left;white-space:nowrap">Responsabil</th><th style="padding:7px 8px;text-align:center">Termen</th></tr>';
   var acts = [
-    {a:"DECIS: pachet complet (elemente + monolit) la SOMACO — responsabilitate unică",r:"G. Spătaru + Management",t:"DECIS"},
-    {a:"Negociere manoperă monolit SOMACO (+85% vs deviz) — țintă recuperare ~17.000 lei",r:"G. Spătaru / Achiziții",t:"28.07"},
-    {a:"Semnare contract SOMACO înainte de expirarea rev6 (valab. 15 zile)",r:"G. Spătaru + Management",t:"04.08"},
-    {a:"Cerere SOMACO: cost proiectare prefabricate separat (scos din rev6)",r:"G. Spătaru / Achiziții",t:"28.07"},
-    {a:"Confirmare în contract: beton+oțel monolit + beton monolitizare pahare rămân la AG",r:"G. Spătaru",t:"28.07"},
-    {a:"Verificare impact rost seismic (anexe monolite/structură prefabricată) cu proiectantul",r:"Proiectant / G. Spătaru",t:"28.07"},
+    {a:"Clarificare Bauelemente: preț montaj gulere/pahare + confirmare că nu oferă monolit",r:"G. Spătaru / Achiziții",t:"24.07"},
+    {a:"Renegociere SOMACO pe baza ofertei Bauelemente (elemente + manoperă monolit)",r:"G. Spătaru / Achiziții",t:"25.07"},
+    {a:"Reconfirmare ofertă ADN (preț + valabilitate)",r:"G. Spătaru / Achiziții",t:"25.07"},
+    {a:"Decizie finală furnizor (cost vs responsabilitate unică) după normalizare scope",r:"Management + G. Spătaru",t:"30.07"},
+    {a:"Verificare rost seismic (anexe monolite/structură prefabricată) cu proiectantul",r:"Proiectant / G. Spătaru",t:"28.07"},
   ];
   acts.forEach(function(x){
     html += '<tr><td style="padding:6px 10px;border-bottom:1px solid #eee">'+x.a+'</td><td style="padding:6px 8px;border-bottom:1px solid #eee;color:#444">'+x.r+'</td><td style="padding:6px 8px;border-bottom:1px solid #eee;text-align:center;white-space:nowrap;font-weight:600">'+x.t+'</td></tr>';
   });
   html += '</table></div></div>';
   html += '<button class="open-fisa-btn" onclick="renderProjHome(\'hangar\')"><i class="ti ti-arrow-left"></i> Înapoi la proiect</button>';
-  html += '<div class="page-footer">PM Hub · EREN CONS SRL · 2026 · Surse: Deviz 17.07.2026, SOMACO rev6 20.07.2026, ASA CONS 16.01.2026, Analiza Cap.3 v4, Curs BNR 21.07.2026</div>';
+  html += '<div class="page-footer">PM Hub · EREN CONS SRL · 2026 · Surse: Deviz 17.07, SOMACO rev6 20.07, ASA CONS 21.07, Bauelemente/Ferrobeton 22.07, Analiza Cap.3 v4 (ADN), Curs BNR 21.07</div>';
   document.getElementById('main').innerHTML = html;
 }
 

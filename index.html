@@ -2532,9 +2532,9 @@ function renderAnPref(proj) {
     {tag:"TRADE-OFF DECIZIE",bg:"#FFF8E1",tc:"#856404",txt:"SOMACO = responsabilitate unică + monolit, dar ~75k mai scump. Bauelemente = cel mai ieftin, dar scope fragmentat (fără montaj pahare, fără monolit, fundații la alt executant). De pus în balanță cost vs risc de interfață. Recomandat: lever de negociere cu SOMACO + clarificare Bauelemente."},
   ];
   concl.forEach(function(c){
-    html += '<div style="background:'+c.bg+';border-radius:6px;padding:8px 12px;font-size:12px;display:flex;gap:10px;align-items:flex-start">';
-    html += '<span style="font-weight:700;color:'+c.tc+';white-space:nowrap;min-width:120px">'+c.tag+'</span>';
-    html += '<span>'+c.txt+'</span></div>';
+    html += '<div style="background:'+c.bg+';border-radius:6px;padding:8px 12px;font-size:12px;display:flex;gap:12px;align-items:flex-start">';
+    html += '<span style="font-weight:700;color:'+c.tc+';flex:0 0 135px;width:135px;line-height:1.3">'+c.tag+'</span>';
+    html += '<span style="flex:1">'+c.txt+'</span></div>';
   });
   html += '</div></div>';
   // Acțiuni

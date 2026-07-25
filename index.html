@@ -175,7 +175,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 .doc-sub{font-size:10px;color:var(--text-tertiary);margin-top:1px}
 /* blink badge NOU */
 @keyframes blinkNou{0%,49%{opacity:1}50%,100%{opacity:0.15}}
-.blink-nou{animation:blinkNou 1s step-start infinite}
+.blink-nou{animation:blinkNou 2s step-start infinite}
 /* alerts */
 .alert-row{display:flex;align-items:flex-start;gap:9px;padding:9px 12px;border-bottom:1px solid var(--grey-100)}
 .alert-row:last-child{border-bottom:none}
@@ -321,6 +321,9 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
           </div>
           <div class="submenu-item" id="item-hangar-anpref" onclick="goModule('hangar','anpref')">
             <i class="ti ti-file-spreadsheet" style="color:#1A5276"></i> Prefabricate
+          </div>
+          <div class="submenu-item" id="item-hangar-ansap" onclick="goModule('hangar','ansap')">
+            <i class="ti ti-file-spreadsheet" style="color:#1A5276"></i> Săpături Platformă și Structură
           </div>
         </div>
         <div class="submenu-item" id="item-hangar-handover" onclick="toggleSubSub('hangar-handover')">
@@ -497,6 +500,7 @@ function goModule(proj, module) {
   else if (module === 'sl2') renderSL2(proj);
   else if (module === 'an21') renderAn21(proj);
   else if (module === 'anpref') renderAnPref(proj);
+  else if (module === 'ansap') renderAnSap(proj);
   else if (module === 'handover') renderHandover(proj);
   else if (module === 'stab01') renderHandover(proj);
   else if (module === 'stab02' || module === 'hozone' || module === 'koizone' || module === 'notapm') renderHandoverSoon(proj, module);
@@ -1648,6 +1652,15 @@ function renderHome() {
       '</div>' +
     '</div>' +
 
+    (new Date() <= new Date('2026-07-30') ? '<div style="background:#FDEDEC;border:1px solid #E6B0AA;border-left:4px solid #CC1515;border-radius:6px;padding:10px 14px;margin-bottom:12px;display:flex;align-items:flex-start;gap:10px">' +
+      '<i class="ti ti-shovel" style="color:#CC1515;font-size:16px;flex-shrink:0;margin-top:1px"></i>' +
+      '<div style="flex:1">' +
+        '<div style="font-size:12px;font-weight:700;color:#922B21;margin-bottom:3px"><span class="blink-nou" style="background:#CC1515;color:#fff;border-radius:4px;padding:1px 7px;font-size:10px;margin-right:6px;letter-spacing:0.5px">NOU</span>Kogălniceanu — Analiză comparativă săpături (3 oferte)' + _badgeTimp('2026-07-30','#CC1515') + '</div>' +
+        '<div style="font-size:11px;color:#2C3E50;line-height:1.5">Deviz F3 vs Salt vs Ideal Max, la cantitățile din deviz. <b>Ideal Max recomandat — 945.907 lei</b> (+8,3% vs deviz), cu ~328.858 lei sub Salt (−25,8%). Salt +45,9%.<br>' +
+        '<b>Cale:</b> <span style="font-family:monospace;background:rgba(0,0,0,0.06);padding:1px 6px;border-radius:4px">Hangar Kogălniceanu → Analize Comparative → Analiză săpături</span></div>' +
+      '</div>' +
+    '</div>' : '') +
+
     (new Date() <= new Date('2026-07-25') ? '<div style="background:#FFF8E1;border:1px solid #F9A825;border-left:4px solid #F9A825;border-radius:6px;padding:10px 14px;margin-bottom:12px;display:flex;align-items:flex-start;gap:10px">' +
       '<i class="ti ti-sparkles" style="color:#F9A825;font-size:16px;flex-shrink:0;margin-top:1px"></i>' +
       '<div>' +
@@ -1681,14 +1694,6 @@ function renderHome() {
       '</div>' +
       '<div style="font-size:10px;color:#888;margin-top:4px">Cale: Campus DUAL → Raport producție SL12 → butoane ajustare</div>' +
     '</div>' : '') +
-
-    '<div style="background:#E8F4FB;border:1px solid #AED6F1;border-left:4px solid #1A5276;border-radius:6px;padding:10px 14px;margin-bottom:12px;display:flex;align-items:flex-start;gap:10px">' +
-      '<i class="ti ti-shovel" style="color:#1A5276;font-size:16px;flex-shrink:0;margin-top:1px"></i>' +
-      '<div style="flex:1">' +
-        '<div style="font-size:12px;font-weight:700;color:#154360;margin-bottom:3px"><span style="background:#1A5276;color:#fff;border-radius:4px;padding:1px 7px;font-size:10px;margin-right:6px;letter-spacing:0.5px">Disponibil curând</span>Kogălniceanu — Analiză comparativă săpături</div>' +
-        '<div style="font-size:11px;color:#2C3E50;line-height:1.5">Analiză oferte executanți pentru lucrările de săpătură și terasamente.</div>' +
-      '</div>' +
-    '</div>' +
 
     '<div style="margin-bottom:12px">' +
       '<div style="display:flex;align-items:center;gap:6px;margin-bottom:8px">' +
@@ -2479,6 +2484,158 @@ function renderAn21(proj) {
 
 // Link Google Sheets Prefabricate
 var PREFAB_SHEET_URL = 'https://docs.google.com/spreadsheets/d/1NqHEFBRS3yYQY6XEC329-AkiMyTFN0AlC_xLE-NdI_E/edit?usp=sharing';
+
+function renderAnSap(proj) {
+  document.querySelectorAll('.submenu-item').forEach(function(i){ i.classList.remove('active'); });
+  var itm = document.getElementById('item-hangar-ansap');
+  if (itm) itm.classList.add('active');
+  closeMenu();
+  document.getElementById('menu-btn').style.display = 'none';
+  var bb = document.getElementById('back-btn');
+  bb.style.display = 'flex';
+  bb.onclick = function() { renderProjHome('hangar'); };
+  var html = '';
+  html += '<div class="proj-header"><div class="proj-title">Analiză Comparativă — Săpături Platformă și Structură</div>';
+  html += '<div class="proj-meta">Hangar Kogălniceanu · Deviz F3 vs SC SALT SOFIA vs SC IDEAL MAX · valori la cantitățile din deviz F3, fără TVA · 25.07.2026</div></div>';
+  html += '<div class="module-badge" style="background:#EEF2FF;color:#4338CA"><i class="ti ti-shovel" style="font-size:13px"></i> Analiză Comparativă Oferte Săpături / Terasamente</div>';
+  html += '<div style="margin-bottom:14px"><a href="' + (typeof SAP_SHEET_URL !== 'undefined' && SAP_SHEET_URL ? SAP_SHEET_URL : 'Analiza_Sapatura_3oferte_v4.xlsx') + '" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 18px;background:#1A5276;color:#fff;border-radius:var(--radius);font-size:12px;font-weight:600;text-decoration:none"><i class="ti ti-table"></i> Deschide analiza comparativă (Excel)</a></div>';
+  // KPIs
+  html += '<div class="kpi-grid" style="margin-bottom:14px">';
+  html += '<div class="kpi"><div class="kpi-label">Deviz F3 (referință)</div><div class="kpi-val">873.507 lei</div><div class="kpi-sub">preț dat de EREN · scope terasamente</div></div>';
+  html += '<div class="kpi"><div class="kpi-label">Ideal Max — RECOMANDAT</div><div class="kpi-val" style="color:#1E6E2D">945.907 lei</div><div class="kpi-sub">+8,3% vs deviz · abatere doar din săpătură</div></div>';
+  html += '<div class="kpi"><div class="kpi-label">Salt</div><div class="kpi-val" style="color:#C0392B">1.274.765 lei</div><div class="kpi-sub">+45,9% vs deviz · scump umpluturi + transport</div></div>';
+  html += '<div class="kpi"><div class="kpi-label">Economie Ideal Max vs Salt</div><div class="kpi-val" style="color:#1E6E2D">328.858 lei</div><div class="kpi-sub">−25,8% · la scope și cantități egale</div></div>';
+  html += '</div>';
+  // Grafic comparativ pe zone (bare CSS)
+  html += '<div class="proj-card" style="margin-bottom:12px">';
+  html += '<div class="proj-card-header" style="background:#2C4A6E"><span style="font-size:13px;font-weight:600;color:#fff">Comparativ valoric pe zone (lei, fără TVA)</span></div>';
+  html += '<div class="proj-card-body">';
+  html += '<div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:12px;font-size:11px">' +
+    '<span style="display:flex;align-items:center;gap:5px"><span style="width:11px;height:11px;border-radius:2px;background:#888780"></span>Deviz F3</span>' +
+    '<span style="display:flex;align-items:center;gap:5px"><span style="width:11px;height:11px;border-radius:2px;background:#2A78D6"></span>Ideal Max</span>' +
+    '<span style="display:flex;align-items:center;gap:5px"><span style="width:11px;height:11px;border-radius:2px;background:#EB6834"></span>Salt</span></div>';
+  var maxv = 1274765;
+  var groups = [
+    {z:'Platformă', d:415430, i:441532, s:632394},
+    {z:'Structură hangar', d:336867, i:363699, s:451807},
+    {z:'Rezervor', d:121210, i:140676, s:190563},
+    {z:'TOTAL', d:873507, i:945907, s:1274765}
+  ];
+  var fmt = function(n){ return n.toLocaleString('ro-RO'); };
+  var bar = function(val, color){ var p=(val/maxv*100).toFixed(1);
+    return '<div style="display:flex;align-items:center;gap:8px;margin-bottom:3px">' +
+      '<div style="flex:1;background:#F0F0F0;border-radius:3px;height:15px"><div style="width:'+p+'%;background:'+color+';height:15px;border-radius:3px"></div></div>' +
+      '<div style="width:82px;font-size:10px;font-weight:600;color:'+color+';text-align:right">'+fmt(val)+'</div></div>'; };
+  groups.forEach(function(g){
+    html += '<div style="margin-bottom:'+(g.z==='TOTAL'?'2':'12')+'px'+(g.z==='TOTAL'?';border-top:1px solid #ddd;padding-top:8px':'')+'">';
+    html += '<div style="font-size:11px;font-weight:700;color:#2C3E50;margin-bottom:4px">'+g.z+'</div>';
+    html += bar(g.d,'#888780') + bar(g.i,'#2A78D6') + bar(g.s,'#EB6834');
+    html += '</div>';
+  });
+  html += '</div></div>';
+  // Tabel comparativ pe articole
+  html += '<div class="proj-card" style="margin-bottom:12px">';
+  html += '<div class="proj-card-header" style="background:#2C4A6E"><span style="font-size:13px;font-weight:600;color:#fff">Comparativ pe articole (lei, la cant. deviz)</span></div>';
+  html += '<div class="proj-card-body" style="padding:0;overflow-x:auto">';
+  html += '<table style="width:100%;border-collapse:collapse;font-size:11px">';
+  html += '<tr style="background:#2E5090;color:#fff"><th style="padding:7px 8px;text-align:left">Articol</th><th style="padding:7px 6px;text-align:right">Cant.</th><th style="padding:7px 6px;text-align:right">Deviz</th><th style="padding:7px 6px;text-align:right">Ideal Max</th><th style="padding:7px 6px;text-align:right">Salt</th><th style="padding:7px 8px;text-align:left">Obs.</th></tr>';
+  var arts = [
+    {zone:'ZONA 1 — PLATFORMĂ'},
+    {a:'Săpătură piatră spartă 30cm',c:'975 mc',d:'21.188',i:'34.125',s:'35.100',o:'IM galben 35'},
+    {a:'Transport evacuare pământ (1)',c:'2.193,75 t',d:'46.529',i:'46.529',s:'78.975',o:'Salt 36 vs deviz 21'},
+    {a:'Săpătură spații largi',c:'992 mc',d:'21.556',i:'34.720',s:'35.712',o:'IM galben 35'},
+    {a:'Transport evacuare pământ (2)',c:'2.232 t',d:'47.341',i:'47.341',s:'80.352',o:''},
+    {a:'Umplutură piatră spartă 40cm',c:'1.306 mc',d:'116.077',i:'116.077',s:'164.882',o:'Salt=58 exec+35/t mat'},
+    {a:'Transport piatră spartă',c:'2.546,7 t',d:'34.355',i:'34.355',s:'91.681',o:'Salt 36 vs deviz 13,49'},
+    {a:'Umplutură balast 20cm',c:'650 mc',d:'83.226',i:'83.226',s:'90.935',o:''},
+    {a:'Transport balast',c:'1.521 t',d:'45.158',i:'45.158',s:'54.756',o:''},
+    {sub:'Subtotal Platformă',d:'415.430',i:'441.532',s:'632.394'},
+    {zone:'ZONA 2 — STRUCTURĂ HANGAR'},
+    {a:'Săpătură fără evacuare',c:'2.022 mc',d:'43.938',i:'70.770',s:'72.792',o:'IM galben 35'},
+    {a:'Transport evacuare pământ',c:'4.549,5 t',d:'96.495',i:'96.495',s:'163.782',o:'Salt ofertase 27 t!'},
+    {a:'Umplutură cu pământ șantier',c:'1.346,48 mc',d:'49.483',i:'49.483',s:'48.473',o:'Salt sub deviz'},
+    {a:'Umplutură balast 20cm',c:'744 mc',d:'95.262',i:'95.262',s:'104.086',o:''},
+    {a:'Transport balast',c:'1.740,96 t',d:'51.689',i:'51.689',s:'62.675',o:''},
+    {sub:'Subtotal Structură',d:'336.867',i:'363.699',s:'451.807'},
+    {zone:'ZONA 3 — REZERVOR'},
+    {a:'Săpătură fără evacuare',c:'1.466,9 mc',d:'31.876',i:'51.342',s:'52.808',o:'IM galben 35'},
+    {a:'Transport evacuare pământ',c:'3.300,53 t',d:'70.004',i:'70.004',s:'118.819',o:'ESTE bugetat în deviz'},
+    {a:'Umplutură cu pământ șantier',c:'526 mc',d:'19.330',i:'19.330',s:'18.936',o:'Salt sub deviz'},
+    {sub:'Subtotal Rezervor',d:'121.210',i:'140.676',s:'190.563'},
+    {tot:'TOTAL GENERAL',d:'873.507',i:'945.907',s:'1.274.765'}
+  ];
+  arts.forEach(function(r){
+    if (r.zone){ html += '<tr style="background:#DCE6F1"><td colspan="6" style="padding:5px 8px;font-weight:700;color:#1F3864;font-size:10px">'+r.zone+'</td></tr>'; return; }
+    if (r.sub){ html += '<tr style="background:#EEF3E2"><td style="padding:6px 8px;font-weight:700">'+r.sub+'</td><td></td><td style="padding:6px 6px;text-align:right;font-weight:700">'+r.d+'</td><td style="padding:6px 6px;text-align:right;font-weight:700;color:#185FA5">'+r.i+'</td><td style="padding:6px 6px;text-align:right;font-weight:700;color:#C0392B">'+r.s+'</td><td></td></tr>'; return; }
+    if (r.tot){ html += '<tr style="background:#FCE4D6"><td style="padding:7px 8px;font-weight:700">'+r.tot+'</td><td></td><td style="padding:7px 6px;text-align:right;font-weight:700">'+r.d+'</td><td style="padding:7px 6px;text-align:right;font-weight:700;color:#185FA5">'+r.i+'</td><td style="padding:7px 6px;text-align:right;font-weight:700;color:#C0392B">'+r.s+'</td><td></td></tr>'; return; }
+    html += '<tr><td style="padding:6px 8px;border-bottom:1px solid #eee">'+r.a+'</td>' +
+      '<td style="padding:6px 6px;border-bottom:1px solid #eee;text-align:right;color:#666;white-space:nowrap">'+r.c+'</td>' +
+      '<td style="padding:6px 6px;border-bottom:1px solid #eee;text-align:right">'+r.d+'</td>' +
+      '<td style="padding:6px 6px;border-bottom:1px solid #eee;text-align:right;color:#185FA5">'+r.i+'</td>' +
+      '<td style="padding:6px 6px;border-bottom:1px solid #eee;text-align:right;color:#C0392B">'+r.s+'</td>' +
+      '<td style="padding:6px 8px;border-bottom:1px solid #eee;font-size:10px;color:#666">'+(r.o||'')+'</td></tr>';
+  });
+  html += '</table></div></div>';
+  // Verificare cantitati
+  html += '<div class="proj-card" style="margin-bottom:12px">';
+  html += '<div class="proj-card-header" style="background:#7B4B18"><span style="font-size:13px;font-weight:600;color:#fff">Verificare cantități — Deviz F3 vs ofertă Salt</span></div>';
+  html += '<div class="proj-card-body" style="padding:0;overflow-x:auto">';
+  html += '<table style="width:100%;border-collapse:collapse;font-size:11px">';
+  html += '<tr style="background:#2E5090;color:#fff"><th style="padding:7px 8px;text-align:left">Articol</th><th style="padding:7px 6px;text-align:right">Deviz F3</th><th style="padding:7px 6px;text-align:right">Salt ofertă</th><th style="padding:7px 6px;text-align:right">Δ</th><th style="padding:7px 8px;text-align:left">Obs.</th></tr>';
+  var qc = [
+    {a:'Platformă — Transport evacuare (1)',d:'2.193,75 t',s:'1.984 t',delta:'−209,75',o:'Salt sub deviz',bg:'#FFF7E6'},
+    {a:'Platformă — Transport evacuare (2)',d:'2.232 t',s:'1.950 t',delta:'−282',o:'Salt sub deviz',bg:'#FFF7E6'},
+    {a:'Structură — Transport evacuare',d:'4.549,5 t',s:'27,22 t',delta:'−4.522,28',o:'SUBEVALUARE MASIVĂ',bg:'#FCE4E4'},
+    {a:'Rezervor — Transport evacuare',d:'3.300,53 t',s:'3.300,53 t',delta:'0',o:'OK',bg:'#EAF7EE'},
+    {a:'Rezervor — Umplutură pământ',d:'526 mc',s:'408 mc',delta:'−118',o:'Salt sub deviz',bg:'#FFF7E6'},
+    {a:'Săpături (toate zonele)',d:'aliniate',s:'aliniate',delta:'≈0',o:'OK',bg:'#EAF7EE'}
+  ];
+  qc.forEach(function(r){
+    html += '<tr style="background:'+r.bg+'"><td style="padding:6px 8px;border-bottom:1px solid #eee">'+r.a+'</td>' +
+      '<td style="padding:6px 6px;border-bottom:1px solid #eee;text-align:right">'+r.d+'</td>' +
+      '<td style="padding:6px 6px;border-bottom:1px solid #eee;text-align:right">'+r.s+'</td>' +
+      '<td style="padding:6px 6px;border-bottom:1px solid #eee;text-align:right;font-weight:600;color:'+(r.o.indexOf('OK')>=0?'#1E6E2D':'#C0392B')+'">'+r.delta+'</td>' +
+      '<td style="padding:6px 8px;border-bottom:1px solid #eee;font-size:10px;font-weight:'+(r.o.indexOf('MASIV')>=0?'700':'400')+';color:'+(r.o.indexOf('OK')>=0?'#1E6E2D':'#C0392B')+'">'+r.o+'</td></tr>';
+  });
+  html += '</table><div style="padding:9px 12px;font-size:10px;color:#666;background:#FAFAFA;border-top:1px solid #eee">Toate valorile din analiză sunt normalizate la cantitățile din deviz F3, ca să fie comparabile (altfel oferta Salt ar apărea artificial mai mică unde a subevaluat cantitatea).</div>';
+  html += '</div></div>';
+  // Concluzii
+  html += '<div class="proj-card" style="margin-bottom:12px">';
+  html += '<div class="proj-card-header" style="background:#2C4A6E"><span style="font-size:13px;font-weight:600;color:#fff">Concluzii</span></div>';
+  html += '<div class="proj-card-body" style="display:flex;flex-direction:column;gap:6px">';
+  var concl = [
+    {tag:'RECOMANDARE',bg:'#E8F5E9',tc:'#1E6E2D',txt:'Ideal Max — 945.907 lei vs Salt 1.274.765 lei → economie ~328.858 lei (−25,8%). Ideal Max se încadrează în prețul din deviz aproape peste tot; abaterea (+8,3% vs deviz) vine DOAR din săpătură (galben 35 vs 21,73 lei/mc).'},
+    {tag:'SALT — SCUMP',bg:'#FCE4E4',tc:'#C0392B',txt:'+45,9% peste deviz. Scump la umpluturi (execuție 58 + material 35 lei/t) și la transport (36 lei/t uniform, indiferent de material, vs 13–30 lei/t în deviz). Ideal Max stă la nivel de deviz pe transport și umpluturi.'},
+    {tag:'CORECȚIE',bg:'#FFF8E1',tc:'#856404',txt:'Transportul de evacuare pământ pentru STRUCTURĂ (4.549,5 t) și REZERVOR (3.300,53 t) ESTE bugetat în deviz F3 — nu era nebugetat cum s-a semnalat inițial (concluzia se baza pe extrasul incomplet din Cap.3).'},
+    {tag:'CANTITĂȚI',bg:'#FFF8E1',tc:'#856404',txt:'Salt a ofertat sub cantitățile din deviz la transportul de evacuare (structură 27,22 t vs 4.549,5 t din deviz — subevaluare masivă). La execuție reală oferta Salt ar crește substanțial. Valorile sunt normalizate la cantitățile din deviz.'},
+    {tag:'GALBEN IDEAL MAX',bg:'#E8F0FE',tc:'#1A5276',txt:'Unde Ideal Max nu se încadrează în prețul dat de EREN, se folosește prețul marcat cu galben — în scope terasamente doar la săpături (35 lei/mc). Ideal Max mai are galben pe stabilizări, BCR și betoane, care se tratează la analizele acelor capitole.'}
+  ];
+  concl.forEach(function(c){
+    html += '<div style="background:'+c.bg+';border-radius:6px;padding:8px 12px;font-size:12px;display:flex;gap:12px;align-items:flex-start">';
+    html += '<span style="font-weight:700;color:'+c.tc+';flex:0 0 120px;width:120px;line-height:1.3">'+c.tag+'</span>';
+    html += '<span style="flex:1">'+c.txt+'</span></div>';
+  });
+  html += '</div></div>';
+  // Actiuni
+  html += '<div class="proj-card" style="margin-bottom:12px">';
+  html += '<div class="proj-card-header" style="background:#7B1818"><span style="font-size:13px;font-weight:600;color:#fff">Acțiuni (responsabil · termen)</span></div>';
+  html += '<div class="proj-card-body" style="padding:0;overflow-x:auto">';
+  html += '<table style="width:100%;border-collapse:collapse;font-size:11px">';
+  html += '<tr style="background:#2E5090;color:#fff"><th style="padding:7px 10px;text-align:left">Acțiune</th><th style="padding:7px 8px;text-align:left;white-space:nowrap">Responsabil</th><th style="padding:7px 8px;text-align:center">Termen</th></tr>';
+  var acts = [
+    {a:'Selectează Ideal Max pentru terasamente (cost + încadrare în deviz)',r:'Management + G. Spătaru',t:'30.07'},
+    {a:'Negociază săpătura Ideal Max 35 → ~28 lei/mc (articolele galbene)',r:'G. Spătaru / Achiziții',t:'30.07'},
+    {a:'Cere Salt reofertare la cantitățile corecte din deviz (dacă rămâne în cursă)',r:'G. Spătaru / Achiziții',t:'29.07'},
+    {a:'Clarifică tehnic: 2.022 mc excavat + 4.549 t evacuat vs 1.346 mc umplutură pământ la structură — de unde pământul de umplutură',r:'Proiectant / G. Spătaru',t:'31.07'}
+  ];
+  acts.forEach(function(x){
+    html += '<tr><td style="padding:6px 10px;border-bottom:1px solid #eee">'+x.a+'</td><td style="padding:6px 8px;border-bottom:1px solid #eee;color:#444">'+x.r+'</td><td style="padding:6px 8px;border-bottom:1px solid #eee;text-align:center;white-space:nowrap;font-weight:600">'+x.t+'</td></tr>';
+  });
+  html += '</table></div></div>';
+  html += '<button class="open-fisa-btn" onclick="renderProjHome(\'hangar\')"><i class="ti ti-arrow-left"></i> Înapoi la proiect</button>';
+  html += '<div class="page-footer">PM Hub · EREN CONS SRL · 2026 · Surse: Ideal Max F3 lista cantități 2_1 + 3_31 (21.07), Salt «SAPATURI - salt.pdf» + material 35 lei/t, Deviz F3 · scope terasamente</div>';
+  document.getElementById('main').innerHTML = html;
+}
 
 function renderAnPref(proj) {
   var html = '';

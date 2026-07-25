@@ -2588,6 +2588,7 @@ function renderHandover(proj) {
   var html = '';
   html += '<div class="proj-header"><div class="proj-title">Hand Over — Predare cu rezerve (Aport PM)</div><div class="proj-meta">Ședință Hand Over 03.08.2026 · STAB-01 Listă Puncte Deschise · Poziție PM: preluare cu rezerve consemnate</div></div>';
   html += '<div class="module-badge" style="background:#FDE8D4;color:#B45309"><i class="ti ti-file-check" style="font-size:13px"></i> STAB-01 · Listă Puncte Deschise (LPD)</div>';
+  html += '<div style="margin-bottom:12px"><a href="https://docs.google.com/spreadsheets/d/1NVv7mJXMQme6la0TtAdC-z6zu5h1ruEm6KesI1gFPdM/edit?usp=sharing" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 18px;background:#1A5276;color:#fff;border-radius:var(--radius);font-size:12px;font-weight:600;text-decoration:none"><i class="ti ti-table"></i> Deschide STAB-01 (Google Sheets)</a></div>';
   html += '<div class="kpi-grid" style="margin-bottom:14px">';
   html += '<div class="kpi"><div class="kpi-label">Ofertă vs estimare autoritate</div><div class="kpi-val" style="color:#C0392B">69,2%</div><div class="kpi-sub">19,26 mil / 27,84 mil · −8,58 mil lei sub plafon</div></div>';
   html += '<div class="kpi"><div class="kpi-label">Bani reali pentru lucrări</div><div class="kpi-val" style="color:#C0392B">56,5%</div><div class="kpi-sub">Cap.4 = 14,73 mil lei (fără OS) din estimarea execuției</div></div>';
@@ -2608,13 +2609,14 @@ function renderHandover(proj) {
   html += '<div class="proj-card" style="margin-bottom:12px">';
   html += '<div class="proj-card-header" style="background:#7B1818"><span style="font-size:13px;font-weight:600;color:#fff">Puncte deschise dedicate</span></div>';
   html += '<div class="proj-card-body" style="display:flex;flex-direction:column;gap:8px">';
-  html += '<div style="border:1px solid #E3E8EF;border-radius:8px;padding:10px 12px">';
-  html += '<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:4px"><span style="font-weight:700;color:#1F3864;font-size:12px">LP03 · OS — Branșamente sanitare</span><span style="background:#E5E7EB;color:#5A6472;padding:1px 8px;border-radius:10px;font-size:9px;font-weight:700">ÎN DEZVOLTARE</span></div>';
-  html += '<div style="font-size:11px;color:#444;line-height:1.5">Punct dedicat branșamentelor sanitare din organizarea de șantier. Se dezvoltă după primirea informațiilor / ofertelor de la Achiziții.</div>';
+  html += '<div style="border:1px solid #F0C9C0;border-radius:8px;padding:10px 12px;background:#FDF6F5">';
+  html += '<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:4px"><span style="font-weight:700;color:#1F3864;font-size:12px">LP03 · OS — Branșamente sanitare</span><span style="background:#C55A11;color:#fff;padding:1px 8px;border-radius:10px;font-size:9px;font-weight:700">MARE</span></div>';
+  html += '<div style="font-size:11px;color:#444;line-height:1.5"><b>Bugetul alocat nu ține cont de realitatea din teren.</b> Buget alocat (deviz cod 172 «Branșare OS la instalația de apă») = 2.484,75 lei — integral material, manoperă bugetată 0. Materiale deja achiziționate: 3.043,93 lei + TVA → depășesc bugetul total cu <b>+22,5% (+559 lei)</b> doar pe materiale. Manopera în curs de evaluare, peste un buget de manoperă = 0 lei. (Valoare în contract cu Beneficiarul: 2.811,40 lei — depășită și ea de materiale.)</div>';
   html += '</div>';
-  html += '<div style="border:1px solid #E3E8EF;border-radius:8px;padding:10px 12px">';
-  html += '<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:4px"><span style="font-weight:700;color:#1F3864;font-size:12px">LP04 · OS — Branșamente electrice</span><span style="background:#E5E7EB;color:#5A6472;padding:1px 8px;border-radius:10px;font-size:9px;font-weight:700">ÎN DEZVOLTARE</span></div>';
-  html += '<div style="font-size:11px;color:#444;line-height:1.5">Punct dedicat branșamentelor electrice din organizarea de șantier. Se dezvoltă după primirea informațiilor / ofertelor de la Achiziții.</div>';
+  html += '<div style="border:1px solid #F0C9C0;border-radius:8px;padding:10px 12px;background:#FDF6F5">';
+  html += '<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:4px"><span style="font-weight:700;color:#1F3864;font-size:12px">LP04 · OS — Branșamente electrice</span><span style="background:#C55A11;color:#fff;padding:1px 8px;border-radius:10px;font-size:9px;font-weight:700">MARE</span></div>';
+  html += '<div style="font-size:11px;color:#444;line-height:1.5"><b>Bugetul alocat nu ține cont de realitatea din teren.</b> Buget inițial 32.370 lei vs ofertă reală Light Design nr.191 = 70.148 lei → <b>+116,7% (+37.778 lei)</b>. Cauze: manoperă omisă complet 28.000 lei (74% — priză pământ, PRAM, montaj TEG/TED, PIF), materiale/echipamente subevaluate 6.504 lei, cerințe teren neprevăzute 3.274 lei (limitatoare viteză). Precedent care confirmă subevaluarea sistemică a bugetului față de condițiile reale.</div>';
+  html += "<div style='margin-top:8px'><button class='open-fisa-btn' style='font-size:11px;padding:5px 12px' onclick=\"renderOSElectric()\"><i class='ti ti-bolt'></i> Deschide analiza OS — Branșamente electrice</button></div>";
   html += '</div>';
   html += '<div style="border:1px solid #F0C9C0;border-radius:8px;padding:10px 12px;background:#FDF6F5">';
   html += '<div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:4px"><span style="font-weight:700;color:#1F3864;font-size:12px">LP05 · Amenajare platformă</span><span style="background:#C0392B;color:#fff;padding:1px 8px;border-radius:10px;font-size:9px;font-weight:700">CRITIC</span></div>';

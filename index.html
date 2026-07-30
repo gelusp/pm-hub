@@ -1635,6 +1635,15 @@ function renderHome() {
       '<span style="font-size:10px;font-weight:400;background:rgba(31,56,100,0.08);color:#2E5090;border-radius:99px;padding:2px 8px;margin-left:4px">încă ' + Math.max(1, Math.ceil((new Date('2026-07-23T23:59:59') - new Date())/86400000)) + ' zile</span></a>' +
     '</div>' : '') +
 
+    (new Date() <= new Date('2026-07-31T23:59:59') ?
+    '<div style="background:#CC1515;border-radius:8px;padding:14px 18px;margin-bottom:14px;display:flex;align-items:center;gap:12px;box-shadow:0 2px 8px rgba(204,21,21,0.35);animation:blinkNou 3s step-start infinite">' +
+      '<i class="ti ti-alert-triangle" style="font-size:22px;color:#fff;flex-shrink:0"></i>' +
+      '<div>' +
+        '<div style="font-size:13px;font-weight:800;color:#fff;letter-spacing:0.5px">ANUNȚ FINALIZARE LUCRĂRI — UPB</div>' +
+        '<div style="font-size:11px;color:rgba(255,255,255,0.85);margin-top:2px">De transmis pe <b style="color:#fff">31.07.2026</b></div>' +
+      '</div>' +
+    '</div>' : '') +
+
     '<div class="proj-card">' +
       '<div class="proj-card-header" style="background:#A03535;border-left:3px solid #CC1515">' +
         '<div class="proj-icon" style="background:rgba(204,21,21,0.25)"><i class="ti ti-building" style="color:#CC1515"></i></div>' +

@@ -1574,7 +1574,7 @@ function deleteAlert(id) {
 function renderAlerts() {
   var el = document.getElementById('alerts-list');
   if (!el) return;
-  var alerts = getAlerts();
+  var alerts = getAlerts().slice().reverse();
   if (!alerts.length) {
     el.innerHTML = '<div style="font-size:11px;color:var(--text-tertiary);padding:4px 0">Nicio alertă adăugată.</div>';
     return;

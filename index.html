@@ -381,6 +381,9 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
           <div class="submenu-item" id="item-campus-sl12" onclick="renderSL12()">
             <i class="ti ti-file-analytics"></i> Raport producție SL12
           </div>
+          <div class="submenu-item" id="item-campus-sl13" onclick="renderSL13()">
+            <i class="ti ti-file-analytics" style="color:#1A5276"></i> Raport producție SL13
+          </div>
           <div class="submenu-item" id="item-campus-lunar" onclick="renderSintezaCOO()">
             <i class="ti ti-calendar-stats"></i> Raport lunar
           </div>
@@ -738,6 +741,97 @@ function renderSL12() {
       '</table>' +
     '</div>' +
     '<div class="page-footer">PM Hub · EREN CONS SRL · 2026</div>';
+}
+
+
+function renderSL13() {
+  document.querySelectorAll('.submenu-item').forEach(function(i){ i.classList.remove('active'); });
+  var item = document.getElementById('item-campus-sl13');
+  if (item) item.classList.add('active');
+  closeMenu();
+  document.getElementById('menu-btn').style.display = 'none';
+  var btn = document.getElementById('back-btn');
+  btn.style.display = 'flex';
+  btn.onclick = function() { renderProjHome('campus'); };
+
+  var capsSL13 = [
+    {cap:'Structură',          sl13:36625.71,       cum:6550487.88,  prc:100},
+    {cap:'Arhitectură',        sl13:1207664.64,     cum:8379927.52,  prc:100},
+    {cap:'Instalații electrice',sl13:618517.79,     cum:2135427.41,  prc:100},
+    {cap:'Instalații sanitare', sl13:273137.56,     cum:752648.90,   prc:97.9},
+    {cap:'HVAC',               sl13:985523.16,      cum:2825626.11,  prc:99.49},
+    {cap:'Montaj echipamente', sl13:58511.23,       cum:213320.60,   prc:100},
+    {cap:'Echipamente & dotări',sl13:1810634.32,    cum:3171510.32,  prc:100},
+    {cap:'Org. șantier',       sl13:155579.50,      cum:1248739.47,  prc:100},
+  ];
+
+  var html = '<div class="proj-header"><div class="proj-title">Campus DUAL Politehnica</div>' +
+    '<div class="proj-meta">PM: Gelu Spătaru · Corp C1 · SL13 Finalizare contract · Iulie 2026</div></div>' +
+    '<div class="module-badge" style="background:#EBF5FB;color:#1A5276"><i class="ti ti-file-analytics" style="font-size:13px"></i> Centralizator F2 — SL13 · Iulie 2026 · Situație finală</div>';
+
+  // KPI cards
+  html += '<div class="kpi-row">';
+  html += '<div class="kpi"><div class="kpi-label">SL13 fără TVA</div><div class="kpi-val" style="color:#1A5276">5.146.194 lei</div><div class="kpi-sub">Iulie 2026</div></div>';
+  html += '<div class="kpi"><div class="kpi-label">SL13 cu TVA</div><div class="kpi-val" style="color:#1A5276">6.226.895 lei</div><div class="kpi-sub">TVA 21%</div></div>';
+  html += '<div class="kpi"><div class="kpi-label">Total cumulat fără TVA</div><div class="kpi-val" style="color:#1E8449">26.978.703 lei</div><div class="kpi-sub">~100% realizat</div></div>';
+  html += '<div class="kpi"><div class="kpi-label">Total cumulat cu TVA</div><div class="kpi-val" style="color:#1E8449">33.255.158 lei</div><div class="kpi-sub">SL1–SL13</div></div>';
+  html += '<div class="kpi"><div class="kpi-label">Ajustări cumulate</div><div class="kpi-val" style="color:#8E44AD">544.477 lei</div><div class="kpi-sub">SL1–SL13 indexare</div></div>';
+  html += '</div>';
+
+  // Section A — Capitole SL13
+  html += '<div class="nivel-row"><div class="nivel-title" style="color:#1A5276"><i class="ti ti-chart-bar"></i> A. Realizat SL13 pe capitole</div></div>';
+  html += '<div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:12px">';
+  html += '<thead><tr style="background:#EBF5FB">';
+  html += '<th style="padding:6px 8px;font-weight:600;text-align:left;border-bottom:2px solid #AED6F1">Capitol</th>';
+  html += '<th style="padding:6px 8px;font-weight:600;text-align:right;border-bottom:2px solid #AED6F1">SL13 (lei)</th>';
+  html += '<th style="padding:6px 8px;font-weight:600;text-align:right;border-bottom:2px solid #AED6F1">Cumulat (lei)</th>';
+  html += '<th style="padding:6px 8px;font-weight:600;text-align:center;border-bottom:2px solid #AED6F1">%</th>';
+  html += '</tr></thead><tbody>';
+  capsSL13.forEach(function(r,i){
+    var bg = i%2===0?'#FAFCFE':'#fff';
+    var prcCol = r.prc>=100?'#1E8449':r.prc>=95?'#F39C12':'#C0392B';
+    html += '<tr style="background:'+bg+'">';
+    html += '<td style="padding:5px 8px">'+r.cap+'</td>';
+    html += '<td style="padding:5px 8px;text-align:right;font-weight:600;color:#1A5276">'+r.sl13.toLocaleString('ro-RO',{minimumFractionDigits:2,maximumFractionDigits:2})+'</td>';
+    html += '<td style="padding:5px 8px;text-align:right">'+r.cum.toLocaleString('ro-RO',{minimumFractionDigits:2,maximumFractionDigits:2})+'</td>';
+    html += '<td style="padding:5px 8px;text-align:center"><span style="background:'+(r.prc>=100?'#EAFAF1':r.prc>=95?'#FEF9E7':'#FDECEA')+';color:'+prcCol+';border-radius:4px;padding:1px 7px;font-weight:600;font-size:11px">'+r.prc+'%</span></td>';
+    html += '</tr>';
+  });
+  // Total row
+  html += '<tr style="background:#EBF5FB;font-weight:700">';
+  html += '<td style="padding:6px 8px">TOTAL (fără amenajare teren)</td>';
+  html += '<td style="padding:6px 8px;text-align:right;color:#1A5276">5.146.193,91</td>';
+  html += '<td style="padding:6px 8px;text-align:right">25.277.688,21</td>';
+  html += '<td style="padding:6px 8px;text-align:center"><span style="background:#EAFAF1;color:#1E8449;border-radius:4px;padding:1px 7px;font-weight:600;font-size:11px">~100%</span></td>';
+  html += '</tr>';
+  html += '</tbody></table></div>';
+
+  // Section B — Stadiu decontare
+  html += '<div class="nivel-row" style="margin-top:14px"><div class="nivel-title" style="color:#1A5276"><i class="ti ti-coins"></i> B. Stadiu decontare cumulat SL1–SL13</div></div>';
+  html += '<div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:12px">';
+  html += '<thead><tr style="background:#EBF5FB">';
+  html += '<th style="padding:6px 8px;font-weight:600;text-align:left;border-bottom:2px solid #AED6F1">Indicator</th>';
+  html += '<th style="padding:6px 8px;font-weight:600;text-align:right;border-bottom:2px solid #AED6F1">Valoare (lei fără TVA)</th>';
+  html += '</tr></thead><tbody>';
+  var stadiu = [
+    {l:'Contract după AA6', v:'26.969.217,38'},
+    {l:'Total realizat cumulat SL1–SL13', v:'26.978.702,55'},
+    {l:'Ajustări prețuri cumulate SL1–SL13', v:'544.476,87'},
+    {l:'Total cu ajustare', v:'27.523.179,42'},
+    {l:'Total realizat cu TVA (21%)', v:'33.255.158,14'},
+  ];
+  stadiu.forEach(function(r,i){
+    html += '<tr style="background:'+(i%2===0?'#FAFCFE':'#fff')+'">';
+    html += '<td style="padding:5px 8px">'+r.l+'</td>';
+    html += '<td style="padding:5px 8px;text-align:right;font-weight:600">'+r.v+'</td>';
+    html += '</tr>';
+  });
+  html += '</tbody></table></div>';
+
+  html += '<div style="background:#EBF5FB;border-left:3px solid #1A5276;border-radius:5px;padding:8px 12px;font-size:11px;margin-top:10px;color:#1A5276"><b>SL13 — situație finală de închidere contract.</b> Contractul este realizat integral (~100%). Valoarea cumulată depășește ușor contractul inițial din cauza actelor adiționale (AA4–AA6) și a ajustărilor de preț.</div>';
+
+  html += '<div class="page-footer">PM Hub · EREN CONS SRL · 2026</div>';
+  document.getElementById('main').innerHTML = html;
 }
 
 function openAjustareSL12() {
@@ -1630,7 +1724,7 @@ function renderHome() {
       '<div class="home-pmhub-label"><i class="ti ti-layout-dashboard" style="font-size:13px;color:#CC1515"></i> PM Hub <span style="font-weight:400;color:var(--text-tertiary)">· EREN CONS SRL · Gelu Spătaru</span></div>' +
     '</div>' +
 
-    (new Date() <= new Date('2026-07-23T23:59:59') ?
+        (new Date() <= new Date('2026-07-23T23:59:59') ?
     '<div style="margin-bottom:12px;display:flex;gap:10px">' +
       '<button onclick="startTour()" style="flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:11px 16px;background:#FEF7F7;color:#CC1515;border:1px solid #F2C9C9;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit"><i class="ti ti-player-play" style="font-size:15px"></i> DEMO — tur ghidat' +
       '<span style="font-size:10px;font-weight:400;background:rgba(204,21,21,0.08);color:#A03535;border-radius:99px;padding:2px 8px;margin-left:4px">încă ' + Math.max(1, Math.ceil((new Date('2026-07-23T23:59:59') - new Date())/86400000)) + ' zile</span></button>' +
@@ -1663,7 +1757,14 @@ function renderHome() {
       '</div>' +
     '</div>' +
 
-    (new Date() <= new Date('2026-08-08T23:59:59') ? '<div style="background:#EEF2FF;border:1px solid #B9C4E8;border-left:4px solid #2C4A6E;border-radius:6px;padding:10px 14px;margin-bottom:12px;display:flex;align-items:flex-start;gap:10px">' +
+    (new Date() <= new Date('2026-08-09') ? '<div style="background:#EBF5FB;border:1px solid #AED6F1;border-left:4px solid #1A5276;border-radius:6px;padding:10px 14px;margin-bottom:12px">' +
+      '<div style="font-size:11px;font-weight:700;color:#1A5276;margin-bottom:4px"><i class="ti ti-file-analytics" style="margin-right:4px"></i>Campus DUAL — SL13 Finalizare contract disponibil' + _badgeTimp('2026-08-09','#1A5276') + '</div>' +
+      '<div style="font-size:10px;color:#555;margin-bottom:5px"><b>Cale:</b> <span style="font-family:monospace;background:rgba(0,0,0,0.06);padding:1px 6px;border-radius:4px">Campus DUAL → Raportări Producție → Raport producție SL13</span></div>' +
+      '<div style="font-size:12px;font-weight:700;color:#2C3E50">SL13 fără TVA: <span style="color:#1A5276">5.146.194 lei</span> · Cu TVA: <span style="color:#1A5276">6.226.895 lei</span></div>' +
+      '<div style="font-size:10px;color:#888;margin-top:3px">Total cumulat realizat: 26.978.703 lei · Ajustări: 544.477 lei · Data: Iulie 2026</div>' +
+    '</div>' : '') +
+
+        (new Date() <= new Date('2026-08-08T23:59:59') ? '<div style="background:#EEF2FF;border:1px solid #B9C4E8;border-left:4px solid #2C4A6E;border-radius:6px;padding:10px 14px;margin-bottom:12px;display:flex;align-items:flex-start;gap:10px">' +
       '<i class="ti ti-building-factory-2" style="color:#2C4A6E;font-size:16px;flex-shrink:0;margin-top:1px"></i>' +
       '<div style="flex:1">' +
         '<div style="font-size:12px;font-weight:700;color:#1F3864;margin-bottom:3px"><span class="blink-nou" style="background:#CC1515;color:#fff;border-radius:4px;padding:1px 7px;font-size:10px;margin-right:6px;letter-spacing:0.5px">NOU</span>Kogălniceanu — Analiză comparativă Confecții Metalice (3 oferte)' + _badgeTimp('2026-08-08','#2C4A6E') + '</div>' +
@@ -1713,11 +1814,6 @@ function renderHome() {
       '<div style="font-size:11px;font-weight:700;color:#6C3483;margin-bottom:4px"><i class="ti ti-file-invoice" style="margin-right:4px"></i>Kogălniceanu — SL2 Execuție disponibil' + _badgeTimp('2026-08-05','#6C3483') + '</div>' +
       '<div style="font-size:12px;font-weight:700;color:#2C3E50">Total fără TVA: <span style="color:#6C3483">638.203 lei</span> · Total cu TVA: <span style="color:#6C3483">772.226 lei</span></div>' +
       '<div style="font-size:10px;color:#888;margin-top:3px">Demolări: 482.712 lei · Org. șantier: 155.491 lei · Data: 31.07.2026</div>' +
-    '</div>' : '') +
-
-    (new Date() <= new Date('2026-08-06') ? '<div style="background:#EBF5FB;border:1px solid #AED6F1;border-left:4px solid #1A5276;border-radius:6px;padding:10px 14px;margin-bottom:12px">' +
-      '<div style="font-size:11px;font-weight:700;color:#1A5276;margin-bottom:4px"><i class="ti ti-clock" style="margin-right:4px"></i>În curând — Campus DUAL SL13' + _badgeTimp('2026-08-06','#1A5276') + '</div>' +
-      '<div style="font-size:12px;color:#2C3E50">Situația de lucrări nr. 13 (finală) este în pregătire — va fi disponibilă în această săptămână.</div>' +
     '</div>' : '') +
 
     (new Date() <= new Date('2026-07-24') ? '<div style="background:#EAFAF1;border:1px solid #A9DFBF;border-left:4px solid #27AE60;border-radius:6px;padding:10px 14px;margin-bottom:12px">' +

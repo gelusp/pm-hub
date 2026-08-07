@@ -293,8 +293,14 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
         <div class="submenu-item" id="item-hangar-plan" onclick="openLink('https://docs.google.com/spreadsheets/d/1ZTLxiHNHZSoIqa3BoH7MNvyArLelJpGm/edit?gid=514226828#gid=514226828','item-hangar-plan')">
           <i class="ti ti-layout-list"></i> Plan Proiect
         </div>
-        <div class="submenu-item" id="item-hangar-productie" onclick="goModule('hangar','productie')">
+        <div class="submenu-item" id="item-hangar-productie" onclick="toggleSubSub('hangar-productie')">
           <i class="ti ti-hammer"></i> Raportări Producție
+          <i class="ti ti-chevron-down chevron" id="chev-hangar-productie" style="font-size:11px"></i>
+        </div>
+        <div class="submenu" id="sub-hangar-productie" style="margin-left:14px;border-left:2px solid var(--grey-200)">
+          <div class="submenu-item" id="item-hangar-prodsed1" onclick="goModule('hangar','prodsed1')">
+            <i class="ti ti-calendar-event" style="color:#1A5276"></i> 1. Ședință producție 14.08.2026
+          </div>
         </div>
         <div class="submenu-item" id="item-hangar-powerbi" onclick="goModule('hangar','powerbi')">
           <i class="ti ti-presentation-analytics" style="color:#7B2D8B"></i> Power BI
@@ -510,6 +516,7 @@ function goModule(proj, module) {
   else if (module === 'handover') renderHandover(proj);
   else if (module === 'stab01') renderHandover(proj);
   else if (module === 'stab02' || module === 'hozone' || module === 'koizone' || module === 'notapm') renderHandoverSoon(proj, module);
+  else if (module === 'prodsed1') renderProdSed1(proj);
   else renderProductie(proj);
 }
 
@@ -1757,6 +1764,15 @@ function renderHome() {
       '</div>' +
     '</div>' +
 
+    (new Date() <= new Date('2026-08-12T23:59:59') ? '<div style="background:#EEF2FF;border:1px solid #B9C4E8;border-left:4px solid #2C4A6E;border-radius:6px;padding:10px 14px;margin-bottom:12px;display:flex;align-items:flex-start;gap:10px">' +
+      '<i class="ti ti-info-circle" style="color:#2C4A6E;font-size:16px;flex-shrink:0;margin-top:1px"></i>' +
+      '<div style="flex:1">' +
+        '<div style="font-size:12px;font-weight:700;color:#1F3864;margin-bottom:3px"><span class="blink-nou" style="background:#CC1515;color:#fff;border-radius:4px;padding:1px 7px;font-size:10px;margin-right:6px;letter-spacing:0.5px">NOU</span>Kogălniceanu — Analiză Platformă (Cap.2.1) refăcută — scenariu optim de sourcing' + _badgeTimp('2026-08-12','#2C4A6E') + '</div>' +
+        '<div style="font-size:11px;color:#2C3E50;line-height:1.5">Scenariu pe pachete cu furnizorul cel mai bun documentat: Ideal Max (contractat), Mithras REV, Holcim REV2. Total optim <b>1.730.910 lei</b> (+36,5% vs buget / +19,8% vs buget indexat). Riscuri, ce e rezolvat și acțiuni cu responsabil/termen — actualizate.<br>' +
+        '<b>Cale:</b> <span style="font-family:monospace;background:rgba(0,0,0,0.06);padding:1px 6px;border-radius:4px">Hangar Kogălniceanu → Analize Comparative → 2.1 Platformă</span></div>' +
+      '</div>' +
+    '</div>' : '') +
+
     (new Date() <= new Date('2026-08-09') ? '<div style="background:#EBF5FB;border:1px solid #AED6F1;border-left:4px solid #1A5276;border-radius:6px;padding:10px 14px;margin-bottom:12px">' +
       '<div style="font-size:11px;font-weight:700;color:#1A5276;margin-bottom:4px"><i class="ti ti-file-analytics" style="margin-right:4px"></i>Campus DUAL — SL13 Finalizare contract disponibil' + _badgeTimp('2026-08-09','#1A5276') + '</div>' +
       '<div style="font-size:10px;color:#555;margin-bottom:5px"><b>Cale:</b> <span style="font-family:monospace;background:rgba(0,0,0,0.06);padding:1px 6px;border-radius:4px">Campus DUAL → Raportări Producție → Raport producție SL13</span></div>' +
@@ -2552,67 +2568,118 @@ function renderSL1(proj) {
 
 function renderAn21(proj) {
   var html = '';
-  html += '<div class="proj-header"><div class="proj-title">Analiză Comparativă — 2.1 Amenajare Platformă Exterioară</div><div class="proj-meta">eDevize F3 vs Mithras MTH-B 525 (10.07) și REVIZUITĂ MTH-B 545 (17.07) · Actualizat 18.07.2026 · Curs BNR 5,2429 lei/EUR</div></div>';
-  html += '<div class="module-badge" style="background:#EEF2FF;color:#4338CA"><i class="ti ti-file-analytics" style="font-size:13px"></i> Analiză Comparativă Oferte Piață</div>';
-  html += '<div style="margin-bottom:12px"><a href="https://docs.google.com/spreadsheets/d/1zTuEs1li8AkkQVDdtnUWeymZQwBOKcvO7R5U5XYpxVM/edit?gid=2059546820#gid=2059546820" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 18px;background:#1A5276;color:#fff;border-radius:var(--radius);font-size:12px;font-weight:600;text-decoration:none"><i class="ti ti-table"></i> Deschide analiza comparativă v3 · REV MTH-B 545 · curs 5,2429</a></div>';
+  html += '<div class="proj-header"><div class="proj-title">Analiză Comparativă — 2.1 Amenajare Platformă Exterioară</div><div class="proj-meta">Scenariu optim de sourcing pe pachete · Buget eDevize/ERP 11.07 · Mithras MTH-B 525 (10.07) / REV MTH-B 545 (17.07) · Ideal Max Ctr.166 (27.07) · Holcim REV2 (24.07) · Curs BNR 5,2429 lei/EUR · Actualizat 07.08.2026</div></div>';
+  html += '<div class="module-badge" style="background:#EEF2FF;color:#4338CA"><i class="ti ti-file-analytics" style="font-size:13px"></i> Scenariu Optim de Sourcing — Cap.2.1 Platformă</div>';
+  if (typeof AN21_SHEET_URL !== 'undefined' && AN21_SHEET_URL) {
+    html += '<div style="margin-bottom:14px"><a href="' + AN21_SHEET_URL + '" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 18px;background:#1A5276;color:#fff;border-radius:var(--radius);font-size:12px;font-weight:600;text-decoration:none"><i class="ti ti-table"></i> Deschide analiza comparativă</a></div>';
+  } else {
+    html += '<div style="margin-bottom:14px"><span style="display:inline-flex;align-items:center;gap:6px;padding:8px 18px;background:#E5E7EB;color:#6B7280;border-radius:var(--radius);font-size:12px;font-weight:600"><i class="ti ti-clock"></i> Link Google Sheets în pregătire</span></div>';
+  }
   // KPIs
   html += '<div class="kpi-grid" style="margin-bottom:14px">';
-  html += '<div class="kpi"><div class="kpi-label">Buget eDevize (total)</div><div class="kpi-val">1.267.781 lei</div><div class="kpi-sub">21 articole · F3 listă cant.</div></div>';
-  html += '<div class="kpi"><div class="kpi-label">Ofertă inițială MTH-B 525</div><div class="kpi-val" style="color:#C0392B">2.147.303 lei</div><div class="kpi-sub">409.564 EUR × 5,2429 · +69,4%</div></div>';
-  html += '<div class="kpi"><div class="kpi-label">Ofertă REVIZUITĂ MTH-B 545</div><div class="kpi-val" style="color:#C0392B">2.002.512 lei</div><div class="kpi-sub">381.947 EUR × 5,2429 · +58,0% vs buget (+734.731 lei)</div></div>';
-  html += '<div class="kpi"><div class="kpi-label">Economie negociere REV</div><div class="kpi-val" style="color:#1E6E2D">−144.791 lei</div><div class="kpi-sub">−27.617 EUR · manoperă BCR 43,85→35,35 €/mp</div></div>';
-  html += '<div class="kpi"><div class="kpi-label">Transport lipsă Mithras</div><div class="kpi-val" style="color:#856404">121.473 lei</div><div class="kpi-sub">Art.7+9+13 absente · scope comparabil: +74,7%</div></div>';
+  html += '<div class="kpi"><div class="kpi-label">Buget original (eDevize/ERP)</div><div class="kpi-val">1.267.774 lei</div><div class="kpi-sub">17 pachete · fără TVA</div></div>';
+  html += '<div class="kpi"><div class="kpi-label">Buget indexat (+14% actualizare preț)</div><div class="kpi-val">1.445.263 lei</div><div class="kpi-sub">clauză contractuală de indexare</div></div>';
+  html += '<div class="kpi"><div class="kpi-label">Total scenariu optim (cel mai bun preț/pachet)</div><div class="kpi-val" style="color:#C0392B">1.730.910 lei</div><div class="kpi-sub">+463.136 lei / +36,5% vs buget original</div></div>';
+  html += '<div class="kpi"><div class="kpi-label">Depășire vs buget indexat</div><div class="kpi-val" style="color:#856404">+285.648 lei</div><div class="kpi-sub">+19,8% — necesită decizie management</div></div>';
+  html += '<div class="kpi"><div class="kpi-label">vs 100% Mithras REV (MTH-B 545)</div><div class="kpi-val" style="color:#1E6E2D">−271.602 lei</div><div class="kpi-sub">−13,6% · scenariul pe pachete e mai ieftin</div></div>';
   html += '</div>';
-  // Tabel articole critice
+  // Tabel pachete
   html += '<div class="proj-card" style="margin-bottom:12px">';
-  html += '<div class="proj-card-header" style="background:#7B1818"><span style="font-size:13px;font-weight:600;color:#fff">Articole cu abateri semnificative</span></div>';
+  html += '<div class="proj-card-header" style="background:#7B1818"><span style="font-size:13px;font-weight:600;color:#fff">Scenariu pe pachete — furnizor recomandat / contractat per articol</span></div>';
   html += '<div class="proj-card-body" style="padding:0;overflow-x:auto">';
   html += '<table style="width:100%;border-collapse:collapse;font-size:11px">';
-  html += '<tr style="background:#2E5090;color:#fff"><th style="padding:7px 10px;text-align:left">Articol</th><th style="padding:7px 8px;text-align:right;white-space:nowrap">Buget (lei)</th><th style="padding:7px 8px;text-align:right;white-space:nowrap">Mithras inițial (lei)</th><th style="padding:7px 8px;text-align:right;white-space:nowrap">Mithras REV (lei)</th><th style="padding:7px 8px;text-align:right">Abatere REV</th><th style="padding:7px 8px;text-align:left">Observații</th></tr>';
+  html += '<tr style="background:#2E5090;color:#fff"><th style="padding:7px 8px;text-align:left">Pachet</th><th style="padding:7px 10px;text-align:left">Articol</th><th style="padding:7px 8px;text-align:left">Furnizor</th><th style="padding:7px 8px;text-align:right;white-space:nowrap">Buget (lei)</th><th style="padding:7px 8px;text-align:right;white-space:nowrap">Optim (lei)</th><th style="padding:7px 8px;text-align:right">Dif.</th><th style="padding:7px 8px;text-align:left">Observații</th></tr>';
   var rows = [
-    {art:"Art.12+14-19 Grup dală BCR + rosturi",b:"617.035",m:"1.447.905",rev:"1.303.115",ab:"+686.080",pct:"+111,2%",bg:"#FCE4D6",obs:"⚠ CRITIC · REV: manoperă 43,85→35,35 €/mp (−144.791 lei) · incl. gujoane+rosturi+emulsie"},
-    {art:"Art.6 Piatră spartă 40cm",b:"120.548",m:"270.466",rev:"270.466",ab:"+149.918",pct:"+124,4%",bg:"#FCE4D6",obs:"⚠ Preț unitar 2× mai mare · nemodificat în REV"},
-    {art:"Art.8 Balast 20cm",b:"86.377",m:"134.611",rev:"134.611",ab:"+48.235",pct:"+55,8%",bg:"#FFEB9C",obs:"Depăşire semnificativă · nemodificat în REV"},
-    {art:"Art.10 Stabilizare balast",b:"74.799",m:"80.256",rev:"80.256",ab:"+5.457",pct:"+7,3%",bg:"#F5F5F5",obs:"Diferență minoră"},
-    {art:"Art.7 Transport piatră spartă",b:"35.654",m:"—",rev:"—",ab:"LIPSĂ",pct:"—",bg:"#FFF8E1",obs:"Absent și din oferta REV"},
-    {art:"Art.9 Transport balast",b:"46.847",m:"—",rev:"—",ab:"LIPSĂ",pct:"—",bg:"#FFF8E1",obs:"Absent și din oferta REV"},
-    {art:"Art.13 Transport beton rutier",b:"38.972",m:"—",rev:"—",ab:"LIPSĂ",pct:"—",bg:"#FFF8E1",obs:"Absent · posibil inclus în BCR"},
-    {art:"Art.20-21 Marcaje",b:"27.492",m:"14.727",rev:"14.727",ab:"-12.765",pct:"-46,4%",bg:"#E2EFDA",obs:"Vopsea monocomponentă · favorabil"},
+    {p:"P1",art:"Săpătură piatră spartă 30cm (975mc)",f:"ELIMINAT — acoperit de demolare",b:"22.426,95",o:"0,00",d:"−22.426,95",pct:"−100%",bg:"#E5E7EB",obs:"Risc dublă facturare Ideal Max — de corectat"},
+    {p:"P1",art:"Săpătură spații largi (992mc)",f:"Ideal Max — CONTRACTAT (Ctr.166)",b:"22.817,98",o:"35.657,44",d:"+12.839,46",pct:"+56,3%",bg:"#FCE4D6",obs:"Deja semnat · Mithras REV ar fi fost 23.404,31 (+2,6%)"},
+    {p:"P2",art:"Transport evacuare pământ (1.984t)",f:"Ideal Max — CONTRACTAT",b:"47.616,00",o:"43.216,88",d:"−4.399,12",pct:"−9,2%",bg:"#E2EFDA",obs:"Mithras REV ar fi fost 36.406,70 (−23,5%)"},
+    {p:"P2",art:"Transport evacuare pământ (1.950t)",f:"Ideal Max — CONTRACTAT",b:"46.800,00",o:"42.476,27",d:"−4.323,73",pct:"−9,2%",bg:"#E2EFDA",obs:"Mithras REV ar fi fost 35.782,79"},
+    {p:"P3",art:"Umplutură piatră spartă 40cm",f:"Ideal Max",b:"120.547,72",o:"116.077,00",d:"−4.470,72",pct:"−3,7%",bg:"#E2EFDA",obs:"—"},
+    {p:"P4",art:"Transport piatră spartă",f:"Ideal Max",b:"35.653,80",o:"34.355,00",d:"−1.298,80",pct:"−3,6%",bg:"#E2EFDA",obs:"—"},
+    {p:"P5",art:"Umplutură balast 20cm",f:"Ideal Max",b:"86.376,55",o:"83.226,00",d:"−3.150,55",pct:"−3,6%",bg:"#E2EFDA",obs:"—"},
+    {p:"P6",art:"Transport balast",f:"Ideal Max",b:"46.846,80",o:"45.158,00",d:"−1.688,80",pct:"−3,6%",bg:"#E2EFDA",obs:"—"},
+    {p:"P7",art:"Stabilizare pământ 20cm",f:"Mithras REV",b:"68.993,23",o:"65.407,27",d:"−3.585,96",pct:"−5,2%",bg:"#E2EFDA",obs:"—"},
+    {p:"P7",art:"Stabilizare balast 20cm",f:"Mithras REV",b:"74.798,75",o:"80.255,69",d:"+5.456,94",pct:"+7,3%",bg:"#FFEB9C",obs:"De negociat / verificat cotații CARMEUSE + ALESOL"},
+    {p:"P8",art:"Strat separator BCR/balast (folie PVC)",f:"Mithras REV",b:"11.403,99",o:"7.665,38",d:"−3.738,61",pct:"−32,8%",bg:"#E2EFDA",obs:"—"},
+    {p:"P9a",art:"Material beton BCR 5.0 (1.003,94mc)",f:"HOLCIM (ofertă REV2, 24.07)",b:"504.992,07",o:"476.871,50",d:"−28.120,57",pct:"−5,6%",bg:"#E2EFDA",obs:"Cea mai bună dintre 4 oferte comparate (Holcim/Romcim ×2)"},
+    {p:"P9b",art:"Transport beton BCR 5.0",f:"HOLCIM (REV2)",b:"38.972,40",o:"86.213,35",d:"+47.240,95",pct:"+121,2%",bg:"#FCE4D6",obs:"⚠ CONFIRMAT cel mai scump element unitar · Romcim nu a cotat transport"},
+    {p:"P9c",art:"Manoperă+utilaj execuție BCR (turnare+finisor)",f:"Mithras REV (MTH-B 545)",b:"71.153,10",o:"599.603,21",d:"+528.450,11",pct:"+742,7%",bg:"#FCE4D6",obs:"⚠ CRITIC · rată CONFIRMATĂ 35,20 €/mp · Mithras a acceptat execuția cu beton de terț (Holcim), fără cost suplimentar"},
+    {p:"P10",art:"Rosturi BCR (gujoane+emulsie+colmatări, 4 poz.)",f:"Mithras REV — INCLUS în manoperă",b:"40.882,61",o:"0,00",d:"−40.882,61",pct:"−100%",bg:"#E8F5E9",obs:"REZOLVAT — confirmat 0,00€, „inclus în prețul de BCR”"},
+    {p:"P11",art:"Marcaje galbenă",f:"Mithras REV",b:"15.293,05",o:"8.192,35",d:"−7.100,70",pct:"−46,4%",bg:"#E2EFDA",obs:"—"},
+    {p:"P11",art:"Marcaje neagră",f:"Mithras REV",b:"12.199,23",o:"6.535,01",d:"−5.664,22",pct:"−46,4%",bg:"#E2EFDA",obs:"—"},
   ];
   rows.forEach(function(r){
-    var abcolor = r.ab.charAt(0)==="-"?"#1E6E2D":(r.ab==="LIPSĂ"?"#856404":"#C0392B");
+    var dcolor = r.d.charAt(0)==="−"?"#1E6E2D":"#C0392B";
     html += '<tr style="background:'+r.bg+'">';
+    html += '<td style="padding:6px 8px;border-bottom:1px solid #eee;font-weight:600;white-space:nowrap">'+r.p+'</td>';
     html += '<td style="padding:6px 10px;border-bottom:1px solid #eee;font-weight:500">'+r.art+'</td>';
+    html += '<td style="padding:6px 8px;border-bottom:1px solid #eee;font-size:10px;color:#333">'+r.f+'</td>';
     html += '<td style="padding:6px 8px;border-bottom:1px solid #eee;text-align:right">'+r.b+'</td>';
-    html += '<td style="padding:6px 8px;border-bottom:1px solid #eee;text-align:right;color:'+( r.m==="—"?"#888":"inherit")+'">'+r.m+'</td>';
-    html += '<td style="padding:6px 8px;border-bottom:1px solid #eee;text-align:right;font-weight:600;color:'+( r.rev==="—"?"#888":"inherit")+'">'+r.rev+'</td>';
-    html += '<td style="padding:6px 8px;border-bottom:1px solid #eee;text-align:right;font-weight:700;color:'+abcolor+'">'+r.ab+' <span style="font-size:10px;font-weight:400">'+r.pct+'</span></td>';
+    html += '<td style="padding:6px 8px;border-bottom:1px solid #eee;text-align:right;font-weight:600">'+r.o+'</td>';
+    html += '<td style="padding:6px 8px;border-bottom:1px solid #eee;text-align:right;font-weight:700;color:'+dcolor+'">'+r.d+' <span style="font-size:10px;font-weight:400">'+r.pct+'</span></td>';
     html += '<td style="padding:6px 8px;border-bottom:1px solid #eee;font-size:10px;color:#444">'+r.obs+'</td>';
     html += '</tr>';
   });
+  html += '<tr style="background:#2C4A6E;color:#fff;font-weight:700"><td colspan="3" style="padding:7px 8px">TOTAL SCENARIU OPTIM</td><td style="padding:7px 8px;text-align:right">1.267.774,23</td><td style="padding:7px 8px;text-align:right">1.730.910,35</td><td style="padding:7px 8px;text-align:right">+463.136,12 <span style="font-size:10px;font-weight:400">+36,5%</span></td><td></td></tr>';
   html += '</table></div></div>';
-  // Concluzii M/Man/U/T
+  // Riscuri curente
   html += '<div class="proj-card" style="margin-bottom:12px">';
-  html += '<div class="proj-card-header" style="background:#2C4A6E"><span style="font-size:13px;font-weight:600;color:#fff">Concluzii structurale — Material / Manoperă / Utilaj / Transport</span></div>';
+  html += '<div class="proj-card-header" style="background:#7B1818"><span style="font-size:13px;font-weight:600;color:#fff">Riscuri active</span></div>';
   html += '<div class="proj-card-body" style="display:flex;flex-direction:column;gap:6px">';
-  var concluzii = [
-    {tag:"MATERIAL",bg:"#FFF3CD",tc:"#856404",txt:"Mithras 1.081.508 lei vs buget 736.815 lei (+46,8%). Nemodificat în REV. Principală diferență: BCR 5.0 şi piatră spartă +124%."},
-    {tag:"MANOPERĂ",bg:"#FCE4D6",tc:"#C0392B",txt:"Mithras REV 921.004 lei (inițial 1.065.795 lei) vs buget 123.749 lei (+644%). Singura reducere din REV: manopera dalei BCR 43,85→35,35 €/mp. Mithras include în manoperă finisorul de beton, utilajele, gujoanele+rosturile. Bugetul F3 are utilaj=0 la Art.12 — lacună în deviz."},
-    {tag:"UTILAJ",bg:"#E8F5E9",tc:"#1E6E2D",txt:"Buget F3: 191.344 lei (inclus în terasamente+straturi). Mithras: 0 lei separat — absorbit în manoperă."},
-    {tag:"TRANSPORT",bg:"#FFF8E1",tc:"#856404",txt:"Buget F3: 215.889 lei. Mithras: 0 lei (Art.7, 9, 13 absente — şi în REV). Comparație incompletă — costul real Mithras este mai mare decât apare în ofertă."},
-    {tag:"CONDIŢIE NOUĂ",bg:"#FCE4D6",tc:"#C0392B",txt:"REV MTH-B 545: o singură mobilizare inclusă. Mobilizări suplimentare finisor de beton = 1.000 €/buc — corelare obligatorie cu graficul de turnare. Valabilitate REV: expiră 22.07.2026."},
+  var riscuri = [
+    {tag:"CRITIC",bg:"#FCE4D6",tc:"#C0392B",txt:"Manoperă execuție BCR (Mithras REV, 35,20 €/mp) — +528.450 lei (+742,7%). Cel mai mare driver al depășirii totale de buget."},
+    {tag:"CONFIRMAT",bg:"#FCE4D6",tc:"#C0392B",txt:"Transport beton BCR (Holcim REV2) — +47.241 lei (+121,2%). Cel mai scump element unitar din scenariu; Romcim nici nu a cotat transport, deci nu există alternativă mai ieftină documentată."},
+    {tag:"MEDIU",bg:"#FFEB9C",tc:"#856404",txt:"Stabilizare balast 20cm (Mithras REV) — +5.457 lei (+7,3%). Necesită cotații ferme CARMEUSE + ALESOL pentru verificare/negociere."},
+    {tag:"ADMINISTRATIV",bg:"#FFF8E1",tc:"#856404",txt:"Risc de dublă facturare la Ideal Max pentru săpătura de 975mc (P1), deja acoperită de contractul de demolare — de corectat pe factură."},
+    {tag:"BUGET",bg:"#FCE4D6",tc:"#C0392B",txt:"Depășire globală: +36,5% vs buget original / +19,8% vs buget indexat (+14%). Necesită decizie de management: act adițional sau alocare buget suplimentar."},
+    {tag:"COORDONARE",bg:"#FFF8E1",tc:"#856404",txt:"3 furnizori distincți activi simultan pe platformă (Ideal Max, Mithras, Holcim) — necesită plan clar de mobilizare/succesiune pentru a evita blocaje pe front."},
   ];
-  concluzii.forEach(function(c){
+  riscuri.forEach(function(c){
     html += '<div style="background:'+c.bg+';border-radius:6px;padding:8px 12px;font-size:12px;display:flex;gap:10px;align-items:flex-start">';
     html += '<span style="font-weight:700;color:'+c.tc+';white-space:nowrap;min-width:80px">'+c.tag+'</span>';
     html += '<span>'+c.txt+'</span></div>';
   });
   html += '</div></div>';
+  // Rezolvat
+  html += '<div class="proj-card" style="margin-bottom:12px">';
+  html += '<div class="proj-card-header" style="background:#1E6E2D"><span style="font-size:13px;font-weight:600;color:#fff">Rezolvat / confirmat</span></div>';
+  html += '<div class="proj-card-body" style="display:flex;flex-direction:column;gap:6px">';
+  var rezolvat = [
+    "Mithras a acceptat execuția BCR cu beton de la furnizor terț (Holcim), fără costuri suplimentare.",
+    "Rosturile BCR (gujoane+emulsie+colmatări) sunt incluse gratuit în manopera de execuție Mithras — elimină un risc de 40.883 lei.",
+    "Contract semnat cu Ideal Max (Ctr.166, Anexă 27.07.2026) pentru săpături, umpluturi și transporturi — costuri fixate.",
+    "Furnizor beton BCR selectat: Holcim (ofertă REV2, 24.07.2026) — cea mai bună dintre 4 oferte comparate (Holcim ×2, Romcim ×2)."
+  ];
+  rezolvat.forEach(function(t){
+    html += '<div style="background:#E8F5E9;border-radius:6px;padding:8px 12px;font-size:12px;display:flex;gap:10px;align-items:flex-start">';
+    html += '<i class="ti ti-check" style="color:#1E6E2D;flex-shrink:0;margin-top:1px"></i><span>'+t+'</span></div>';
+  });
+  html += '</div></div>';
+  // Actiuni
+  html += '<div class="proj-card" style="margin-bottom:12px">';
+  html += '<div class="proj-card-header" style="background:#2C4A6E"><span style="font-size:13px;font-weight:600;color:#fff">Acțiuni</span></div>';
+  html += '<div class="proj-card-body" style="padding:0;overflow-x:auto">';
+  html += '<table style="width:100%;border-collapse:collapse;font-size:11px">';
+  html += '<tr style="background:#EEF2F7"><th style="padding:7px 10px;text-align:left">Acțiune</th><th style="padding:7px 8px;text-align:left;white-space:nowrap">Responsabil</th><th style="padding:7px 8px;text-align:left;white-space:nowrap">Termen</th></tr>';
+  var actiuni = [
+    {a:"Cere cotații ferme CARMEUSE + ALESOL pentru stabilizare balast — verifică posibilitatea de reducere a depășirii de 5.457 lei",r:"G. Spătaru / Achiziții",t:"14.08.2026"},
+    {a:"Corectează dubla facturare Ideal Max pentru săpătura P1 (975mc), deja acoperită de contractul de demolare",r:"G. Spătaru",t:"12.08.2026"},
+    {a:"Prezintă managementului depășirea de buget (+36,5% / +19,8%) pentru decizie: act adițional sau buget suplimentar",r:"G. Spătaru",t:"15.08.2026"},
+    {a:"Confirmă în scris cu Mithras (addendum la MTH-B 545) acceptul execuției BCR cu beton Holcim, fără costuri suplimentare",r:"G. Spătaru",t:"11.08.2026"},
+    {a:"Stabilește planul de coordonare/mobilizare pentru cei 3 furnizori activi pe platformă (Ideal Max, Mithras, Holcim)",r:"G. Spătaru / Șef șantier",t:"18.08.2026"},
+    {a:"Verifică valabilitatea ofertei Holcim REV2 (24.07.2026) la data emiterii comenzii ferme",r:"Achiziții",t:"20.08.2026"},
+  ];
+  actiuni.forEach(function(x){
+    html += '<tr><td style="padding:6px 10px;border-bottom:1px solid #eee">'+x.a+'</td><td style="padding:6px 8px;border-bottom:1px solid #eee;white-space:nowrap">'+x.r+'</td><td style="padding:6px 8px;border-bottom:1px solid #eee;white-space:nowrap">'+x.t+'</td></tr>';
+  });
+  html += '</table></div></div>';
   html += '<button class="open-fisa-btn" onclick="renderProjHome(\'hangar\')"><i class="ti ti-arrow-left"></i> Înapoi la proiect</button>';
   html += '<div class="page-footer">PM Hub · EREN CONS SRL · 2026</div>';
   document.getElementById('main').innerHTML = html;
 }
 
+// Scenariu Optim Sourcing Platformă (2.1) — pune aici URL-ul Google Sheets primit. Lasă gol pentru „în pregătire".
+var AN21_SHEET_URL = 'https://docs.google.com/spreadsheets/d/1yJA82_I8-Od-P-GC8lici23oisMD7sC650YVIglYokQ/edit?usp=sharing';
 // Link Google Sheets Prefabricate
 var PREFAB_SHEET_URL = 'https://docs.google.com/spreadsheets/d/1NqHEFBRS3yYQY6XEC329-AkiMyTFN0AlC_xLE-NdI_E/edit?usp=sharing';
 // Link Google Sheets Confecții Metalice (pune aici URL-ul publicat; lasă gol pentru „în pregătire")
@@ -2887,6 +2954,111 @@ function renderAnPref(proj) {
   document.getElementById('main').innerHTML = html;
 }
 
+
+// Ședință producție 14.08.2026 — pune aici link-ul Google Drive/Sheets al raportului; butonul îl folosește automat. Lasă gol => „link în pregătire".
+var PRODSED1_URL = 'https://docs.google.com/spreadsheets/d/1y0DxTt9JZem6ISGCWgGH3RaEWkmEIjzhRuqyPx4DFHY/edit?usp=sharing';
+
+function renderProdSed1(proj) {
+  document.querySelectorAll('.submenu-item').forEach(function(i){ i.classList.remove('active'); });
+  var it = document.getElementById('item-hangar-prodsed1'); if (it) it.classList.add('active');
+  var html = '';
+  html += '<div class="proj-header"><div class="proj-title">Ședință de producție — 14.08.2026</div><div class="proj-meta">Hangar Kogălniceanu · Luna de raportare: Iulie 2026 · Status grafic la 07.08.2026 · valori fără TVA</div></div>';
+  html += '<div class="module-badge productie"><i class="ti ti-calendar-stats" style="font-size:13px"></i> Raportare lunară producție — SL2</div>';
+  if (PRODSED1_URL) {
+    html += '<div style="margin-bottom:12px"><a href="'+PRODSED1_URL+'" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 18px;background:#1A5276;color:#fff;border-radius:var(--radius);font-size:12px;font-weight:600;text-decoration:none"><i class="ti ti-table"></i> Deschide raportul complet</a></div>';
+  } else {
+    html += '<div style="margin-bottom:12px"><span style="display:inline-flex;align-items:center;gap:6px;padding:8px 18px;background:#E5E7EB;color:#6B7280;border-radius:var(--radius);font-size:12px;font-weight:600"><i class="ti ti-file-spreadsheet"></i> Fișier: Raport_Lunar_Prezentare_Proiect_v4_completat_07.08.2026.xlsx · link în pregătire</span></div>';
+  }
+  // Notă progres 38% vs valoric
+  html += '<div style="background:#FFF8E1;border-left:3px solid #B7791F;border-radius:6px;padding:8px 12px;font-size:11px;color:#7A5B12;margin-bottom:14px"><strong>De reținut:</strong> cei <b>38%</b> din grafic sunt pe DURATĂ/efort (% Complete MS Project), umflați de proiectarea 100% (durată mare, valoare mică). Progresul <b>valoric</b> real (ponderi din F6) este <b>6,6%</b> realizat vs <b>5,5%</b> planificat.</div>';
+  // KPIs
+  html += '<div class="kpi-grid" style="margin-bottom:14px">';
+  html += '<div class="kpi"><div class="kpi-label">Progres valoric realizat</div><div class="kpi-val" style="color:#1E6E2D">6,6%</div><div class="kpi-sub">1.275.053 lei · proiectare + demolări + organizare</div></div>';
+  html += '<div class="kpi"><div class="kpi-label">Progres valoric planificat</div><div class="kpi-val">5,5%</div><div class="kpi-sub">→ +1,1% în avans (demolări decontate integral SL2)</div></div>';
+  html += '<div class="kpi"><div class="kpi-label">Progres grafic (MS Project)</div><div class="kpi-val">38%</div><div class="kpi-sub">pe durată/efort · nu pe valoare</div></div>';
+  html += '<div class="kpi"><div class="kpi-label">Întârziere vs contract</div><div class="kpi-val">0 zile</div><div class="kpi-sub">termen menținut 13.04.2027 (grafic revizuit)</div></div>';
+  html += '</div>';
+  // Stadiu pe faze
+  html += '<div class="proj-card" style="margin-bottom:12px">';
+  html += '<div class="proj-card-header" style="background:#2C4A6E"><span style="font-size:13px;font-weight:600;color:#fff">Stadiu pe categorii (pondere valorică din F6)</span></div>';
+  html += '<div class="proj-card-body" style="padding:0;overflow-x:auto">';
+  html += '<table style="width:100%;border-collapse:collapse;font-size:11px">';
+  html += '<tr style="background:#2E5090;color:#fff"><th style="padding:7px 8px;text-align:left">Categorie</th><th style="padding:7px 6px;text-align:right">Pondere</th><th style="padding:7px 6px;text-align:right">Planificat</th><th style="padding:7px 6px;text-align:right">Realizat</th><th style="padding:7px 8px;text-align:left">Status</th></tr>';
+  var frows = [
+    {c:"Proiectare + asistență tehnică (cap.3)",p:"4,1%",pl:"81,2%",r:"81,2%",st:"În curs",bg:"#fff"},
+    {c:"Organizare de șantier (5.1)",p:"2,5%",pl:"28,3%",r:"32,4%",st:"În avans",bg:"#fff"},
+    {c:"Demolări — Obiect 1 + Obiect 3",p:"2,5%",pl:"44,3%",r:"100%",st:"Finalizat",bg:"#E2EFDA"},
+    {c:"Structură Hangar (prefabricate + confecții)",p:"24,4%",pl:"1,7%",r:"0%",st:"Nedemarat",bg:"#FFF2CC"},
+    {c:"Arhitectură Hangar — C+M",p:"25,9%",pl:"0%",r:"0%",st:"Nedemarat",bg:"#FFF2CC"},
+    {c:"Utilaje și echipamente (cap.4.3)",p:"12,4%",pl:"0%",r:"0%",st:"Nedemarat",bg:"#fff"},
+    {c:"Instalații + rețele + platformă + dotări",p:"28,2%",pl:"0%",r:"0%",st:"Nedemarat",bg:"#fff"},
+    {c:"TOTAL PROIECT (ponderat valoric)",p:"100%",pl:"5,5%",r:"6,6%",st:"+1,1%",bg:"#D9E1F2",tot:true},
+  ];
+  frows.forEach(function(x){
+    html += '<tr style="background:'+x.bg+'">';
+    html += '<td style="padding:6px 8px;border-bottom:1px solid #eee;'+(x.tot?"font-weight:700":"font-weight:500")+'">'+x.c+'</td>';
+    html += '<td style="padding:6px 6px;border-bottom:1px solid #eee;text-align:right">'+x.p+'</td>';
+    html += '<td style="padding:6px 6px;border-bottom:1px solid #eee;text-align:right">'+x.pl+'</td>';
+    html += '<td style="padding:6px 6px;border-bottom:1px solid #eee;text-align:right;font-weight:600">'+x.r+'</td>';
+    html += '<td style="padding:6px 8px;border-bottom:1px solid #eee">'+x.st+'</td>';
+    html += '</tr>';
+  });
+  html += '</table>';
+  html += '<div style="padding:9px 12px;font-size:10px;color:#666;background:#FAFAFA;border-top:1px solid #eee">Structura + Arhitectura hangarului ≈ 50% din valoarea contractului, la 0% — start imediat (ordin Obiect 2 emis 28.07, PV predare-primire semnat).</div>';
+  html += '</div></div>';
+  // Abateri
+  html += '<div class="proj-card" style="margin-bottom:12px">';
+  html += '<div class="proj-card-header" style="background:#7B1818"><span style="font-size:13px;font-weight:600;color:#fff">Abateri & puncte deschise</span></div>';
+  html += '<div class="proj-card-body" style="display:flex;flex-direction:column;gap:6px">';
+  var ab = [
+    {tag:"Mobilizări restante",bg:"#FCE4E4",tc:"#C0392B",txt:"Cabină poartă, sistem camere securitate/supraveghere, drum acces temporar — 0%. Condiționează accesul/securitatea la startul execuției."},
+    {tag:"Asistență tehnică",bg:"#FFF8E1",tc:"#856404",txt:"Start asistență tehnică din partea proiectantului — de confirmat înainte de prima fază determinantă la Obiect 2."},
+    {tag:"Rezolvat",bg:"#E8F5E9",tc:"#1E6E2D",txt:"Ordin de începere Obiect 2 emis 28.07.2026 + PV predare-primire amplasament semnat — fără blocaj administrativ."},
+  ];
+  ab.forEach(function(c){
+    html += '<div style="background:'+c.bg+';border-radius:6px;padding:8px 12px;font-size:12px;display:flex;gap:12px;align-items:flex-start">';
+    html += '<span style="font-weight:700;color:'+c.tc+';flex:0 0 130px;width:130px;line-height:1.3">'+c.tag+'</span>';
+    html += '<span style="flex:1">'+c.txt+'</span></div>';
+  });
+  html += '</div></div>';
+  // Riscuri top
+  html += '<div class="proj-card" style="margin-bottom:12px">';
+  html += '<div class="proj-card-header" style="background:#8A5A00"><span style="font-size:13px;font-weight:600;color:#fff">Riscuri principale (impact cash)</span></div>';
+  html += '<div class="proj-card-body" style="padding:0;overflow-x:auto">';
+  html += '<table style="width:100%;border-collapse:collapse;font-size:11px">';
+  html += '<tr style="background:#2E5090;color:#fff"><th style="padding:7px 8px;text-align:left">Risc</th><th style="padding:7px 6px;text-align:center">Scor</th><th style="padding:7px 8px;text-align:left">Măsură</th></tr>';
+  var rk = [
+    {d:"GPU 400Hz Dynell — livrare 20–24 săpt. EXW Austria",s:"16",m:"Lansare comandă urgentă (14.08)"},
+    {d:"Buget execuție documentat ~40%, oferte parțial expirate",s:"16",m:"Reofertare Cap.7 electrice + Cap.8 sanitare"},
+    {d:"Prefabricate + confecții metalice — preț/livrare nefinalizate",s:"15",m:"Contractare SOMACO + rundă finală confecții"},
+    {d:"Item nebugetat: rezervor 370mc + sistem spumă (Cap.8)",s:"12",m:"Ofertare + tratare pe claim/AA"},
+  ];
+  rk.forEach(function(x){
+    html += '<tr><td style="padding:6px 8px;border-bottom:1px solid #eee">'+x.d+'</td><td style="padding:6px 6px;border-bottom:1px solid #eee;text-align:center;font-weight:700;color:#C0392B">'+x.s+'</td><td style="padding:6px 8px;border-bottom:1px solid #eee;color:#444">'+x.m+'</td></tr>';
+  });
+  html += '</table></div></div>';
+  // Actiuni
+  html += '<div class="proj-card" style="margin-bottom:12px">';
+  html += '<div class="proj-card-header" style="background:#1E4620"><span style="font-size:13px;font-weight:600;color:#fff">Acțiuni cheie (owner · termen)</span></div>';
+  html += '<div class="proj-card-body" style="padding:0;overflow-x:auto">';
+  html += '<table style="width:100%;border-collapse:collapse;font-size:11px">';
+  html += '<tr style="background:#2E5090;color:#fff"><th style="padding:7px 10px;text-align:left">Acțiune</th><th style="padding:7px 8px;text-align:left;white-space:nowrap">Owner</th><th style="padding:7px 8px;text-align:center">Termen</th></tr>';
+  var ac = [
+    {a:"Finalizare demolare pavilion J hangar (Obiect 1)",o:"G. Peltea (SS)",t:"11.08"},
+    {a:"Mobilizare echipe săpătură + otelieri (radier bazin + fundații)",o:"G. Peltea (SS)",t:"10.08"},
+    {a:"Lansare comandă GPU 400Hz Dynell DSF030",o:"A. Ichim (Achiziții)",t:"14.08"},
+    {a:"Închidere mobilizări restante (poartă, camere, drum acces)",o:"G. Peltea (SS)",t:"18.08"},
+    {a:"Rundă finală preț confecții metalice + aliniere scope",o:"PM / Achiziții",t:"21.08"},
+    {a:"Reofertare Cap.7 electrice F3 + Cap.8 sanitare",o:"PM / Ofertare",t:"31.08"},
+  ];
+  ac.forEach(function(x){
+    html += '<tr><td style="padding:6px 10px;border-bottom:1px solid #eee">'+x.a+'</td><td style="padding:6px 8px;border-bottom:1px solid #eee;color:#444;white-space:nowrap">'+x.o+'</td><td style="padding:6px 8px;border-bottom:1px solid #eee;text-align:center;white-space:nowrap;font-weight:600">'+x.t+'</td></tr>';
+  });
+  html += '</table></div></div>';
+  html += '<button class="open-fisa-btn" onclick="renderProjHome(\'hangar\')"><i class="ti ti-arrow-left"></i> Înapoi la proiect</button>';
+  html += '<div class="page-footer">PM Hub · EREN CONS SRL · 2026 · Sursă: Raport_Lunar_Prezentare_Proiect_v4_completat_07.08.2026.xlsx + F6 SL2 (ver 05.08.2026) + grafic revizuit 07.08.2026</div>';
+  document.getElementById('main').innerHTML = html;
+}
 
 function renderConfMetalice(proj) {
   var html = '';

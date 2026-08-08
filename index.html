@@ -260,6 +260,9 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
         <i class="ti ti-chevron-down chevron" id="chev-hangar"></i>
       </div>
       <div class="submenu" id="sub-hangar">
+        <div class="submenu-item" id="item-hangar-contractsinteza" onclick="goModule('hangar','contractsinteza')">
+          <i class="ti ti-file-dollar"></i> Sinteză execuție contract
+        </div>
         <div class="submenu-item" id="item-hangar-validare" onclick="goModule('hangar','validare')">
           <i class="ti ti-chart-bar"></i> Validare Bugete
         </div>
@@ -500,7 +503,8 @@ function goModule(proj, module) {
   var btn = document.getElementById('back-btn');
   btn.style.display = 'flex';
   btn.onclick = function() { renderProjHome(proj); };
-  if (module === 'validare') renderValidare(proj);
+  if (module === 'contractsinteza') renderContractSinteza(proj);
+  else if (module === 'validare') renderValidare(proj);
   else if (module === 'analize') renderAnalize(proj);
   else if (module === 'sinteza') renderSinteza(proj);
   else if (module === 'powerbi') renderPowerBI(proj);
@@ -1751,8 +1755,9 @@ function renderHome() {
     '<div class="proj-card">' +
       '<div class="proj-card-header" style="background:#A03535;border-left:3px solid #CC1515">' +
         '<div class="proj-icon" style="background:rgba(204,21,21,0.25)"><i class="ti ti-building" style="color:#CC1515"></i></div>' +
-        '<div><div style="font-size:13px;font-weight:600;color:#fff">Hangar Kogălniceanu</div>' +
-        '<div style="font-size:10px;color:rgba(255,255,255,0.6)">Îîn validare · Start: 19.06.2026</div></div>' +
+        '<div style="flex:1"><div style="font-size:13px;font-weight:600;color:#fff">Hangar Kogălniceanu</div>' +
+        '<div style="font-size:10px;color:rgba(255,255,255,0.6)">În validare · Start: 19.06.2026</div></div>' +
+        '<button onclick="goModule(\'hangar\',\'contractsinteza\')" style="display:inline-flex;align-items:center;gap:6px;padding:7px 14px;background:rgba(255,255,255,0.16);color:#fff;border:1px solid rgba(255,255,255,0.45);border-radius:7px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap" onmouseover="this.style.background=\'rgba(255,255,255,0.28)\'" onmouseout="this.style.background=\'rgba(255,255,255,0.16)\'"><i class="ti ti-file-dollar" style="font-size:14px"></i> Sinteză execuție contract</button>' +
       '</div>' +
     '</div>' +
 
@@ -2956,7 +2961,7 @@ function renderAnPref(proj) {
 
 
 // Ședință producție 14.08.2026 — pune aici link-ul Google Drive/Sheets al raportului; butonul îl folosește automat. Lasă gol => „link în pregătire".
-var PRODSED1_URL = 'https://docs.google.com/spreadsheets/d/1y0DxTt9JZem6ISGCWgGH3RaEWkmEIjzhRuqyPx4DFHY/edit?usp=sharing';
+var PRODSED1_URL = 'https://docs.google.com/spreadsheets/d/1ZNr5vKnn40eE_OSuGRibPOgG_7bT4-ShsBd4rTFaS6o/edit?usp=sharing';
 
 function renderProdSed1(proj) {
   document.querySelectorAll('.submenu-item').forEach(function(i){ i.classList.remove('active'); });
@@ -3168,6 +3173,189 @@ function renderConfMetalice(proj) {
   document.getElementById('main').innerHTML = html;
 }
 
+
+// ── Sinteză execuție contract (validare contract / buget / ERP · saving) ─────────────
+var CONTRACTSINT_URL = ''; // link Google Sheets sinteză contract — de completat
+
+function renderContractSinteza(proj) {
+  document.querySelectorAll('.submenu-item').forEach(function(i){ i.classList.remove('active'); });
+  var it = document.getElementById('item-hangar-contractsinteza'); if (it) it.classList.add('active');
+
+  // ── Cascada valorii (lei fără TVA) ──
+  var LICITATIE = 27839501;   // estimare autoritate (SEAP)
+  var OFERTA    = 19305182;   // ofertă EREN cu AA2 (inițial 19.261.832)
+  var BUGET     = 17075952;   // Deviz General intern (include proiectarea)
+  var LUCRARI   = 14734563;   // Cap.4 investiția de bază (fără OS)
+  var cascada = [
+    {l:'Valoare licitație (estimare autoritate)', v:LICITATIE, pct:100.0, note:'Plafon SEAP · +2,72 mil diverse și neprevăzute EXCLUSE', c:'#6B7280'},
+    {l:'Valoare ofertată de EREN (contract)',      v:OFERTA,    pct:69.4,  note:'69,2% din estimare · −8,58 mil sub plafon · +AA2 43.350', c:'#185FA5'},
+    {l:'Buget alocat intern (Deviz General)',      v:BUGET,     pct:61.3,  note:'−11,4% față de contract · include proiectarea 740.500', c:'#3B6D11'},
+    {l:'Bani reali pentru lucrări (Cap.4, fără OS)', v:LUCRARI, pct:52.9,  note:'56,5% din estimarea execuției (26,07 mil) · OS scos', c:'#854F0B'}
+  ];
+
+  // ── Contracte semnate în execuție ──
+  // buget: număr = buget alocat; 0 = nebugetat (Δ = −contract); null = în curs (exclus din Δ)
+  var contracte = [
+    {scope:'Demolări hangar + platformă (Cap.1)', furnizor:'General Util Cons', nr:'ctr 153 · 09.07.2026', buget:403282, contract:240554, venit:507634, stare:'Semnat',
+     nota:'Demolare hangar existent și platformă din BCR, dezechipare instalații și transport evacuare moloz. Acoperă integral scope-ul Cap.1. Preia în execuție și săpătura stratului de piatră spartă (975 mc, buget 21.187 lei), fără modificarea valorii contractului.'},
+    {scope:'Structură prefabricate (Cap.3)', furnizor:'Bauelemente', nr:'ctr · 31.07.2026', buget:564814, contract:502415, venit:546070, venitAprox:true, stare:'Semnat',
+     nota:'Pachet complet: stâlpi, pereți soclu, pahare prefabricate, fundații și montaj gulere, manoperă monolitizare. Betonul de monolitizare rămâne în sarcina AG.'},
+    {scope:'Săpături / terasamente', furnizor:'Ideal Max Construct', nr:'ctr 166 · 27.07.2026 · AA1', buget:407222, contract:468573, venit:493459, stare:'Semnat', soft:true,
+     mkt:'Cea mai avantajoasă din ofertele de piață (cu ~180.000 lei sub Salt). Bugetul prevedea doar transportul pământului, nu și depozitarea la groapă — Ideal Max acoperă și această lucrare nebugetată, evitând o pierdere mult mai mare.',
+     nota:'Terasamente — săpătură, transport evacuare + depozitare pământ și umplutură cu pământ propriu (fundații hangar, rezervor, platformă). Articolul de săpătură strat piatră spartă (975 mc) preluat de General Util prin AA1, fără cost. Umpluturile din piatră spartă și balast se contractează separat. Prețul de piață la săpătură (~36 lei/mc) este peste referința de deviz (21,73), de unde diferența față de buget.'},
+    {scope:'OS electric — TEG / TED (Cap.5)', furnizor:'Light Design', nr:'ctr 161 · 20.07.2026', buget:32370, contract:70148, venit:36625, stare:'Semnat',
+     ctx:'Sub-recuperare de OS de la beneficiar: „Tablouri și cabluri OS" (cod 170) recunoscut la doar 36.625 lei, sub costul real de piață. Nu este supra-preț Light Design, ci OS insuficient recuperat prin contract (temă OS ascuns).',
+     nota:'Branșamente și tablouri OS: TEG cu contorizare, TED distribuție, prize de pământ, buletine PRAM, manoperă și PIF.'},
+    {scope:'OS muncitori necalificați (Cap.5)', furnizor:'Ideal Max Construct', nr:'ctr 154 · 09.07.2026', buget:0, contract:45360, venit:null, stare:'Semnat',
+     nota:'Manoperă necalificată pentru organizarea de șantier — 6 luni. Furnizare de manoperă, fără linie de venit distinctă la beneficiar.'}
+  ];
+  var totContract = 0, totBugetCmp = 0, totContractCmp = 0, pendingCount = 0;
+  contracte.forEach(function(c){
+    totContract += c.contract;
+    if (c.buget === null) { pendingCount++; }
+    else { totBugetCmp += c.buget; totContractCmp += c.contract; }
+  });
+  var totDelta = totBugetCmp - totContractCmp; // >0 = saving, <0 = pierdere (pe scope-uri cu buget)
+  // Marjă vs venit (beneficiar): doar pe contracte cu venit definit
+  var totVenit = 0, totCostVenit = 0, venitCount = 0;
+  contracte.forEach(function(c){
+    if (c.venit !== null && c.venit !== undefined) { totVenit += c.venit; totCostVenit += c.contract; venitCount++; }
+  });
+  var margVenit = totVenit - totCostVenit;            // marjă absolută vs venit
+  var margVenitPct = totVenit>0 ? (margVenit/totVenit*100) : 0;
+  var EXEC = 18521332; // valoare execuție din contract (fără proiectare)
+  var gradAcoperire = (totContract / EXEC * 100);
+
+  function fmt(n){ return n.toLocaleString('ro-RO'); }
+  function milfmt(n){ return (n/1000000).toFixed(2).replace('.',',') + ' mil'; }
+
+  var html = '';
+  html += '<div class="proj-header"><div class="proj-title">Sinteză execuție contract — Validare / Buget / Saving</div><div class="proj-meta">' + (DATA[proj]?DATA[proj].title:'Hangar Kogălniceanu') + ' · imaginea financiară a contractului, de la licitație la costul real · actualizat 08.08.2026</div></div>';
+  html += '<div class="module-badge" style="background:#E7ECF6;color:#1F3864"><i class="ti ti-file-dollar" style="font-size:13px"></i> Sinteză execuție contract · buget · contracte semnate · saving/pierderi</div>';
+  if (CONTRACTSINT_URL) {
+    html += '<div style="margin-bottom:12px"><a href="' + CONTRACTSINT_URL + '" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 18px;background:#1A5276;color:#fff;border-radius:var(--radius);font-size:12px;font-weight:600;text-decoration:none"><i class="ti ti-table"></i> Deschide sinteza (Google Sheets)</a></div>';
+  } else {
+    html += '<div style="margin-bottom:12px"><span style="display:inline-flex;align-items:center;gap:6px;padding:8px 18px;background:#E5E7EB;color:#6B7280;border-radius:var(--radius);font-size:12px;font-weight:600"><i class="ti ti-table"></i> Link sinteză în pregătire</span></div>';
+  }
+
+  // ── KPI principale ──
+  html += '<div class="kpi-grid" style="margin-bottom:14px">';
+  html += '<div class="kpi"><div class="kpi-label">Valoare contract (cu AA2)</div><div class="kpi-val" style="color:#185FA5">19,31 mil</div><div class="kpi-sub">lei fără TVA · 69,2% din estimarea autorității (27,84 mil)</div></div>';
+  html += '<div class="kpi"><div class="kpi-label">Buget alocat (Deviz General)</div><div class="kpi-val" style="color:#3B6D11">17,08 mil</div><div class="kpi-sub">−11,4% față de contract · include proiectarea</div></div>';
+  html += '<div class="kpi"><div class="kpi-label">Bani reali pentru lucrări</div><div class="kpi-val" style="color:#854F0B">56,5%</div><div class="kpi-sub">Cap.4 = 14,73 mil (fără OS) din estimarea execuției</div></div>';
+  html += '<div class="kpi"><div class="kpi-label">Grad acoperire cu contracte semnate</div><div class="kpi-val" style="color:#A32D2D">' + gradAcoperire.toFixed(1).replace('.',',') + '%</div><div class="kpi-sub">' + fmt(totContract) + ' lei contractați din 18,52 mil execuție</div></div>';
+  html += '</div>';
+
+  // ── Cascada valorii ──
+  html += '<div class="proj-card" style="margin-bottom:14px">';
+  html += '<div class="proj-card-header" style="background:#1F3864"><span style="font-size:13px;font-weight:600;color:#fff"><i class="ti ti-stairs-down"></i> Cascada valorii — cât rămâne efectiv pentru lucrări</span></div>';
+  html += '<div class="proj-card-body" style="gap:12px">';
+  cascada.forEach(function(s){
+    html += '<div>';
+    html += '<div style="display:flex;justify-content:space-between;align-items:baseline;font-size:12px;margin-bottom:3px"><span style="color:#213;font-weight:600">' + s.l + '</span><span style="color:' + s.c + ';font-weight:700">' + fmt(s.v) + ' lei · ' + s.pct.toFixed(1).replace('.',',') + '%</span></div>';
+    html += '<div style="height:16px;background:#EEF0F3;border-radius:5px;overflow:hidden"><div style="height:100%;width:' + s.pct + '%;background:' + s.c + '"></div></div>';
+    html += '<div style="font-size:10px;color:#7A828E;margin-top:3px">' + s.note + '</div>';
+    html += '</div>';
+  });
+  html += '</div></div>';
+
+  // ── Ascunderi în ofertă / OS ──
+  html += '<div class="proj-card" style="margin-bottom:14px">';
+  html += '<div class="proj-card-header" style="background:#7B1818"><span style="font-size:13px;font-weight:600;color:#fff"><i class="ti ti-eye-off"></i> Ascunderi în ofertă / OS — presiune pe prețul lucrărilor</span></div>';
+  html += '<div class="proj-card-body" style="gap:8px">';
+  html += '<div style="background:#FDECEA;border-left:3px solid #C0392B;border-radius:6px;padding:9px 12px;font-size:12px;line-height:1.5"><b>OS ascuns 1.005.849 lei.</b> Organizare de șantier real bugetată 1.600.888 lei, dar Beneficiarul recunoaște doar 595.040 lei; diferența este cost de OS înglobat în prețul lucrărilor de execuție (recuperare OS plafonată la 595k, restul apasă pe prețul lucrărilor).</div>';
+  html += '<div style="background:#FDECEA;border-left:3px solid #C0392B;border-radius:6px;padding:9px 12px;font-size:12px;line-height:1.5"><b>Fără rezervă de risc.</b> Cei 10% diverse și neprevăzute din estimare (2.718.815 lei) au fost EXCLUȘI din ofertă — proiectul se derulează fără contingency pentru surprizele din teren.</div>';
+  html += '<div style="background:#FEF6E7;border-left:3px solid #C77C0A;border-radius:6px;padding:9px 12px;font-size:12px;line-height:1.5"><b>Asistență tehnică sub-ofertată.</b> AT proiectant ofertată la 75.000 lei = 20% din estimarea autorității (374.883 lei) — decontare limitată pe toată durata execuției.</div>';
+  html += '</div></div>';
+
+  // ── Marjă + documentare (2 carduri pe rând) ──
+  html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">';
+  // marja
+  html += '<div class="proj-card" style="margin-bottom:0">';
+  html += '<div class="proj-card-header" style="background:#2C4A6E"><span style="font-size:13px;font-weight:600;color:#fff"><i class="ti ti-percentage"></i> Marja ofertată</span></div>';
+  html += '<div class="proj-card-body"><div style="font-size:26px;font-weight:700;color:#1F3864;line-height:1">2.185.880 lei</div><div style="font-size:12px;color:#5A6472;margin-bottom:8px">11,35% pe buget Cap.4+5 (16.335.452 lei)</div><div style="font-size:11px;color:#444;line-height:1.5">Marjă provenită integral din execuție (proiectarea la cost ≈ venit). <b>Calitate subțire</b>: costuri documentate ~40% cu oferte expirate, ~10% regie/CI, expusă riscurilor critice.</div></div></div>';
+  // documentare
+  html += '<div class="proj-card" style="margin-bottom:0">';
+  html += '<div class="proj-card-header" style="background:#3B6D11"><span style="font-size:13px;font-weight:600;color:#fff"><i class="ti ti-checklist"></i> Documentare cu oferte de piață</span></div>';
+  html += '<div class="proj-card-body">';
+  html += '<div style="font-size:26px;font-weight:700;color:#3B6D11;line-height:1">40,3%</div><div style="font-size:12px;color:#5A6472;margin-bottom:8px">oferte de piață (OP) · 49,8% cu OP+VP+DO</div>';
+  html += '<div style="height:14px;display:flex;border-radius:5px;overflow:hidden;margin-bottom:6px"><div style="width:40.3%;background:#639922" title="Oferte piață"></div><div style="width:9.5%;background:#EF9F27" title="Proiect anterior / estimare DO"></div><div style="width:50.2%;background:#E24B4A" title="Nedocumentat"></div></div>';
+  html += '<div style="font-size:11px;color:#444;line-height:1.5"><b>~8,6 mil lei nedocumentat</b> (fără ofertă de piață). Critic: Cap.8 sanitare 0%, structură metalică 109 t, Cap.7 F3, Cap.10 F3.</div>';
+  html += '</div></div>';
+  html += '</div>';
+
+  // ── DERULARE — contracte semnate ──
+  html += '<div style="height:1px;background:linear-gradient(90deg,#1F3864,transparent);margin:20px 0 12px"></div>';
+  html += '<div style="font-size:14px;font-weight:700;color:#1F3864;margin-bottom:4px"><i class="ti ti-signature"></i> Derulare — contracte semnate în execuție</div>';
+  html += '<div style="font-size:11px;color:#5A6472;margin-bottom:12px">Costul real se conturează pe măsură ce semnăm. Pentru fiecare contract: buget alocat vs valoare semnată → saving sau pierdere.</div>';
+
+  // KPI derulare
+  html += '<div class="kpi-grid" style="margin-bottom:14px">';
+  html += '<div class="kpi"><div class="kpi-label">Total contractat</div><div class="kpi-val">' + fmt(totContract) + '</div><div class="kpi-sub">lei fără TVA · ' + contracte.length + ' contract(e) semnat(e)</div></div>';
+  html += '<div class="kpi"><div class="kpi-label">Saving vs buget</div><div class="kpi-val" style="color:' + (totDelta>=0?'#3B6D11':'#A32D2D') + '">' + (totDelta>=0?'+':'−') + Math.abs(totDelta/totBugetCmp*100).toFixed(1).replace('.',',') + '%</div><div class="kpi-sub">' + (totDelta>=0?'+':'−') + fmt(Math.abs(totDelta)) + ' lei · buget ' + fmt(totBugetCmp) + ' → contractat ' + fmt(totContractCmp) + '</div></div>';
+  html += '<div class="kpi"><div class="kpi-label">Marjă vs venit (beneficiar)</div><div class="kpi-val" style="color:' + (margVenit>=0?'#3B6D11':'#A32D2D') + '">' + (margVenit>=0?'+':'−') + Math.abs(margVenitPct).toFixed(1).replace('.',',') + '%</div><div class="kpi-sub">' + (margVenit>=0?'+':'−') + fmt(Math.abs(Math.round(margVenit))) + ' lei · venit ' + fmt(totVenit) + ' → cost ' + fmt(totCostVenit) + ' (' + venitCount + ' contracte cu venit)</div></div>';
+  html += '<div class="kpi"><div class="kpi-label">Grad acoperire execuție</div><div class="kpi-val" style="color:#A32D2D">' + gradAcoperire.toFixed(1).replace('.',',') + '%</div><div class="kpi-sub">din 18,52 mil lei lucrări de execuție</div></div>';
+  html += '</div>';
+
+  // gauge grad acoperire
+  html += '<div style="margin-bottom:14px"><div style="display:flex;justify-content:space-between;font-size:11px;color:#5A6472;margin-bottom:3px"><span>Acoperire contract cu contracte semnate</span><span style="font-weight:700;color:#1F3864">' + gradAcoperire.toFixed(1).replace('.',',') + '% din 100%</span></div>';
+  html += '<div style="height:18px;background:#EEF0F3;border-radius:6px;overflow:hidden"><div style="height:100%;width:' + Math.max(gradAcoperire,1.2) + '%;background:linear-gradient(90deg,#1F3864,#378ADD);min-width:2px"></div></div></div>';
+
+  // tabel contracte
+  html += '<div class="proj-card" style="margin-bottom:14px"><div style="overflow-x:auto">';
+  html += '<table style="width:100%;border-collapse:collapse;font-size:11px">';
+  html += '<thead><tr style="background:#1F3864;color:#fff;text-align:left">';
+  html += '<th style="padding:8px 10px">Scope</th><th style="padding:8px 10px">Furnizor</th><th style="padding:8px 10px;text-align:right">Buget alocat</th><th style="padding:8px 10px;text-align:right">Valoare contract</th><th style="padding:8px 10px;text-align:right">Saving vs buget</th><th style="padding:8px 10px;text-align:right">Venit beneficiar</th><th style="padding:8px 10px;text-align:right">Marjă vs venit</th></tr></thead><tbody>';
+  contracte.forEach(function(c){
+    var pending = (c.buget === null);
+    var nebug = (c.buget === 0);
+    var bugetCell = pending ? '<span style="color:#8A94A3;font-style:italic">în curs</span>' : (nebug ? '<span style="color:#8A94A3;font-style:italic">nebugetat</span>' : fmt(c.buget));
+    var dCell, dcol = '#5A6472';
+    if (pending) {
+      dCell = '<span style="color:#8A94A3">—</span>';
+    } else {
+      var d = c.buget - c.contract;
+      dcol = d>=0 ? '#3B6D11' : (c.soft ? '#854F0B' : '#A32D2D');
+      dCell = (d>=0?'+':'−') + fmt(Math.abs(d));
+      if (c.buget>0) dCell += '<div style="font-size:9px;font-weight:500">' + (d>=0?'+':'−') + Math.abs(d/c.buget*100).toFixed(1).replace('.',',') + '%</div>';
+    }
+    // Venit + Marjă vs venit
+    var hasVenit = (c.venit !== null && c.venit !== undefined);
+    var venitCell = hasVenit ? (fmt(c.venit) + (c.venitAprox?'<span style="color:#9AA3B0"> *</span>':'')) : '<span style="color:#8A94A3;font-style:italic">—</span>';
+    var mvCell, mvcol = '#5A6472';
+    if (hasVenit) {
+      var mv = c.venit - c.contract;
+      mvcol = mv>=0 ? '#3B6D11' : '#A32D2D';
+      mvCell = (mv>=0?'+':'−') + fmt(Math.abs(mv)) + '<div style="font-size:9px;font-weight:500">' + (mv>=0?'+':'−') + Math.abs(mv/c.venit*100).toFixed(1).replace('.',',') + '%</div>';
+    } else { mvCell = '<span style="color:#8A94A3">—</span>'; }
+    var badge = c.stare==='Semnat' ? '#3B6D11' : (c.stare==='În semnare' ? '#C77C0A' : '#6B7280');
+    var statusChip = '<span style="background:' + badge + ';color:#fff;padding:1px 7px;border-radius:9px;font-size:9px;font-weight:700;white-space:nowrap;margin-left:6px">' + c.stare + '</span>';
+    var mktLine = c.mkt ? '<div style="font-size:10px;color:#2F6B1E;background:#EAF3DE;border-radius:5px;padding:5px 8px;margin-top:5px"><i class="ti ti-award"></i> ' + c.mkt + '</div>' : '';
+    var ctxLine = c.ctx ? '<div style="font-size:10px;color:#3A5573;background:#EAF0F6;border-radius:5px;padding:5px 8px;margin-top:5px"><i class="ti ti-info-circle"></i> ' + c.ctx + '</div>' : '';
+    html += '<tr style="border-bottom:1px solid #E8E8E8">';
+    html += '<td style="padding:8px 10px"><b>' + c.scope + '</b>' + statusChip + '<div style="font-size:10px;color:#7A828E;margin-top:2px">' + (c.nr?'<span style="color:#9AA3B0">'+c.nr+'</span> · ':'') + c.nota + '</div>' + mktLine + ctxLine + '</td>';
+    html += '<td style="padding:8px 10px;white-space:nowrap">' + c.furnizor + '</td>';
+    html += '<td style="padding:8px 10px;text-align:right;white-space:nowrap">' + bugetCell + '</td>';
+    html += '<td style="padding:8px 10px;text-align:right;white-space:nowrap;font-weight:600">' + fmt(c.contract) + '</td>';
+    html += '<td style="padding:8px 10px;text-align:right;white-space:nowrap;color:' + dcol + ';font-weight:700">' + dCell + '</td>';
+    html += '<td style="padding:8px 10px;text-align:right;white-space:nowrap">' + venitCell + '</td>';
+    html += '<td style="padding:8px 10px;text-align:right;white-space:nowrap;color:' + mvcol + ';font-weight:700">' + mvCell + '</td>';
+    html += '</tr>';
+  });
+  html += '</tbody><tfoot><tr style="background:#F2F4F7;font-weight:700;border-top:2px solid #1F3864">';
+  html += '<td style="padding:8px 10px" colspan="2">TOTAL contractat</td>';
+  html += '<td style="padding:8px 10px;text-align:right">' + fmt(totBugetCmp) + '</td>';
+  html += '<td style="padding:8px 10px;text-align:right">' + fmt(totContract) + '</td>';
+  html += '<td style="padding:8px 10px;text-align:right;color:' + (totDelta>=0?'#3B6D11':'#A32D2D') + '">' + (totDelta>=0?'+':'−') + fmt(Math.abs(totDelta)) + '<div style="font-size:9px">' + (totDelta>=0?'+':'−') + Math.abs(totDelta/totBugetCmp*100).toFixed(1).replace('.',',') + '%</div></td>';
+  html += '<td style="padding:8px 10px;text-align:right">' + fmt(totVenit) + '</td>';
+  html += '<td style="padding:8px 10px;text-align:right;color:' + (margVenit>=0?'#3B6D11':'#A32D2D') + '">' + (margVenit>=0?'+':'−') + fmt(Math.abs(Math.round(margVenit))) + '<div style="font-size:9px">' + (margVenit>=0?'+':'−') + Math.abs(margVenitPct).toFixed(1).replace('.',',') + '%</div></td>';
+  html += '</tr></tfoot></table></div>';
+  html += '<div style="font-size:10px;color:#8A94A3;padding:8px 12px;line-height:1.5"><b>Saving vs buget</b> = buget alocat − valoare contract (eficiența la achiziție, pe scope-urile cu buget). <b>Marjă vs venit</b> = venit beneficiar (deviz cu CI+profit) − valoare contract = profitabilitatea reală pe scope. Venitul se ia din anexa la contractul cu beneficiarul. <span style="color:#9AA3B0">* Prefabricate: venit conservator (doar stâlpi + pahare); marja reală este cel puțin atât.</span> OS necalificați nu are venit distinct (furnizare de manoperă). Grad acoperire ' + gradAcoperire.toFixed(1).replace('.',',') + '% = contractat / 18,52 mil lei execuție.</div></div>';
+
+  html += "<button class=\"open-fisa-btn\" onclick=\"renderProjHome('hangar')\"><i class=\"ti ti-arrow-left\"></i> Înapoi la proiect</button>";
+  html += '<div class="page-footer">PM Hub · EREN CONS SRL · 2026 · Sinteză execuție contract · Surse: Fișa de date SEAP, Contract 997/2025 + AA2, Deviz General buget, analize Cap.1-13, decizii contractare</div>';
+  document.getElementById('main').innerHTML = html;
+}
 
 function renderHandover(proj) {
   var html = '';

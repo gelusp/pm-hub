@@ -3223,6 +3223,12 @@ function renderContractSinteza(proj) {
   });
   var margVenit = totVenit - totCostVenit;            // marjă absolută vs venit
   var margVenitPct = totVenit>0 ? (margVenit/totVenit*100) : 0;
+  // Influența indexării (subcl. 48.5): venit execuție C+M × An; subcontracte preț fix → rămâne la EREN
+  var AN_INDEX = 1.143354;                             // coeficient indexare curent (In mai.2026 / Io ian.2025)
+  var venitIndexat = totVenit * AN_INDEX;
+  var margVenitIdx = venitIndexat - totCostVenit;
+  var margVenitIdxPct = venitIndexat>0 ? (margVenitIdx/venitIndexat*100) : 0;
+  var indexUplift = totVenit * (AN_INDEX - 1);         // plusul de marjă din indexare
   var EXEC = 18521332; // valoare execuție din contract (fără proiectare)
   var gradAcoperire = (totContract / EXEC * 100);
 
@@ -3268,6 +3274,18 @@ function renderContractSinteza(proj) {
   html += '<div style="background:#FEF6E7;border-left:3px solid #C77C0A;border-radius:6px;padding:9px 12px;font-size:12px;line-height:1.5"><b>Asistență tehnică sub-ofertată.</b> AT proiectant ofertată la 75.000 lei = 20% din estimarea autorității (374.883 lei) — decontare limitată pe toată durata execuției.</div>';
   html += '</div></div>';
 
+  // ── Indexare prețuri (ajustare) — venit suplimentar ──
+  html += '<div class="proj-card" style="margin-bottom:14px">';
+  html += '<div class="proj-card-header" style="background:#1E5631"><span style="font-size:13px;font-weight:600;color:#fff"><i class="ti ti-trending-up"></i> Indexare prețuri (ajustare) — sub-clauza 48.5 · venit suplimentar peste contract</span></div>';
+  html += '<div class="proj-card-body">';
+  html += '<div style="display:flex;gap:22px;flex-wrap:wrap;margin-bottom:10px">';
+  html += '<div><div style="font-size:22px;font-weight:700;color:#3B6D11">+14,3%</div><div style="font-size:11px;color:#5A6472">coeficient curent · An = 1,1434</div></div>';
+  html += '<div><div style="font-size:22px;font-weight:700;color:#1F3864">91.489</div><div style="font-size:11px;color:#5A6472">lei ajustare realizată (SL2, iul.2026)</div></div>';
+  html += '<div><div style="font-size:22px;font-weight:700;color:#3B6D11">~2,31 mil</div><div style="font-size:11px;color:#5A6472">lei potențial pe execuția C+M (la coef. curent)</div></div>';
+  html += '</div>';
+  html += '<div style="font-size:11px;color:#444;line-height:1.55"><b>An = av + (1−av)·In/Io</b> · av=0 · Io=143,70 (ian.2025, Data de Referință) · In=164,30 (mai.2026, provizoriu) · sursă Buletin Statistic INS nr.05/2026. Se aplică DOAR execuției (C+M ≈ 16,10 mil lei), NU proiectării. Ajustarea crește cu indicii ICC pe măsură ce se decontează lucrările; subcontractele fiind la preț fix, indexarea rămâne integral câștig pentru EREN. <b>Efect în analiză:</b> ridică marja reală vs venit de la +19,5% (bază) la ~+29,6% (cu indexare) — vezi KPI-urile din Derulare.</div>';
+  html += '</div></div>';
+
   // ── Marjă + documentare (2 carduri pe rând) ──
   html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">';
   // marja
@@ -3293,7 +3311,8 @@ function renderContractSinteza(proj) {
   html += '<div class="kpi-grid" style="margin-bottom:14px">';
   html += '<div class="kpi"><div class="kpi-label">Total contractat</div><div class="kpi-val">' + fmt(totContract) + '</div><div class="kpi-sub">lei fără TVA · ' + contracte.length + ' contract(e) semnat(e)</div></div>';
   html += '<div class="kpi"><div class="kpi-label">Saving vs buget</div><div class="kpi-val" style="color:' + (totDelta>=0?'#3B6D11':'#A32D2D') + '">' + (totDelta>=0?'+':'−') + Math.abs(totDelta/totBugetCmp*100).toFixed(1).replace('.',',') + '%</div><div class="kpi-sub">' + (totDelta>=0?'+':'−') + fmt(Math.abs(totDelta)) + ' lei · buget ' + fmt(totBugetCmp) + ' → contractat ' + fmt(totContractCmp) + '</div></div>';
-  html += '<div class="kpi"><div class="kpi-label">Marjă vs venit (beneficiar)</div><div class="kpi-val" style="color:' + (margVenit>=0?'#3B6D11':'#A32D2D') + '">' + (margVenit>=0?'+':'−') + Math.abs(margVenitPct).toFixed(1).replace('.',',') + '%</div><div class="kpi-sub">' + (margVenit>=0?'+':'−') + fmt(Math.abs(Math.round(margVenit))) + ' lei · venit ' + fmt(totVenit) + ' → cost ' + fmt(totCostVenit) + ' (' + venitCount + ' contracte cu venit)</div></div>';
+  html += '<div class="kpi"><div class="kpi-label">Marjă vs venit (bază)</div><div class="kpi-val" style="color:' + (margVenit>=0?'#3B6D11':'#A32D2D') + '">' + (margVenit>=0?'+':'−') + Math.abs(margVenitPct).toFixed(1).replace('.',',') + '%</div><div class="kpi-sub">' + (margVenit>=0?'+':'−') + fmt(Math.abs(Math.round(margVenit))) + ' lei · venit ' + fmt(totVenit) + ' → cost ' + fmt(totCostVenit) + ' (fără indexare)</div></div>';
+  html += '<div class="kpi" style="background:#EAF3DE;border-color:#C0DD97"><div class="kpi-label">Marjă vs venit + indexare</div><div class="kpi-val" style="color:#3B6D11">+' + margVenitIdxPct.toFixed(1).replace('.',',') + '%</div><div class="kpi-sub">+' + fmt(Math.round(margVenitIdx)) + ' lei · venit indexat ' + fmt(Math.round(venitIndexat)) + ' (coef. 1,1434 · +' + fmt(Math.round(indexUplift)) + ' din indexare)</div></div>';
   html += '<div class="kpi"><div class="kpi-label">Grad acoperire execuție</div><div class="kpi-val" style="color:#A32D2D">' + gradAcoperire.toFixed(1).replace('.',',') + '%</div><div class="kpi-sub">din 18,52 mil lei lucrări de execuție</div></div>';
   html += '</div>';
 

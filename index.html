@@ -3203,11 +3203,11 @@ function renderContractSinteza(proj) {
     {scope:'Săpături / terasamente', furnizor:'Ideal Max Construct', nr:'ctr 166 · 27.07.2026 · AA1', buget:407222, contract:468573, venit:493459, stare:'Semnat', soft:true,
      mkt:'Cea mai avantajoasă din ofertele de piață (cu ~180.000 lei sub Salt). Bugetul prevedea doar transportul pământului, nu și depozitarea la groapă — Ideal Max acoperă și această lucrare nebugetată, evitând o pierdere mult mai mare.',
      nota:'Terasamente — săpătură, transport evacuare + depozitare pământ și umplutură cu pământ propriu (fundații hangar, rezervor, platformă). Articolul de săpătură strat piatră spartă (975 mc) preluat de General Util prin AA1, fără cost. Umpluturile din piatră spartă și balast se contractează separat. Prețul de piață la săpătură (~36 lei/mc) este peste referința de deviz (21,73), de unde diferența față de buget.'},
-    {scope:'OS electric — TEG / TED (Cap.5)', furnizor:'Light Design', nr:'ctr 161 · 20.07.2026', buget:32370, contract:70148, venit:36625, stare:'Semnat',
-     ctx:'Sub-recuperare de OS de la beneficiar: „Tablouri și cabluri OS" (cod 170) recunoscut la doar 36.625 lei, sub costul real de piață. Nu este supra-preț Light Design, ci OS insuficient recuperat prin contract (temă OS ascuns).',
-     nota:'Branșamente și tablouri OS: TEG cu contorizare, TED distribuție, prize de pământ, buletine PRAM, manoperă și PIF.'},
-    {scope:'OS muncitori necalificați (Cap.5)', furnizor:'Ideal Max Construct', nr:'ctr 154 · 09.07.2026', buget:0, contract:45360, venit:null, stare:'Semnat',
-     nota:'Manoperă necalificată pentru organizarea de șantier — 6 luni. Furnizare de manoperă, fără linie de venit distinctă la beneficiar.'}
+    {scope:'OS electric — TEG / TED + proiectoare (Cap.5)', furnizor:'Light Design', nr:'ctr 161 · 20.07.2026', buget:39840, contract:70148, venit:45077, stare:'Semnat',
+     ctx:'Sub-recuperare de OS de la beneficiar: „Tablouri și cabluri OS" (cod 170) + „Proiectoare OS" (cod 171) recunoscute la 45.077 lei, sub costul real. Nu este supra-preț Light Design, ci OS insuficient recuperat prin contract (temă OS ascuns).',
+     nota:'Branșamente și tablouri OS: TEG cu contorizare, TED distribuție, prize de pământ, buletine PRAM, proiectoare OS, manoperă și PIF. Buget = cod 170 (32.370) + cod 171 proiectoare (7.470).'},
+    {scope:'OS muncitori necalificați (Cap.5)', furnizor:'Ideal Max Construct', nr:'ctr 154 · 09.07.2026', buget:45360, contract:45360, venit:null, stare:'Semnat',
+     nota:'Manoperă necalificată OS — 6 luni × 7.560 lei, exact pe buget. Deviz 5.1.3 prevede 2 articole cod 194 (câte 45.360 lei); contractat momentan unul (Ideal Max). Al doilea articol (45.360 lei) rămâne de contractat. Cheltuială OS distribuită în prețuri — fără linie de venit distinctă la beneficiar.'}
   ];
   var totContract = 0, totBugetCmp = 0, totContractCmp = 0, pendingCount = 0;
   contracte.forEach(function(c){

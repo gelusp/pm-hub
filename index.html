@@ -261,7 +261,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
       </div>
       <div class="submenu" id="sub-hangar">
         <div class="submenu-item" id="item-hangar-contractsinteza" onclick="goModule('hangar','contractsinteza')">
-          <i class="ti ti-file-dollar"></i> Sinteză execuție contract
+          <i class="ti ti-file-dollar"></i> Sinteză contract
         </div>
         <div class="submenu-item" id="item-hangar-validare" onclick="goModule('hangar','validare')">
           <i class="ti ti-chart-bar"></i> Validare Bugete
@@ -278,17 +278,8 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
             <i class="ti ti-bolt" style="color:#854F0B"></i> OS — Branșamente electrice
           </div>
         </div>
-        <div class="submenu-item" id="item-hangar-doccontract" onclick="toggleSubSub('hangar-doccontract')">
+        <div class="submenu-item" id="item-hangar-docbenef" onclick="goModule('hangar','docbenef')">
           <i class="ti ti-files" style="color:#1A5276"></i> Documente Contract
-          <i class="ti ti-chevron-down chevron" id="chev-hangar-doccontract" style="font-size:11px"></i>
-        </div>
-        <div class="submenu" id="sub-hangar-doccontract" style="margin-left:14px;border-left:2px solid var(--grey-200)">
-          <div class="submenu-item" id="item-hangar-ordin2" onclick="goModule('hangar','doccontract')">
-            <i class="ti ti-file-certificate" style="color:#1A5276"></i> Ordin Administrativ Nr. 2
-          </div>
-          <div class="submenu-item" id="item-hangar-politacar" onclick="goModule('hangar','politacar')">
-            <i class="ti ti-shield-check" style="color:#1A5276"></i> Poliță CAR
-          </div>
         </div>
         <div class="submenu-item" id="item-hangar-sinteza" onclick="goModule('hangar','sinteza')">
           <i class="ti ti-clipboard-list"></i> Acțiuni / Riscuri / Rec.
@@ -511,6 +502,7 @@ function goModule(proj, module) {
   else if (module === 'erp') renderERP(proj);
   else if (module === 'doccontract') renderDocContract(proj);
   else if (module === 'politacar') renderPolitaCAR(proj);
+  else if (module === 'docbenef') renderDocBenef(proj);
   else if (module === 'sl1') renderSL1(proj);
   else if (module === 'sl2') renderSL2(proj);
   else if (module === 'an21') renderAn21(proj);
@@ -1092,7 +1084,7 @@ function renderDocContract(proj) {
         '<span style="font-size:10px;background:#FAEEDA;color:#854F0B;padding:2px 10px;border-radius:99px;font-weight:600">Clauza 50 \xb7 50.1 \xb7 48 \xb7 47 \xb7 50.2</span>' +
         '<span style="font-size:10px;background:#FDEDEC;color:#C0392B;padding:2px 10px;border-radius:99px;font-weight:600">UM 02311 Constanța</span>' +
       '</div>' +
-      '<a href="Documente relevante/20260625_N_A5-976_Ordin_Administrativ_nr2_HangarJ-[02311].pdf" target="_blank" ' +
+      '<a href="https://drive.google.com/file/d/1lk_JZFbTq7GGfxUZVz3qpHGzCuKR-RNL/view?usp=sharing" target="_blank" ' +
         'style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:#1A5276;color:#fff;border-radius:6px;' +
         'font-size:12px;font-weight:600;text-decoration:none;margin-bottom:16px">' +
         '<i class="ti ti-file-type-pdf"></i> Vizualizează Ordinul Administrativ Nr. 2' +
@@ -1217,6 +1209,140 @@ function renderDocContract(proj) {
         '<i class="ti ti-file-plus" style="font-size:24px;margin-bottom:8px;color:var(--text-tertiary)"></i>' +
         '<p style="font-size:12px;color:var(--text-secondary)">Adaugă: ordine administrative suplimentare \xb7 acte adiționale \xb7 decizii supervizor \xb7 note de şanțer</p>' +
       '</div>' +
+    '</div>' +
+
+    '<div class="page-footer">PM Hub \xb7 EREN CONS SRL \xb7 2026</div>';
+}
+
+// === REGISTRU DOCUMENTE TRANSMISE DE BENEFICIAR (UM 02311 Constanța) ===
+// Adăugare document nou = o singură intrare în DOCS_BENEF. Lista se sortează
+// automat cronologic invers (cel mai recent primul) după cheia "k" (AAAALLZZ + rang zi).
+var DOCBENEF_DIR = '13. Documente transmise de beneficiar/';
+var DOCS_BENEF = [
+  { k:202608071, d:'07.08.2026', cat:'FINANCIAR',  nr:'AE-815',  serie:'AE',
+    titlu:'Emitere factură',
+    desc:'Comunicare privind emiterea facturii aferente obiectivului Hangar Kogălniceanu.',
+    color:'#854F0B', bg:'#FAEEDA', icon:'ti-file-invoice',
+    url:'https://drive.google.com/file/d/1ravtHeOb4BsbTYlblyqSZGkjoxnpQ1Ay/view?usp=sharing' },
+
+  { k:202608061, d:'06.08.2026', cat:'RECEPȚIE',   nr:'AE-793',  serie:'AE',
+    titlu:'Convocare Recepție la Terminarea Lucrărilor — demolare',
+    desc:'Recepție pentru Obiect 01 (Demolare Pavilion) și Obiect 03 (Demolare platformă), programată 12.08.2026 ora 13:00. Nominalizare reprezentanți până la 07.08.2026 ora 14:00; RTE și dirigintele prezintă referatele tehnice în 8 exemplare.',
+    color:'#C0392B', bg:'#FDEDEC', icon:'ti-calendar-event',
+    url:'https://drive.google.com/file/d/14gcMlcCIT_3uNt1ZJtIvzEKnow3NYh_E/view?usp=sharing' },
+
+  { k:202607311, d:'31.07.2026', cat:'FINANCIAR',  nr:'AE-750',  serie:'AE',
+    titlu:'Emitere factură fiscală — SL1',
+    desc:'Comunicare privind emiterea facturii fiscale aferente Situației de Lucrări nr.1 (proiectare).',
+    color:'#854F0B', bg:'#FAEEDA', icon:'ti-file-invoice',
+    url:'https://drive.google.com/file/d/1tVtyIEi6s2fqi9j7xE3YVyTdWfly-fXc/view?usp=sharing' },
+
+  { k:202607282, d:'28.07.2026', cat:'CALITATE',   nr:'A5-1069', serie:'A5',
+    titlu:'Faze determinante — controlul calității',
+    desc:'Stabilirea fazelor determinante pentru controlul calității lucrărilor pe obiectiv.',
+    color:'#6C3483', bg:'#F5EEF8', icon:'ti-clipboard-check',
+    url:'https://drive.google.com/file/d/114jU_oSvO6gPscoW-xXKO04j6jVp-GMQ/view?usp=sharing' },
+
+  { k:202607281, d:'28.07.2026', cat:'TRANSMITERE', nr:'AE-717', serie:'AE',
+    titlu:'Transmitere faze determinante',
+    desc:'Transmiterea către executant a documentului privind fazele determinante.',
+    color:'#566573', bg:'#EAECEE', icon:'ti-mail-forward',
+    url:'https://drive.google.com/file/d/1WrCcyHy4oSpQTSUy7xyh3AzAe5p8W8o_/view?usp=sharing' },
+
+  { k:202607272, d:'27.07.2026', cat:'ORDIN',      nr:'A5-1068', serie:'A5',
+    titlu:'Ordin Administrativ de Începere a Lucrărilor Nr. 2',
+    desc:'Începerea execuției pentru Obiect 02 – Pavilion Nou Hangar Mentenanță Elicoptere, Obiect 04 – Platformă betonată + rigolă și Obiect 05 – Rețele utilități/branșamente. Cod proiect 2023-I-888.',
+    color:'#1A5276', bg:'#D6EAF8', icon:'ti-file-certificate',
+    url:'https://drive.google.com/file/d/15pSW66D-j9fZgUtCkrbEgOtkCVtobbNI/view?usp=sharing' },
+
+  { k:202607271, d:'27.07.2026', cat:'NOTIFICARE', nr:'AE-704',  serie:'AE',
+    titlu:'Notificare înlocuire expert',
+    desc:'Notificare privind înlocuirea unui expert din echipa de proiectare/asistență tehnică.',
+    color:'#2E86C1', bg:'#EBF5FB', icon:'ti-user-exclamation',
+    url:'https://drive.google.com/file/d/1l4wnaqNAiRnizgTaADagnfaBXB6gLM_L/view?usp=sharing' },
+
+  { k:202507161, d:'16.07.2026', cat:'ASIGURARE', nr:'CM 963004884', serie:'',
+    titlu:'Poliță CAR — Lucrări Construcții-Montaj',
+    desc:'Poliță All Risks (Groupama Asigurări) pentru lucrările de construcții-montaj. Asigurat: EREN CONS SRL; beneficiar: UM 02311 Constanța.',
+    color:'#1E6E2D', bg:'#EAF3DE', icon:'ti-shield-check', mod:'politacar' },
+
+  { k:202506251, d:'25.06.2026', cat:'ORDIN', nr:'A5-976', serie:'A5',
+    titlu:'Ordin Administrativ Nr. 2 — modalități întocmire Situații de Lucrări',
+    desc:'Cerințe de întocmire și transmitere a SL (4 exemplare, semnătură obligatorie, checklist documente justificative). Bază legală: Ord. MApN M.151/2017.',
+    color:'#1A5276', bg:'#D6EAF8', icon:'ti-file-certificate', mod:'doccontract' }
+];
+
+function renderDocBenef(proj) {
+  var p = DATA[proj] || DATA['hangar'];
+  var docs = DOCS_BENEF.slice().sort(function(a, b) { return b.k - a.k; });
+
+  var cards = '';
+  docs.forEach(function(x) {
+    // Acțiune: PDF pe Google Drive (x.url) sau pagină internă detaliată (x.mod)
+    var action = x.mod
+      ? '<a onclick="goModule(\'hangar\',\'' + x.mod + '\');return false;" '
+      : '<a href="' + x.url + '" target="_blank" ';
+    var actIcon = x.mod ? 'ti-arrow-right' : 'ti-file-type-pdf';
+    var actLabel = x.mod ? 'Deschide' : 'Vizualizează';
+    cards +=
+      '<div class="nivel-card" style="margin-bottom:10px;border-left:4px solid ' + x.color + ';' +
+        'display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap;padding:14px 16px">' +
+
+        // Data (bloc stânga)
+        '<div style="min-width:58px;text-align:center;flex-shrink:0">' +
+          '<div style="font-size:15px;font-weight:800;color:' + x.color + ';line-height:1">' + x.d.slice(0,5) + '</div>' +
+          '<div style="font-size:10px;color:var(--text-tertiary);font-weight:600">' + x.d.slice(6) + '</div>' +
+        '</div>' +
+
+        // Iconiță
+        '<div style="width:38px;height:38px;border-radius:9px;background:' + x.bg + ';display:flex;align-items:center;' +
+          'justify-content:center;flex-shrink:0">' +
+          '<i class="ti ' + x.icon + '" style="font-size:19px;color:' + x.color + '"></i>' +
+        '</div>' +
+
+        // Conținut
+        '<div style="flex:1;min-width:210px">' +
+          '<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:5px">' +
+            '<span style="font-size:9.5px;font-weight:700;letter-spacing:.04em;background:' + x.bg + ';color:' + x.color + ';' +
+              'padding:2px 8px;border-radius:99px">' + x.cat + '</span>' +
+            '<span style="font-size:9.5px;font-weight:600;background:var(--grey-100,#f1f3f5);color:var(--text-secondary);' +
+              'padding:2px 8px;border-radius:99px"><i class="ti ti-hash" style="font-size:10px"></i> ' + x.nr + '</span>' +
+          '</div>' +
+          '<div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:3px">' + x.titlu + '</div>' +
+          '<div style="font-size:11.5px;color:var(--text-secondary);line-height:1.45">' + x.desc + '</div>' +
+        '</div>' +
+
+        // Buton acces individual
+        action +
+          'style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:' + x.color + ';color:#fff;' +
+          'border-radius:6px;font-size:11.5px;font-weight:600;text-decoration:none;flex-shrink:0;align-self:center;cursor:pointer">' +
+          '<i class="ti ' + actIcon + '"></i> ' + actLabel +
+        '</a>' +
+      '</div>';
+  });
+
+  document.getElementById('main').innerHTML =
+    '<div class="proj-header"><div class="proj-title">Documente Contract</div>' +
+    '<div class="proj-meta">' + p.title + ' \xb7 Contract A997/01.08.2025 \xb7 registru cronologic</div></div>' +
+    '<div class="module-badge" style="background:#D6EAF8;color:#1A5276">' +
+      '<i class="ti ti-files" style="font-size:13px"></i> Registru documente contract</div>' +
+
+    // Bară recap
+    '<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:14px">' +
+      '<span style="font-size:11px;background:#EBF5FB;color:#1A5276;padding:4px 12px;border-radius:99px;font-weight:700">' +
+        '<i class="ti ti-files"></i> ' + docs.length + ' documente</span>' +
+      '<span style="font-size:11px;background:#F4F6F7;color:var(--text-secondary);padding:4px 12px;border-radius:99px;font-weight:600">' +
+        '<i class="ti ti-sort-descending"></i> Cronologic invers (cel mai recent primul)</span>' +
+    '</div>' +
+
+    cards +
+
+    '<div style="padding:9px 13px;background:#FDFEFE;border:1px solid var(--border);border-radius:6px;font-size:11px;' +
+      'color:var(--text-secondary);margin-top:6px">' +
+      '<i class="ti ti-info-circle" style="color:#2E86C1"></i> ' +
+      'Documente transmise de Beneficiar (UM 02311): serii <strong>A5</strong> = documente oficiale (ordine, faze determinante), ' +
+      '<strong>AE</strong> = transmiteri e-mail (convocări, facturi, notificări). ' +
+      'Polița CAR și Ordinul Administrativ Nr. 2 deschid fișele lor detaliate; celelalte deschid PDF-ul din Google Drive.' +
     '</div>' +
 
     '<div class="page-footer">PM Hub \xb7 EREN CONS SRL \xb7 2026</div>';
@@ -1757,7 +1883,7 @@ function renderHome() {
         '<div class="proj-icon" style="background:rgba(204,21,21,0.25)"><i class="ti ti-building" style="color:#CC1515"></i></div>' +
         '<div style="flex:1"><div style="font-size:13px;font-weight:600;color:#fff">Hangar Kogălniceanu</div>' +
         '<div style="font-size:10px;color:rgba(255,255,255,0.6)">În validare / execuție · Start: 19.06.2026</div></div>' +
-        '<button onclick="goModule(\'hangar\',\'contractsinteza\')" style="display:inline-flex;align-items:center;gap:6px;padding:7px 14px;background:rgba(255,255,255,0.16);color:#fff;border:1px solid rgba(255,255,255,0.45);border-radius:7px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap" onmouseover="this.style.background=\'rgba(255,255,255,0.28)\'" onmouseout="this.style.background=\'rgba(255,255,255,0.16)\'"><i class="ti ti-file-dollar" style="font-size:14px"></i> Sinteză execuție contract</button>' +
+        '<button onclick="goModule(\'hangar\',\'contractsinteza\')" style="display:inline-flex;align-items:center;gap:6px;padding:7px 14px;background:rgba(255,255,255,0.16);color:#fff;border:1px solid rgba(255,255,255,0.45);border-radius:7px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap" onmouseover="this.style.background=\'rgba(255,255,255,0.28)\'" onmouseout="this.style.background=\'rgba(255,255,255,0.16)\'"><i class="ti ti-file-dollar" style="font-size:14px"></i> Sinteză contract</button>' +
       '</div>' +
     '</div>' +
 

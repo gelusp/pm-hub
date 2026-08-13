@@ -1917,6 +1917,7 @@ function renderHome() {
       '<div style="display:flex;gap:8px;flex-wrap:wrap">' +
         '<a href="https://drive.google.com/file/d/1WTbEqbLgWtShcepvEIQH5b5DPEadHO50/view?usp=sharing" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:6px 14px;background:#D4AC0D;color:#fff;border-radius:6px;font-size:12px;font-weight:600;text-decoration:none;font-family:inherit"><i class="ti ti-file-description"></i> Notă informare management</a>' +
         '<a href="https://drive.google.com/file/d/1huZH29FXeCeV0q_6VnciOUVH06_YD5Vh/view?usp=sharing" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:6px 14px;background:#7D6608;color:#fff;border-radius:6px;font-size:12px;font-weight:600;text-decoration:none;font-family:inherit"><i class="ti ti-tools"></i> Notă tehnică grup pompare</a>' +
+        '<a href="javascript:void(0)" onclick="openCronologieSchema()" style="display:inline-flex;align-items:center;gap:6px;padding:6px 14px;background:#1F3864;color:#fff;border-radius:6px;font-size:12px;font-weight:600;text-decoration:none;font-family:inherit"><i class="ti ti-timeline"></i> Cronologie și Date Tehnice</a>' +
       '</div>' +
     '</div>' : '') +
 
@@ -4344,6 +4345,140 @@ function openVizualizareSL2() {
   window.open('https://drive.google.com/file/d/1fWdqnsQcbn-8C1480jgAuggYty0fcklD/view?usp=sharing', '_blank');
 }
 
+</script>
+
+<!-- MODAL Cronologie si Date Tehnice (grup pompare) -->
+<div id="cronoModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:99999;align-items:flex-start;justify-content:center;padding:18px;overflow:auto">
+  <div style="background:#fff;border-radius:10px;max-width:1180px;width:100%;position:relative;box-shadow:0 12px 44px rgba(0,0,0,0.35)">
+    <button onclick="document.getElementById('cronoModal').style.display='none'" style="position:absolute;top:10px;right:12px;background:#1F3864;color:#fff;border:none;border-radius:6px;padding:6px 12px;font-size:13px;font-weight:600;cursor:pointer;z-index:2;font-family:inherit">✕ Închide</button>
+    <iframe id="cronoFrame" style="width:100%;height:88vh;border:none;border-radius:10px"></iframe>
+  </div>
+</div>
+<script>
+const SCHEMA_CRONO_HTML = `<!DOCTYPE html><html lang="ro"><head><meta charset="utf-8">
+<style>
+  :root{--navy:#1F3864;--blue:#3f6ea5;--green:#1E6B3A;--greenbg:#EAF4EC;--amber:#8A5A00;--amberbg:#FBF3E4;--red:#9A2A2A;--redbg:#FBECEC;--ink:#222;--muted:#5b6470;--line:#d7dee8;}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Segoe UI',Calibri,Arial,sans-serif;color:var(--ink);background:#fff;}
+  .page{width:1120px;margin:0 auto;padding:32px 40px 28px;}
+  .brand{font-size:12.5px;font-weight:700;color:var(--muted);letter-spacing:.4px}
+  h1{font-size:24px;color:var(--navy);margin-top:5px;line-height:1.18}
+  .sub{font-size:13.5px;color:var(--muted);margin-top:4px}
+  .rule{height:3px;background:var(--navy);border-radius:2px;margin:12px 0 16px}
+  .lbl{font-size:11.5px;font-weight:800;letter-spacing:.9px;text-transform:uppercase}
+  .card{border:1px solid var(--line);border-radius:9px;padding:13px 16px;margin-bottom:13px}
+  .obj{background:var(--greenbg);border-color:#bfe0c8}
+  .obj .lbl{color:var(--green)} .obj p{font-size:14px;margin-top:4px;color:#1b3b28} .obj b{color:var(--green)}
+  .h2{font-size:15px;font-weight:800;color:var(--navy);margin:6px 0 3px}
+  .note{font-size:12px;color:var(--muted);margin-bottom:10px}
+  .row{display:flex;align-items:center;margin:9px 0}
+  .rowlab{width:235px;font-size:12.5px;line-height:1.22;padding-right:12px;text-align:right}
+  .rowlab .v{font-size:19px;font-weight:800;display:block}
+  .rowlab .t{color:var(--muted)}
+  .track{flex:1;background:#f0f3f7;border-radius:6px;height:31px;position:relative}
+  .bar{height:100%;border-radius:6px;display:flex;align-items:center;justify-content:flex-end;padding-right:10px;color:#fff;font-weight:800;font-size:13.5px}
+  .b80{width:18.6%;background:#9aa7b6}.b155{width:36.1%;background:var(--blue)}.b430{width:100%;background:var(--red)}
+  .anno{position:absolute;right:0;top:-17px;font-size:11px;color:var(--red);font-weight:700}
+  .warn{background:var(--redbg);border:1px solid #e6b7b7;border-radius:7px;padding:9px 13px;margin-top:8px;font-size:12.5px;color:#7a2020;line-height:1.4}
+  .warn b{color:var(--red)}
+  .cols{display:flex;gap:14px}
+  .col{flex:1}
+  .brev{background:#f4f8f4;border:1.5px solid #bcdcc4;border-radius:9px;padding:13px 16px}
+  .brev .lbl{color:var(--green)}
+  .kv{display:flex;justify-content:space-between;font-size:13px;padding:3px 0;border-bottom:1px dashed #d9e5db}
+  .kv:last-child{border-bottom:none}
+  .kv b{color:var(--navy)}
+  .big{background:var(--green);color:#fff;border-radius:7px;padding:8px 12px;margin-top:8px;text-align:center;font-weight:800;font-size:15px}
+  .tl{position:relative;padding:6px 0 2px}
+  .tlline{position:absolute;left:1.5%;right:1.5%;top:20px;height:3px;background:#cfd8e4}
+  .tlwrap{display:flex;justify-content:space-between;position:relative}
+  .tlnode{width:16%;text-align:center}
+  .dot{width:14px;height:14px;border-radius:50%;background:var(--navy);margin:12px auto 8px;border:3px solid #fff;box-shadow:0 0 0 2px var(--navy)}
+  .dot.acc{background:var(--red);box-shadow:0 0 0 2px var(--red)}
+  .dot.verbal{background:#fff;border:3px dashed var(--red);box-shadow:0 0 0 2px var(--red)}
+  .tldate{font-size:11px;font-weight:800;color:var(--navy)}
+  .tltxt{font-size:10.5px;color:#3a4450;line-height:1.28;margin-top:3px}
+  .amber{background:var(--amberbg);border-color:#e6d3ab}.amber .lbl{color:var(--amber)}
+  ul{margin:6px 0 0 2px;list-style:none}
+  li{font-size:12.5px;line-height:1.42;padding-left:15px;position:relative;margin-bottom:4px}
+  li:before{content:"–";position:absolute;left:0;font-weight:800;color:var(--amber)}
+  .amber b{color:var(--amber)}
+  .concl{background:var(--navy);color:#fff;border-radius:9px;padding:14px 18px;margin-top:13px}
+  .concl .lbl{color:#a9c2e6}.concl p{font-size:13.5px;line-height:1.5;margin-top:5px}.concl b{color:#ffd98a}
+  .foot{font-size:10.5px;color:var(--muted);margin-top:10px;text-align:center}
+</style></head>
+<body><div class="page">
+  <div class="brand">S.C. EREN CONS S.R.L. · Hangar Kogălniceanu · contract 997/01.08.2025 · SEAP SCN1142389/CN1071922</div>
+  <h1>Grupul de pompare pentru spumă — de la SF la breviarul de recalcul</h1>
+  <div class="sub">Obiectivul (inundare la 5 m) e clar; grupul din SF e neclar și subdimensionat — nici fișa revizuită nu asigură cei 5 m</div>
+  <div class="rule"></div>
+
+  <div class="card obj">
+    <span class="lbl">✔ Nivel 1 — Obiectivul funcțional (clar, necontestat)</span>
+    <p>Stingere cu spumă de <b>înaltă înfoiere</b>, prin <b>inundarea totală</b> a halei <b>până la ~5 m</b> (nivelul elicei aeronavelor), cu <b>toate generatoarele simultan</b> (SF pag. 85; P118/2-2013; SR EN 13565-2). Confirmat și de autoritate în clarificări.</p>
+  </div>
+
+  <div class="h2">Nivel 2 — Debitul grupului de pompare amestec spumant (mc/h)</div>
+  <div class="note">Aceeași instalație, trei cifre. Cea impusă/ofertată e ~2,8× sub necesarul dovedit de breviar.</div>
+  <div class="row"><div class="rowlab"><span class="v">80</span><span class="t">Fișa tehnică din SF (partea scrisă nici nu prevede grup dedicat)</span></div><div class="track"><div class="bar b80">80</div></div></div>
+  <div class="row"><div class="rowlab"><span class="v">155,25</span><span class="t">Ce am ofertat (cifra din fișa impusă, revizuită)</span></div><div class="track"><div class="bar b155">155,25</div></div></div>
+  <div class="row"><div class="rowlab"><span class="v">~430</span><span class="t">Necesar real — Breviar TRIPTIC 28.04.2026</span></div><div class="track"><div class="bar b430"><span class="anno">ofertanții estimaseră ~508 în licitație</span>~430 mc/h @ 10,6 bar</div></div></div>
+
+  <div class="warn"><b>⚠ Înălțimea de inundare de 5 m (obiectivul din SF) NU este asigurată nici cu fișa tehnică revizuită (155,25 mc/h).</b> Breviarul o dovedește: ca hala să fie inundată la 5 m în timpul cerut (≤2 min) e nevoie de ~430 mc/h și 8 generatoare. Cei 155,25 lasă inundarea sub 5 m → instalație nefuncțională și fără aviz ISU.</div>
+
+  <div class="cols" style="margin-top:14px">
+    <div class="col">
+      <div class="brev">
+        <span class="lbl">Dovada — Breviar de calcul revizuit (5 m), 28.04.2026</span>
+        <div style="margin-top:7px">
+          <div class="kv"><span>Volum de inundat (1.457 mp × <b>5 m</b>)</span><b>7.287 m³</b></div>
+          <div class="kv"><span>Metodă volumetrică: rată 1 m/min, timp inundare</span><b>2 min</b></div>
+          <div class="kv"><span>Factori compensare (lipseau din SF)</span><b>CN 1,15 · CL 1,2</b></div>
+          <div class="kv"><span>Generatoare GH800, înfoiere 760:1</span><b>8 buc.</b></div>
+          <div class="kv"><span>Rezervă 100% spumant (agent + rezervă)</span><b>~7 mc</b></div>
+        </div>
+        <div class="big">Debit pompă ≈ 430 mc/h  ·  10,6 bar</div>
+      </div>
+    </div>
+    <div class="col">
+      <div class="card amber" style="margin-bottom:0;height:100%">
+        <span class="lbl">Nivel 3 — De ce SF-ul nu definește clar grupul</span>
+        <ul>
+          <li><b>Contradicție:</b> partea scrisă — apă „din racord la rețea", <b>fără grup dedicat</b>; anexa (Fișa tehnică 3) — un grup de 80 mc/h.</li>
+          <li><b>Metodă greșită:</b> rată de aplicare pe suprafață (factor „tanc de stocare"), nu volumetrică — fără volum, fără timp de umplere, fără CN.</li>
+          <li><b>Date incoerente:</b> rezervă spumă 140 vs 65 mc; arie 1.735 vs 1.961 mp; fără rezerva de 100% de spumant.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="h2" style="margin-top:15px">Cronologia — cum s-a ajuns aici</div>
+  <div class="tl">
+    <div class="tlline"></div>
+    <div class="tlwrap">
+      <div class="tlnode"><div class="dot"></div><div class="tldate">2023 · SF</div><div class="tltxt">Obiectiv: inundare totală la 5 m. Grup spumă neclar (fără grup / 80 mc/h).</div></div>
+      <div class="tlnode"><div class="dot acc"></div><div class="tldate">05.12.2024 · Clarificări</div><div class="tltxt">Ofertanții: 12 generatoare = ~508 mc/h, nu 80. Cer fișe corectate. Autoritatea amână „la faza PT".</div></div>
+      <div class="tlnode"><div class="dot"></div><div class="tldate">13.01.2025 · Fișă revizuită</div><div class="tltxt">Grup la 155,25 mc/h (generator micșorat). EREN ofertează cifra impusă — dar tot nu asigură 5 m.</div></div>
+      <div class="tlnode"><div class="dot acc"></div><div class="tldate">24.03.2026 · Minuta nr.5</div><div class="tltxt">Adresa Re-A-N3372: autoritatea cere reanaliza scenariului de spumă (aeronavă nouă, platformă).</div></div>
+      <div class="tlnode"><div class="dot acc"></div><div class="tldate">28.04.2026 · Breviar</div><div class="tltxt">Recalcul volumetric: <b>~430 mc/h @ 10,6 bar</b> pt inundare la 5 m + rezervă 100%.</div></div>
+      <div class="tlnode"><div class="dot verbal"></div><div class="tldate" style="color:var(--red)">Doar VERBAL · Revenire la SF</div><div class="tltxt">Autoritatea retrage aeronava <b>doar verbal, fără adresă oficială</b>. Fără document scris, cerința Re-A-N3372 rămâne în vigoare. Iar obiectivul SF (5 m) rămâne oricum → tot ~430 mc/h.</div></div>
+    </div>
+  </div>
+
+  <div class="concl">
+    <span class="lbl">Concluzie — poziția EREN</span>
+    <p>Necesarul real (~430 mc/h pentru inundare la 5 m) e <b>~2,8× peste</b> cel impus/ofertat (155,25), iar breviarul îl dovedește. <b>Retragerea aeronavei este deocamdată doar verbală</b> — fără adresă oficială, cerința scrisă (Re-A-N3372) rămâne în vigoare; EREN va solicita retragerea în scris. Iar chiar dacă se retrage în scris, obiectivul SF (inundare la 5 m) rămâne — fișa de 155,25 nu îl asigură. Deci corecția grupului <b>nu ține de aeronavă</b>, ci de eroarea SF-ului. Încadrare: <b>eroare în Cerințele Beneficiarului (clauza 8.4) → Revendicare (clauza 69a) → Ordin Administrativ de Modificare → Legea 98/2016, art. 221</b>. În plus, soluția de 155,25 mc/h nu obține avizul ISU.</p>
+  </div>
+
+  <div class="foot">Surse: SF 2023-I-888 (pag. 84–96) · Fișa tehnică 3 · clarificări licitație (RASPUNS FINAL) · Minuta ședinței nr. 5 / adresa Re-A-N3372/20.03.2026 · Breviar de calcul revizuit 5 m, 28.04.2026 · SR EN 13565-2+AC · P118/2-2013.</div>
+</div></body></html>
+`;
+function openCronologieSchema(){
+  var m=document.getElementById("cronoModal");
+  document.getElementById("cronoFrame").srcdoc = SCHEMA_CRONO_HTML;
+  m.style.display="flex";
+}
+document.addEventListener("keydown",function(e){ if(e.key==="Escape"){var m=document.getElementById("cronoModal"); if(m) m.style.display="none";} });
 </script>
 </body>
 </html>

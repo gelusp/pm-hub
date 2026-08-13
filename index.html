@@ -1911,6 +1911,15 @@ function renderHome() {
       '<div style="font-size:10px;color:#888;margin-top:3px">Total cumulat realizat: 26.978.703 lei · Ajustări: 544.477 lei · Data: Iulie 2026</div>' +
     '</div>' : '') +
 
+    (new Date() <= new Date('2026-08-18') ? '<div style="background:#FEF9E7;border:1px solid #F9E79F;border-left:4px solid #D4AC0D;border-radius:6px;padding:10px 14px;margin-bottom:12px">' +
+      '<div style="font-size:11px;font-weight:700;color:#7D6608;margin-bottom:5px"><i class="ti ti-droplet" style="margin-right:4px"></i>Clarificări GRUP POMPARE' + _badgeTimp('2026-08-18','#D4AC0D') + '</div>' +
+      '<div style="font-size:11px;color:#555;margin-bottom:8px">Documente și clarificări tehnice grup pompare — link-uri disponibile mai jos.</div>' +
+      '<div style="display:flex;gap:8px;flex-wrap:wrap">' +
+        '<a href="https://drive.google.com/file/d/1WTbEqbLgWtShcepvEIQH5b5DPEadHO50/view?usp=sharing" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:6px 14px;background:#D4AC0D;color:#fff;border-radius:6px;font-size:12px;font-weight:600;text-decoration:none;font-family:inherit"><i class="ti ti-file-description"></i> Notă informare management</a>' +
+        '<a href="https://drive.google.com/file/d/1huZH29FXeCeV0q_6VnciOUVH06_YD5Vh/view?usp=sharing" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:6px 14px;background:#7D6608;color:#fff;border-radius:6px;font-size:12px;font-weight:600;text-decoration:none;font-family:inherit"><i class="ti ti-tools"></i> Notă tehnică grup pompare</a>' +
+      '</div>' +
+    '</div>' : '') +
+
         (new Date() <= new Date('2026-08-08T23:59:59') ? '<div style="background:#EEF2FF;border:1px solid #B9C4E8;border-left:4px solid #2C4A6E;border-radius:6px;padding:10px 14px;margin-bottom:12px;display:flex;align-items:flex-start;gap:10px">' +
       '<i class="ti ti-building-factory-2" style="color:#2C4A6E;font-size:16px;flex-shrink:0;margin-top:1px"></i>' +
       '<div style="flex:1">' +
@@ -4325,6 +4334,8 @@ function renderSL2(proj) {
     '<div class="page-footer">PM Hub · EREN CONS SRL · 2026</div>';
 }
 
+function openGrupPompare1() { window.open('https://drive.google.com/file/d/1WTbEqbLgWtShcepvEIQH5b5DPEadHO50/view?usp=sharing', '_blank'); }
+function openGrupPompare2() { window.open('https://drive.google.com/file/d/1huZH29FXeCeV0q_6VnciOUVH06_YD5Vh/view?usp=sharing', '_blank'); }
 function openDocumenteCalitSL2() { window.open('https://drive.google.com/file/d/1B5-LORpcFtUC-GyrhNxO-VJnw7dDXMhE/view?usp=sharing', '_blank'); }
 
 function openFoiAtasamentSL2() { window.open('https://drive.google.com/file/d/12pTwiQJiEfKTvpORPjBPx_Jjy0klBLTE/view?usp=sharing', '_blank'); }

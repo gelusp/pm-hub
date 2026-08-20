@@ -1935,11 +1935,11 @@ function renderHome() {
       '</div>' +
     '</div>' : '') +
 
-        (new Date() <= new Date('2026-08-08T23:59:59') ? '<div style="background:#EEF2FF;border:1px solid #B9C4E8;border-left:4px solid #2C4A6E;border-radius:6px;padding:10px 14px;margin-bottom:12px;display:flex;align-items:flex-start;gap:10px">' +
+        (new Date() <= new Date('2026-08-24T23:59:59') ? '<div style="background:#EEF2FF;border:1px solid #B9C4E8;border-left:4px solid #2C4A6E;border-radius:6px;padding:10px 14px;margin-bottom:12px;display:flex;align-items:flex-start;gap:10px">' +
       '<i class="ti ti-building-factory-2" style="color:#2C4A6E;font-size:16px;flex-shrink:0;margin-top:1px"></i>' +
       '<div style="flex:1">' +
-        '<div style="font-size:12px;font-weight:700;color:#1F3864;margin-bottom:3px"><span class="blink-nou" style="background:#CC1515;color:#fff;border-radius:4px;padding:1px 7px;font-size:10px;margin-right:6px;letter-spacing:0.5px">NOU</span>Kogălniceanu — Analiză comparativă Confecții Metalice (3 oferte)' + _badgeTimp('2026-08-08','#2C4A6E') + '</div>' +
-        '<div style="font-size:11px;color:#2C3E50;line-height:1.5"><b>Risc MAJOR închis</b> (poz.38, 37,9% din Cap.3): 3 oferte în execuție. <b>Actualizare 07.08:</b> ROTINVEST a revizuit oferta — a eliminat cale de rulare (scope aliniat la deviz), total clar <b>1.490.723 lei</b> la 13,00 lei/kg (cel mai bun preț); mai lipsesc doar buloanele + mortarul. FEROCOM +5,9% · ROMSERVICE +10,6% (singura completă). Curs BNR 5,2473.<br>' +
+        '<div style="font-size:12px;font-weight:700;color:#1F3864;margin-bottom:3px"><span class="blink-nou" style="background:#CC1515;color:#fff;border-radius:4px;padding:1px 7px;font-size:10px;margin-right:6px;letter-spacing:0.5px">NOU</span>Kogălniceanu — Confecții Metalice: a 4-a ofertă (INIC) adăugată' + _badgeTimp('2026-08-24','#2C4A6E') + '</div>' +
+        '<div style="font-size:11px;color:#2C3E50;line-height:1.5"><b>Actualizare 19.08:</b> adăugată oferta INIC MARKETING PLUS (18.08) — cea mai scumpă, <b>17,05 lei/kg</b> (+29% vs buget), fără protecție foc/buloane/mortar; iese din discuția de preț. Clasament neschimbat: <b>ROTINVEST 13,00 lei/kg</b> (cel mai bun) · FEROCOM 13,88 · ROMSERVICE 14,44 (singura completă) · INIC 17,05.<br>' +
         '<b>Cale:</b> <span style="font-family:monospace;background:rgba(0,0,0,0.06);padding:1px 6px;border-radius:4px">Hangar Kogălniceanu → Analize Comparative → Confecții Metalice</span></div>' +
       '</div>' +
     '</div>' : '') +
@@ -3217,71 +3217,76 @@ function renderProdSed1(proj) {
 
 function renderConfMetalice(proj) {
   var html = '';
-  html += '<div class="proj-header"><div class="proj-title">Analiză Comparativă — Confecții Metalice (Cap.3 Structură)</div><div class="proj-meta">Buget intern (algoritm M+L+U+T) vs 3 oferte în execuție: ROMSERVICE · FEROCOM · ROTINVEST (revizuit 07.08) · valori lei fără TVA · curs BNR 5,2473 lei/EUR</div></div>';
+  html += '<div class="proj-header"><div class="proj-title">Analiză Comparativă — Confecții Metalice (Cap.3 Structură)</div><div class="proj-meta">Buget intern (algoritm M+L+U+T) vs 4 oferte în execuție: ROMSERVICE · FEROCOM · ROTINVEST (rev 07.08) · INIC MARKETING PLUS (18.08) · valori lei fără TVA · curs BNR 5,2473 lei/EUR</div></div>';
   html += '<div class="module-badge" style="background:#EEF2FF;color:#4338CA"><i class="ti ti-file-analytics" style="font-size:13px"></i> Analiză Comparativă Oferte Confecții Metalice</div>';
   if (CONFMETAL_SHEET_URL) {
     html += '<div style="margin-bottom:12px"><a href="'+CONFMETAL_SHEET_URL+'" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 18px;background:#1A5276;color:#fff;border-radius:var(--radius);font-size:12px;font-weight:600;text-decoration:none"><i class="ti ti-table"></i> Deschide analiza comparativă</a></div>';
   } else {
-    html += '<div style="margin-bottom:12px"><span style="display:inline-flex;align-items:center;gap:6px;padding:8px 18px;background:#E5E7EB;color:#6B7280;border-radius:var(--radius);font-size:12px;font-weight:600"><i class="ti ti-file-spreadsheet"></i> Fișier: Analiza_Comparativa_ConfectiiMetalice_v1.xlsx · link Google Sheets în pregătire</span></div>';
+    html += '<div style="margin-bottom:12px"><span style="display:inline-flex;align-items:center;gap:6px;padding:8px 18px;background:#E5E7EB;color:#6B7280;border-radius:var(--radius);font-size:12px;font-weight:600"><i class="ti ti-file-spreadsheet"></i> Fișier: Analiza_Comparativa_ConfectiiMetalice_v3.xlsx · link Google Sheets în pregătire</span></div>';
   }
   // Închidere risc major
-  html += '<div style="background:#E2EFDA;border-left:3px solid #1E6E2D;border-radius:6px;padding:8px 12px;font-size:11px;color:#1E6E2D;margin-bottom:14px"><strong>RISC MAJOR ÎNCHIS:</strong> poz.38 „Confecții metalice acoperiș + spații anexe" (1.434.571 lei buget, 37,9% din Cap.3) era marcată „FĂRĂ OFERTĂ PIAȚĂ" în etapa de ofertare. În execuție au fost obținute <strong>3 oferte</strong> → grad de fundamentare de la 0% la ~100% pe această poziție.</div>';
+  html += '<div style="background:#E2EFDA;border-left:3px solid #1E6E2D;border-radius:6px;padding:8px 12px;font-size:11px;color:#1E6E2D;margin-bottom:14px"><strong>RISC MAJOR ÎNCHIS:</strong> poz.38 „Confecții metalice acoperiș + spații anexe" (1.434.571 lei buget, 37,9% din Cap.3) era marcată „FĂRĂ OFERTĂ PIAȚĂ" în etapa de ofertare. În execuție au fost obținute <strong>4 oferte</strong> → grad de fundamentare de la 0% la ~100% pe această poziție.</div>';
   // KPIs
   html += '<div class="kpi-grid" style="margin-bottom:14px">';
   html += '<div class="kpi"><div class="kpi-label">Buget intern (pachet deviz)</div><div class="kpi-val">1.534.155 lei</div><div class="kpi-sub">structură + protecție foc + buloane + mortar · reper</div></div>';
-  html += '<div class="kpi"><div class="kpi-label">ROTINVEST (revizuit 07.08)</div><div class="kpi-val" style="color:#1E6E2D">1.490.723 lei</div><div class="kpi-sub">total ofertă · 13,00 lei/kg · scope curat · fără buloane/mortar</div></div>';
-  html += '<div class="kpi"><div class="kpi-label">ROMSERVICE (Total A)</div><div class="kpi-val" style="color:#C0392B">1.619.695 lei</div><div class="kpi-sub">+10,6% · singura ofertă completă · în EUR</div></div>';
-  html += '<div class="kpi"><div class="kpi-label">Preț unitar structură</div><div class="kpi-val">13,00–14,44 lei/kg</div><div class="kpi-sub">buget 13,16 · ROTI 13,00 · FERO 13,88 · ROMS 14,44</div></div>';
+  html += '<div class="kpi"><div class="kpi-label">ROTINVEST (cel mai bun preț)</div><div class="kpi-val" style="color:#1E6E2D">1.490.723 lei</div><div class="kpi-sub">rev 07.08 · 13,00 lei/kg · scope curat · fără buloane/mortar</div></div>';
+  html += '<div class="kpi"><div class="kpi-label">ROMSERVICE (singura completă)</div><div class="kpi-val">1.619.695 lei</div><div class="kpi-sub">+10,6% · structură+buloane+protecție+mortar · în EUR</div></div>';
+  html += '<div class="kpi"><div class="kpi-label">Preț unitar structură (4 oferte)</div><div class="kpi-val">13,00–17,05 lei/kg</div><div class="kpi-sub">ROTI 13,00 · buget 13,16 · FERO 13,88 · ROMS 14,44 · <b style="color:#C0392B">INIC 17,05</b></div></div>';
   html += '</div>';
   // Tabel comparativ pe poziții (scope deviz)
   html += '<div class="proj-card" style="margin-bottom:12px">';
   html += '<div class="proj-card-header" style="background:#2C4A6E"><span style="font-size:13px;font-weight:600;color:#fff">Comparativ pe poziții — scope deviz (lei fără TVA · curs BNR 5,2473)</span></div>';
   html += '<div class="proj-card-body" style="padding:0;overflow-x:auto">';
   html += '<table style="width:100%;border-collapse:collapse;font-size:11px">';
-  html += '<tr style="background:#2E5090;color:#fff"><th style="padding:7px 8px;text-align:left">Poziție</th><th style="padding:7px 6px;text-align:right">Buget</th><th style="padding:7px 6px;text-align:right">ROMSERVICE</th><th style="padding:7px 6px;text-align:right">FEROCOM</th><th style="padding:7px 6px;text-align:right">ROTINVEST</th><th style="padding:7px 8px;text-align:left">Observații</th></tr>';
+  html += '<tr style="background:#2E5090;color:#fff"><th style="padding:7px 8px;text-align:left">Poziție</th><th style="padding:7px 6px;text-align:right">Buget</th><th style="padding:7px 6px;text-align:right">ROMSERVICE</th><th style="padding:7px 6px;text-align:right">FEROCOM</th><th style="padding:7px 6px;text-align:right">ROTINVEST</th><th style="padding:7px 6px;text-align:right">INIC</th><th style="padding:7px 8px;text-align:left">Observații</th></tr>';
   var rows = [
-    {p:"Structură confecții metalice (109.000 kg)",b:"1.434.571",r:"1.573.450",f:"1.513.295",t:"1.417.000",obs:"ROMS cotat în EUR; FERO/ROTI recalculat la 109.000 kg din PU propriu.",bg:"#F5F5F5"},
-    {p:"Protecție foc EI 30 (700 mp)",b:"29.960",r:"46.244",f:"37.100",t:"35.000",obs:"ROMS 12,59 €/mp (a cotat 2.280 mp, opțional); FERO 53 lei/mp; ROTI 50 lei/mp.",bg:"#F5F5F5"},
-    {p:"Buloane de ancoraj (3.000 kg)",b:"56.444",r:"41.401",f:"necotat",t:"necotat",obs:"Doar ROMSERVICE a cotat. FERO/ROTI la provizion buget.",bg:"#FFF8E1"},
-    {p:"Mortar de subturnare (0,88 mc)",b:"13.180",r:"13.763",f:"necotat",t:"necotat",obs:"Doar ROMSERVICE a cotat. FERO/ROTI la provizion buget.",bg:"#FFF8E1"},
-    {p:"TOTAL A — structură + protecție foc",b:"1.464.531",r:"1.619.695",f:"1.550.395",t:"1.452.000",obs:"Comparație pură (cotat de toți). ROTINVEST sub buget; ROMSERVICE cel mai scump.",bg:"#E2EFDA",tot:true},
-    {p:"TOTAL B — pachet complet deviz",b:"1.534.155",r:"1.674.859",f:"1.620.019",t:"1.521.624",obs:"FERO/ROTI cu provizion buget pt buloane+mortar (orientativ până la cotare).",bg:"#FFF2CC",tot:true},
+    {p:"Structură confecții metalice (109.000 kg)",b:"1.434.571",r:"1.573.450",f:"1.513.295",t:"1.417.000",n:"1.858.856",obs:"ROMS+INIC cotate în EUR; FERO/ROTI/INIC recalculat la 109.000 kg din PU propriu. INIC 3,25 €/kg = 17,05 lei/kg.",bg:"#F5F5F5"},
+    {p:"Protecție foc EI 30 (700 mp)",b:"29.960",r:"46.244",f:"37.100",t:"35.000",n:"necotat",obs:"ROMS 12,59 €/mp; FERO 53 lei/mp; ROTI 50 lei/mp; INIC nu cotează.",bg:"#F5F5F5"},
+    {p:"Buloane de ancoraj (3.000 kg)",b:"56.444",r:"41.401",f:"necotat",t:"necotat",n:"necotat",obs:"Doar ROMSERVICE a cotat. Restul la provizion buget.",bg:"#FFF8E1"},
+    {p:"Mortar de subturnare (0,88 mc)",b:"13.180",r:"13.763",f:"necotat",t:"necotat",n:"necotat",obs:"Doar ROMSERVICE a cotat. Restul la provizion buget.",bg:"#FFF8E1"},
+    {p:"TOTAL A — structură + protecție foc",b:"1.464.531",r:"1.619.695",f:"1.550.395",t:"1.452.000",n:"1.888.816",obs:"Comparație pură. ROTINVEST sub buget; INIC cel mai scump.",bg:"#E2EFDA",tot:true},
+    {p:"TOTAL B — pachet complet deviz",b:"1.534.155",r:"1.674.859",f:"1.620.019",t:"1.521.624",n:"1.958.440",obs:"Necotatele la provizion buget (orientativ până la cotare).",bg:"#FFF2CC",tot:true},
   ];
   rows.forEach(function(r){
     html += '<tr style="background:'+r.bg+'">';
     html += '<td style="padding:6px 8px;border-bottom:1px solid #eee;'+(r.tot?"font-weight:700":"font-weight:500")+'">'+r.p+'</td>';
     html += '<td style="padding:6px 6px;border-bottom:1px solid #eee;text-align:right">'+r.b+'</td>';
     var mk = function(v){ return v==="necotat" ? '<td style="padding:6px 6px;border-bottom:1px solid #eee;text-align:right;color:#C0392B;font-style:italic;font-size:10px">'+v+'</td>' : '<td style="padding:6px 6px;border-bottom:1px solid #eee;text-align:right">'+v+'</td>'; };
-    html += mk(r.r); html += mk(r.f); html += mk(r.t);
+    html += mk(r.r); html += mk(r.f); html += mk(r.t); html += mk(r.n);
     html += '<td style="padding:6px 8px;border-bottom:1px solid #eee;font-size:10px;color:#444">'+r.obs+'</td>';
     html += '</tr>';
   });
   html += '</table>';
-  html += '<div style="padding:9px 12px;font-size:10px;color:#666;background:#FAFAFA;border-top:1px solid #eee">Δ% Total A vs buget: ROTINVEST <b style="color:#1E6E2D">−0,9%</b> · FEROCOM <b style="color:#C0392B">+5,9%</b> · ROMSERVICE <b style="color:#C0392B">+10,6%</b></div>';
+  html += '<div style="padding:9px 12px;font-size:10px;color:#666;background:#FAFAFA;border-top:1px solid #eee">Δ% Total A vs buget: ROTINVEST <b style="color:#1E6E2D">−0,9%</b> · FEROCOM <b style="color:#C0392B">+5,9%</b> · ROMSERVICE <b style="color:#C0392B">+10,6%</b> · INIC <b style="color:#C0392B">+29,0%</b></div>';
   html += '</div></div>';
   // Defalcare scope extins FERO/ROTI
   html += '<div class="proj-card" style="margin-bottom:12px">';
-  html += '<div class="proj-card-header" style="background:#548235"><span style="font-size:13px;font-weight:600;color:#fff">Scope extins FEROCOM/ROTINVEST (127.075 kg — cotat suplimentar)</span></div>';
+  html += '<div class="proj-card-header" style="background:#548235"><span style="font-size:13px;font-weight:600;color:#fff">Defalcare structură + poziții suplimentare (ca depuse) — FEROCOM / ROTINVEST / INIC</span></div>';
   html += '<div class="proj-card-body" style="padding:0;overflow-x:auto">';
   html += '<table style="width:100%;border-collapse:collapse;font-size:11px">';
-  html += '<tr style="background:#2E5090;color:#fff"><th style="padding:7px 8px;text-align:left">Sub-poziție</th><th style="padding:7px 6px;text-align:right">Cantitate</th><th style="padding:7px 6px;text-align:right">FEROCOM</th><th style="padding:7px 6px;text-align:right">ROTINVEST</th></tr>';
+  html += '<tr style="background:#2E5090;color:#fff"><th style="padding:7px 8px;text-align:left">Sub-poziție</th><th style="padding:7px 6px;text-align:right">Cantitate</th><th style="padding:7px 6px;text-align:right">FEROCOM</th><th style="padding:7px 6px;text-align:right">ROTINVEST</th><th style="padding:7px 6px;text-align:right">INIC</th></tr>';
   var srows = [
-    {p:"Acoperiș – Hala",q:"85.000 kg",f:"1.181.500",t:"1.105.000"},
-    {p:"Acoperiș – Spații anexe",q:"14.200 kg",f:"196.670",t:"184.600"},
-    {p:"Structură secundară pereți",q:"12.900 kg",f:"178.665",t:"167.700"},
-    {p:"Cale de rulare (pod rulant)",q:"14.975 kg",f:"207.404",t:"eliminat rev 07.08"},
-    {p:"TOTAL structură + protecție foc (ca depus)",q:"FERO 127.075 / ROTI 112.100 kg",f:"1.799.667",t:"1.490.723",tot:true},
+    {p:"Acoperiș – Hala",q:"85.000 kg",f:"1.181.500",t:"1.105.000",n:"1.449.567"},
+    {p:"Acoperiș – Spații anexe",q:"14.200 kg",f:"196.670",t:"184.600",n:"242.163"},
+    {p:"Structură secundară pereți",q:"12.900 kg",f:"178.665",t:"167.700",n:"219.993"},
+    {p:"Subtotal structură (fără cale)",q:"112.100 kg",f:"1.556.835",t:"1.457.300",n:"1.911.723",sub:true},
+    {p:"Cale de rulare (pod rulant) — extra",q:"14.975 kg",f:"207.404",t:"eliminat",n:"255.380"},
+    {p:"Instalare ancore în capul stâlpilor",q:"150 buc",f:"—",t:"—",n:"78.710"},
+    {p:"Protecție foc EI 30 (ca depus)",q:"668,46 mp",f:"35.428",t:"33.423",n:"necotat"},
+    {p:"Arhitectură — scară zincată bazin",q:"700 kg",f:"—",t:"11.550",n:"19.100"},
+    {p:"TOTAL OFERTĂ (ca depusă)",q:"toate poz.",f:"1.799.667",t:"1.502.273",n:"2.264.912",tot:true},
   ];
   srows.forEach(function(s){
-    html += '<tr style="background:'+(s.tot?"#E2EFDA":"#fff")+'">';
-    html += '<td style="padding:6px 8px;border-bottom:1px solid #eee;'+(s.tot?"font-weight:700":"")+'">'+s.p+'</td>';
+    var bg = s.tot?"#E2EFDA":(s.sub?"#EEF2FF":"#fff");
+    html += '<tr style="background:'+bg+'">';
+    html += '<td style="padding:6px 8px;border-bottom:1px solid #eee;'+((s.tot||s.sub)?"font-weight:700":"")+'">'+s.p+'</td>';
     html += '<td style="padding:6px 6px;border-bottom:1px solid #eee;text-align:right;color:#555">'+s.q+'</td>';
-    html += '<td style="padding:6px 6px;border-bottom:1px solid #eee;text-align:right">'+s.f+'</td>';
-    html += '<td style="padding:6px 6px;border-bottom:1px solid #eee;text-align:right">'+s.t+'</td>';
+    var mk = function(v){ var col = (v==="necotat")?"#C0392B":((v==="eliminat")?"#1E6E2D":"inherit"); var it=(v==="necotat"||v==="eliminat")?"font-style:italic;font-size:10px":""; return '<td style="padding:6px 6px;border-bottom:1px solid #eee;text-align:right;color:'+col+';'+it+'">'+v+'</td>'; };
+    html += mk(s.f); html += mk(s.t); html += mk(s.n);
     html += '</tr>';
   });
   html += '</table>';
-  html += '<div style="padding:9px 12px;font-size:10px;color:#1E6E2D;background:#E8F5E9;border-top:1px solid #eee"><b>Rev 07.08:</b> ROTINVEST a ELIMINAT cale de rulare (14.975 kg / 194.675 lei) — poziția pod rulant, în afara scope-ului devizului. Total ROTINVEST scade de la 1.685.398 la <b>1.490.723 lei</b>, scope aliniat la deviz. FEROCOM încă include cale de rulare (de exclus și la ei pentru comparație corectă).</div>';
+  html += '<div style="padding:9px 12px;font-size:10px;color:#1E6E2D;background:#E8F5E9;border-top:1px solid #eee"><b>Rev 07.08:</b> ROTINVEST a ELIMINAT cale de rulare (194.675 lei) → total 1.490.723 lei (structură+protecție) + 11.550 scară bazin. <b>INIC (18.08):</b> include cale de rulare + instalare ancore stâlpi + scară bazin, dar FĂRĂ protecție foc/buloane/mortar; la 17,05 lei/kg e cel mai scump (+31% vs ROTINVEST pe structură).</div>';
   html += '</div></div>';
   // Concluzii
   html += '<div class="proj-card" style="margin-bottom:12px">';
@@ -3291,8 +3296,9 @@ function renderConfMetalice(proj) {
     {tag:"SE POATE CONTRACTA ÎN BUGET",bg:"#E8F5E9",tc:"#1E6E2D",txt:"Pe scope aliniat la deviz, oferta cea mai avantajoasă (ROTINVEST, Total A 1.452.000 lei) este la nivelul bugetului intern (−0,9%). Pachetul de confecții metalice se poate contracta fără depășire de buget."},
     {tag:"ROTINVEST (revizuit 07.08)",bg:"#E8F5E9",tc:"#1E6E2D",txt:"Cel mai mic preț unitar (13,00 lei/kg, sub buget). Revizuit 07.08: a eliminat cale de rulare (scope aliniat la deviz, 112.100 kg) și a emis total clar 1.490.723 lei / 292.873 € — centralizatorul e OK acum. Mai lipsesc doar buloanele + mortarul; cu ele completate devine oferta completă la cel mai bun preț."},
     {tag:"ROMSERVICE",bg:"#FFF8E1",tc:"#856404",txt:"Singura ofertă completă (structură + buloane + protecție + mortar), aliniată exact la 109.000 kg din deviz. +10,6% peste buget. Furnizor specializat în hale (are portofoliu). Cotat în EUR — de blocat cursul."},
-    {tag:"FEROCOM",bg:"#FCE4E4",tc:"#C0392B",txt:"Cel mai scump pe structură (13,88 lei/kg, +5,9% Total A), fără buloane/mortar. Livrare material 4 săptămâni de la comandă."},
-    {tag:"RECOMANDARE",bg:"#E8F5E9",tc:"#1E6E2D",txt:"ROTINVEST devine prima opțiune (preț cel mai mic + scope acum curat + total clar 1.490.723 lei). Singurul pas rămas: completarea buloanelor + mortarului. FEROCOM: exclude cale de rulare pentru comparație corectă. ROMSERVICE rămâne alternativă completă de referință (+ blocare curs EUR). Decizie după completarea celor 2 poziții la ROTINVEST."},
+    {tag:"FEROCOM",bg:"#E8F0FE",tc:"#1A5276",txt:"13,88 lei/kg (+5,9% Total A), fără buloane/mortar; include cale de rulare (de exclus pt comparație). Livrare material 4 săptămâni de la comandă."},
+    {tag:"INIC MARKETING PLUS (18.08)",bg:"#FCE4E4",tc:"#C0392B",txt:"CEA MAI SCUMPĂ: 3,25 €/kg = 17,05 lei/kg pe structură, +29,0% Total A vs buget (+31% vs ROTINVEST). Cotată în EUR. Include cale de rulare + instalare ancore stâlpi + scară zincată bazin, dar FĂRĂ protecție foc, buloane, mortar. Necompetitivă pe preț — utilă doar ca referință de disponibilitate/termen (confecție 2 luni + montaj 3 săpt.; plată 50% avans)."},
+    {tag:"RECOMANDARE",bg:"#E8F5E9",tc:"#1E6E2D",txt:"ROTINVEST rămâne prima opțiune (preț cel mai mic + scope curat + total clar 1.490.723 lei). Singurul pas rămas: completarea buloanelor + mortarului. ROMSERVICE = alternativă completă de referință (+ blocare curs EUR). FEROCOM: exclude cale de rulare pt comparație. INIC iese din discuția de preț (cea mai scumpă). Decizie după completarea celor 2 poziții la ROTINVEST."},
   ];
   concl.forEach(function(c){
     html += '<div style="background:'+c.bg+';border-radius:6px;padding:8px 12px;font-size:12px;display:flex;gap:12px;align-items:flex-start">';
@@ -3307,18 +3313,19 @@ function renderConfMetalice(proj) {
   html += '<table style="width:100%;border-collapse:collapse;font-size:11px">';
   html += '<tr style="background:#2E5090;color:#fff"><th style="padding:7px 10px;text-align:left">Acțiune</th><th style="padding:7px 8px;text-align:left;white-space:nowrap">Responsabil</th><th style="padding:7px 8px;text-align:center">Termen</th></tr>';
   var acts = [
-    {a:"ROTINVEST — completare buloane + mortar (scope + centralizator OK după rev 07.08) → ofertă completă",r:"G. Spătaru / Achiziții",t:"11.08"},
-    {a:"FEROCOM — exclude cale de rulare pt comparație corectă + completare buloane/mortar",r:"Achiziții",t:"11.08"},
-    {a:"ROMSERVICE — confirmare scrisă monedă (EUR) + blocare curs (alternativă completă)",r:"Achiziții / G. Spătaru",t:"11.08"},
-    {a:"Reconfirmare valabilitate preț toți 3 (BoQ ian.2026 / ROMSERVICE mai 2026)",r:"Achiziții",t:"11.08"},
-    {a:"Decizie furnizor — ROTINVEST prima opțiune dacă completează cele 2 poziții",r:"Management + G. Spătaru",t:"13.08"},
+    {a:"ROTINVEST — completare buloane + mortar (scope + total OK după rev 07.08) → ofertă completă",r:"G. Spătaru / Achiziții",t:"24.08"},
+    {a:"ROMSERVICE — confirmare scrisă monedă (EUR) + blocare curs (alternativă completă)",r:"Achiziții / G. Spătaru",t:"24.08"},
+    {a:"FEROCOM — exclude cale de rulare pt comparație corectă + completare buloane/mortar",r:"Achiziții",t:"24.08"},
+    {a:"INIC — necompetitivă pe preț; păstrată doar ca referință de termen/disponibilitate",r:"PM",t:"—"},
+    {a:"Reconfirmare valabilitate preț oferte + corelare termen execuție cu graficul",r:"Achiziții / Planificare",t:"24.08"},
+    {a:"Decizie furnizor — ROTINVEST prima opțiune dacă completează cele 2 poziții",r:"Management + G. Spătaru",t:"26.08"},
   ];
   acts.forEach(function(x){
     html += '<tr><td style="padding:6px 10px;border-bottom:1px solid #eee">'+x.a+'</td><td style="padding:6px 8px;border-bottom:1px solid #eee;color:#444">'+x.r+'</td><td style="padding:6px 8px;border-bottom:1px solid #eee;text-align:center;white-space:nowrap;font-weight:600">'+x.t+'</td></tr>';
   });
   html += '</table></div></div>';
   html += '<button class="open-fisa-btn" onclick="renderProjHome(\'hangar\')"><i class="ti ti-arrow-left"></i> Înapoi la proiect</button>';
-  html += '<div class="page-footer">PM Hub · EREN CONS SRL · 2026 · Surse: Analiza_Comparativa_ConfectiiMetalice_v2.xlsx, oferte ROMSERVICE 19.05.2026 / FEROCOM 22.01.2026 / ROTINVEST rev 07.08.2026, Analiza Cap.3 v4, Curs BNR 31.07.2026 (5,2473)</div>';
+  html += '<div class="page-footer">PM Hub · EREN CONS SRL · 2026 · Surse: Analiza_Comparativa_ConfectiiMetalice_v3.xlsx, oferte ROMSERVICE 19.05.2026 / FEROCOM 22.01.2026 / ROTINVEST rev 07.08.2026 / INIC MARKETING PLUS 18.08.2026, Analiza Cap.3 v4, Curs BNR 31.07.2026 (5,2473)</div>';
   document.getElementById('main').innerHTML = html;
 }
 

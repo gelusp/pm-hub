@@ -2723,7 +2723,7 @@ function renderSL1(proj) {
 
 function renderAn21(proj) {
   var html = '';
-  html += '<div class="proj-header"><div class="proj-title">Analiză Comparativă — 2.1 Amenajare Platformă Exterioară</div><div class="proj-meta">Scenariu optim de sourcing pe pachete · Buget eDevize/ERP 11.07 · Mithras MTH-B 525 (10.07) / REV MTH-B 545 (17.07) · Ideal Max Ctr.166 (27.07) · Holcim REV2 (24.07) · Curs BNR 5,2429 lei/EUR · Actualizat 07.08.2026</div></div>';
+  html += '<div class="proj-header"><div class="proj-title">Analiză Comparativă — 2.1 Amenajare Platformă Exterioară</div><div class="proj-meta">Scenariu optim de sourcing pe pachete · Buget eDevize/ERP 11.07 · Mithras MTH-B 525 (10.07) / REV MTH-B 545 (17.07) · Ideal Max Ctr.166 (27.07) · Holcim REV2 (24.07) · Dito (17.08.2026) · Curs BNR 5,2429 lei/EUR · Actualizat 20.08.2026</div></div>';
   html += '<div class="module-badge" style="background:#EEF2FF;color:#4338CA"><i class="ti ti-file-analytics" style="font-size:13px"></i> Scenariu Optim de Sourcing — Cap.2.1 Platformă</div>';
   if (typeof AN21_SHEET_URL !== 'undefined' && AN21_SHEET_URL) {
     html += '<div style="margin-bottom:14px"><a href="' + AN21_SHEET_URL + '" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 18px;background:#1A5276;color:#fff;border-radius:var(--radius);font-size:12px;font-weight:600;text-decoration:none"><i class="ti ti-table"></i> Deschide analiza comparativă</a></div>';
@@ -2746,20 +2746,20 @@ function renderAn21(proj) {
   html += '<tr style="background:#2E5090;color:#fff"><th style="padding:7px 8px;text-align:left">Pachet</th><th style="padding:7px 10px;text-align:left">Articol</th><th style="padding:7px 8px;text-align:left">Furnizor</th><th style="padding:7px 8px;text-align:right;white-space:nowrap">Buget (lei)</th><th style="padding:7px 8px;text-align:right;white-space:nowrap">Optim (lei)</th><th style="padding:7px 8px;text-align:right">Dif.</th><th style="padding:7px 8px;text-align:left">Observații</th></tr>';
   var rows = [
     {p:"P1",art:"Săpătură piatră spartă 30cm (975mc)",f:"ELIMINAT — acoperit de demolare",b:"22.426,95",o:"0,00",d:"−22.426,95",pct:"−100%",bg:"#E5E7EB",obs:"Risc dublă facturare Ideal Max — de corectat"},
-    {p:"P1",art:"Săpătură spații largi (992mc)",f:"Ideal Max — CONTRACTAT (Ctr.166)",b:"22.817,98",o:"35.657,44",d:"+12.839,46",pct:"+56,3%",bg:"#FCE4D6",obs:"Deja semnat · Mithras REV ar fi fost 23.404,31 (+2,6%)"},
-    {p:"P2",art:"Transport evacuare pământ (1.984t)",f:"Ideal Max — CONTRACTAT",b:"47.616,00",o:"43.216,88",d:"−4.399,12",pct:"−9,2%",bg:"#E2EFDA",obs:"Mithras REV ar fi fost 36.406,70 (−23,5%)"},
-    {p:"P2",art:"Transport evacuare pământ (1.950t)",f:"Ideal Max — CONTRACTAT",b:"46.800,00",o:"42.476,27",d:"−4.323,73",pct:"−9,2%",bg:"#E2EFDA",obs:"Mithras REV ar fi fost 35.782,79"},
-    {p:"P3",art:"Umplutură piatră spartă 40cm",f:"Ideal Max",b:"120.547,72",o:"116.077,00",d:"−4.470,72",pct:"−3,7%",bg:"#E2EFDA",obs:"Mithras REV ar fi fost 270.466 lei (+133% vs Ideal Max)"},
-    {p:"P4",art:"Transport piatră spartă",f:"Ideal Max",b:"35.653,80",o:"34.355,00",d:"−1.298,80",pct:"−3,6%",bg:"#E2EFDA",obs:"—"},
-    {p:"P5",art:"Umplutură balast 20cm",f:"Ideal Max",b:"86.376,55",o:"83.226,00",d:"−3.150,55",pct:"−3,6%",bg:"#E2EFDA",obs:"Mithras REV ar fi fost 134.610 lei (+62% vs Ideal Max)"},
-    {p:"P6",art:"Transport balast",f:"Ideal Max",b:"46.846,80",o:"45.158,00",d:"−1.688,80",pct:"−3,6%",bg:"#E2EFDA",obs:"—"},
-    {p:"P7",art:"Stabilizare pământ 20cm",f:"Mithras REV",b:"68.993,23",o:"65.407,27",d:"−3.585,96",pct:"−5,2%",bg:"#E2EFDA",obs:"—"},
-    {p:"P7",art:"Stabilizare balast 20cm",f:"Mithras REV",b:"74.798,75",o:"80.255,69",d:"+5.456,94",pct:"+7,3%",bg:"#FFEB9C",obs:"De negociat / verificat cotații CARMEUSE + ALESOL"},
-    {p:"P8",art:"Strat separator BCR/balast (folie PVC)",f:"Mithras REV",b:"11.403,99",o:"7.665,38",d:"−3.738,61",pct:"−32,8%",bg:"#E2EFDA",obs:"—"},
-    {p:"P9a",art:"Material beton BCR 5.0 (1.003,94mc)",f:"HOLCIM (ofertă REV2, 24.07)",b:"504.992,07",o:"476.871,50",d:"−28.120,57",pct:"−5,6%",bg:"#E2EFDA",obs:"Cea mai bună dintre 4 oferte comparate (Holcim/Romcim ×2)"},
-    {p:"P9b",art:"Transport beton BCR 5.0",f:"HOLCIM (REV2)",b:"38.972,40",o:"86.213,35",d:"+47.240,95",pct:"+121,2%",bg:"#FCE4D6",obs:"⚠ CONFIRMAT cel mai scump element unitar · Romcim nu a cotat transport"},
-    {p:"P9c",art:"Manoperă+utilaj execuție BCR (turnare+finisor)",f:"Mithras REV (MTH-B 545)",b:"71.153,10",o:"599.603,21",d:"+528.450,11",pct:"+742,7%",bg:"#FCE4D6",obs:"⚠ CRITIC · rată CONFIRMATĂ 35,20 €/mp · Mithras a acceptat execuția cu beton de terț (Holcim), fără cost suplimentar"},
-    {p:"P10",art:"Rosturi BCR (gujoane+emulsie+colmatări, 4 poz.)",f:"Mithras REV — INCLUS în manoperă",b:"40.882,61",o:"0,00",d:"−40.882,61",pct:"−100%",bg:"#E8F5E9",obs:"REZOLVAT — confirmat 0,00€, „inclus în prețul de BCR”"},
+    {p:"P1",art:"Săpătură spații largi (992mc)",f:"Ideal Max — CONTRACTAT (Ctr.166)",b:"22.817,98",o:"35.657,44",d:"+12.839,46",pct:"+56,3%",bg:"#FCE4D6",obs:"Deja semnat · Mithras REV ar fi fost 23.404,31 (+2,6%) · Dito 34.720 (−2,6% vs contract, dar nemodificabil)"},
+    {p:"P2",art:"Transport evacuare pământ (1.984t)",f:"Ideal Max — CONTRACTAT",b:"47.616,00",o:"43.216,88",d:"−4.399,12",pct:"−9,2%",bg:"#E2EFDA",obs:"Mithras REV ar fi fost 36.406,70 (−23,5%) · ⚠ Dito 486.080 (245 lei/t) — posibil risc conformitate transport (tichet cântar+Anexa 3-UCG)"},
+    {p:"P2",art:"Transport evacuare pământ (1.950t)",f:"Ideal Max — CONTRACTAT",b:"46.800,00",o:"42.476,27",d:"−4.323,73",pct:"−9,2%",bg:"#E2EFDA",obs:"Mithras REV ar fi fost 35.782,79 · ⚠ Dito 477.750 (245 lei/t) — același risc de conformitate"},
+    {p:"P3",art:"Umplutură piatră spartă 40cm",f:"Ideal Max",b:"120.547,72",o:"116.077,00",d:"−4.470,72",pct:"−3,7%",bg:"#E2EFDA",obs:"Mithras REV ar fi fost 270.466 lei (+133% vs Ideal Max) · Dito 372.210 (+220,7% vs Ideal Max)"},
+    {p:"P4",art:"Transport piatră spartă",f:"Ideal Max",b:"35.653,80",o:"34.355,00",d:"−1.298,80",pct:"−3,6%",bg:"#E2EFDA",obs:"Dito nu a cotat"},
+    {p:"P5",art:"Umplutură balast 20cm",f:"Ideal Max",b:"86.376,55",o:"83.226,00",d:"−3.150,55",pct:"−3,6%",bg:"#E2EFDA",obs:"Mithras REV ar fi fost 134.610 lei (+62% vs Ideal Max) · Dito 185.250 (+122,6% vs Ideal Max)"},
+    {p:"P6",art:"Transport balast",f:"Ideal Max",b:"46.846,80",o:"45.158,00",d:"−1.688,80",pct:"−3,6%",bg:"#E2EFDA",obs:"Dito nu a cotat"},
+    {p:"P7",art:"Stabilizare pământ 20cm",f:"Mithras REV",b:"68.993,23",o:"65.407,27",d:"−3.585,96",pct:"−5,2%",bg:"#E2EFDA",obs:"Dito nu a cotat"},
+    {p:"P7",art:"Stabilizare balast 20cm",f:"Mithras REV",b:"74.798,75",o:"80.255,69",d:"+5.456,94",pct:"+7,3%",bg:"#FFEB9C",obs:"De negociat / verificat cotații CARMEUSE + ALESOL · Dito nu a cotat"},
+    {p:"P8",art:"Strat separator BCR/balast (folie PVC)",f:"Mithras REV",b:"11.403,99",o:"7.665,38",d:"−3.738,61",pct:"−32,8%",bg:"#E2EFDA",obs:"Dito 25.789,84 pe 3.393,4mp (desen, +4,44% vs deviz) — de 3,4× mai scump/unitate"},
+    {p:"P9a",art:"Material beton BCR 5.0 (1.003,94mc)",f:"HOLCIM (ofertă REV2, 24.07)",b:"504.992,07",o:"476.871,50",d:"−28.120,57",pct:"−5,6%",bg:"#E2EFDA",obs:"Cea mai bună dintre 4 oferte comparate (Holcim/Romcim ×2) · Dito nu cotează materialul separat"},
+    {p:"P9b",art:"Transport beton BCR 5.0",f:"HOLCIM (REV2)",b:"38.972,40",o:"86.213,35",d:"+47.240,95",pct:"+121,2%",bg:"#FCE4D6",obs:"⚠ CONFIRMAT cel mai scump element unitar · Romcim nu a cotat transport · Dito nu cotează distinct"},
+    {p:"P9c",art:"Manoperă+utilaj execuție BCR (turnare+finisor)",f:"Mithras REV (MTH-B 545)",b:"71.153,10",o:"599.603,21",d:"+528.450,11",pct:"+742,7%",bg:"#FCE4D6",obs:"⚠ CRITIC · rată CONFIRMATĂ 35,20 €/mp · Mithras a acceptat execuția cu beton de terț (Holcim), fără cost suplimentar · Dito cotează dala completă (material+manoperă) ca pachet unic — vezi card Ofertă Dito"},
+    {p:"P10",art:"Rosturi BCR (gujoane+emulsie+colmatări, 4 poz.)",f:"Mithras REV — INCLUS în manoperă",b:"40.882,61",o:"0,00",d:"−40.882,61",pct:"−100%",bg:"#E8F5E9",obs:"REZOLVAT — confirmat 0,00€, „inclus în prețul de BCR” · Dito le cotează explicit, ≈138.945 lei (ancore epoxy, taiere+colmatare mastic)"},
     {p:"P11",art:"Marcaje galbenă",f:"Mithras REV",b:"15.293,05",o:"8.192,35",d:"−7.100,70",pct:"−46,4%",bg:"#E2EFDA",obs:"—"},
     {p:"P11",art:"Marcaje neagră",f:"Mithras REV",b:"12.199,23",o:"6.535,01",d:"−5.664,22",pct:"−46,4%",bg:"#E2EFDA",obs:"—"},
   ];
@@ -2777,6 +2777,22 @@ function renderAn21(proj) {
   });
   html += '<tr style="background:#2C4A6E;color:#fff;font-weight:700"><td colspan="3" style="padding:7px 8px">TOTAL SCENARIU OPTIM</td><td style="padding:7px 8px;text-align:right">1.267.774,23</td><td style="padding:7px 8px;text-align:right">1.730.910,35</td><td style="padding:7px 8px;text-align:right">+463.136,12 <span style="font-size:10px;font-weight:400">+36,5%</span></td><td></td></tr>';
   html += '</table></div></div>';
+  // Oferta noua Dito
+  html += '<div class="proj-card" style="margin-bottom:12px">';
+  html += '<div class="proj-card-header" style="background:#6C3483"><span style="font-size:13px;font-weight:600;color:#fff">Ofertă nouă — Dito (17.08.2026)</span></div>';
+  html += '<div class="proj-card-body" style="display:flex;flex-direction:column;gap:6px">';
+  var dito = [
+    {tag:"TOTAL DEPUS",bg:"#F5EEF8",tc:"#6C3483",txt:"3.072.012 lei fără TVA, pe 39 poziții — scope mai larg decât scenariul curent (include și cofrare, protecție antievaporant, ancore epoxy, taiere+colmatare rosturi, rigolă F900)."},
+    {tag:"DALĂ BCR",bg:"#F5EEF8",tc:"#6C3483",txt:"Pachet complet (separator+dală+cofrare+protecție antievaporant+ancore epoxy+rosturi mastic bituminos): Dito ≈1.201.431 lei vs ≈1.170.353 lei în scenariul actual (Holcim material + Mithras manoperă) — doar +2,7%, dar cu scop tehnic mult mai transparent/detaliat decât „inclus” generic la Mithras."},
+    {tag:"UMPLUTURI",bg:"#FCE4D6",tc:"#C0392B",txt:"Piatră spartă 40cm și balast 20cm — Dito cu +220,7% / +122,6% peste Ideal Max. Ideal Max rămâne recomandarea fermă."},
+    {tag:"SCOPE NOU",bg:"#FFF8E1",tc:"#856404",txt:"Rigolă F900 (montaj+piatră spartă+beton egalizare+rosturi) ≈265.690 lei — poziție neinclusă în scenariul curent. De clarificat dacă e Cap.2.1 Platformă sau alt capitol de deviz."},
+  ];
+  dito.forEach(function(c){
+    html += '<div style="background:'+c.bg+';border-radius:6px;padding:8px 12px;font-size:12px;display:flex;gap:10px;align-items:flex-start">';
+    html += '<span style="font-weight:700;color:'+c.tc+';white-space:nowrap;min-width:80px">'+c.tag+'</span>';
+    html += '<span>'+c.txt+'</span></div>';
+  });
+  html += '</div></div>';
   // Riscuri curente
   html += '<div class="proj-card" style="margin-bottom:12px">';
   html += '<div class="proj-card-header" style="background:#7B1818"><span style="font-size:13px;font-weight:600;color:#fff">Riscuri active</span></div>';
@@ -2786,6 +2802,7 @@ function renderAn21(proj) {
     {tag:"CONFIRMAT",bg:"#FCE4D6",tc:"#C0392B",txt:"Transport beton BCR (Holcim REV2) — +47.241 lei (+121,2%). Cel mai scump element unitar din scenariu; Romcim nici nu a cotat transport, deci nu există alternativă mai ieftină documentată."},
     {tag:"MEDIU",bg:"#FFEB9C",tc:"#856404",txt:"Stabilizare balast 20cm (Mithras REV) — +5.457 lei (+7,3%). Necesită cotații ferme CARMEUSE + ALESOL pentru verificare/negociere."},
     {tag:"ADMINISTRATIV",bg:"#FFF8E1",tc:"#856404",txt:"Risc de dublă facturare la Ideal Max pentru săpătura de 975mc (P1), deja acoperită de contractul de demolare — de corectat pe factură."},
+    {tag:"CONFORMITATE",bg:"#FCE4D6",tc:"#C0392B",txt:"Transport evacuare pământ: Dito cotează 245 lei/tonă (cu tichet de cântar + Anexa 3-UCG, depozit autorizat) vs 21,78 lei/tonă la Ideal Max — deja CONTRACTAT. Diferența de +1.025% sugerează posibil risc de conformitate legală/de mediu la transportul contractat, nu doar de preț — de verificat urgent."},
     {tag:"BUGET",bg:"#FCE4D6",tc:"#C0392B",txt:"Depășire globală: +36,5% vs buget original / +19,8% vs buget indexat (+14%). Necesită decizie de management: act adițional sau alocare buget suplimentar."},
     {tag:"COORDONARE",bg:"#FFF8E1",tc:"#856404",txt:"3 furnizori distincți activi simultan pe platformă (Ideal Max, Mithras, Holcim) — necesită plan clar de mobilizare/succesiune pentru a evita blocaje pe front."},
   ];
@@ -2817,12 +2834,13 @@ function renderAn21(proj) {
   html += '<table style="width:100%;border-collapse:collapse;font-size:11px">';
   html += '<tr style="background:#EEF2F7"><th style="padding:7px 10px;text-align:left">Acțiune</th><th style="padding:7px 8px;text-align:left;white-space:nowrap">Responsabil</th><th style="padding:7px 8px;text-align:left;white-space:nowrap">Termen</th></tr>';
   var actiuni = [
-    {a:"Cere cotații ferme CARMEUSE + ALESOL pentru stabilizare balast — verifică posibilitatea de reducere a depășirii de 5.457 lei",r:"G. Spătaru / Achiziții",t:"14.08.2026"},
-    {a:"Corectează dubla facturare Ideal Max pentru săpătura P1 (975mc), deja acoperită de contractul de demolare",r:"G. Spătaru",t:"12.08.2026"},
-    {a:"Prezintă managementului depășirea de buget (+36,5% / +19,8%) pentru decizie: act adițional sau buget suplimentar",r:"G. Spătaru",t:"15.08.2026"},
-    {a:"Confirmă în scris cu Mithras (addendum la MTH-B 545) acceptul execuției BCR cu beton Holcim, fără costuri suplimentare",r:"G. Spătaru",t:"11.08.2026"},
-    {a:"Stabilește planul de coordonare/mobilizare pentru cei 3 furnizori activi pe platformă (Ideal Max, Mithras, Holcim)",r:"G. Spătaru / Șef șantier",t:"18.08.2026"},
-    {a:"Verifică valabilitatea ofertei Holcim REV2 (24.07.2026) la data emiterii comenzii ferme",r:"Achiziții",t:"20.08.2026"},
+    {a:"Cere cotații ferme CARMEUSE + ALESOL pentru stabilizare balast (Art.10) — verifică posibilitatea de reducere a depășirii de 5.457 lei",r:"G. Spătaru / Achiziții",t:"27.08.2026"},
+    {a:"Corectează dubla facturare Ideal Max pentru săpătura P1 (975mc), deja acoperită de contractul de demolare",r:"G. Spătaru",t:"25.08.2026"},
+    {a:"Confirmă în scris cu Mithras (addendum la MTH-B 545) acceptul execuției BCR cu beton Holcim, fără costuri suplimentare",r:"G. Spătaru",t:"22.08.2026"},
+    {a:"Verifică conformitatea legală a transportului de pământ contractat cu Ideal Max (tichet de cântar + Anexa 3-UCG, depozit autorizat) față de cerințele cotate de Dito",r:"G. Spătaru / QA-Mediu",t:"26.08.2026"},
+    {a:"Clarifică scope-ul poziției rigolă F900 din oferta Dito — face parte din Cap.2.1 Platformă sau alt capitol de deviz?",r:"G. Spătaru",t:"29.08.2026"},
+    {a:"Prezintă managementului depășirea de buget (+36,5% / +19,8%) pentru decizie: act adițional sau buget suplimentar",r:"G. Spătaru",t:"28.08.2026"},
+    {a:"Verifică valabilitatea ofertei Holcim REV2 (24.07.2026) la comanda fermă + plan de coordonare/mobilizare pentru cei 3-4 furnizori activi pe platformă",r:"G. Spătaru / Achiziții",t:"31.08.2026"},
   ];
   actiuni.forEach(function(x){
     html += '<tr><td style="padding:6px 10px;border-bottom:1px solid #eee">'+x.a+'</td><td style="padding:6px 8px;border-bottom:1px solid #eee;white-space:nowrap">'+x.r+'</td><td style="padding:6px 8px;border-bottom:1px solid #eee;white-space:nowrap">'+x.t+'</td></tr>';

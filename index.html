@@ -265,7 +265,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
           <i class="ti ti-file-dollar"></i> Sinteză contract
         </div>
         <div class="submenu-item" id="item-hangar-edevizeregistru" onclick="goModule('hangar','edevizeregistru')">
-          <i class="ti ti-clipboard-check"></i> Registru decizii — eDevize
+          <i class="ti ti-clipboard-check"></i> Liste revizuite — eDevize
         </div>
         <div class="submenu-item" id="item-hangar-validare" onclick="goModule('hangar','validare')">
           <i class="ti ti-chart-bar"></i> Validare Bugete
@@ -1895,7 +1895,7 @@ function renderHome() {
     '<div class="proj-card" style="cursor:pointer" onclick="goModule(\'hangar\',\'edevizeregistru\')">' +
       '<div class="proj-card-header" style="background:#1F3864;border-left:3px solid #2C4A6E">' +
         '<div class="proj-icon" style="background:rgba(44,74,110,0.35)"><i class="ti ti-clipboard-check" style="color:#AEC6E4"></i></div>' +
-        '<div style="flex:1"><div style="font-size:13px;font-weight:600;color:#fff;display:flex;align-items:center;gap:7px"><span class="blink-nou6" style="background:#CC1515;color:#fff;border-radius:4px;padding:1px 7px;font-size:9px;letter-spacing:0.5px;font-weight:800">NOU</span>Registru decizii — eDevize Kogălniceanu</div>' +
+        '<div style="flex:1"><div style="font-size:13px;font-weight:600;color:#fff;display:flex;align-items:center;gap:7px"><span class="blink-nou6" style="background:#CC1515;color:#fff;border-radius:4px;padding:1px 7px;font-size:9px;letter-spacing:0.5px;font-weight:800">NOU</span>Liste revizuite — eDevize Kogălniceanu</div>' +
         '<div style="font-size:10px;color:rgba(255,255,255,0.6)">Lucrări suplimentare · DN vs LS · trasabilitate + bază memorii</div></div>' +
         '<i class="ti ti-chevron-right" style="color:rgba(255,255,255,0.7);font-size:18px"></i>' +
       '</div>' +
@@ -3392,7 +3392,7 @@ function renderEdevizeRegistru(proj){
   var briefRezBtn = `<span onclick="openBriefRezultat()" style="display:inline-flex;align-items:center;gap:7px;padding:9px 16px;background:#1A7F45;color:#fff;border:1px solid rgba(255,255,255,0.5);border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap"><i class="ti ti-checkbox" style="font-size:15px"></i> Rezultat eDevize</span>`;
   h+=`<div style="background:linear-gradient(135deg,#1F3864,#2C4A6E);border-radius:10px;padding:18px 20px;margin-bottom:14px;color:#fff;display:flex;align-items:center;gap:14px;flex-wrap:wrap">
        <div style="flex:1;min-width:230px">
-         <div style="font-size:16px;font-weight:800;display:flex;align-items:center;gap:9px"><i class="ti ti-clipboard-check" style="font-size:19px"></i> Registru decizii — eDevize Kogălniceanu</div>
+         <div style="font-size:16px;font-weight:800;display:flex;align-items:center;gap:9px"><i class="ti ti-clipboard-check" style="font-size:19px"></i> Liste revizuite — eDevize Kogălniceanu</div>
          <div style="font-size:11px;color:rgba(255,255,255,0.82);margin-top:4px">Împărțire lucrări suplimentare pe structura devizelor: Diverse și Neprevăzute (DN) vs Lucrări Suplimentare (LS) · actualizat ${D.updated}</div>
        </div>
        <div style="display:flex;gap:8px;flex-wrap:wrap">${xlsBtn}${briefRezBtn}${briefBtn}</div>

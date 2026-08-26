@@ -314,6 +314,9 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
           <div class="submenu-item" id="item-hangar-sl2" onclick="goModule('hangar','sl2')">
             <i class="ti ti-file-invoice" style="color:#6C3483"></i> SL2 — Execuție
           </div>
+          <div class="submenu-item" id="item-hangar-sl3" onclick="goModule('hangar','sl3')">
+            <i class="ti ti-file-invoice" style="color:#B9770E"></i> SL3 — Execuție
+          </div>
         </div>
         <div class="submenu-item" id="item-hangar-analize" onclick="toggleSubSub('hangar-analize')">
           <i class="ti ti-file-analytics" style="color:#2E7D32"></i> Analize Comparative
@@ -510,6 +513,7 @@ function goModule(proj, module) {
   else if (module === 'docbenef') renderDocBenef(proj);
   else if (module === 'sl1') renderSL1(proj);
   else if (module === 'sl2') renderSL2(proj);
+  else if (module === 'sl3') renderSL3(proj);
   else if (module === 'an21') renderAn21(proj);
   else if (module === 'anpref') renderAnPref(proj);
   else if (module === 'anconfmetal') renderConfMetalice(proj);
@@ -2723,7 +2727,7 @@ function renderSL1(proj) {
 
 function renderAn21(proj) {
   var html = '';
-  html += '<div class="proj-header"><div class="proj-title">Analiză Comparativă — 2.1 Amenajare Platformă Exterioară</div><div class="proj-meta">Scenariu optim de sourcing pe pachete · Buget eDevize/ERP 11.07 · Mithras MTH-B 525 (10.07) / REV MTH-B 545 (17.07) · Ideal Max Ctr.166 (27.07) · Holcim REV2 (24.07) · Curs BNR 5,2429 lei/EUR · Actualizat 07.08.2026</div></div>';
+  html += '<div class="proj-header"><div class="proj-title">Analiză Comparativă — 2.1 Amenajare Platformă Exterioară</div><div class="proj-meta">Scenariu optim de sourcing pe pachete · Buget eDevize/ERP 11.07 · Mithras MTH-B 525 (10.07) / REV MTH-B 545 (17.07) · Ideal Max Ctr.166 (27.07) · Holcim REV2 (24.07) · Dito (17.08.2026) · Curs BNR 5,2429 lei/EUR · Actualizat 20.08.2026</div></div>';
   html += '<div class="module-badge" style="background:#EEF2FF;color:#4338CA"><i class="ti ti-file-analytics" style="font-size:13px"></i> Scenariu Optim de Sourcing — Cap.2.1 Platformă</div>';
   if (typeof AN21_SHEET_URL !== 'undefined' && AN21_SHEET_URL) {
     html += '<div style="margin-bottom:14px"><a href="' + AN21_SHEET_URL + '" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 18px;background:#1A5276;color:#fff;border-radius:var(--radius);font-size:12px;font-weight:600;text-decoration:none"><i class="ti ti-table"></i> Deschide analiza comparativă</a></div>';
@@ -2736,32 +2740,32 @@ function renderAn21(proj) {
   html += '<div class="kpi"><div class="kpi-label">Buget indexat (+14% actualizare preț)</div><div class="kpi-val">1.445.263 lei</div><div class="kpi-sub">clauză contractuală de indexare</div></div>';
   html += '<div class="kpi"><div class="kpi-label">Total scenariu optim (cel mai bun preț/pachet)</div><div class="kpi-val" style="color:#C0392B">1.730.910 lei</div><div class="kpi-sub">+463.136 lei / +36,5% vs buget original</div></div>';
   html += '<div class="kpi"><div class="kpi-label">Depășire vs buget indexat</div><div class="kpi-val" style="color:#856404">+285.648 lei</div><div class="kpi-sub">+19,8% — necesită decizie management</div></div>';
-  html += '<div class="kpi"><div class="kpi-label">vs 100% Mithras REV (MTH-B 545)</div><div class="kpi-val" style="color:#1E6E2D">−271.602 lei</div><div class="kpi-sub">−13,6% · scenariul pe pachete e mai ieftin</div></div>';
+  html += '<div class="kpi"><div class="kpi-label">Ofertă DITO (oglindă pe Optim)</div><div class="kpi-val" style="color:#6C3483">2.897.240 lei</div><div class="kpi-sub">+1.166.330 lei / +67,4% vs scenariul optim — mai scump</div></div>';
   html += '</div>';
   // Tabel pachete
   html += '<div class="proj-card" style="margin-bottom:12px">';
   html += '<div class="proj-card-header" style="background:#7B1818"><span style="font-size:13px;font-weight:600;color:#fff">Scenariu pe pachete — furnizor recomandat / contractat per articol</span></div>';
   html += '<div class="proj-card-body" style="padding:0;overflow-x:auto">';
   html += '<table style="width:100%;border-collapse:collapse;font-size:11px">';
-  html += '<tr style="background:#2E5090;color:#fff"><th style="padding:7px 8px;text-align:left">Pachet</th><th style="padding:7px 10px;text-align:left">Articol</th><th style="padding:7px 8px;text-align:left">Furnizor</th><th style="padding:7px 8px;text-align:right;white-space:nowrap">Buget (lei)</th><th style="padding:7px 8px;text-align:right;white-space:nowrap">Optim (lei)</th><th style="padding:7px 8px;text-align:right">Dif.</th><th style="padding:7px 8px;text-align:left">Observații</th></tr>';
+  html += '<tr style="background:#2E5090;color:#fff"><th style="padding:7px 8px;text-align:left">Pachet</th><th style="padding:7px 10px;text-align:left">Articol</th><th style="padding:7px 8px;text-align:left">Furnizor</th><th style="padding:7px 8px;text-align:right;white-space:nowrap">Buget (lei)</th><th style="padding:7px 8px;text-align:right;white-space:nowrap">Optim (lei)</th><th style="padding:7px 8px;text-align:right;white-space:nowrap;background:#6C3483">Ofertă DITO (lei)</th><th style="padding:7px 8px;text-align:right">Dif.</th><th style="padding:7px 8px;text-align:right;white-space:nowrap">P.U. Buget→DITO</th><th style="padding:7px 8px;text-align:left">Observații</th></tr>';
   var rows = [
-    {p:"P1",art:"Săpătură piatră spartă 30cm (975mc)",f:"ELIMINAT — acoperit de demolare",b:"22.426,95",o:"0,00",d:"−22.426,95",pct:"−100%",bg:"#E5E7EB",obs:"Risc dublă facturare Ideal Max — de corectat"},
-    {p:"P1",art:"Săpătură spații largi (992mc)",f:"Ideal Max — CONTRACTAT (Ctr.166)",b:"22.817,98",o:"35.657,44",d:"+12.839,46",pct:"+56,3%",bg:"#FCE4D6",obs:"Deja semnat · Mithras REV ar fi fost 23.404,31 (+2,6%)"},
-    {p:"P2",art:"Transport evacuare pământ (1.984t)",f:"Ideal Max — CONTRACTAT",b:"47.616,00",o:"43.216,88",d:"−4.399,12",pct:"−9,2%",bg:"#E2EFDA",obs:"Mithras REV ar fi fost 36.406,70 (−23,5%)"},
-    {p:"P2",art:"Transport evacuare pământ (1.950t)",f:"Ideal Max — CONTRACTAT",b:"46.800,00",o:"42.476,27",d:"−4.323,73",pct:"−9,2%",bg:"#E2EFDA",obs:"Mithras REV ar fi fost 35.782,79"},
-    {p:"P3",art:"Umplutură piatră spartă 40cm",f:"Ideal Max",b:"120.547,72",o:"116.077,00",d:"−4.470,72",pct:"−3,7%",bg:"#E2EFDA",obs:"Mithras REV ar fi fost 270.466 lei (+133% vs Ideal Max)"},
-    {p:"P4",art:"Transport piatră spartă",f:"Ideal Max",b:"35.653,80",o:"34.355,00",d:"−1.298,80",pct:"−3,6%",bg:"#E2EFDA",obs:"—"},
-    {p:"P5",art:"Umplutură balast 20cm",f:"Ideal Max",b:"86.376,55",o:"83.226,00",d:"−3.150,55",pct:"−3,6%",bg:"#E2EFDA",obs:"Mithras REV ar fi fost 134.610 lei (+62% vs Ideal Max)"},
-    {p:"P6",art:"Transport balast",f:"Ideal Max",b:"46.846,80",o:"45.158,00",d:"−1.688,80",pct:"−3,6%",bg:"#E2EFDA",obs:"—"},
-    {p:"P7",art:"Stabilizare pământ 20cm",f:"Mithras REV",b:"68.993,23",o:"65.407,27",d:"−3.585,96",pct:"−5,2%",bg:"#E2EFDA",obs:"—"},
-    {p:"P7",art:"Stabilizare balast 20cm",f:"Mithras REV",b:"74.798,75",o:"80.255,69",d:"+5.456,94",pct:"+7,3%",bg:"#FFEB9C",obs:"De negociat / verificat cotații CARMEUSE + ALESOL"},
-    {p:"P8",art:"Strat separator BCR/balast (folie PVC)",f:"Mithras REV",b:"11.403,99",o:"7.665,38",d:"−3.738,61",pct:"−32,8%",bg:"#E2EFDA",obs:"—"},
-    {p:"P9a",art:"Material beton BCR 5.0 (1.003,94mc)",f:"HOLCIM (ofertă REV2, 24.07)",b:"504.992,07",o:"476.871,50",d:"−28.120,57",pct:"−5,6%",bg:"#E2EFDA",obs:"Cea mai bună dintre 4 oferte comparate (Holcim/Romcim ×2)"},
-    {p:"P9b",art:"Transport beton BCR 5.0",f:"HOLCIM (REV2)",b:"38.972,40",o:"86.213,35",d:"+47.240,95",pct:"+121,2%",bg:"#FCE4D6",obs:"⚠ CONFIRMAT cel mai scump element unitar · Romcim nu a cotat transport"},
-    {p:"P9c",art:"Manoperă+utilaj execuție BCR (turnare+finisor)",f:"Mithras REV (MTH-B 545)",b:"71.153,10",o:"599.603,21",d:"+528.450,11",pct:"+742,7%",bg:"#FCE4D6",obs:"⚠ CRITIC · rată CONFIRMATĂ 35,20 €/mp · Mithras a acceptat execuția cu beton de terț (Holcim), fără cost suplimentar"},
-    {p:"P10",art:"Rosturi BCR (gujoane+emulsie+colmatări, 4 poz.)",f:"Mithras REV — INCLUS în manoperă",b:"40.882,61",o:"0,00",d:"−40.882,61",pct:"−100%",bg:"#E8F5E9",obs:"REZOLVAT — confirmat 0,00€, „inclus în prețul de BCR”"},
-    {p:"P11",art:"Marcaje galbenă",f:"Mithras REV",b:"15.293,05",o:"8.192,35",d:"−7.100,70",pct:"−46,4%",bg:"#E2EFDA",obs:"—"},
-    {p:"P11",art:"Marcaje neagră",f:"Mithras REV",b:"12.199,23",o:"6.535,01",d:"−5.664,22",pct:"−46,4%",bg:"#E2EFDA",obs:"—"},
+    {p:"P1",art:"Săpătură piatră spartă 30cm (975mc)",f:"ELIMINAT — acoperit de demolare",b:"22.426,95",o:"0,00",dt:"0,00",d:"−22.426,95",pct:"−100%",pu:"23,00 → 35,00 lei/mc",bg:"#E5E7EB",obs:"Risc dublă facturare Ideal Max — de corectat. Preț Dito informativ, poziția nu se plătește indiferent de furnizor."},
+    {p:"P1",art:"Săpătură spații largi (992mc)",f:"Ideal Max — CONTRACTAT (Ctr.166)",b:"22.817,98",o:"35.657,44",dt:"34.720,00",d:"+12.839,46",pct:"+56,3%",pu:"23,00 → 35,00 lei/mc",bg:"#FCE4D6",obs:"Deja semnat/nemodificabil · Mithras REV ar fi fost 23.404,31 (+2,6%) · Dito ar fi −2,6% vs contract"},
+    {p:"P2",art:"Transport evacuare pământ (1.984t)",f:"Ideal Max — CONTRACTAT",b:"47.616,00",o:"43.216,88",dt:"⚠ 486.080,00",d:"−4.399,12",pct:"−9,2%",pu:"24,00 → 245,00 lei/t",bg:"#E2EFDA",obs:"Deja semnat · Dito 245 lei/t (×10 vs buget/contract) — vezi risc conformitate transport"},
+    {p:"P2",art:"Transport evacuare pământ (1.950t)",f:"Ideal Max — CONTRACTAT",b:"46.800,00",o:"42.476,27",dt:"⚠ 477.750,00",d:"−4.323,73",pct:"−9,2%",pu:"24,00 → 245,00 lei/t",bg:"#E2EFDA",obs:"Deja semnat · Dito 245 lei/t — același risc de conformitate"},
+    {p:"P3",art:"Umplutură piatră spartă 40cm",f:"Ideal Max",b:"120.547,72",o:"116.077,00",dt:"372.210,00",d:"−4.470,72",pct:"−3,7%",pu:"92,30 → 285,00 lei/mc",bg:"#E2EFDA",obs:"Dito +220,7% vs Ideal Max — Ideal Max rămâne recomandat"},
+    {p:"P4",art:"Transport piatră spartă",f:"Ideal Max",b:"35.653,80",o:"34.355,00",dt:"34.355,00",d:"−1.298,80",pct:"−3,6%",pu:"14,00 → nu a cotat",bg:"#E2EFDA",obs:"Dito nu a cotat — col. Ofertă DITO preia valoarea Optim (mirror)"},
+    {p:"P5",art:"Umplutură balast 20cm",f:"Ideal Max",b:"86.376,55",o:"83.226,00",dt:"185.250,00",d:"−3.150,55",pct:"−3,6%",pu:"132,89 → 285,00 lei/mc",bg:"#E2EFDA",obs:"Dito +122,6% vs Ideal Max — Ideal Max rămâne recomandat"},
+    {p:"P6",art:"Transport balast",f:"Ideal Max",b:"46.846,80",o:"45.158,00",dt:"45.158,00",d:"−1.688,80",pct:"−3,6%",pu:"30,80 → nu a cotat",bg:"#E2EFDA",obs:"Dito nu a cotat — col. Ofertă DITO preia valoarea Optim (mirror)"},
+    {p:"P7",art:"Stabilizare pământ 20cm",f:"Mithras REV",b:"68.993,23",o:"65.407,27",dt:"65.407,27",d:"−3.585,96",pct:"−5,2%",pu:"21,02 → nu a cotat",bg:"#E2EFDA",obs:"Dito nu a cotat — col. Ofertă DITO preia valoarea Optim (mirror)"},
+    {p:"P7",art:"Stabilizare balast 20cm",f:"Mithras REV",b:"74.798,75",o:"80.255,69",dt:"80.255,69",d:"+5.456,94",pct:"+7,3%",pu:"115,08 → nu a cotat",bg:"#FFEB9C",obs:"De negociat / verificat cotații CARMEUSE + ALESOL · Dito nu a cotat"},
+    {p:"P8",art:"Strat separator BCR/balast (folie PVC)",f:"Mithras REV",b:"11.403,99",o:"7.665,38",dt:"24.692,40",d:"−3.738,61",pct:"−32,8%",pu:"3,51 → 7,60 lei/mp",bg:"#E2EFDA",obs:"Dito scalat la 3.249mp deviz (brut 25.789,84 pe 3.393,4mp) — de 2,2× mai scump/unitate"},
+    {p:"P9a",art:"Material beton BCR 5.0 (1.003,94mc)",f:"HOLCIM (ofertă REV2, 24.07)",b:"504.992,07",o:"476.871,50",dt:"0,00*",d:"−28.120,57",pct:"−5,6%",pu:"503,01 lei/mc — Dito nu separă",bg:"#E2EFDA",obs:"Cea mai bună dintre 4 oferte comparate (Holcim/Romcim ×2) · Dito nu cotează materialul separat — alocat în P9c"},
+    {p:"P9b",art:"Transport beton BCR 5.0",f:"HOLCIM (REV2)",b:"38.972,40",o:"86.213,35",dt:"0,00*",d:"+47.240,95",pct:"+121,2%",pu:"38,82 lei/mc — Dito nu separă",bg:"#FCE4D6",obs:"⚠ CONFIRMAT cel mai scump element unitar · Dito nu cotează transportul separat — alocat în P9c"},
+    {p:"P9c",art:"Manoperă+utilaj execuție BCR (turnare+finisor)",f:"Mithras REV (MTH-B 545)",b:"71.153,10",o:"599.603,21",dt:"937.661,40*",d:"+528.450,11",pct:"+742,7%",pu:"21,90 → 288,60* lei/mp",bg:"#FCE4D6",obs:"⚠ CRITIC · 35,20 €/mp manoperă confirmată · *288,60 lei/mp Dito e material+manoperă COMBINATE — comparabil corect: buget combinat 177,33 lei/mp, deci Dito +62,8% pe dala completă"},
+    {p:"P10",art:"Rosturi BCR (gujoane+emulsie+colmatări, 4 poz.)",f:"Mithras REV — INCLUS în manoperă",b:"40.882,61",o:"0,00",dt:"138.945,15",d:"−40.882,61",pct:"−100%",pu:"N/A (pachet, nu unitate)",bg:"#E8F5E9",obs:"REZOLVAT la Mithras (0,00€, inclus) · Dito cotează complet: ancore epoxy+cărucioare 42.986,78 (echiv. gujoane) + emulsie 3.649,00 (178mp, identic) + tăiere/colmatare mastic 68.115,60 + tăiere rost 7.660,00 + dilatație polistiren+mastic 16.533,77 (scope nou) = 138.945,15 lei total"},
+    {p:"P11",art:"Marcaje galbenă",f:"Mithras REV",b:"15.293,05",o:"8.192,35",dt:"8.208,00",d:"−7.100,70",pct:"−46,4%",pu:"251,53 → 135,00 lei/mp",bg:"#E2EFDA",obs:"Practic identic cu Dito (+0,2%) — ambii mult sub bugetul de referință"},
+    {p:"P11",art:"Marcaje neagră",f:"Mithras REV",b:"12.199,23",o:"6.535,01",dt:"6.547,50",d:"−5.664,22",pct:"−46,4%",pu:"251,53 → 135,00 lei/mp",bg:"#E2EFDA",obs:"Practic identic cu Dito (+0,2%) — ambii mult sub bugetul de referință"},
   ];
   rows.forEach(function(r){
     var dcolor = r.d.charAt(0)==="−"?"#1E6E2D":"#C0392B";
@@ -2771,12 +2775,33 @@ function renderAn21(proj) {
     html += '<td style="padding:6px 8px;border-bottom:1px solid #eee;font-size:10px;color:#333">'+r.f+'</td>';
     html += '<td style="padding:6px 8px;border-bottom:1px solid #eee;text-align:right">'+r.b+'</td>';
     html += '<td style="padding:6px 8px;border-bottom:1px solid #eee;text-align:right;font-weight:600">'+r.o+'</td>';
+    html += '<td style="padding:6px 8px;border-bottom:1px solid #eee;text-align:right;font-size:10px;color:#6C3483">'+r.dt+'</td>';
     html += '<td style="padding:6px 8px;border-bottom:1px solid #eee;text-align:right;font-weight:700;color:'+dcolor+'">'+r.d+' <span style="font-size:10px;font-weight:400">'+r.pct+'</span></td>';
+    html += '<td style="padding:6px 8px;border-bottom:1px solid #eee;text-align:right;font-size:10px;color:#555;white-space:nowrap">'+r.pu+'</td>';
     html += '<td style="padding:6px 8px;border-bottom:1px solid #eee;font-size:10px;color:#444">'+r.obs+'</td>';
     html += '</tr>';
   });
-  html += '<tr style="background:#2C4A6E;color:#fff;font-weight:700"><td colspan="3" style="padding:7px 8px">TOTAL SCENARIU OPTIM</td><td style="padding:7px 8px;text-align:right">1.267.774,23</td><td style="padding:7px 8px;text-align:right">1.730.910,35</td><td style="padding:7px 8px;text-align:right">+463.136,12 <span style="font-size:10px;font-weight:400">+36,5%</span></td><td></td></tr>';
-  html += '</table></div></div>';
+  html += '<tr style="background:#2C4A6E;color:#fff;font-weight:700"><td colspan="4" style="padding:7px 8px">TOTAL SCENARIU OPTIM</td><td style="padding:7px 8px;text-align:right">1.730.910,35</td><td style="padding:7px 8px;text-align:right;background:#6C3483">2.897.240,41</td><td style="padding:7px 8px;text-align:right">+463.136,12 <span style="font-size:10px;font-weight:400">+36,5%</span></td><td colspan="2"></td></tr>';
+  html += '</table></div>';
+  html += '<div style="padding:8px 12px;font-size:10px;color:#666;border-top:1px solid #eee">P.U. = preț unitar (Buget → DITO), pe UM-ul din deviz. * Pe P9a/P9b/P9c, Dito cotează dala BCR completă (material+manoperă) ca preț unic — valoarea e alocată la P9c (scalată la 3.249mp deviz), ca să nu se dubleze la total. Coloana Ofertă DITO respectă cantitățile din buget; nu ține cont de faptul că P1-b și P2 sunt deja CONTRACTATE cu Ideal Max (nemodificabile).</div>';
+  html += '</div>';
+  // Oferta noua Dito
+  html += '<div class="proj-card" style="margin-bottom:12px">';
+  html += '<div class="proj-card-header" style="background:#6C3483"><span style="font-size:13px;font-weight:600;color:#fff">Ofertă nouă — Dito (17.08.2026)</span></div>';
+  html += '<div class="proj-card-body" style="display:flex;flex-direction:column;gap:6px">';
+  var dito = [
+    {tag:"TOTAL DEPUS",bg:"#F5EEF8",tc:"#6C3483",txt:"3.072.012 lei fără TVA, pe 39 poziții — scope mai larg decât scenariul curent (include și cofrare, protecție antievaporant, ancore epoxy, taiere+colmatare rosturi, rigolă F900)."},
+    {tag:"DALĂ BCR",bg:"#F5EEF8",tc:"#6C3483",txt:"Pachet complet (separator+dală+cofrare+protecție antievaporant+ancore epoxy+rosturi mastic bituminos): Dito ≈1.201.431 lei vs ≈1.170.353 lei în scenariul actual (Holcim material + Mithras manoperă) — doar +2,7%, dar cu scop tehnic mult mai transparent/detaliat decât „inclus” generic la Mithras."},
+    {tag:"UMPLUTURI",bg:"#FCE4D6",tc:"#C0392B",txt:"Piatră spartă 40cm și balast 20cm — Dito cu +220,7% / +122,6% peste Ideal Max. Ideal Max rămâne recomandarea fermă."},
+    {tag:"SCOPE NOU",bg:"#FFF8E1",tc:"#856404",txt:"Rigolă F900 (montaj+piatră spartă+beton egalizare+rosturi) ≈265.690 lei — poziție neinclusă în scenariul curent. De clarificat dacă e Cap.2.1 Platformă sau alt capitol de deviz."},
+    {tag:"CONCLUZIE",bg:"#F5EEF8",tc:"#6C3483",txt:"Oglindă directă pe scenariul optim (col. „Ofertă DITO” din tabel, cu Dito unde a cotat și Optim unde nu, inclusiv rosturile BCR cotate integral la 138.945,15 lei): 2.897.240 lei — cu 1.166.330 lei mai scump decât scenariul optim actual (+67,4%). Chiar respectând contractul deja semnat cu Ideal Max pe P1+P2 (nemodificabil), oferta Dito NU îmbunătățește scenariul pe niciun calcul."},
+  ];
+  dito.forEach(function(c){
+    html += '<div style="background:'+c.bg+';border-radius:6px;padding:8px 12px;font-size:12px;display:flex;gap:10px;align-items:flex-start">';
+    html += '<span style="font-weight:700;color:'+c.tc+';white-space:nowrap;min-width:80px">'+c.tag+'</span>';
+    html += '<span>'+c.txt+'</span></div>';
+  });
+  html += '</div></div>';
   // Riscuri curente
   html += '<div class="proj-card" style="margin-bottom:12px">';
   html += '<div class="proj-card-header" style="background:#7B1818"><span style="font-size:13px;font-weight:600;color:#fff">Riscuri active</span></div>';
@@ -2786,6 +2811,7 @@ function renderAn21(proj) {
     {tag:"CONFIRMAT",bg:"#FCE4D6",tc:"#C0392B",txt:"Transport beton BCR (Holcim REV2) — +47.241 lei (+121,2%). Cel mai scump element unitar din scenariu; Romcim nici nu a cotat transport, deci nu există alternativă mai ieftină documentată."},
     {tag:"MEDIU",bg:"#FFEB9C",tc:"#856404",txt:"Stabilizare balast 20cm (Mithras REV) — +5.457 lei (+7,3%). Necesită cotații ferme CARMEUSE + ALESOL pentru verificare/negociere."},
     {tag:"ADMINISTRATIV",bg:"#FFF8E1",tc:"#856404",txt:"Risc de dublă facturare la Ideal Max pentru săpătura de 975mc (P1), deja acoperită de contractul de demolare — de corectat pe factură."},
+    {tag:"CONFORMITATE",bg:"#FCE4D6",tc:"#C0392B",txt:"Transport evacuare pământ: Dito cotează 245 lei/tonă (cu tichet de cântar + Anexa 3-UCG, depozit autorizat) vs 21,78 lei/tonă la Ideal Max — deja CONTRACTAT. Diferența de +1.025% sugerează posibil risc de conformitate legală/de mediu la transportul contractat, nu doar de preț — de verificat urgent."},
     {tag:"BUGET",bg:"#FCE4D6",tc:"#C0392B",txt:"Depășire globală: +36,5% vs buget original / +19,8% vs buget indexat (+14%). Necesită decizie de management: act adițional sau alocare buget suplimentar."},
     {tag:"COORDONARE",bg:"#FFF8E1",tc:"#856404",txt:"3 furnizori distincți activi simultan pe platformă (Ideal Max, Mithras, Holcim) — necesită plan clar de mobilizare/succesiune pentru a evita blocaje pe front."},
   ];
@@ -2817,12 +2843,13 @@ function renderAn21(proj) {
   html += '<table style="width:100%;border-collapse:collapse;font-size:11px">';
   html += '<tr style="background:#EEF2F7"><th style="padding:7px 10px;text-align:left">Acțiune</th><th style="padding:7px 8px;text-align:left;white-space:nowrap">Responsabil</th><th style="padding:7px 8px;text-align:left;white-space:nowrap">Termen</th></tr>';
   var actiuni = [
-    {a:"Cere cotații ferme CARMEUSE + ALESOL pentru stabilizare balast — verifică posibilitatea de reducere a depășirii de 5.457 lei",r:"G. Spătaru / Achiziții",t:"14.08.2026"},
-    {a:"Corectează dubla facturare Ideal Max pentru săpătura P1 (975mc), deja acoperită de contractul de demolare",r:"G. Spătaru",t:"12.08.2026"},
-    {a:"Prezintă managementului depășirea de buget (+36,5% / +19,8%) pentru decizie: act adițional sau buget suplimentar",r:"G. Spătaru",t:"15.08.2026"},
-    {a:"Confirmă în scris cu Mithras (addendum la MTH-B 545) acceptul execuției BCR cu beton Holcim, fără costuri suplimentare",r:"G. Spătaru",t:"11.08.2026"},
-    {a:"Stabilește planul de coordonare/mobilizare pentru cei 3 furnizori activi pe platformă (Ideal Max, Mithras, Holcim)",r:"G. Spătaru / Șef șantier",t:"18.08.2026"},
-    {a:"Verifică valabilitatea ofertei Holcim REV2 (24.07.2026) la data emiterii comenzii ferme",r:"Achiziții",t:"20.08.2026"},
+    {a:"Cere cotații ferme CARMEUSE + ALESOL pentru stabilizare balast (Art.10) — verifică posibilitatea de reducere a depășirii de 5.457 lei",r:"G. Spătaru / Achiziții",t:"27.08.2026"},
+    {a:"Corectează dubla facturare Ideal Max pentru săpătura P1 (975mc), deja acoperită de contractul de demolare",r:"G. Spătaru",t:"25.08.2026"},
+    {a:"Confirmă în scris cu Mithras (addendum la MTH-B 545) acceptul execuției BCR cu beton Holcim, fără costuri suplimentare",r:"G. Spătaru",t:"22.08.2026"},
+    {a:"Verifică conformitatea legală a transportului de pământ contractat cu Ideal Max (tichet de cântar + Anexa 3-UCG, depozit autorizat) față de cerințele cotate de Dito",r:"G. Spătaru / QA-Mediu",t:"26.08.2026"},
+    {a:"Clarifică scope-ul poziției rigolă F900 din oferta Dito — face parte din Cap.2.1 Platformă sau alt capitol de deviz?",r:"G. Spătaru",t:"29.08.2026"},
+    {a:"Prezintă managementului depășirea de buget (+36,5% / +19,8%) pentru decizie: act adițional sau buget suplimentar",r:"G. Spătaru",t:"28.08.2026"},
+    {a:"Verifică valabilitatea ofertei Holcim REV2 (24.07.2026) la comanda fermă + plan de coordonare/mobilizare pentru cei 3-4 furnizori activi pe platformă",r:"G. Spătaru / Achiziții",t:"31.08.2026"},
   ];
   actiuni.forEach(function(x){
     html += '<tr><td style="padding:6px 10px;border-bottom:1px solid #eee">'+x.a+'</td><td style="padding:6px 8px;border-bottom:1px solid #eee;white-space:nowrap">'+x.r+'</td><td style="padding:6px 8px;border-bottom:1px solid #eee;white-space:nowrap">'+x.t+'</td></tr>';
@@ -3348,7 +3375,7 @@ function openBriefSinteza(){
   } else { ov.style.display='flex'; }
 }
 function closeBriefSinteza(){ var ov=document.getElementById('brief-overlay'); if(ov) ov.style.display='none'; }
-var EDEVIZE_BRIEF_REZ_HTML = "<!DOCTYPE html>\n<html lang=\"ro\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Rezultat eDevize - Liste propuse \u2014 Kog\u0103lniceanu</title>\n<style>\n  :root{--ink:#1a2230;--mut:#5b6675;--line:#e2e6ee;--bg:#f6f8fb;--card:#fff;--green:#1a7f45;--greenbg:#e7f5ec;--red:#c02637;--redbg:#fbe8ea;--amber:#a86400;--amberbg:#fdf2df;--blue:#1552a8;--bluebg:#e8f0fb;}\n  *{box-sizing:border-box}\n  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.5;font-size:15px}\n  .wrap{max-width:960px;margin:0 auto;padding:28px 22px 60px}\n  header{border-bottom:2px solid var(--ink);padding-bottom:14px;margin-bottom:20px}\n  h1{font-size:21px;margin:0 0 4px}\n  .sub{color:var(--mut);font-size:13px}\n  h2{font-size:16px;margin:28px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--line)}\n  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}\n  .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px}\n  .card .lab{font-size:12px;color:var(--mut);text-transform:uppercase;letter-spacing:.4px}\n  .card .val{font-size:23px;font-weight:700;margin:4px 0 2px}\n  .card .meta{font-size:12.5px}\n  .ok{color:var(--green)} .bad{color:var(--red)} .warn{color:var(--amber)}\n  table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden;font-size:14px;margin-top:6px}\n  th,td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--line)}\n  th{background:#eef2f8;font-size:11.5px;text-transform:uppercase;letter-spacing:.3px;color:var(--mut)}\n  td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}\n  tr:last-child td{border-bottom:none}\n  .rowtot td{font-weight:700;background:#f0f3f8}\n  .concl{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--blue);border-radius:8px;padding:12px 16px;margin-top:10px;font-size:14px}\n  .concl.bad{border-left-color:var(--red)} .concl.ok{border-left-color:var(--green)} .concl.warn{border-left-color:var(--amber)}\n  .note{color:var(--mut);font-size:12.5px;margin-top:8px}\n  .foot{margin-top:30px;padding-top:12px;border-top:1px solid var(--line);color:var(--mut);font-size:12px}\n  .pill{display:inline-block;padding:2px 9px;border-radius:999px;font-size:11.5px;font-weight:700}\n  .pill.g{background:var(--greenbg);color:var(--green)} .pill.r{background:var(--redbg);color:var(--red)}\n  @media print{body{background:#fff}.wrap{max-width:none}.card,table,.concl{break-inside:avoid}}\n  @media(max-width:640px){.cards{grid-template-columns:1fr}}\n</style>\n</head>\n<body>\n<div class=\"wrap\">\n<header>\n  <h1>Rezultat eDevize - Liste propuse</h1>\n  <div class=\"sub\">Hangar Kog\u0103lniceanu \u00b7 liste ref\u0103cute \u0219i generate \u00een eDevize din analiza v49 \u00b7 valori din F1 centralizator, <b>f\u0103r\u0103 TVA</b> (T4 \u00eenchis) \u00b7 6 fi\u0219iere: Contract \u00b7 LS (NCS1/NCS2) \u00b7 DN (NCS1/NCS2) \u00b7 Note de Renun\u021bare</div>\n</header>\n\n<div class=\"concl ok\"><b>\u2714 Cifre reale, din eDevize.</b> Acest document reflect\u0103 exact ce a rezultat \u00een eDevize dup\u0103 refacere liste \u2014 nu aproxim\u0103rile din analiz\u0103. Modific\u0103rile-cheie sunt confirmate la virgul\u0103: swap-urile (deviz 4.1 = 4.988.662,88), compensarea pe manopera BCR (deviz 2.1 = 1.606.848,39), \u0219i 8.4 Sta\u021bie pompare r\u0103mas\u0103 \u00een contract.</div>\n\n<div class=\"concl bad\"><b>\u26a0 Observa\u021bie intern\u0103 (sesizat\u0103 de PM) \u2014 de fundamentat:</b> Devizul <b>8.1 Camer\u0103 pompare + gospod\u0103rie spum\u0103</b> nu a fost \u00eentocmit \u00een listele anex\u0103 la contract. Este ad\u0103ugat acum ca <b>list\u0103 suplimentar\u0103 (NCS2)</b>, f\u0103r\u0103 NR-uri corespondente. <b>Beneficiarul are \u00eentreb\u0103ri</b> pe acest subiect, iar momentan <b>nu avem \u00eenc\u0103 un r\u0103spuns sus\u021binut</b> \u2014 de fundamentat.</div>\n\n<h2>1 \u00b7 Cele 3 instrumente vs plafoane</h2>\n<div class=\"cards\">\n  <div class=\"card\">\n    <div class=\"lab\">DN \u2014 Diverse \u0219i Neprev\u0103zute</div>\n    <div class=\"val bad\">3.093.006</div>\n    <div class=\"meta\">plafon FIX 2.718.815 \u00b7 <span class=\"bad\">dep\u0103\u0219e\u0219te cu 374.191</span></div>\n  </div>\n  <div class=\"card\">\n    <div class=\"lab\">LS \u2014 Lucr\u0103ri Suplimentare</div>\n    <div class=\"val ok\">2.438.845</div>\n    <div class=\"meta\">plafon 15% = 2.778.200 \u00b7 <span class=\"ok\">liber 339.355</span></div>\n  </div>\n  <div class=\"card\">\n    <div class=\"lab\">Note de Renun\u021bare (NR)</div>\n    <div class=\"val warn\">\u22122.058.160</div>\n    <div class=\"meta\">renun\u021b\u0103ri depuse</div>\n  </div>\n</div>\n<div class=\"concl bad\"><b>Singura constr\u00e2ngere:</b> DN dep\u0103\u0219e\u0219te plafonul (fix, nesuplimentabil) cu <b>374.191 lei</b>. LS are loc liber 339.355 \u2014 mai pu\u021bin dec\u00e2t excedentul DN, deci mutarea de articole pe LS acoper\u0103 cea mai mare parte, dar r\u0103m\u00e2ne un rest de ~35.000 de rezolvat (reducere de scop DN sau swap nou). Restul plafoanelor sunt respectate.</div>\n\n<h2>2 \u00b7 Detaliere pe fi\u0219iere (F1 centralizator, f\u0103r\u0103 TVA)</h2>\n<table>\n  <thead><tr><th>Fi\u0219ier eDevize</th><th class=\"num\">C+M (F3)</th><th class=\"num\">Utilaje (F4)</th><th class=\"num\">Total</th></tr></thead>\n  <tbody>\n    <tr><td>DN \u2014 NCS1 (pre\u021b contract)</td><td class=\"num\">414.879</td><td class=\"num\">\u2014</td><td class=\"num\">414.879</td></tr>\n    <tr><td>DN \u2014 NCS2 (pre\u021b nou)</td><td class=\"num\">148.323</td><td class=\"num\">2.529.804</td><td class=\"num\">2.678.127</td></tr>\n    <tr class=\"rowtot\"><td>DN total</td><td class=\"num\">563.202</td><td class=\"num\">2.529.804</td><td class=\"num\">3.093.006</td></tr>\n    <tr><td>LS \u2014 NCS1 (pre\u021b contract)</td><td class=\"num\">984.524</td><td class=\"num\">111.252</td><td class=\"num\">1.095.776</td></tr>\n    <tr><td>LS \u2014 NCS2 (pre\u021b nou)</td><td class=\"num\">1.343.069</td><td class=\"num\">\u2014</td><td class=\"num\">1.343.069</td></tr>\n    <tr class=\"rowtot\"><td>LS total</td><td class=\"num\">2.327.593</td><td class=\"num\">111.252</td><td class=\"num\">2.438.845</td></tr>\n    <tr><td>Note de Renun\u021bare</td><td class=\"num\">\u2212464.897</td><td class=\"num\">\u22121.593.263</td><td class=\"num\">\u22122.058.160</td></tr>\n    <tr class=\"rowtot\"><td>Contract revizuit (F1)</td><td class=\"num\" colspan=\"2\"></td><td class=\"num\">19.174.832</td></tr>\n  </tbody>\n</table>\n\n<h2>3 \u00b7 Utilaje F4 pe DN (confirmate)</h2>\n<table>\n  <thead><tr><th>Echipament</th><th class=\"num\">buc</th><th class=\"num\">Valoare</th></tr></thead>\n  <tbody>\n    <tr><td>Grup generator electric 1400 kVA (O7)</td><td class=\"num\">1</td><td class=\"num\">834.674</td></tr>\n    <tr><td>Skid rezervor spum\u0103 3500 l, dozator RC DN200 (O8)</td><td class=\"num\">2</td><td class=\"num\">452.321</td></tr>\n    <tr><td>Generator de spum\u0103 GH800-VDS (O8)</td><td class=\"num\">8</td><td class=\"num\">329.648</td></tr>\n    <tr class=\"rowtot\"><td>Total utilaje pe DN-NCS2</td><td class=\"num\"></td><td class=\"num\">2.529.804</td></tr>\n  </tbody>\n</table>\n<div class=\"note\">Aceste echipamente (m\u0103rite fa\u021b\u0103 de contract: generator 500\u21921400 kVA etc.) sunt \u00eencadrate DN ca pre\u021b nou (NCS2). Generatorul r\u0103m\u00e2ne p\u00e2rghia de reechilibrare: dac\u0103 beneficiarul accept\u0103 cauza \u201ecerin\u021b\u0103 de avia\u021bie\", poate fi mutat pe LS (care are 339.355 liberi), reduc\u00e2nd excedentul DN.</div>\n\n<h2>4 \u00b7 Ce urmeaz\u0103</h2>\n<div class=\"concl warn\"><b>Reechilibrarea DN</b> (excedent 374.191): (1) prioritar \u2014 noi surse de swap (\u00eenlocuire direct\u0103 \u00een baz\u0103, f\u0103r\u0103 consum de plafon); (2) mutarea unor articole \u00eentregi din cerin\u021ba de avia\u021bie pe LS (max 339.355 liber); (3) o reducere de scop DN pentru restul (~35.000). Toate \u2014 de discutat cu beneficiarul. NCS tip2 vor face oricum obiectul unei negocieri, deci l\u0103sarea DN u\u0219or peste plafon r\u0103m\u00e2ne o marj\u0103 strategic\u0103 valid\u0103.</div>\n\n<h2>5 \u00b7 Neimplementat \u00eenc\u0103 \u2014 de urm\u0103rit</h2>\n<div class=\"concl bad\"><b>Distan\u021ba p\u00e2n\u0103 la postul trafo (actual estimat 650 m \u2014 CABL5): NU e implementat\u0103 \u00eenc\u0103.</b> De verificat pe teren. Dac\u0103 e mai aproape, risc\u0103m s\u0103 bloc\u0103m bani \u00eentr-un NR viitor (traseu/cablu supraestimat, surplus de renun\u021bat ulterior). Dac\u0103 mic\u0219or\u0103m lungimea cablului, ducem diferen\u021ba de bani pe platforma BCR (unde \u00eenregistr\u0103m deficit), \u00een loc s\u0103 o bloc\u0103m.</div>\n\n<div class=\"foot\">Surs\u0103: 6 fi\u0219iere eDevize din \u201e16. Liste refacute eDevize / 10. Liste revizuite - GSP\" \u00b7 valori F1 centralizator, f\u0103r\u0103 TVA \u00b7 generat din analiza v49. Brief-ul de \u0219edin\u021b\u0103 din 20.08 (cu simularea de dinaintea depunerii) r\u0103m\u00e2ne separat, neschimbat.</div>\n</div>\n</body>\n</html>\n";
+var EDEVIZE_BRIEF_REZ_HTML = "<!DOCTYPE html>\n<html lang=\"ro\">\n<head>\n<meta charset=\"utf-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n<title>Rezultat eDevize - Liste propuse \u2014 Kog\u0103lniceanu</title>\n<style>\n  :root{--ink:#1a2230;--mut:#5b6675;--line:#e2e6ee;--bg:#f6f8fb;--card:#fff;--green:#1a7f45;--greenbg:#e7f5ec;--red:#c02637;--redbg:#fbe8ea;--amber:#a86400;--amberbg:#fdf2df;--blue:#1552a8;--bluebg:#e8f0fb;}\n  *{box-sizing:border-box}\n  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,\"Segoe UI\",Roboto,Arial,sans-serif;color:var(--ink);background:var(--bg);line-height:1.5;font-size:15px}\n  .wrap{max-width:960px;margin:0 auto;padding:28px 22px 60px}\n  header{border-bottom:2px solid var(--ink);padding-bottom:14px;margin-bottom:20px}\n  h1{font-size:21px;margin:0 0 4px}\n  .sub{color:var(--mut);font-size:13px}\n  h2{font-size:16px;margin:28px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--line)}\n  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}\n  .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px}\n  .card .lab{font-size:12px;color:var(--mut);text-transform:uppercase;letter-spacing:.4px}\n  .card .val{font-size:23px;font-weight:700;margin:4px 0 2px}\n  .card .meta{font-size:12.5px}\n  .ok{color:var(--green)} .bad{color:var(--red)} .warn{color:var(--amber)}\n  table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden;font-size:14px;margin-top:6px}\n  th,td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--line)}\n  th{background:#eef2f8;font-size:11.5px;text-transform:uppercase;letter-spacing:.3px;color:var(--mut)}\n  td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}\n  tr:last-child td{border-bottom:none}\n  .rowtot td{font-weight:700;background:#f0f3f8}\n  .concl{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--blue);border-radius:8px;padding:12px 16px;margin-top:10px;font-size:14px}\n  .concl.bad{border-left-color:var(--red)} .concl.ok{border-left-color:var(--green)} .concl.warn{border-left-color:var(--amber)}\n  .note{color:var(--mut);font-size:12.5px;margin-top:8px}\n  .foot{margin-top:30px;padding-top:12px;border-top:1px solid var(--line);color:var(--mut);font-size:12px}\n  .pill{display:inline-block;padding:2px 9px;border-radius:999px;font-size:11.5px;font-weight:700}\n  .pill.g{background:var(--greenbg);color:var(--green)} .pill.r{background:var(--redbg);color:var(--red)}\n  @media print{body{background:#fff}.wrap{max-width:none}.card,table,.concl{break-inside:avoid}}\n  @media(max-width:640px){.cards{grid-template-columns:1fr}}\n</style>\n</head>\n<body>\n<div class=\"wrap\">\n<header>\n  <h1>Rezultat eDevize - Liste propuse</h1>\n  <div class=\"sub\">Hangar Kog\u0103lniceanu \u00b7 liste ref\u0103cute \u0219i generate \u00een eDevize din analiza v49 \u00b7 valori din F1 centralizator, <b>f\u0103r\u0103 TVA</b> (T4 \u00eenchis) \u00b7 6 fi\u0219iere: Contract \u00b7 LS (NCS1/NCS2) \u00b7 DN (NCS1/NCS2) \u00b7 Note de Renun\u021bare</div>\n</header>\n\n<div class=\"concl ok\"><b>\u2714 Cifre reale, din eDevize.</b> Acest document reflect\u0103 exact ce a rezultat \u00een eDevize dup\u0103 refacere liste \u2014 nu aproxim\u0103rile din analiz\u0103. Modific\u0103rile-cheie sunt confirmate la virgul\u0103: swap-urile (deviz 4.1 = 4.988.662,88), compensarea pe manopera BCR (deviz 2.1 = 1.606.848,39), \u0219i 8.4 Sta\u021bie pompare r\u0103mas\u0103 \u00een contract.</div>\n\n<div class=\"concl bad\"><b>\u26a0 Observa\u021bie intern\u0103 (sesizat\u0103 de PM) \u2014 de fundamentat:</b> Devizul <b>8.1 Camer\u0103 pompare + gospod\u0103rie spum\u0103</b> nu a fost \u00eentocmit \u00een listele anex\u0103 la contract. Este ad\u0103ugat acum ca <b>list\u0103 suplimentar\u0103 (NCS2)</b>, f\u0103r\u0103 NR-uri corespondente. <b>Beneficiarul are \u00eentreb\u0103ri</b> pe acest subiect, iar momentan <b>nu avem \u00eenc\u0103 un r\u0103spuns sus\u021binut</b> \u2014 de fundamentat.</div>\n\n<h2>1 \u00b7 Cele 3 instrumente vs plafoane</h2>\n<div class=\"cards\">\n  <div class=\"card\">\n    <div class=\"lab\">DN \u2014 Diverse \u0219i Neprev\u0103zute</div>\n    <div class=\"val bad\">3.093.006</div>\n    <div class=\"meta\">plafon FIX 2.718.815 \u00b7 <span class=\"bad\">dep\u0103\u0219e\u0219te cu 374.191</span></div>\n  </div>\n  <div class=\"card\">\n    <div class=\"lab\">LS \u2014 Lucr\u0103ri Suplimentare</div>\n    <div class=\"val ok\">2.438.845</div>\n    <div class=\"meta\">plafon 15% = 2.778.200 \u00b7 <span class=\"ok\">liber 339.355</span></div>\n  </div>\n  <div class=\"card\">\n    <div class=\"lab\">Note de Renun\u021bare (NR)</div>\n    <div class=\"val warn\">\u22122.058.160</div>\n    <div class=\"meta\">renun\u021b\u0103ri depuse</div>\n  </div>\n</div>\n<div class=\"concl bad\"><b>Singura constr\u00e2ngere:</b> DN dep\u0103\u0219e\u0219te plafonul (fix, nesuplimentabil) cu <b>374.191 lei</b>. LS are loc liber 339.355 \u2014 mai pu\u021bin dec\u00e2t excedentul DN, deci mutarea de articole pe LS acoper\u0103 cea mai mare parte, dar r\u0103m\u00e2ne un rest de ~35.000 de rezolvat (reducere de scop DN sau swap nou). Restul plafoanelor sunt respectate.</div>\n\n<h2>2 \u00b7 Detaliere pe fi\u0219iere (F1 centralizator, f\u0103r\u0103 TVA)</h2>\n<table>\n  <thead><tr><th>Fi\u0219ier eDevize</th><th class=\"num\">C+M (F3)</th><th class=\"num\">Utilaje (F4)</th><th class=\"num\">Total</th></tr></thead>\n  <tbody>\n    <tr><td>DN \u2014 NCS1 (pre\u021b contract)</td><td class=\"num\">414.879</td><td class=\"num\">\u2014</td><td class=\"num\">414.879</td></tr>\n    <tr><td>DN \u2014 NCS2 (pre\u021b nou)</td><td class=\"num\">148.323</td><td class=\"num\">2.529.804</td><td class=\"num\">2.678.127</td></tr>\n    <tr class=\"rowtot\"><td>DN total</td><td class=\"num\">563.202</td><td class=\"num\">2.529.804</td><td class=\"num\">3.093.006</td></tr>\n    <tr><td>LS \u2014 NCS1 (pre\u021b contract)</td><td class=\"num\">984.524</td><td class=\"num\">111.252</td><td class=\"num\">1.095.776</td></tr>\n    <tr><td>LS \u2014 NCS2 (pre\u021b nou)</td><td class=\"num\">1.343.069</td><td class=\"num\">\u2014</td><td class=\"num\">1.343.069</td></tr>\n    <tr class=\"rowtot\"><td>LS total</td><td class=\"num\">2.327.593</td><td class=\"num\">111.252</td><td class=\"num\">2.438.845</td></tr>\n    <tr><td>Note de Renun\u021bare</td><td class=\"num\">\u2212464.897</td><td class=\"num\">\u22121.593.263</td><td class=\"num\">\u22122.058.160</td></tr>\n    <tr class=\"rowtot\"><td>Contract revizuit (F1)</td><td class=\"num\" colspan=\"2\"></td><td class=\"num\">19.174.832</td></tr>\n  </tbody>\n</table>\n\n<h2>3 \u00b7 Utilaje F4 pe DN (confirmate)</h2>\n<table>\n  <thead><tr><th>Echipament</th><th class=\"num\">buc</th><th class=\"num\">Valoare</th></tr></thead>\n  <tbody>\n    <tr><td>Sta\u021bie pompare Sprinklere (1A+1R+1J) (O6)</td><td class=\"num\">1</td><td class=\"num\">683.971</td></tr>\n    <tr><td>Rezervor stocare ap\u0103 / bazin reten\u021bie (O6)</td><td class=\"num\">1</td><td class=\"num\">229.190</td></tr>\n    <tr><td>Grup generator electric 1400 kVA (O7)</td><td class=\"num\">1</td><td class=\"num\">834.674</td></tr>\n    <tr><td>Skid rezervor spum\u0103 3500 l, dozator RC DN200 (O8)</td><td class=\"num\">2</td><td class=\"num\">452.321</td></tr>\n    <tr><td>Generator de spum\u0103 GH800-VDS (O8)</td><td class=\"num\">8</td><td class=\"num\">329.648</td></tr>\n    <tr class=\"rowtot\"><td>Total utilaje pe DN-NCS2</td><td class=\"num\"></td><td class=\"num\">2.529.804</td></tr>\n  </tbody>\n</table>\n<div class=\"note\">Aceste echipamente (m\u0103rite fa\u021b\u0103 de contract: generator 500\u21921400 kVA etc.) sunt \u00eencadrate DN ca pre\u021b nou (NCS2). Generatorul r\u0103m\u00e2ne p\u00e2rghia de reechilibrare: dac\u0103 beneficiarul accept\u0103 cauza \u201ecerin\u021b\u0103 de avia\u021bie\", poate fi mutat pe LS (care are 339.355 liberi), reduc\u00e2nd excedentul DN.</div>\n\n<h2>4 \u00b7 Ce urmeaz\u0103</h2>\n<div class=\"concl warn\"><b>Reechilibrarea DN</b> (excedent 374.191): (1) prioritar \u2014 noi surse de swap (\u00eenlocuire direct\u0103 \u00een baz\u0103, f\u0103r\u0103 consum de plafon); (2) mutarea unor articole \u00eentregi din cerin\u021ba de avia\u021bie pe LS (max 339.355 liber); (3) o reducere de scop DN pentru restul (~35.000). Toate \u2014 de discutat cu beneficiarul. NCS tip2 vor face oricum obiectul unei negocieri, deci l\u0103sarea DN u\u0219or peste plafon r\u0103m\u00e2ne o marj\u0103 strategic\u0103 valid\u0103.</div>\n\n<h2>5 \u00b7 Neimplementat \u00eenc\u0103 \u2014 de urm\u0103rit</h2>\n<div class=\"concl bad\"><b>Distan\u021ba p\u00e2n\u0103 la postul trafo (actual estimat 650 m \u2014 CABL5): NU e implementat\u0103 \u00eenc\u0103.</b> De verificat pe teren. Dac\u0103 e mai aproape, risc\u0103m s\u0103 bloc\u0103m bani \u00eentr-un NR viitor (traseu/cablu supraestimat, surplus de renun\u021bat ulterior). Dac\u0103 mic\u0219or\u0103m lungimea cablului, ducem diferen\u021ba de bani pe platforma BCR (unde \u00eenregistr\u0103m deficit), \u00een loc s\u0103 o bloc\u0103m.</div>\n\n<div class=\"foot\">Surs\u0103: 6 fi\u0219iere eDevize din \u201e16. Liste refacute eDevize / 10. Liste revizuite - GSP\" \u00b7 valori F1 centralizator, f\u0103r\u0103 TVA \u00b7 generat din analiza v49. Brief-ul de \u0219edin\u021b\u0103 din 20.08 (cu simularea de dinaintea depunerii) r\u0103m\u00e2ne separat, neschimbat.</div>\n</div>\n</body>\n</html>\n";
 var EDEVIZE_BRIEF_REZ_URL = "Sinteza_eDevize_Rezultat.html";
 function openBriefRezultat(){
   var ov=document.getElementById('briefrez-overlay');
@@ -4543,6 +4570,299 @@ function renderSL2(proj) {
         '</table>' +
       '</div>' +
       '<div style="font-size:10px;color:var(--text-secondary);font-style:italic">SL1 (proiectare) nu se ajustează — formula vizează lucrările realizate (subcl. 48.5). Valorile ajustării se cumulează la fiecare SL de execuție viitoare.</div>' +
+    '</div>' +
+    '<div class="page-footer">PM Hub · EREN CONS SRL · 2026</div>';
+}
+
+function renderSL3(proj) {
+  document.querySelectorAll('.submenu-item').forEach(function(i){ i.classList.remove('active'); });
+  var item = document.getElementById('item-hangar-sl3');
+  if (item) item.classList.add('active');
+  closeMenu();
+  document.getElementById('menu-btn').style.display = 'none';
+  var btn = document.getElementById('back-btn');
+  btn.style.display = 'flex';
+  btn.onclick = function() { renderProjHome('hangar'); };
+
+  document.getElementById('main').innerHTML =
+    '<div class="proj-header">' +
+      '<div class="proj-title">Situație de Lucrări Nr. 3 — Execuție</div>' +
+      '<div class="proj-meta">Contract A-997 / 01.08.2025 \xb7 Hangar Kogălniceanu \xb7 UM 0187 \xb7 25.08.2026</div>' +
+    '</div>' +
+    '<div class="module-badge" style="background:#FAEEDA;color:#B9770E">' +
+      '<i class="ti ti-file-analytics" style="font-size:13px"></i> SL3 — Execuție' +
+    '</div>' +
+
+    '<div class="nivel-card" style="margin-bottom:16px;border-left:4px solid #B9770E">' +
+      '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px">' +
+        '<span style="font-size:10px;background:#FAEEDA;color:#B9770E;padding:2px 10px;border-radius:99px;font-weight:600">SL Nr. 3</span>' +
+        '<span style="font-size:10px;background:#D6EAF8;color:#1A5276;padding:2px 10px;border-radius:99px;font-weight:600">Execuție</span>' +
+        '<span style="font-size:10px;background:#EAF3DE;color:#1E6E2D;padding:2px 10px;border-radius:99px;font-weight:600">Contract A-997 / 01.08.2025</span>' +
+        '<span style="font-size:10px;background:#FCE4D6;color:#854F0B;padding:2px 10px;border-radius:99px;font-weight:600">Perioada august 2026</span>' +
+      '</div>' +
+
+      '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">' +
+        '<a href="https://drive.google.com/file/d/1gmE1H30CVwY5klZTiCY9XvIbuTLGQqp8/view?usp=sharing" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:#6C3483;color:#fff;border-radius:6px;font-size:12px;font-weight:600;text-decoration:none"><i class="ti ti-mail-forward"></i> 1. Adresă înaintare SL3</a>' +
+        '<a href="https://drive.google.com/file/d/19XNWSr-4RJWkReZCZpuWfxPjJqLd3woR/view?usp=sharing" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:#0E6E6E;color:#fff;border-radius:6px;font-size:12px;font-weight:600;text-decoration:none"><i class="ti ti-table"></i> 2. Centralizator SL3</a>' +
+        '<a href="https://drive.google.com/file/d/1_Df6dEQrU2-JlHL_2ddBcqR-Wi-kNOob/view?usp=sharing" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:#1A5276;color:#fff;border-radius:6px;font-size:12px;font-weight:600;text-decoration:none"><i class="ti ti-file-type-pdf"></i> 3. Situație de lucrări SL3</a>' +
+        '<a href="https://drive.google.com/file/d/1XSHYU5rNPo0hCLsgp1PTv5PZW_b8AZRH/view?usp=sharing" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:#B9770E;color:#fff;border-radius:6px;font-size:12px;font-weight:600;text-decoration:none"><i class="ti ti-paperclip"></i> 4. Foi de atașament</a>' +
+        '<a href="https://drive.google.com/file/d/1bJbgoMgnGR8w_Kv-AT6hgXUe3O_1PNBE/view?usp=sharing" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:#1F4E79;color:#fff;border-radius:6px;font-size:12px;font-weight:600;text-decoration:none"><i class="ti ti-chart-bar"></i> 5. Grafic fizic și valoric (F6)</a>' +
+        '<a href="https://drive.google.com/file/d/1Vgsj1fz8mz1-jILck6Rg7b9BBwc6femD/view?usp=sharing" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:#8E44AD;color:#fff;border-radius:6px;font-size:12px;font-weight:600;text-decoration:none"><i class="ti ti-chart-line"></i> 6. Realizat vs planificat + Curba S</a>' +
+        '<a href="https://drive.google.com/file/d/1UFDH5cXy1SGgBRLwUNUJCAWj-FqHM8Yx/view?usp=sharing" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:#C0392B;color:#fff;border-radius:6px;font-size:12px;font-weight:600;text-decoration:none"><i class="ti ti-file-percent"></i> 8. Ajustare prețuri SL3</a>' +
+      '</div>' +
+
+      '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:16px">' +
+        '<div style="background:#FAEEDA;border-radius:8px;padding:12px;text-align:center">' +
+          '<div style="font-size:10px;color:#B9770E;font-weight:700;margin-bottom:4px">TOTAL FĂRĂ TVA</div>' +
+          '<div style="font-size:18px;font-weight:700;color:#B9770E">699.504</div>' +
+          '<div style="font-size:10px;color:var(--text-secondary)">lei</div>' +
+        '</div>' +
+        '<div style="background:#EAF3DE;border-radius:8px;padding:12px;text-align:center">' +
+          '<div style="font-size:10px;color:#1E6E2D;font-weight:700;margin-bottom:4px">TVA 21%</div>' +
+          '<div style="font-size:18px;font-weight:700;color:#1E6E2D">146.896</div>' +
+          '<div style="font-size:10px;color:var(--text-secondary)">lei</div>' +
+        '</div>' +
+        '<div style="background:#D6EAF8;border-radius:8px;padding:12px;text-align:center">' +
+          '<div style="font-size:10px;color:#1A5276;font-weight:700;margin-bottom:4px">TOTAL CU TVA</div>' +
+          '<div style="font-size:18px;font-weight:700;color:#1A5276">846.400</div>' +
+          '<div style="font-size:10px;color:var(--text-secondary)">lei</div>' +
+        '</div>' +
+        '<div style="background:#FCE4D6;border-radius:8px;padding:12px;text-align:center">' +
+          '<div style="font-size:10px;color:#854F0B;font-weight:700;margin-bottom:4px">DATA SL</div>' +
+          '<div style="font-size:16px;font-weight:700;color:#854F0B">25.08.2026</div>' +
+          '<div style="font-size:10px;color:var(--text-secondary)">ver. 25.08.2026</div>' +
+        '</div>' +
+      '</div>' +
+    '</div>' +
+
+    '<div class="nivel-card" style="margin-bottom:16px;border-left:4px solid #1A5276">' +
+      '<div class="nivel-title" style="color:#1A5276"><i class="ti ti-list-details"></i> F1 — Centralizator pe obiectiv</div>' +
+      '<div style="overflow-x:auto;margin-top:10px">' +
+        '<table style="width:100%;border-collapse:collapse;font-size:12px">' +
+          '<thead><tr style="background:#1A5276;color:#fff">' +
+            '<th style="padding:8px;text-align:left">Capitol</th>' +
+            '<th style="padding:8px;text-align:right">Valoare fără TVA (lei)</th>' +
+            '<th style="padding:8px;text-align:right">Din care C+M (lei)</th>' +
+          '</tr></thead>' +
+          '<tbody>' +
+            '<tr style="background:#F9F9F9;border-bottom:1px solid #EEE">' +
+              '<td style="padding:8px">Cap. 4.1.2 — Amenajare platformă exterioară</td>' +
+              '<td style="padding:8px;text-align:right;font-weight:600">28.058,45</td>' +
+              '<td style="padding:8px;text-align:right">28.058,45</td>' +
+            '</tr>' +
+            '<tr style="background:#fff;border-bottom:1px solid #EEE">' +
+              '<td style="padding:8px">Cap. 4.1.3 — Structura Hangar</td>' +
+              '<td style="padding:8px;text-align:right;font-weight:600">654.783,34</td>' +
+              '<td style="padding:8px;text-align:right">654.783,34</td>' +
+            '</tr>' +
+            '<tr style="background:#EAF4FB;border-bottom:1px solid #EEE">' +
+              '<td style="padding:8px">Cap. 5.1.1 — Organizare de șantier</td>' +
+              '<td style="padding:8px;text-align:right;font-weight:600">16.662,49</td>' +
+              '<td style="padding:8px;text-align:right">16.662,49</td>' +
+            '</tr>' +
+          '</tbody>' +
+          '<tfoot>' +
+            '<tr style="background:#EBF5FB;border-top:2px solid #1A5276">' +
+              '<td style="padding:8px;font-weight:700">TOTAL fără TVA</td>' +
+              '<td style="padding:8px;text-align:right;font-weight:700;font-size:13px;color:#1A5276">699.504,28</td>' +
+              '<td style="padding:8px;text-align:right;font-weight:700">699.504,28</td>' +
+            '</tr>' +
+            '<tr style="background:#F9F9F9">' +
+              '<td style="padding:8px;color:#555">TVA 21%</td>' +
+              '<td style="padding:8px;text-align:right;color:#555">146.895,90</td>' +
+              '<td style="padding:8px;text-align:right;color:#555">146.895,90</td>' +
+            '</tr>' +
+            '<tr style="background:#1A5276;color:#fff;font-weight:700">' +
+              '<td style="padding:8px">TOTAL cu TVA</td>' +
+              '<td style="padding:8px;text-align:right;font-size:14px">846.400,18</td>' +
+              '<td style="padding:8px;text-align:right">846.400,18</td>' +
+            '</tr>' +
+          '</tfoot>' +
+        '</table>' +
+      '</div>' +
+    '</div>' +
+
+    '<div class="nivel-card" style="margin-bottom:16px;border-left:4px solid #2C3E50">' +
+      '<div class="nivel-title" style="color:#2C3E50"><i class="ti ti-chart-bar"></i> Stadiu decontare — SL1 + SL2 + SL3 (cumulat)</div>' +
+      '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:10px;margin:12px 0">' +
+        '<div style="background:#EAF3DE;border-radius:8px;padding:12px;text-align:center;border-top:3px solid #1E6E2D">' +
+          '<div style="font-size:10px;color:#1E6E2D;font-weight:700;margin-bottom:4px">VALOARE CONTRACT</div>' +
+          '<div style="font-size:15px;font-weight:700;color:#1E6E2D">19.305.182</div>' +
+          '<div style="font-size:10px;color:var(--text-secondary)">lei fără TVA</div>' +
+        '</div>' +
+        '<div style="background:#F5EEF8;border-radius:8px;padding:12px;text-align:center;border-top:3px solid #6C3483">' +
+          '<div style="font-size:10px;color:#6C3483;font-weight:700;margin-bottom:4px">DECONTAT SL1+SL2</div>' +
+          '<div style="font-size:15px;font-weight:700;color:#6C3483">1.275.053</div>' +
+          '<div style="font-size:10px;color:var(--text-secondary)">lei · anterior</div>' +
+        '</div>' +
+        '<div style="background:#FAEEDA;border-radius:8px;padding:12px;text-align:center;border-top:3px solid #B9770E">' +
+          '<div style="font-size:10px;color:#B9770E;font-weight:700;margin-bottom:4px">DECONTAT SL3</div>' +
+          '<div style="font-size:15px;font-weight:700;color:#B9770E">699.504</div>' +
+          '<div style="font-size:10px;color:var(--text-secondary)">lei · Execuție</div>' +
+        '</div>' +
+        '<div style="background:#D6EAF8;border-radius:8px;padding:12px;text-align:center;border-top:3px solid #1A5276">' +
+          '<div style="font-size:10px;color:#1A5276;font-weight:700;margin-bottom:4px">CUMULAT SL1+SL2+SL3</div>' +
+          '<div style="font-size:16px;font-weight:700;color:#1A5276">1.974.557</div>' +
+          '<div style="font-size:10px;color:var(--text-secondary)">lei fără TVA</div>' +
+        '</div>' +
+        '<div style="background:#FDEDEC;border-radius:8px;padding:12px;text-align:center;border-top:3px solid #C0392B">' +
+          '<div style="font-size:10px;color:#C0392B;font-weight:700;margin-bottom:4px">REST DE DECONTAT</div>' +
+          '<div style="font-size:15px;font-weight:700;color:#C0392B">17.330.625</div>' +
+          '<div style="font-size:10px;color:var(--text-secondary)">lei fără TVA</div>' +
+        '</div>' +
+        '<div style="background:#2C3E50;border-radius:8px;padding:12px;text-align:center;border-top:3px solid #566573">' +
+          '<div style="font-size:10px;color:#AAB7B8;font-weight:700;margin-bottom:4px">PROGRES GLOBAL</div>' +
+          '<div style="font-size:22px;font-weight:700;color:#fff">10,23%</div>' +
+          '<div style="font-size:10px;color:#AAB7B8">din valoare totală</div>' +
+        '</div>' +
+      '</div>' +
+      '<div style="margin-bottom:12px">' +
+        '<div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text-secondary);margin-bottom:4px">' +
+          '<span>Progres decontare cumulat</span><span>10,23%</span>' +
+        '</div>' +
+        '<div style="background:var(--grey-200);border-radius:4px;height:10px;position:relative">' +
+          '<div style="background:#6C3483;border-radius:4px 0 0 4px;height:10px;width:3.25%;display:inline-block;vertical-align:top"></div>' +
+          '<div style="background:#8E44AD;height:10px;width:3.35%;display:inline-block;vertical-align:top"></div>' +
+          '<div style="background:#B9770E;border-radius:0 4px 4px 0;height:10px;width:3.62%;display:inline-block;vertical-align:top"></div>' +
+        '</div>' +
+        '<div style="display:flex;gap:12px;margin-top:4px">' +
+          '<span style="font-size:10px;color:#6C3483">&#9632; SL1: 3,25%</span>' +
+          '<span style="font-size:10px;color:#8E44AD">&#9632; SL2: +3,35%</span>' +
+          '<span style="font-size:10px;color:#B9770E">&#9632; SL3: +3,62%</span>' +
+        '</div>' +
+      '</div>' +
+      '<div style="overflow-x:auto">' +
+        '<table style="width:100%;border-collapse:collapse;font-size:11px">' +
+          '<thead><tr style="background:#2C3E50;color:#fff">' +
+            '<th style="padding:7px 8px;text-align:left">SL</th>' +
+            '<th style="padding:7px 8px;text-align:left">Tip</th>' +
+            '<th style="padding:7px 8px;text-align:left">Capitol</th>' +
+            '<th style="padding:7px 8px;text-align:right">Fără TVA (lei)</th>' +
+            '<th style="padding:7px 8px;text-align:right">TVA (lei)</th>' +
+            '<th style="padding:7px 8px;text-align:right">Cu TVA (lei)</th>' +
+          '</tr></thead>' +
+          '<tbody>' +
+            '<tr style="background:#F5EEF8;border-bottom:1px solid #EEE">' +
+              '<td style="padding:7px 8px;font-weight:700;color:#6C3483">SL1</td>' +
+              '<td style="padding:7px 8px">Proiectare</td>' +
+              '<td style="padding:7px 8px;color:#555">Cap.3 — Proiectare &amp; AT</td>' +
+              '<td style="padding:7px 8px;text-align:right;font-weight:600">627.850,00</td>' +
+              '<td style="padding:7px 8px;text-align:right">131.848,50</td>' +
+              '<td style="padding:7px 8px;text-align:right;font-weight:600">759.698,50</td>' +
+            '</tr>' +
+            '<tr style="background:#EDE7F6;border-bottom:1px solid #EEE">' +
+              '<td style="padding:7px 8px;font-weight:700;color:#6C3483">SL2</td>' +
+              '<td style="padding:7px 8px">Execuție</td>' +
+              '<td style="padding:7px 8px;color:#555">Cap.1 Demolări + Cap.5 OS</td>' +
+              '<td style="padding:7px 8px;text-align:right;font-weight:600">647.202,90</td>' +
+              '<td style="padding:7px 8px;text-align:right">135.912,61</td>' +
+              '<td style="padding:7px 8px;text-align:right;font-weight:600">783.115,51</td>' +
+            '</tr>' +
+            '<tr style="background:#FDF3E6;border-bottom:1px solid #EEE">' +
+              '<td style="padding:7px 8px;font-weight:700;color:#B9770E">SL3</td>' +
+              '<td style="padding:7px 8px">Execuție</td>' +
+              '<td style="padding:7px 8px;color:#555">Cap.4.1 Amenajare + Structură + Cap.5 OS</td>' +
+              '<td style="padding:7px 8px;text-align:right;font-weight:600">699.504,28</td>' +
+              '<td style="padding:7px 8px;text-align:right">146.895,90</td>' +
+              '<td style="padding:7px 8px;text-align:right;font-weight:600">846.400,18</td>' +
+            '</tr>' +
+          '</tbody>' +
+          '<tfoot>' +
+            '<tr style="background:#2C3E50;color:#fff;font-weight:700">' +
+              '<td colspan="3" style="padding:8px">TOTAL DECONTAT CUMULAT</td>' +
+              '<td style="padding:8px;text-align:right;font-size:13px">1.974.557,18</td>' +
+              '<td style="padding:8px;text-align:right">414.657,01</td>' +
+              '<td style="padding:8px;text-align:right;font-size:13px">2.389.214,19</td>' +
+            '</tr>' +
+            '<tr style="background:#FDEDEC">' +
+              '<td colspan="3" style="padding:7px 8px;font-weight:600;color:#C0392B">Rest de decontat</td>' +
+              '<td style="padding:7px 8px;text-align:right;font-weight:700;color:#C0392B">17.330.624,84</td>' +
+              '<td style="padding:7px 8px;text-align:right;color:#C0392B">3.639.431,22</td>' +
+              '<td style="padding:7px 8px;text-align:right;font-weight:700;color:#C0392B">20.970.056,06</td>' +
+            '</tr>' +
+          '</tfoot>' +
+        '</table>' +
+      '</div>' +
+
+      '<div style="font-size:11px;font-weight:700;color:#2C3E50;margin:18px 0 8px;text-transform:uppercase;letter-spacing:0.05em">' +
+        '<i class="ti ti-file-percent"></i> Ajustare de preț (indexare) — sub-clauza 48.5' +
+      '</div>' +
+      '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:10px">' +
+        '<div style="background:#FDEDEC;border-radius:8px;padding:12px;text-align:center;border-top:3px solid #C0392B">' +
+          '<div style="font-size:10px;color:#C0392B;font-weight:700;margin-bottom:4px">COEF. AJUSTARE SL3 (An)</div>' +
+          '<div style="font-size:16px;font-weight:700;color:#C0392B">1,149617</div>' +
+          '<div style="font-size:10px;color:var(--text-secondary)">In/Io = 165,2 / 143,7</div>' +
+        '</div>' +
+        '<div style="background:#FDEDEC;border-radius:8px;padding:12px;text-align:center">' +
+          '<div style="font-size:10px;color:#C0392B;font-weight:700;margin-bottom:4px">AJUSTARE SL3</div>' +
+          '<div style="font-size:16px;font-weight:700;color:#C0392B">104.657,91</div>' +
+          '<div style="font-size:10px;color:var(--text-secondary)">lei fără TVA</div>' +
+        '</div>' +
+        '<div style="background:#FDEDEC;border-radius:8px;padding:12px;text-align:center">' +
+          '<div style="font-size:10px;color:#C0392B;font-weight:700;margin-bottom:4px">AJUSTARE SL3 CU TVA</div>' +
+          '<div style="font-size:16px;font-weight:700;color:#C0392B">126.636,07</div>' +
+          '<div style="font-size:10px;color:var(--text-secondary)">lei (TVA 21%)</div>' +
+        '</div>' +
+        '<div style="background:#2C3E50;border-radius:8px;padding:12px;text-align:center">' +
+          '<div style="font-size:10px;color:#fff;font-weight:700;margin-bottom:4px">CUMULAT AJUSTĂRI</div>' +
+          '<div style="font-size:16px;font-weight:700;color:#fff">196.147,00</div>' +
+          '<div style="font-size:10px;color:#BFC9D4">lei fără TVA</div>' +
+        '</div>' +
+      '</div>' +
+      '<div style="font-size:10px;color:var(--text-secondary);margin-bottom:10px">' +
+        'av = 0% \xb7 Io (ian. 2025 — Data de Referință) = 143,70 \xb7 In (iun. 2026, tab.15) = 165,20 \xb7 An = av+(1−av)·In/Io \xb7 Sursa: Buletin Statistic de Prețuri INS nr. 06/2026' +
+      '</div>' +
+      '<div style="overflow-x:auto;margin-bottom:6px">' +
+        '<table style="width:100%;border-collapse:collapse;font-size:11px">' +
+          '<thead><tr style="background:#C0392B;color:#fff">' +
+            '<th style="padding:7px 8px;text-align:left">SL</th>' +
+            '<th style="padding:7px 8px;text-align:left">Tip</th>' +
+            '<th style="padding:7px 8px;text-align:right">Valoare bază (lei)</th>' +
+            '<th style="padding:7px 8px;text-align:right">Coef. An</th>' +
+            '<th style="padding:7px 8px;text-align:right">Ajustare fără TVA</th>' +
+            '<th style="padding:7px 8px;text-align:right">TVA 21%</th>' +
+            '<th style="padding:7px 8px;text-align:right">Ajustare cu TVA</th>' +
+          '</tr></thead>' +
+          '<tbody>' +
+            '<tr style="border-bottom:1px solid #EEE">' +
+              '<td style="padding:7px 8px;font-weight:700;color:#6C3483">SL1</td>' +
+              '<td style="padding:7px 8px">Proiectare</td>' +
+              '<td style="padding:7px 8px;text-align:right">627.850,00</td>' +
+              '<td style="padding:7px 8px;text-align:right;color:var(--text-secondary)">—</td>' +
+              '<td style="padding:7px 8px;text-align:right">0,00</td>' +
+              '<td style="padding:7px 8px;text-align:right">0,00</td>' +
+              '<td style="padding:7px 8px;text-align:right">0,00</td>' +
+            '</tr>' +
+            '<tr style="border-bottom:1px solid #EEE">' +
+              '<td style="padding:7px 8px;font-weight:700;color:#6C3483">SL2</td>' +
+              '<td style="padding:7px 8px">Execuție</td>' +
+              '<td style="padding:7px 8px;text-align:right">638.203,00</td>' +
+              '<td style="padding:7px 8px;text-align:right">1,143354</td>' +
+              '<td style="padding:7px 8px;text-align:right;font-weight:600">91.489,09</td>' +
+              '<td style="padding:7px 8px;text-align:right">19.212,71</td>' +
+              '<td style="padding:7px 8px;text-align:right;font-weight:600">110.701,80</td>' +
+            '</tr>' +
+            '<tr style="background:#FDF2F2;border-bottom:1px solid #EEE">' +
+              '<td style="padding:7px 8px;font-weight:700;color:#C0392B">SL3</td>' +
+              '<td style="padding:7px 8px">Execuție</td>' +
+              '<td style="padding:7px 8px;text-align:right">699.504,28</td>' +
+              '<td style="padding:7px 8px;text-align:right">1,149617</td>' +
+              '<td style="padding:7px 8px;text-align:right;font-weight:600">104.657,91</td>' +
+              '<td style="padding:7px 8px;text-align:right">21.978,16</td>' +
+              '<td style="padding:7px 8px;text-align:right;font-weight:600">126.636,07</td>' +
+            '</tr>' +
+          '</tbody>' +
+          '<tfoot>' +
+            '<tr style="background:#2C3E50;color:#fff;font-weight:700">' +
+              '<td colspan="4" style="padding:8px">TOTAL AJUSTĂRI CUMULATE</td>' +
+              '<td style="padding:8px;text-align:right;font-size:13px">196.147,00</td>' +
+              '<td style="padding:8px;text-align:right">41.190,87</td>' +
+              '<td style="padding:8px;text-align:right;font-size:13px">237.337,87</td>' +
+            '</tr>' +
+          '</tfoot>' +
+        '</table>' +
+      '</div>' +
+      '<div style="font-size:10px;color:var(--text-secondary);font-style:italic">SL1 (proiectare) nu se ajustează — formula vizează lucrările realizate (subcl. 48.5). Indicele iunie 2026 este provizoriu (Buletin INS nr. 06/2026).</div>' +
     '</div>' +
     '<div class="page-footer">PM Hub · EREN CONS SRL · 2026</div>';
 }

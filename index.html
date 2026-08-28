@@ -335,6 +335,27 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
           <div class="submenu-item" id="item-hangar-ansap" onclick="goModule('hangar','ansap')">
             <i class="ti ti-file-spreadsheet" style="color:#1A5276"></i> Săpături Platformă și Structură
           </div>
+          <div class="submenu-item" id="item-hangar-inst-toggle" onclick="toggleSubSub('hangar-inst')">
+            <i class="ti ti-building-factory-2" style="color:#4338CA"></i> Analiză Instalații
+            <i class="ti ti-chevron-down chevron" id="chev-hangar-inst" style="font-size:11px"></i>
+          </div>
+          <div class="submenu" id="sub-hangar-inst" style="margin-left:14px;border-left:2px solid var(--grey-200)">
+            <div class="submenu-item" id="item-hangar-instdash" onclick="goModule('hangar','instdash')">
+              <i class="ti ti-layout-dashboard" style="color:#4338CA"></i> Dashboard General
+            </div>
+            <div class="submenu-item" id="item-hangar-inst7" onclick="goModule('hangar','inst7')">
+              <i class="ti ti-bolt" style="color:#B03A2E"></i> Cap.7 — Rețele Electrice Ext.
+            </div>
+            <div class="submenu-item" id="item-hangar-inst9" onclick="goModule('hangar','inst9')">
+              <i class="ti ti-air-conditioning" style="color:#1A7A5E"></i> Cap.9 — HVAC
+            </div>
+            <div class="submenu-item" id="item-hangar-inst10" onclick="goModule('hangar','inst10')">
+              <i class="ti ti-plug-connected" style="color:#B45309"></i> Cap.10 — Curenți Tari
+            </div>
+            <div class="submenu-item" id="item-hangar-inst11" onclick="goModule('hangar','inst11')">
+              <i class="ti ti-antenna" style="color:#5B2C87"></i> Cap.11 — Curenți Slabi
+            </div>
+          </div>
         </div>
         <div class="submenu-item" id="item-hangar-handover" onclick="toggleSubSub('hangar-handover')">
           <i class="ti ti-file-check" style="color:#B45309"></i> Hand Over
@@ -518,6 +539,11 @@ function goModule(proj, module) {
   else if (module === 'anpref') renderAnPref(proj);
   else if (module === 'anconfmetal') renderConfMetalice(proj);
   else if (module === 'ansap') renderAnSap(proj);
+  else if (module === 'instdash') renderInstDashboard(proj);
+  else if (module === 'inst7') renderInstCapitol(proj, 'cap7');
+  else if (module === 'inst9') renderInstCapitol(proj, 'cap9');
+  else if (module === 'inst10') renderInstCapitol(proj, 'cap10');
+  else if (module === 'inst11') renderInstCapitol(proj, 'cap11');
   else if (module === 'handover') renderHandover(proj);
   else if (module === 'stab01') renderHandover(proj);
   else if (module === 'stab02' || module === 'hozone' || module === 'koizone' || module === 'notapm') renderHandoverSoon(proj, module);
@@ -4935,6 +4961,285 @@ function openFoiAtasamentSL2() { window.open('https://drive.google.com/file/d/12
 function openVizualizareSL2() {
   window.open('https://drive.google.com/file/d/1fWdqnsQcbn-8C1480jgAuggYty0fcklD/view?usp=sharing', '_blank');
 }
+
+// ============ ANALIZĂ INSTALAȚII — date structurate pe capitole de buget ============
+var INST_DATA = {
+  cap7: {
+    key:'cap7', mod:'inst7', nume:'Cap.7 — Rețele Electrice Exterioare', icon:'ti-bolt', color:'#B03A2E',
+    ofertanti:['IMSAT','KOHLER','CAT'],
+    f3Label:'F3 — Lucrări electrice exterioare',
+    f3: [
+      {cod:'7.1', den:'Priză pământ + paratrăsnet', buget:70064.24, of:{IMSAT:148189.46}, obs:'+111,5% — piață peste deviz'},
+      {cod:'7.2', den:'Sistem degivrare ghidaj poartă', buget:9895.80, of:{IMSAT:8876.00}, obs:'-10,3% — singura poziție sub buget'},
+      {cod:'7.3', den:'Cabluri electrice (CABL1-5)', buget:633053.03, of:{IMSAT:1334893.14}, obs:'+110,9% — inflație cablu de cupru'},
+      {cod:'7.4', den:'Montaj grup electrogen', buget:9986.53, of:{}, obs:'Neofertat — posibil inclus la furnizorul de generator'}
+    ],
+    f4Label:'F4 — Echipamente electrice speciale',
+    f4: [
+      {cod:'F4.1', den:'Generator electric — 500→1400kVA (swap corecție SF)', buget:834674.03, bugetNote:'valoare folosită în eDevize (F4 Utilaje O7, 1400kVA)', of:{KOHLER:257500, CAT:323000, IMSAT:1589297.03}, obs:'KOHLER/CAT = oferte vechi pt 550kVA (nov.2024), nu 1400kVA — nu sunt comparabile direct cu IMSAT. IMSAT +90,4% peste valoarea deja asumată în eDevize.'},
+      {cod:'F4.2', den:'Post trafo 20/0.4kV, 630kVA', buget:null, of:{}, obs:'Fără buget identificat în deviz. IMSAT: NU OFERTĂM.'}
+    ],
+    riscuri:[
+      {sev:'CRITIC', text:'Generator 1400kVA — IMSAT cu 90,4% peste valoarea deja folosită în eDevize (834.674 lei). Decizie necesară înainte de a bloca plafonul DN pe Obiect 7.'},
+      {sev:'MARE', text:'Cabluri electrice CABL1-5 — toate +110-115% peste buget, consistent cu inflația cuprului. Contractul IMSAT are clauză explicită de ajustare la bursa metalelor.'},
+      {sev:'MEDIU', text:'7.4 Montaj generator (9.987 lei) și Post trafo — neofertate de nimeni. De clarificat cu furnizorul de generator dacă montajul e inclus.'}
+    ],
+    actiuni:[
+      {a:'Cere IMSAT alternativa BAUDOUIN/MITSUBISHI pt generator (menționată ca opțiune mai ieftină în ofertă)', r:'G. Spătaru', t:'—'},
+      {a:'Clarifică cu furnizorul de generator dacă montajul (7.4) e inclus în preț', r:'G. Spătaru', t:'—'},
+      {a:'Solicită a doua ofertă completă pe Cap.7 (priză pământ, degivrare, cabluri) — IMSAT e singurul reper azi', r:'Achiziții', t:'—'}
+    ]
+  },
+  cap9: {
+    key:'cap9', mod:'inst9', nume:'Cap.9 — HVAC', icon:'ti-air-conditioning', color:'#1A7A5E',
+    ofertanti:['IMSAT','ROMSTAL/ECOFLAM/CAIROX/ROSENBERG'],
+    f3Label:'F3 — Lucrări de instalare (montaj + materiale)',
+    f3: [
+      {cod:'9.1', den:'Climatizare + Ventilare', buget:102909.73, of:{IMSAT:164338.18}, obs:'+59,7% — prima ofertă F3 primită pe acest subcapitol'},
+      {cod:'9.2', den:'Distribuție calorifere', buget:83787.80, of:{IMSAT:112728.97}, obs:'+34,5% — prima ofertă F3 primită pe acest subcapitol'}
+    ],
+    f4Label:'F3+F4 — Montaj echipamente (labor + furnizare, ofertate împreună)',
+    f4: [
+      {cod:'9.3+F4', den:'Montaj echipamente HVAC (cazane, VRV, ventilatoare, pompe)', buget:320217.77, bugetNote:'46.090 (F3 montaj) + 274.128 (F4 echipamente)', of:{IMSAT:319110.93, 'ROMSTAL/ECOFLAM/CAIROX/ROSENBERG':130343.35}, obs:'IMSAT practic identic cu bugetul combinat (-0,3%) — bundle montaj+echipament coincide cu suma F3+F4. Ofertele individuale anterioare (Romstal/Ecoflam/Cairox/Rosenberg) acopereau doar 47,5% din F4, echipament cu echipament, neconsolidat.'}
+    ],
+    riscuri:[
+      {sev:'OK', text:'Cap.9 e capitolul cel mai bine fundamentat: IMSAT umple golul F3 (0% acoperire înainte) și bundle-ul 9.3+F4 e aproape identic cu bugetul.'},
+      {sev:'MEDIU', text:'9.1 și 9.2 (+59,7% / +34,5%) — verifică dacă diferența vine din preț de piață sau din spec (izolații, tip conductă).'}
+    ],
+    actiuni:[
+      {a:'Confirmă tehnic dacă IMSAT poate substitui integral ofertele individuale Romstal/Ecoflam/Cairox/Rosenberg (verifică echivalență model VRV, cazane)', r:'G. Spătaru / Proiectant', t:'—'},
+      {a:'Dacă IMSAT confirmă spec echivalentă, recomandă contractarea unică IMSAT pe Cap.9 (responsabilitate unică + preț aproape de buget)', r:'PM', t:'—'}
+    ]
+  },
+  cap10: {
+    key:'cap10', mod:'inst10', nume:'Cap.10 — Curenți Tari', icon:'ti-plug-connected', color:'#B45309',
+    ofertanti:['IMSAT','Dynell'],
+    f3Label:'F3 — Lucrări de instalații (montaj + materiale)',
+    f3: [
+      {cod:'10.1', den:'Tablouri electrice (TAB1-4)', buget:74490.31, of:{IMSAT:702252.94}, obs:'+842,7% — anomalie majoră, necesită verificare tehnică (spec/putere/marcă aparataj). IMSAT a mai inclus tablouri suplimentare nebugetate (TADM1/2, TCT, TGE, baterie compensare) în valoare de 294.829 lei, fără corespondent în deviz.'},
+      {cod:'10.2', den:'Corpuri de iluminat (11 poz.)', buget:419909.77, of:{IMSAT:155014.10}, obs:'-63,1% — ATENȚIE: la balizaj IP68 (15 buc) bugetul e 14.781 lei/buc, IMSAT ~1.778 lei/buc (8x mai ieftin) — risc de echipament neconform spec. aeroportuară, de verificat cu proiectantul înainte de a considera economie.'},
+      {cod:'10.3', den:'Aparataj (6 poz.)', buget:18365.49, of:{IMSAT:90543.91}, obs:'+393% — cantități identice cu devizul'},
+      {cod:'10.4', den:'Cabluri de energie (14 poz.)', buget:206858.36, of:{IMSAT:493063.98}, obs:'+138,4% — aceeași cauză ca 7.3, inflație cablu cupru'},
+      {cod:'10.5', den:'Paturi cabluri / tuburi', buget:28261.22, of:{IMSAT:102572.27}, obs:'+263% pe pozițiile comparabile; IMSAT a mai adăugat 49.726 lei scop suplimentar (paturi curenți slabi + dimensiuni noi) fără corespondent în deviz'},
+      {cod:'10.6', den:'Montaj (puncte alimentare curent, 4 buc.)', buget:40231.33, of:{}, obs:'Neofertat de IMSAT — rămâne integral neacoperit'}
+    ],
+    f4Label:'F4 — Echipamente',
+    f4: [
+      {cod:'F4.1', den:'GPU 400Hz — sursă statică alimentare curent continuu (4 buc.)', buget:482171.14, of:{Dynell:746000}, obs:'IMSAT NU a ofertat acest echipament. Dynell rămâne singurul ofertant (+54,7% peste buget).'}
+    ],
+    riscuri:[
+      {sev:'CRITIC', text:'10.1 Tablouri electrice +842,7% — cea mai mare anomalie din toată analiza. De verificat urgent cu proiectantul înainte de orice decizie de contractare.'},
+      {sev:'MARE', text:'10.2 Corpuri iluminat — posibil echipament de balizaj neconform spec. aeroportuară (IP68, certificare). Nu trata diferența de -63% ca economie fără verificare tehnică.'},
+      {sev:'MEDIU', text:'10.4 Cabluri energie +138,4% — aceeași inflație cupru ca la Cap.7.'},
+      {sev:'MIC', text:'10.6 (40.231 lei) neofertat de IMSAT — de cerut completare.'}
+    ],
+    actiuni:[
+      {a:'Verificare tehnică urgentă cu proiectantul: specificația reală a tabloului general (justificare preț 10.1)', r:'G. Spătaru / Proiectant', t:'—'},
+      {a:'Cere fișa tehnică a corpului de balizaj ofertat de IMSAT — confirmare conformitate aeroportuară IP68', r:'G. Spătaru / Proiectant', t:'—'},
+      {a:'Cere IMSAT completare poziție 10.6 (puncte alimentare curent, 4 buc.)', r:'Achiziții', t:'—'}
+    ]
+  },
+  cap11: {
+    key:'cap11', mod:'inst11', nume:'Cap.11 — Curenți Slabi', icon:'ti-antenna', color:'#5B2C87',
+    ofertanti:['IMSAT','Nibaco','Honeywell'],
+    f3Label:'F3+F4 — IDSAI (detecție/semnalizare incendiu, montaj+furnizare combinate)',
+    f3: [
+      {cod:'11.1', den:'IDSAI — detecție incendiu (F3 253.569 + F4 ECS/Rack 31.513)', buget:285081.44, of:{IMSAT:350347.60, Nibaco:199669.35, Honeywell:139100.90}, obs:'Honeywell cea mai ieftină (-51,2% vs buget). IMSAT e cea mai scumpă din 3 oferte (+152% peste Honeywell) — nu e competitivă pe acest pachet.'},
+      {cod:'11.2', den:'Rețea de date (5 poz.)', buget:25138.89, of:{IMSAT:59143.68, Nibaco:52701.70, Honeywell:34701.85}, obs:'Honeywell cea mai ieftină; toate 3 peste buget'},
+      {cod:'11.3', den:'Montaj echipamente (rack, ECS)', buget:2943.78, of:{}, obs:'Neofertat separat — presupus inclus în pachetul IDSAI la toți 3 ofertanții'}
+    ],
+    f4Label:'Extra — scope nebugetat în deviz',
+    f4: [
+      {cod:'EXTRA.1', den:'CCTV — sistem supraveghere video', buget:null, of:{Nibaco:60957.25, Honeywell:33768.25}, obs:'Nu există subcapitol explicit în devizul curent. IMSAT nu ofertează acest sistem (nu e în scope-ul lor).'},
+      {cod:'EXTRA.2', den:'Control acces', buget:null, of:{Nibaco:61379.75, Honeywell:27212.15}, obs:'Nu există subcapitol explicit în devizul curent. IMSAT nu ofertează acest sistem.'}
+    ],
+    riscuri:[
+      {sev:'MARE', text:'IMSAT cea mai scumpă ofertă pe detecție incendiu (350.348 lei) — Honeywell (139.101 lei) rămâne opțiunea logică.'},
+      {sev:'MEDIU', text:'CCTV + Control acces (Nibaco 122.337 / Honeywell 60.980 lei) nu au subcapitol explicit în deviz — de clarificat dacă sunt scop contractual sau extra-scop.'},
+      {sev:'MIC', text:'Centrala trape desfumare (F4 poz.2) — preț 0 lei în deviz, nespecificat. Necesită ofertă separată.'}
+    ],
+    actiuni:[
+      {a:'Nu continua cu IMSAT pe detecție incendiu — rămâi pe Honeywell (139.101 lei)', r:'PM', t:'—'},
+      {a:'Clarifică cu proiectantul/beneficiarul dacă CCTV și Control acces sunt scop contractual', r:'G. Spătaru', t:'—'},
+      {a:'Solicită ofertă separată pentru centrala de acționare trape desfumare (preț 0 în deviz)', r:'Achiziții', t:'—'}
+    ]
+  }
+};
+
+// ============ ANALIZĂ INSTALAȚII — funcții de randare ============
+function _instFmt(n) {
+  if (n === null || n === undefined) return '—';
+  return n.toLocaleString('ro-RO', {maximumFractionDigits:0}) + ' lei';
+}
+function _instDelta(buget, val) {
+  if (buget === null || buget === undefined || !buget || val === null || val === undefined) return '';
+  var d = (val - buget) / buget * 100;
+  var sign = d >= 0 ? '+' : '';
+  var color = d > 15 ? '#C0392B' : (d < -5 ? '#1E6E2D' : '#B45309');
+  return '<div style="font-size:9.5px;color:' + color + ';font-weight:600">' + sign + d.toFixed(1) + '%</div>';
+}
+function _instSevColor(sev) {
+  if (sev === 'CRITIC') return {bg:'#FCE4E4', tc:'#C0392B'};
+  if (sev === 'MARE') return {bg:'#FFF3E0', tc:'#B45309'};
+  if (sev === 'MEDIU') return {bg:'#FFF8E1', tc:'#856404'};
+  if (sev === 'OK') return {bg:'#E8F5E9', tc:'#1E6E2D'};
+  return {bg:'#F0F0F0', tc:'#555'};
+}
+
+function _instBuildTable(rows, ofertanti, sectionLabel) {
+  var html = '<div class="proj-card" style="margin-bottom:12px">';
+  html += '<div class="proj-card-header" style="background:#2C4A6E"><span style="font-size:13px;font-weight:600;color:#fff">' + sectionLabel + '</span></div>';
+  html += '<div class="proj-card-body" style="padding:0;overflow-x:auto">';
+  html += '<table style="width:100%;border-collapse:collapse;font-size:11px">';
+  html += '<tr style="background:#2E5090;color:#fff"><th style="padding:7px 8px;text-align:left;white-space:nowrap">Cod</th><th style="padding:7px 8px;text-align:left">Subcapitol / Poziție</th><th style="padding:7px 8px;text-align:right;white-space:nowrap">Buget</th>';
+  ofertanti.forEach(function(o){ html += '<th style="padding:7px 8px;text-align:right;white-space:nowrap">' + o + '</th>'; });
+  html += '<th style="padding:7px 8px;text-align:left">Observații</th></tr>';
+  rows.forEach(function(r){
+    html += '<tr>';
+    html += '<td style="padding:6px 8px;border-bottom:1px solid #eee;font-weight:600;color:#444;white-space:nowrap">' + r.cod + '</td>';
+    html += '<td style="padding:6px 8px;border-bottom:1px solid #eee">' + r.den + (r.bugetNote ? '<div style="font-size:9.5px;color:#888;font-style:italic">' + r.bugetNote + '</div>' : '') + '</td>';
+    html += '<td style="padding:6px 8px;border-bottom:1px solid #eee;text-align:right;white-space:nowrap">' + _instFmt(r.buget) + '</td>';
+    ofertanti.forEach(function(o){
+      var v = r.of && (o in r.of) ? r.of[o] : null;
+      html += '<td style="padding:6px 8px;border-bottom:1px solid #eee;text-align:right;white-space:nowrap">' + _instFmt(v) + _instDelta(r.buget, v) + '</td>';
+    });
+    html += '<td style="padding:6px 8px;border-bottom:1px solid #eee;font-size:10px;color:#555;max-width:280px">' + (r.obs || '') + '</td>';
+    html += '</tr>';
+  });
+  html += '</table></div></div>';
+  return html;
+}
+
+function renderInstCapitol(proj, capKey) {
+  document.querySelectorAll('.submenu-item').forEach(function(i){ i.classList.remove('active'); });
+  var cap = INST_DATA[capKey];
+  var itm = document.getElementById('item-hangar-' + cap.mod);
+  if (itm) itm.classList.add('active');
+  closeMenu();
+  document.getElementById('menu-btn').style.display = 'none';
+  var bb = document.getElementById('back-btn');
+  bb.style.display = 'flex';
+  bb.onclick = function() { renderInstDashboard(proj); };
+
+  var bugetTotal = 0, ofTotal = {};
+  cap.ofertanti.forEach(function(o){ ofTotal[o] = 0; });
+  cap.f3.concat(cap.f4).forEach(function(r){
+    if (r.buget) bugetTotal += r.buget;
+    cap.ofertanti.forEach(function(o){ if (r.of && r.of[o]) ofTotal[o] += r.of[o]; });
+  });
+
+  var html = '';
+  html += '<div class="proj-header"><div class="proj-title">Analiză Instalații — ' + cap.nume + '</div>';
+  html += '<div class="proj-meta">Hangar Kogălniceanu · matrice subcapitol × ofertant, la cantitățile din deviz F3 · fără TVA</div></div>';
+  html += '<div class="module-badge" style="background:#EEF2FF;color:#4338CA"><i class="ti ' + cap.icon + '" style="font-size:13px"></i> ' + cap.nume + '</div>';
+
+  html += '<div class="kpi-grid" style="margin-bottom:14px">';
+  html += '<div class="kpi"><div class="kpi-label">Buget total capitol</div><div class="kpi-val">' + _instFmt(bugetTotal) + '</div><div class="kpi-sub">F3+F4, poziții comparabile</div></div>';
+  cap.ofertanti.forEach(function(o){
+    var d = bugetTotal ? ((ofTotal[o]-bugetTotal)/bugetTotal*100) : 0;
+    var color = ofTotal[o] === 0 ? '#999' : (d > 15 ? '#C0392B' : (d < -5 ? '#1E6E2D' : '#B45309'));
+    html += '<div class="kpi"><div class="kpi-label">' + o + '</div><div class="kpi-val" style="color:' + color + '">' + (ofTotal[o] ? _instFmt(ofTotal[o]) : '— neofertat') + '</div>' +
+      (ofTotal[o] ? '<div class="kpi-sub">' + (d>=0?'+':'') + d.toFixed(1) + '% vs buget</div>' : '<div class="kpi-sub">fără ofertă pe acest capitol</div>') + '</div>';
+  });
+  html += '</div>';
+
+  html += _instBuildTable(cap.f3, cap.ofertanti, cap.f3Label);
+  html += _instBuildTable(cap.f4, cap.ofertanti, cap.f4Label);
+
+  html += '<div class="proj-card" style="margin-bottom:12px">';
+  html += '<div class="proj-card-header" style="background:#7B1818"><span style="font-size:13px;font-weight:600;color:#fff">Riscuri</span></div>';
+  html += '<div class="proj-card-body" style="display:flex;flex-direction:column;gap:6px">';
+  cap.riscuri.forEach(function(r){
+    var sc = _instSevColor(r.sev);
+    html += '<div style="background:' + sc.bg + ';border-radius:6px;padding:8px 12px;font-size:12px;display:flex;gap:12px;align-items:flex-start">';
+    html += '<span style="font-weight:700;color:' + sc.tc + ';flex:0 0 70px;width:70px">' + r.sev + '</span>';
+    html += '<span style="flex:1">' + r.text + '</span></div>';
+  });
+  html += '</div></div>';
+
+  html += '<div class="proj-card" style="margin-bottom:12px">';
+  html += '<div class="proj-card-header" style="background:#2C4A6E"><span style="font-size:13px;font-weight:600;color:#fff">Acțiuni</span></div>';
+  html += '<div class="proj-card-body" style="padding:0;overflow-x:auto">';
+  html += '<table style="width:100%;border-collapse:collapse;font-size:11px">';
+  html += '<tr style="background:#2E5090;color:#fff"><th style="padding:7px 10px;text-align:left">Acțiune</th><th style="padding:7px 8px;text-align:left;white-space:nowrap">Responsabil</th><th style="padding:7px 8px;text-align:center">Termen</th></tr>';
+  cap.actiuni.forEach(function(x){
+    html += '<tr><td style="padding:6px 10px;border-bottom:1px solid #eee">' + x.a + '</td><td style="padding:6px 8px;border-bottom:1px solid #eee;color:#444">' + x.r + '</td><td style="padding:6px 8px;border-bottom:1px solid #eee;text-align:center;white-space:nowrap;font-weight:600">' + x.t + '</td></tr>';
+  });
+  html += '</table></div></div>';
+
+  html += '<button class="open-fisa-btn" onclick="renderInstDashboard(\'' + proj + '\')"><i class="ti ti-arrow-left"></i> Înapoi la Dashboard Instalații</button>';
+  html += '<div class="page-footer">PM Hub · EREN CONS SRL · 2026 · Surse: Fișa Validare Buget v21, F3 lista cantități per subcapitol, ofertă IMSAT 21.07.2026 (curs 5,2384 lei/EUR), oferte anterioare Nov.2024</div>';
+  document.getElementById('main').innerHTML = html;
+}
+
+function renderInstDashboard(proj) {
+  document.querySelectorAll('.submenu-item').forEach(function(i){ i.classList.remove('active'); });
+  var itm = document.getElementById('item-hangar-instdash');
+  if (itm) itm.classList.add('active');
+  closeMenu();
+  document.getElementById('menu-btn').style.display = 'none';
+  var bb = document.getElementById('back-btn');
+  bb.style.display = 'flex';
+  bb.onclick = function() { renderProjHome(proj); };
+
+  var caps = ['cap7','cap9','cap10','cap11'];
+  var html = '';
+  html += '<div class="proj-header"><div class="proj-title">Analiză Instalații — Dashboard General</div>';
+  html += '<div class="proj-meta">Hangar Kogălniceanu · Cap.7 Rețele Electrice Ext. · Cap.9 HVAC · Cap.10 Curenți Tari · Cap.11 Curenți Slabi · pe structura Fișei de Validare Buget</div></div>';
+  html += '<div class="module-badge" style="background:#EEF2FF;color:#4338CA"><i class="ti ti-building-factory-2" style="font-size:13px"></i> Analiză Instalații pe Capitole de Buget</div>';
+
+  var bugetGlobal = 0, ofGlobalBest = 0;
+  html += '<div class="proj-card" style="margin-bottom:12px">';
+  html += '<div class="proj-card-header" style="background:#2C4A6E"><span style="font-size:13px;font-weight:600;color:#fff">Sinteză pe capitole</span></div>';
+  html += '<div class="proj-card-body" style="padding:0;overflow-x:auto">';
+  html += '<table style="width:100%;border-collapse:collapse;font-size:11px">';
+  html += '<tr style="background:#2E5090;color:#fff"><th style="padding:7px 8px;text-align:left">Capitol</th><th style="padding:7px 8px;text-align:right">Buget</th><th style="padding:7px 8px;text-align:left">Ofertanți</th><th style="padding:7px 8px;text-align:left">Concluzie</th><th style="padding:7px 8px;text-align:center">Detaliu</th></tr>';
+  var concluzii = {
+    cap7: 'IMSAT singurul ofertant complet pe F3. Generator 1400kVA +90% peste eDevize — de clarificat.',
+    cap9: 'Cel mai bine fundamentat — IMSAT ~aproape de buget (+17,6% combinat), umple gol F3.',
+    cap10: 'IMSAT singurul ofertant F3, dar cu anomalii mari (tablouri +843%). Verificare tehnică necesară.',
+    cap11: 'IMSAT necompetitiv pe detecție incendiu — Honeywell rămâne opțiunea (-51% vs buget).'
+  };
+  caps.forEach(function(k){
+    var cap = INST_DATA[k];
+    var bugetTotal = 0, ofTotal = {};
+    cap.ofertanti.forEach(function(o){ ofTotal[o] = 0; });
+    cap.f3.concat(cap.f4).forEach(function(r){
+      if (r.buget) bugetTotal += r.buget;
+      cap.ofertanti.forEach(function(o){ if (r.of && r.of[o]) ofTotal[o] += r.of[o]; });
+    });
+    bugetGlobal += bugetTotal;
+    html += '<tr>';
+    html += '<td style="padding:7px 8px;border-bottom:1px solid #eee;font-weight:700;color:' + cap.color + '"><i class="ti ' + cap.icon + '"></i> ' + cap.nume + '</td>';
+    html += '<td style="padding:7px 8px;border-bottom:1px solid #eee;text-align:right">' + _instFmt(bugetTotal) + '</td>';
+    html += '<td style="padding:7px 8px;border-bottom:1px solid #eee;font-size:10px">' + cap.ofertanti.map(function(o){ return o + (ofTotal[o] ? ' (' + _instFmt(ofTotal[o]) + ')' : ' (—)'); }).join('<br>') + '</td>';
+    html += '<td style="padding:7px 8px;border-bottom:1px solid #eee;font-size:10.5px;color:#444;max-width:320px">' + concluzii[k] + '</td>';
+    html += '<td style="padding:7px 8px;border-bottom:1px solid #eee;text-align:center"><button class="open-fisa-btn" style="font-size:10px;padding:4px 10px" onclick="goModule(\'hangar\',\'' + cap.mod + '\')">Deschide</button></td>';
+    html += '</tr>';
+  });
+  html += '<tr style="background:#F5F5F5;font-weight:700"><td style="padding:8px">TOTAL 4 CAPITOLE</td><td style="padding:8px;text-align:right">' + _instFmt(bugetGlobal) + '</td><td colspan="3"></td></tr>';
+  html += '</table></div></div>';
+
+  html += '<div class="proj-card" style="margin-bottom:12px">';
+  html += '<div class="proj-card-header" style="background:#7B1818"><span style="font-size:13px;font-weight:600;color:#fff">Cele mai importante 3 riscuri (toate capitolele)</span></div>';
+  html += '<div class="proj-card-body" style="display:flex;flex-direction:column;gap:6px">';
+  var topRisks = [
+    {cap:'Cap.10', sev:'CRITIC', text:'Tablouri electrice (10.1) +842,7% peste buget — cea mai mare anomalie din toată analiza. Verificare tehnică urgentă înainte de orice decizie.'},
+    {cap:'Cap.7', sev:'CRITIC', text:'Generator 1400kVA — IMSAT cu 90,4% peste valoarea deja folosită în eDevize (834.674 lei). Impact direct pe plafonul DN Obiect 7.'},
+    {cap:'Cap.11', sev:'MARE', text:'IMSAT necompetitivă pe detecție incendiu (350.348 lei) — Honeywell rămâne opțiunea logică la 139.101 lei.'}
+  ];
+  topRisks.forEach(function(r){
+    var sc = _instSevColor(r.sev);
+    html += '<div style="background:' + sc.bg + ';border-radius:6px;padding:8px 12px;font-size:12px;display:flex;gap:12px;align-items:flex-start">';
+    html += '<span style="font-weight:700;color:' + sc.tc + ';flex:0 0 100px;width:100px">' + r.cap + ' · ' + r.sev + '</span>';
+    html += '<span style="flex:1">' + r.text + '</span></div>';
+  });
+  html += '</div></div>';
+
+  html += '<div class="page-footer">PM Hub · EREN CONS SRL · 2026 · Ofertă analizată: IMSAT 21.07.2026 · Surse anterioare: Nibaco/Honeywell, Dynell, KOHLER/CAT, ROMSTAL/ECOFLAM/CAIROX/ROSENBERG (nov.2024)</div>';
+  document.getElementById('main').innerHTML = html;
+}
+
 
 </script>
 

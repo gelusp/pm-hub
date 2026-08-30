@@ -425,6 +425,9 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
         <div class="submenu-item" id="item-campus-nrncs" onclick="renderCentralizatorNRNCS()">
           <i class="ti ti-table" style="color:#1A5276"></i> Centralizator NR-NCS final
         </div>
+        <div class="submenu-item" id="item-campus-isu" onclick="renderIsuTest('campus')">
+          <i class="ti ti-flame-off" style="color:#E74C3C"></i> Lucrări solicitate de ISU
+        </div>
       </div>
 
       <button class="sidebar-add" onclick="alert('Funcționalitate în dezvoltare.')">
@@ -476,6 +479,75 @@ function openMenu() {
 function closeMenu() {
   document.getElementById('sidebar').classList.remove('open');
   document.getElementById('overlay').classList.remove('open');
+}
+
+function renderIsuTest(fromProj) {
+  if (fromProj) {
+    document.querySelectorAll('.submenu-item').forEach(function(i){ i.classList.remove('active'); });
+    var item = document.getElementById('item-' + fromProj + '-isu');
+    if (item) item.classList.add('active');
+    closeMenu();
+    document.getElementById('menu-btn').style.display = 'none';
+    var btn = document.getElementById('back-btn');
+    btn.style.display = 'flex';
+    btn.onclick = function() { renderProjHome(fromProj); };
+  }
+  var backAction = fromProj ? "renderProjHome('" + fromProj + "')" : "goHome()";
+  document.getElementById('main').innerHTML =
+    '<div class="proj-header"><div class="proj-title">Lucrări solicitate de ISU - Campus DUAL</div>' +
+    '<div class="proj-meta">HIGH PRIORITY \xb7 Con\u021Binut \xEEn preg\u0103tire</div></div>' +
+    '<div class="proj-card" style="margin-bottom:12px"><div class="proj-card-body">' +
+      '<div style="font-size:11px;font-weight:700;color:#B45309;margin-bottom:2px">Lucrări solicitate de ISU:</div>' +
+      '<div style="display:flex;gap:10px;padding:9px 0;border-bottom:1px solid #EEE">' +
+        '<div style="width:20px;height:20px;border-radius:50%;background:#FDECEA;color:#C0392B;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">1</div>' +
+        '<div style="flex:1"><div style="font-size:12px;color:#333">Sistem automatizare 3 uși - evacuare</div><a href=\'https://drive.google.com/file/d/19JKN0s91eAJjnNnC04rOy0agLAeaaU49/view?usp=sharing\' target=\'_blank\' style=\'display:inline-flex;align-items:center;gap:6px;padding:6px 14px;background:#E74C3C;color:#fff;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none;margin-top:6px\'><i class=\'ti ti-file-description\'></i> Vezi oferta Nibaco</a></div>' +
+      '</div>' +
+      '<div style="display:flex;gap:10px;padding:9px 0;border-bottom:1px solid #EEE">' +
+        '<div style="width:20px;height:20px;border-radius:50%;background:#FDECEA;color:#C0392B;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">2</div>' +
+        '<div style="flex:1"><div style="font-size:12px;color:#333">Înlocuire ușă acces U09 acces cantină în tipologie nouă tip RF30 min</div></div>' +
+      '</div>' +
+      '<div style="display:flex;gap:10px;padding:9px 0;border-bottom:1px solid #EEE">' +
+        '<div style="width:20px;height:20px;border-radius:50%;background:#FDECEA;color:#C0392B;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">3</div>' +
+        '<div style="flex:1"><div style="font-size:12px;color:#333">Montare grilă pentru ușile de acces hol tip UE01 în supralumină sticlă (înlocuire sticlă supralumină + grilă)</div></div>' +
+      '</div>' +
+      '<div style="display:flex;gap:10px;padding:9px 0;border-bottom:1px solid #EEE">' +
+        '<div style="width:20px;height:20px;border-radius:50%;background:#FDECEA;color:#C0392B;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">4</div>' +
+        '<div style="flex:1"><div style="font-size:12px;color:#333">Montare grilă pentru ușile de acces gunoi tip UE01 în panel (decupare în panel + grilă)</div></div>' +
+      '</div>' +
+      '<div style="display:flex;gap:10px;padding:9px 0;border-bottom:1px solid #EEE">' +
+        '<div style="width:20px;height:20px;border-radius:50%;background:#FDECEA;color:#C0392B;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">5</div>' +
+        '<div style="flex:1"><div style="font-size:12px;color:#333">Se adaugă motorizare tip desfumare și sistem antipanică electrică CISA pentru ușile U04 (2 motoare + 4 sisteme antipanică + 4 amortizoare TS5000)</div></div>' +
+      '</div>' +
+      '<div style="display:flex;gap:10px;padding:9px 0;border-bottom:1px solid #EEE">' +
+        '<div style="width:20px;height:20px;border-radius:50%;background:#FDECEA;color:#C0392B;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">6</div>' +
+        '<div style="flex:1"><div style="font-size:12px;color:#333">Demontat / montat ușă hol tip UE01</div></div>' +
+      '</div>' +
+      '<div style="padding:9px 0 9px 30px;border-bottom:1px solid #EEE">' +
+        '<a href=\'https://drive.google.com/file/d/19Tt4070G_-8ZprAZziITuOdjUnI0sXHb/view?usp=sharing\' target=\'_blank\' style=\'display:inline-flex;align-items:center;gap:6px;padding:6px 14px;background:#E74C3C;color:#fff;border-radius:6px;font-size:11px;font-weight:600;text-decoration:none\'><i class=\'ti ti-file-description\'></i> Vezi oferta AKERO (pct. 2-6)</a>' +
+      '</div>' +
+      '<div style="display:flex;gap:10px;padding:9px 0;border-bottom:1px solid #EEE">' +
+        '<div style="width:20px;height:20px;border-radius:50%;background:#FDECEA;color:#C0392B;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">7</div>' +
+        '<div style="flex:1"><div style="font-size:12px;color:#333">PIF pentru trape desfumare</div></div>' +
+      '</div>' +
+      '<div style="display:flex;gap:10px;padding:9px 0">' +
+        '<div style="width:20px;height:20px;border-radius:50%;background:#FDECEA;color:#C0392B;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">8</div>' +
+        '<div style="flex:1"><div style="font-size:12px;color:#333">Praguri RF pentru 6 uși (AX Perpetuum)</div></div>' +
+      '</div>' +
+    '</div></div>' +
+
+    '<div class="proj-card" style="margin-bottom:12px;border-left:4px solid #D4AC0D"><div class="proj-card-body">' +
+      '<div style="font-size:11px;font-weight:700;color:#7D6608;margin-bottom:6px"><i class="ti ti-help-circle" style="margin-right:4px"></i>Verificare tehnică necesară:</div>' +
+      '<ul style="margin:0;padding-left:18px;font-size:12px;line-height:1.7;color:#333">' +
+        '<li>Ușa U09 este RF în proiect?</li>' +
+        '<li>Cele 3 uși cu automatizare (evacuare) erau prevăzute cu automatizare în proiect?</li>' +
+        '<li>Ușile care necesită grilă erau prevăzute din proiect cu acestea?</li>' +
+        '<li>De verificat sensul de montaj pentru ușa bucătărie tip UE01.</li>' +
+        '<li>Trebuie demontate și montate toate 3 uși sau doar una?</li>' +
+        '<li>Trapele sunt achiziționate de AKERO de la Mima Smoke Out (au prezentat autorizația ISU), montate de AKERO, iar detecția la incendiu o face Nibaco — cine trebuie să emită PIF-ul?</li>' +
+      '</ul>' +
+    '</div></div>' +
+
+    '<button class="open-fisa-btn" onclick="' + backAction + '"><i class="ti ti-arrow-left"></i> \xCEnapoi</button>';
 }
 
 function goHome() {
@@ -1927,6 +1999,15 @@ function renderHome() {
         '<div style="font-size:11px;color:rgba(255,255,255,0.85);margin-top:2px">De transmis pe <b style="color:#fff">31.07.2026</b></div>' +
       '</div>' +
     '</div>' : '') +
+
+    '<div class="proj-card" id="card-isu" style="cursor:pointer" onclick="renderIsuTest()">' +
+      '<div class="proj-card-header" style="background:#1a1a1a;border-left:3px solid #E74C3C">' +
+        '<div class="proj-icon" style="background:rgba(231,76,60,0.25)"><i class="ti ti-flame-off" style="color:#E74C3C"></i></div>' +
+        '<div style="flex:1"><div style="font-size:13px;font-weight:600;color:#fff;display:flex;align-items:center;gap:7px"><span style="background:#E74C3C;color:#fff;border-radius:4px;padding:1px 7px;font-size:9px;letter-spacing:0.5px;font-weight:800">HIGH PRIORITY</span>Lucrări solicitate de ISU - Campus DUAL</div>' +
+        '</div>' +
+        '<i class="ti ti-chevron-right" style="color:rgba(255,255,255,0.7);font-size:18px"></i>' +
+      '</div>' +
+    '</div>' +
 
     '<div class="proj-card">' +
       '<div class="proj-card-header" style="background:#A03535;border-left:3px solid #CC1515">' +

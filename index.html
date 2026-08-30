@@ -1946,6 +1946,12 @@ function renderHome() {
       '</div>' +
     '</div>' +
 
+    (new Date() <= new Date('2026-09-06') ? '<div style="background:#FEF9E7;border:1px solid #F9E79F;border-left:4px solid #D4AC0D;border-radius:6px;padding:10px 14px;margin-bottom:12px">' +
+      '<div style="font-size:11px;font-weight:700;color:#7D6608;margin-bottom:5px"><span class="blink-nou6" style="background:#D4AC0D;color:#fff;border-radius:4px;padding:1px 6px;font-size:9px;font-weight:800;margin-right:6px;letter-spacing:0.5px">NOU</span><i class="ti ti-tools" style="margin-right:4px"></i>Kogălniceanu — Au fost inițiate toate analizele comparative pe instalații' + _badgeTimp('2026-09-06','#D4AC0D') + '</div>' +
+      '<div style="font-size:10px;color:#555;margin-bottom:4px"><b>Cale:</b> <span style="font-family:monospace;background:rgba(0,0,0,0.06);padding:1px 6px;border-radius:4px">Hangar Kogălniceanu → Analize Comparative → [capitol instalație]</span></div>' +
+      '<div style="font-size:11px;color:#7D6608">Cap.8 Sanitare · Cap.9 HVAC · Cap.10 Curenți tari · Cap.11 Curenți slabi</div>' +
+    '</div>' : '') +
+
     '<div class="proj-card">' +
       '<div class="proj-card-header" style="background:#1F5C1F;border-left:3px solid #3B8A3B">' +
         '<div class="proj-icon" style="background:rgba(59,138,59,0.3)"><i class="ti ti-school" style="color:#7DC87D"></i></div>' +
@@ -5041,25 +5047,31 @@ var INST_DATA = {
   },
   cap11: {
     key:'cap11', mod:'inst11', nume:'Cap.11 — Curenți Slabi', icon:'ti-antenna', color:'#5B2C87',
-    ofertanti:['IMSAT','Nibaco','Honeywell'],
-    f3Label:'F3+F4 — IDSAI (detecție/semnalizare incendiu, montaj+furnizare combinate)',
+    fisierLink:'https://docs.google.com/spreadsheets/d/1nkiEotreaHpkmvBkgEdmuA84z329jwrS_Uhe182D6Vk/edit?usp=sharing',
+    ofertanti:['IMSAT','Nibaco','Honeywell','Polon-Alfa'],
+    f3Label:'F3 — pe structura Centralizator_Cereri_Oferta_CurentiSlabi_cu_Pret_30_08_2026 (34 articole, detaliu în xlsx)',
     f3: [
-      {cod:'11.1', den:'IDSAI — detecție incendiu (F3 253.569 + F4 ECS/Rack 31.513)', buget:285081.44, of:{IMSAT:350347.60, Nibaco:199669.35, Honeywell:139100.90}, obs:'Honeywell cea mai ieftină (-51,2% vs buget). IMSAT e cea mai scumpă din 3 oferte (+152% peste Honeywell) — nu e competitivă pe acest pachet.'},
-      {cod:'11.2', den:'Rețea de date (5 poz.)', buget:25138.89, of:{IMSAT:59143.68, Nibaco:52701.70, Honeywell:34701.85}, obs:'Honeywell cea mai ieftină; toate 3 peste buget'},
-      {cod:'11.3', den:'Montaj echipamente (rack, ECS)', buget:2943.78, of:{}, obs:'Neofertat separat — presupus inclus în pachetul IDSAI la toți 3 ofertanții'}
+      {cod:'IDSAI', den:'IDSAI — detecție, semnalizare, avertizare incendiu (22 articole)', buget:274740.99, of:{IMSAT:339767.01, Nibaco:199669.35, Honeywell:139100.90, 'Polon-Alfa':52557.10}, obs:'Honeywell cea mai apropiată de buget (-49,4%). IMSAT cea mai scumpă (+23,7%). Polon-Alfa mult sub buget (-80,9%) — de verificat dacă oferta e completă/echivalentă tehnic înainte de a o trata ca economie.'},
+      {cod:'RETDATE', den:'Rețea de date (5 articole)', buget:26983.20, of:{IMSAT:59143.68, Nibaco:52701.68, Honeywell:34701.83}, obs:'Toate 3 peste buget. Polon-Alfa nu a ofertat rețea de date.'}
     ],
-    f4Label:'Extra — scope nebugetat în deviz',
+    f4Label:'F3+F4 combinat + Extra (scop nebugetat) — detaliu complet în xlsx',
     f4: [
-      {cod:'EXTRA.1', den:'CCTV — sistem supraveghere video', buget:null, of:{Nibaco:60957.25, Honeywell:33768.25}, obs:'Nu există subcapitol explicit în devizul curent. IMSAT nu ofertează acest sistem (nu e în scope-ul lor).'},
-      {cod:'EXTRA.2', den:'Control acces', buget:null, of:{Nibaco:61379.75, Honeywell:27212.15}, obs:'Nu există subcapitol explicit în devizul curent. IMSAT nu ofertează acest sistem.'}
+      {cod:'ECS', den:'Centrala ECS — montaj (F3) + utilaj (F4) combinat', buget:21830.17, bugetNote:'1.456,82 (montaj) + 20.373,35 (utilaj)', of:{IMSAT:10580.58}, obs:'Doar IMSAT ofertă separat (-51,5%, fără Rack). Nibaco/Honeywell/Polon-Alfa au centrala inclusă deja în IDSAI — nu se poate separa din oferta lor turnkey.'},
+      {cod:'EXTRA.1', den:'CCTV — sistem supraveghere video', buget:null, of:{Nibaco:60957.26, Honeywell:33768.23, 'Polon-Alfa':5577.65}, obs:'Fără subcapitol explicit în deviz. IMSAT nu ofertează.'},
+      {cod:'EXTRA.2', den:'Control acces', buget:null, of:{Nibaco:61379.76, Honeywell:27212.13, 'Polon-Alfa':9853.90}, obs:'Fără subcapitol explicit în deviz. IMSAT nu ofertează.'},
+      {cod:'EXTRA.3', den:'Polon-Alfa — completare surse tensiune 24V (20 buc) + acumulatori (40 buc)', buget:null, of:{'Polon-Alfa':15549.30}, obs:'Ofertă separată (fișier distinct, oct.2024), alocare neclară — posibilă suprapunere cu sursele deja incluse în IDSAI. DE CLARIFICAT cu Polon-Alfa.'}
     ],
     riscuri:[
-      {sev:'MARE', text:'IMSAT cea mai scumpă ofertă pe detecție incendiu (350.348 lei) — Honeywell (139.101 lei) rămâne opțiunea logică.'},
-      {sev:'MEDIU', text:'CCTV + Control acces (Nibaco 122.337 / Honeywell 60.980 lei) nu au subcapitol explicit în deviz — de clarificat dacă sunt scop contractual sau extra-scop.'},
-      {sev:'MIC', text:'Centrala trape desfumare (F4 poz.2) — preț 0 lei în deviz, nespecificat. Necesită ofertă separată.'}
+      {sev:'MARE', text:'IMSAT cea mai scumpă ofertă pe IDSAI (339.767 lei, +23,7%) — Honeywell (139.101 lei) rămâne opțiunea logică pe acest pachet.'},
+      {sev:'MARE', text:'Polon-Alfa la doar 52.557 lei pe IDSAI (-80,9% vs buget) — diferență prea mare pentru a fi doar preț de listă; verificare tehnică obligatorie înainte de a o considera opțiune reală.'},
+      {sev:'MEDIU', text:'Oferta separată Polon-Alfa de surse/acumulatori (15.549 lei) are alocare neclară — risc de dublă numărare dacă se însumează necondiționat cu IDSAI.'},
+      {sev:'MEDIU', text:'CCTV + Control acces (Nibaco 122.337 / Honeywell 60.980 / Polon-Alfa 15.431 lei) nu au subcapitol explicit în deviz — de clarificat dacă sunt scop contractual sau extra-scop.'},
+      {sev:'MIC', text:'Centrala trape desfumare — preț 0 lei atât în deviz cât și la Nibaco/oferte vechi, nespecificat. Necesită ofertă separată.'}
     ],
     actiuni:[
       {a:'Nu continua cu IMSAT pe detecție incendiu — rămâi pe Honeywell (139.101 lei)', r:'PM', t:'—'},
+      {a:'Cere Polon-Alfa confirmare scop/specificații complete pt. IDSAI — diferența de -80,9% trebuie explicată tehnic, nu doar comercial', r:'G. Spătaru / Proiectant', t:'—'},
+      {a:'Clarifică cu Polon-Alfa alocarea ofertei separate de surse/acumulatori (15.549 lei) față de IDSAI', r:'Achiziții', t:'—'},
       {a:'Clarifică cu proiectantul/beneficiarul dacă CCTV și Control acces sunt scop contractual', r:'G. Spătaru', t:'—'},
       {a:'Solicită ofertă separată pentru centrala de acționare trape desfumare (preț 0 în deviz)', r:'Achiziții', t:'—'}
     ]
@@ -5133,6 +5145,10 @@ function renderInstCapitol(proj, capKey) {
   html += '<div class="proj-meta">Hangar Kogălniceanu · matrice subcapitol × ofertant, la cantitățile din deviz F3 · fără TVA</div></div>';
   html += '<div class="module-badge" style="background:#EEF2FF;color:#4338CA"><i class="ti ' + cap.icon + '" style="font-size:13px"></i> ' + cap.nume + '</div>';
 
+  if (cap.fisierLink) {
+    html += '<div style="margin-bottom:14px"><a href="' + cap.fisierLink + '" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 18px;background:#1A5276;color:#fff;border-radius:var(--radius);font-size:12px;font-weight:600;text-decoration:none"><i class="ti ti-table"></i> Deschide analiza comparativă</a></div>';
+  }
+
   html += '<div class="kpi-grid" style="margin-bottom:14px">';
   html += '<div class="kpi"><div class="kpi-label">Buget total capitol</div><div class="kpi-val">' + _instFmt(bugetTotal) + '</div><div class="kpi-sub">F3+F4, poziții comparabile</div></div>';
   cap.ofertanti.forEach(function(o){
@@ -5198,7 +5214,7 @@ function renderInstDashboard(proj) {
     cap7: 'IMSAT singurul ofertant complet pe F3. Generator 1400kVA +90% peste eDevize — de clarificat.',
     cap9: 'Cel mai bine fundamentat — IMSAT ~aproape de buget (+17,6% combinat), umple gol F3.',
     cap10: 'IMSAT singurul ofertant F3, dar cu anomalii mari (tablouri +843%). Verificare tehnică necesară.',
-    cap11: 'IMSAT necompetitiv pe detecție incendiu — Honeywell rămâne opțiunea (-51% vs buget).'
+    cap11: '4 ofertanți acum (+ Polon-Alfa). Honeywell cel mai aproape de buget pe IDSAI; Polon-Alfa mult sub buget (-81%) — de verificat tehnic înainte de a-l considera opțiune reală.'
   };
   caps.forEach(function(k){
     var cap = INST_DATA[k];
@@ -5226,7 +5242,7 @@ function renderInstDashboard(proj) {
   var topRisks = [
     {cap:'Cap.10', sev:'CRITIC', text:'Tablouri electrice (10.1) +842,7% peste buget — cea mai mare anomalie din toată analiza. Verificare tehnică urgentă înainte de orice decizie.'},
     {cap:'Cap.7', sev:'CRITIC', text:'Generator 1400kVA — IMSAT cu 90,4% peste valoarea deja folosită în eDevize (834.674 lei). Impact direct pe plafonul DN Obiect 7.'},
-    {cap:'Cap.11', sev:'MARE', text:'IMSAT necompetitivă pe detecție incendiu (350.348 lei) — Honeywell rămâne opțiunea logică la 139.101 lei.'}
+    {cap:'Cap.11', sev:'MARE', text:'Polon-Alfa la 52.557 lei pe IDSAI (-80,9% vs buget) — diferență prea mare pentru a fi doar preț; verificare tehnică obligatorie. IMSAT rămâne cea mai scumpă (339.767 lei), Honeywell (139.101 lei) opțiunea logică.'}
   ];
   topRisks.forEach(function(r){
     var sc = _instSevColor(r.sev);
@@ -5236,7 +5252,7 @@ function renderInstDashboard(proj) {
   });
   html += '</div></div>';
 
-  html += '<div class="page-footer">PM Hub · EREN CONS SRL · 2026 · Ofertă analizată: IMSAT 21.07.2026 · Surse anterioare: Nibaco/Honeywell, Dynell, KOHLER/CAT, ROMSTAL/ECOFLAM/CAIROX/ROSENBERG (nov.2024)</div>';
+  html += '<div class="page-footer">PM Hub · EREN CONS SRL · 2026 · Ofertă analizată: IMSAT 21.07.2026 · Surse anterioare: Nibaco/Honeywell/Polon-Alfa, Dynell, KOHLER/CAT, ROMSTAL/ECOFLAM/CAIROX/ROSENBERG (nov.2024)</div>';
   document.getElementById('main').innerHTML = html;
 }
 

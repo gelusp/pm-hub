@@ -3753,7 +3753,13 @@ function renderContractSinteza(proj) {
      ctx:'Sub-recuperare de OS de la beneficiar: „Tablouri și cabluri OS" (cod 170) + „Proiectoare OS" (cod 171) recunoscute la 45.077 lei, sub costul real. Nu este supra-preț Light Design, ci OS insuficient recuperat prin contract (temă OS ascuns).',
      nota:'Branșamente și tablouri OS: TEG cu contorizare, TED distribuție, prize de pământ, buletine PRAM, proiectoare OS, manoperă și PIF. Buget = cod 170 (32.370) + cod 171 proiectoare (7.470).'},
     {scope:'OS muncitori necalificați (Cap.5)', furnizor:'Ideal Max Construct', nr:'ctr 154 · 09.07.2026', buget:45360, contract:45360, venit:null, stare:'Semnat',
-     nota:'Manoperă necalificată OS — 6 luni × 7.560 lei, exact pe buget. Deviz 5.1.3 prevede 2 articole cod 194 (câte 45.360 lei); contractat momentan unul (Ideal Max). Al doilea articol (45.360 lei) rămâne de contractat. Cheltuială OS distribuită în prețuri — fără linie de venit distinctă la beneficiar.'}
+     nota:'Manoperă necalificată OS — 6 luni × 7.560 lei, exact pe buget. Deviz 5.1.3 prevede 2 articole cod 194 (câte 45.360 lei); contractat momentan unul (Ideal Max). Al doilea articol (45.360 lei) rămâne de contractat. Cheltuială OS distribuită în prețuri — fără linie de venit distinctă la beneficiar.'},
+    {scope:'Cap.2.1 — Amenajare Platformă Exterioară (BCR)', furnizor:'DITO Grup', nr:'decizie 03.09.2026 · în semnare', buget:694896, contract:1060252, venit:null, stare:'În semnare',
+     nota:'Platformă din beton de ciment rezistent (BCR 5.0): strat separator P8, dală BCR all-in P9, rosturi BCR P10, marcaje rutiere P11 (3.249 mp). Discount final acceptat DITO: −5,0% (−55.803 lei față de oferta inițială 1.116.054 lei). EREN solicitase −13,3%; diferență nerecuperată vs propunerea EREN: +93.107 lei. Depășire vs buget: +365.355 lei (+52,6%). Curs 5,2429 lei/EUR.',
+     ctx:'Depășire buget semnificativă (+52,6%): buget alocat 694.896 lei vs valoare contractată 1.060.252 lei. Negociere finalizată la 5,0% discount față de oferta inițială — marja de negociere obținută parțial (EREN solicita 13,3%).'},
+    {scope:'Confecții metalice — Structură Hangar (Cap.3)', furnizor:'A&C Metal Industry SRL', nr:'ofertă 03.09.2026 · în semnare', buget:1434571, contract:1610276, venit:1586706, stare:'În semnare',
+     nota:'Uzinare și montaj structură metalică: acoperiș hală 85.000 kg + spații anexe 14.200 kg + structură secundară pereți 12.900 kg + organe asamblare + transport (112.100 kg uzinat total) — 306.509 EUR, la curs BNR 03.09.2026 (5,2536 lei/EUR). Exclude: carcase buloane/ancoraje, protecție antifoc (firmă specializată după montaj), utilaj montaj (macara — de clarificat). Depășire vs buget art.38: +175.705 lei (+12,2%). Marjă vs venit (bază, fără indexare): −23.570 lei (−1,5%) — negativă la cursul actual. <b>Marjă vs venit CU indexare SL3 (An=1,149617):</b> +213.828 lei (+11,7%) — indexarea (aplicată doar veniturilor, subcontractul A&amp;C Metal e preț fix) recuperează integral și depășește pierderea de curs valutar.',
+     ctx:'Cel mai mare risc bugetar neacoperit al Cap.3 (37,9% din buget) — rezolvat tehnic. Marja de bază a devenit NEGATIVĂ odată actualizat cursul EUR la valoarea BNR de azi (de la +3,4% la −1,5%), dar indexarea de preț SL3 (subcl. 48.5, coef. 1,149617) o readuce pe plus la +11,7%, pentru că subcontractul e la preț fix iar indexarea se aplică integral veniturilor de la beneficiar. Atenție: utilaj montaj (macara) fără linie de buget identificată; antetul ofertei conține referințe la alt proiect (DIGO STRUCTURI/AEON BUILDING) — de clarificat înainte de semnare.'}
   ];
   var totContract = 0, totBugetCmp = 0, totContractCmp = 0, pendingCount = 0;
   contracte.forEach(function(c){
@@ -3770,7 +3776,7 @@ function renderContractSinteza(proj) {
   var margVenit = totVenit - totCostVenit;            // marjă absolută vs venit
   var margVenitPct = totVenit>0 ? (margVenit/totVenit*100) : 0;
   // Influența indexării (subcl. 48.5): venit execuție C+M × An; subcontracte preț fix → rămâne la EREN
-  var AN_INDEX = 1.143354;                             // coeficient indexare curent (In mai.2026 / Io ian.2025)
+  var AN_INDEX = 1.149617;                             // coeficient indexare SL3 simulat (In iun.2026 / Io ian.2025) — actualizat de la 1,143354 (SL2)
   var venitIndexat = totVenit * AN_INDEX;
   var margVenitIdx = venitIndexat - totCostVenit;
   var margVenitIdxPct = venitIndexat>0 ? (margVenitIdx/venitIndexat*100) : 0;
@@ -3892,6 +3898,10 @@ function renderContractSinteza(proj) {
       var mv = c.venit - c.contract;
       mvcol = mv>=0 ? '#3B6D11' : '#A32D2D';
       mvCell = (mv>=0?'+':'−') + fmt(Math.abs(mv)) + '<div style="font-size:9px;font-weight:500">' + (mv>=0?'+':'−') + Math.abs(mv/c.venit*100).toFixed(1).replace('.',',') + '%</div>';
+      var venitIdxRow = c.venit * AN_INDEX;
+      var mvIdx = venitIdxRow - c.contract;
+      var mvIdxCol = mvIdx>=0 ? '#1E6E2D' : '#A32D2D';
+      mvCell += '<div style="font-size:9px;font-weight:600;color:' + mvIdxCol + ';margin-top:2px;border-top:1px dashed #D8DEE6;padding-top:2px">cu index SL3: ' + (mvIdx>=0?'+':'−') + fmt(Math.round(Math.abs(mvIdx))) + ' (' + (mvIdx>=0?'+':'−') + Math.abs(mvIdx/venitIdxRow*100).toFixed(1).replace('.',',') + '%)</div>';
     } else { mvCell = '<span style="color:#8A94A3">—</span>'; }
     var badge = c.stare==='Semnat' ? '#3B6D11' : (c.stare==='În semnare' ? '#C77C0A' : '#6B7280');
     var statusChip = '<span style="background:' + badge + ';color:#fff;padding:1px 7px;border-radius:9px;font-size:9px;font-weight:700;white-space:nowrap;margin-left:6px">' + c.stare + '</span>';
@@ -3913,9 +3923,9 @@ function renderContractSinteza(proj) {
   html += '<td style="padding:8px 10px;text-align:right">' + fmt(totContract) + '</td>';
   html += '<td style="padding:8px 10px;text-align:right;color:' + (totDelta>=0?'#3B6D11':'#A32D2D') + '">' + (totDelta>=0?'+':'−') + fmt(Math.abs(totDelta)) + '<div style="font-size:9px">' + (totDelta>=0?'+':'−') + Math.abs(totDelta/totBugetCmp*100).toFixed(1).replace('.',',') + '%</div></td>';
   html += '<td style="padding:8px 10px;text-align:right">' + fmt(totVenit) + '</td>';
-  html += '<td style="padding:8px 10px;text-align:right;color:' + (margVenit>=0?'#3B6D11':'#A32D2D') + '">' + (margVenit>=0?'+':'−') + fmt(Math.abs(Math.round(margVenit))) + '<div style="font-size:9px">' + (margVenit>=0?'+':'−') + Math.abs(margVenitPct).toFixed(1).replace('.',',') + '%</div></td>';
+  html += '<td style="padding:8px 10px;text-align:right;color:' + (margVenit>=0?'#3B6D11':'#A32D2D') + '">' + (margVenit>=0?'+':'−') + fmt(Math.abs(Math.round(margVenit))) + '<div style="font-size:9px">' + (margVenit>=0?'+':'−') + Math.abs(margVenitPct).toFixed(1).replace('.',',') + '%</div>' + '<div style="font-size:9px;font-weight:600;color:' + (margVenitIdx>=0?'#1E6E2D':'#A32D2D') + ';margin-top:2px;border-top:1px dashed #C7CEDA;padding-top:2px">cu index SL3: ' + (margVenitIdx>=0?'+':'−') + fmt(Math.round(Math.abs(margVenitIdx))) + ' (' + (margVenitIdx>=0?'+':'−') + Math.abs(margVenitIdxPct).toFixed(1).replace('.',',') + '%)</div></td>';
   html += '</tr></tfoot></table></div>';
-  html += '<div style="font-size:10px;color:#8A94A3;padding:8px 12px;line-height:1.5"><b>Saving vs buget</b> = buget alocat − valoare contract (eficiența la achiziție, pe scope-urile cu buget). <b>Marjă vs venit</b> = venit beneficiar (deviz cu CI+profit) − valoare contract = profitabilitatea reală pe scope. Venitul se ia din anexa la contractul cu beneficiarul. <span style="color:#9AA3B0">* Prefabricate: venit conservator (doar stâlpi + pahare); marja reală este cel puțin atât.</span> OS necalificați nu are venit distinct (furnizare de manoperă). Grad acoperire ' + gradAcoperire.toFixed(1).replace('.',',') + '% = contractat / 18,52 mil lei execuție.</div></div>';
+  html += '<div style="font-size:10px;color:#8A94A3;padding:8px 12px;line-height:1.5"><b>Saving vs buget</b> = buget alocat − valoare contract (eficiența la achiziție, pe scope-urile cu buget). <b>Marjă vs venit</b> = venit beneficiar (deviz cu CI+profit) − valoare contract = profitabilitatea reală pe scope. Venitul se ia din anexa la contractul cu beneficiarul. <b>Cu index SL3</b> = venitul indexat conform sub-clauzei 48.5 (coef. An=' + AN_INDEX.toFixed(6).replace('.',',') + ', simulare SL3, provizoriu — se aplică UNIFORM tuturor contractelor semnate până acum, indiferent de data semnării, pentru că indicii INS sunt aceiași pe toată execuția curentă) − valoare contract. Subcontractele sunt la preț fix, deci tot uplift-ul de indexare rămâne câștig la EREN. <span style="color:#9AA3B0">* Prefabricate: venit conservator (doar stâlpi + pahare); marja reală este cel puțin atât.</span> OS necalificați nu are venit distinct (furnizare de manoperă). Grad acoperire ' + gradAcoperire.toFixed(1).replace('.',',') + '% = contractat / 18,52 mil lei execuție.</div></div>';
 
   html += "<button class=\"open-fisa-btn\" onclick=\"renderProjHome('hangar')\"><i class=\"ti ti-arrow-left\"></i> Înapoi la proiect</button>";
   html += '<div class="page-footer">PM Hub · EREN CONS SRL · 2026 · Sinteză execuție contract · Surse: Fișa de date SEAP, Contract 997/2025 + AA2, Deviz General buget, analize Cap.1-13, decizii contractare</div>';

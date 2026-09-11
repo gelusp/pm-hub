@@ -2018,6 +2018,15 @@ function renderHome() {
       '</div>' +
     '</div>' : '') +
 
+    '<div class="proj-card" style="cursor:pointer" onclick="renderContracteSubantreprize()">' +
+      '<div class="proj-card-header" style="background:#1E6E2D;border-left:3px solid #3B8A3B">' +
+        '<div class="proj-icon" style="background:rgba(59,138,59,0.3)"><i class="ti ti-clipboard-check" style="color:#A9E5B6"></i></div>' +
+        '<div style="flex:1"><div style="font-size:13px;font-weight:600;color:#fff;display:flex;align-items:center;gap:7px"><span class="blink-nou6" style="background:#CC1515;color:#fff;border-radius:4px;padding:1px 7px;font-size:9px;letter-spacing:0.5px;font-weight:800">NOU</span>Campus DUAL — Rest de facturat de Subantreprize</div>' +
+        '<div style="font-size:10px;color:rgba(255,255,255,0.6)">38 subantreprize · valori, facturat, rest de facturat, anexe de renunțare</div></div>' +
+        '<i class="ti ti-chevron-right" style="color:rgba(255,255,255,0.7);font-size:18px"></i>' +
+      '</div>' +
+    '</div>' +
+
     '<div class="proj-card" id="card-isu" style="cursor:pointer" onclick="renderIsuTest()">' +
       '<div class="proj-card-header" style="background:#1a1a1a;border-left:3px solid #E74C3C">' +
         '<div class="proj-icon" style="background:rgba(231,76,60,0.25)"><i class="ti ti-flame-off" style="color:#E74C3C"></i></div>' +
@@ -2047,15 +2056,6 @@ function renderHome() {
         '<div class="proj-icon" style="background:rgba(59,138,59,0.3)"><i class="ti ti-school" style="color:#7DC87D"></i></div>' +
         '<div style="flex:1"><div style="font-size:13px;font-weight:600;color:#fff">Campus DUAL Politehnica</div>' +
         '<div style="font-size:10px;color:rgba(255,255,255,0.6)">Îîn execuție · Corp C1</div></div>' +
-      '</div>' +
-    '</div>' +
-
-    '<div class="proj-card" style="cursor:pointer" onclick="renderContracteSubantreprize()">' +
-      '<div class="proj-card-header" style="background:#1E6E2D;border-left:3px solid #3B8A3B">' +
-        '<div class="proj-icon" style="background:rgba(59,138,59,0.3)"><i class="ti ti-clipboard-check" style="color:#A9E5B6"></i></div>' +
-        '<div style="flex:1"><div style="font-size:13px;font-weight:600;color:#fff;display:flex;align-items:center;gap:7px"><span class="blink-nou6" style="background:#CC1515;color:#fff;border-radius:4px;padding:1px 7px;font-size:9px;letter-spacing:0.5px;font-weight:800">NOU</span>Campus DUAL — Rest de facturat de Subantreprize</div>' +
-        '<div style="font-size:10px;color:rgba(255,255,255,0.6)">38 subantreprize · valori, facturat, rest de facturat, anexe de renunțare</div></div>' +
-        '<i class="ti ti-chevron-right" style="color:rgba(255,255,255,0.7);font-size:18px"></i>' +
       '</div>' +
     '</div>' +
 
@@ -4305,42 +4305,42 @@ var CONTRACTE_SUBANTREPRIZE = [
     {nr:3,  nume:'Light Design',                scop:'Organizare de șantier (OS)', rest:0, renuntare:0},
     {nr:4,  nume:'ColtLaumi',                   scop:'Organizare de șantier (OS)', rest:0, renuntare:0},
     {nr:5,  nume:'Light Design',                scop:'Împământare', rest:0, renuntare:0},
-    {nr:6,  nume:'Cris & Cris Mecanic',         scop:'Lucrări mecanice'},
-    {nr:7,  nume:'Topizol',                     scop:'Hidroizolații'},
-    {nr:8,  nume:'Bodoli',                      scop:'Instalații în radier'},
-    {nr:9,  nume:'New Mao',                     scop:'—'},
+    {nr:6,  nume:'Cris & Cris Mecanic',         scop:'Lucrări mecanice', rest:10842.78, renuntare:10842.78, renuntNota:'nu se mai execută — anexă de renunțare integrală'},
+    {nr:7,  nume:'Topizol',                     scop:'Hidroizolații', rest:0, renuntare:0},
+    {nr:8,  nume:'Bodoli',                      scop:'Instalații în radier', rest:0, renuntare:0},
+    {nr:9,  nume:'New Mao',                     scop:'—', rest:0, renuntare:0},
     {nr:10, nume:'Nibaco',                      scop:'Instalații / rețele'},
     {nr:11, nume:'ColtLaumi',                   scop:'Umpluturi — dif. îmbunătățire teren'},
     {nr:12, nume:'BRT Consulting Tech',         scop:'Consultanță tehnică'},
     {nr:13, nume:'Gabaadi Construct',           scop:'Structură / execuție'},
     {nr:14, nume:'Aris',                        scop:'—'},
-    {nr:15, nume:'Smith New Big',               scop:'Manoperă necalificată'},
+    {nr:15, nume:'Smith New Big',               scop:'Manoperă necalificată', rest:0, renuntare:0},
     {nr:16, nume:'Gaabadi Construct',           scop:'Zidării — tencuieli'},
-    {nr:17, nume:'AKERO Industry',              scop:'—'},
-    {nr:18, nume:'Cris & Cris Mecanic',         scop:'Confecții metalice'},
+    {nr:17, nume:'AKERO Industry',              scop:'—', rest:0, renuntare:0},
+    {nr:18, nume:'Cris & Cris Mecanic',         scop:'Confecții metalice', rest:50000, renuntare:58064.47, netOverride:0, restNota:'factură efectivă 50.000 lei (cofraje Peri)', renuntNota:'se renunță la 58.064,47 lei din rest — după cei 50.000 lei facturați, nimic de plată'},
     {nr:19, nume:'Simplu Cons',                 scop:'Terase', rest:58736.54, renuntare:58736.54, renuntNota:'nu se mai execută — anexă de renunțare integrală'},
     {nr:'19a', nume:'Simplu Cons',              scop:'AA1', sub:true, rest:46809.47},
     {nr:20, nume:'CSM Leader Construct',        scop:'Șape'},
     {nr:21, nume:'G.A. Baadi',                  scop:'Gips carton'},
-    {nr:22, nume:'Kleemann',                    scop:'Lift'},
+    {nr:22, nume:'Kleemann',                    scop:'Lift', rest:0, renuntare:0},
     {nr:23, nume:'Elda Interconstruct',         scop:'Termosistem fațade'},
     {nr:24, nume:'G.A. Baadi Construct',        scop:'Glet'},
-    {nr:25, nume:'Solexpert',                   scop:'Șapă autonivelantă & covor PVC'},
+    {nr:25, nume:'Solexpert',                   scop:'Șapă autonivelantă & covor PVC', rest:0, renuntare:0},
     {nr:26, nume:'KONE',                        scop:'Lift'},
     {nr:27, nume:'Ganta Profil',                scop:'—'},
     {nr:28, nume:'G.A. Baadi Construct',        scop:'Rest finisaje'},
-    {nr:29, nume:'Light Design',                scop:'Tablouri noi'},
+    {nr:29, nume:'Light Design',                scop:'Tablouri noi', rest:0, renuntare:0},
     {nr:30, nume:'AX Perpetuum Impex',          scop:'Covor PVC', mod:true, rest:64242.15, restNota:'contract de bază', renuntare:64242.15, renuntNota:'nu se mai execută — anexă de renunțare integrală'},
     {nr:'30a', nume:'AX Perpetuum Impex',       scop:'AA1 — Compartimentări HPL', sub:true, rest:113093.67},
     {nr:'30b', nume:'AX Perpetuum Impex',       scop:'AA2 — Pardoseală bucătărie & Plăcări MDF', sub:true, rest:182694.10},
     {nr:31, nume:'Elda',                        scop:'Placări ceramice'},
-    {nr:32, nume:'General Construct',           scop:'Folie lichidă'},
+    {nr:32, nume:'General Construct',           scop:'Folie lichidă', rest:0, renuntare:0},
     {nr:33, nume:'Sabin Favorit Construct',     scop:'Trapă vizitare', mod:true},
     {nr:34, nume:'Ceramic Compact Construct',   scop:'Zugrăveli'},
-    {nr:35, nume:'Coneco Romania',              scop:'Vopsea termospumantă'},
-    {nr:36, nume:'Oxyroof',                     scop:'Terasă verde', mod:true},
-    {nr:37, nume:'OVO Design',                  scop:'Dotări'},
-    {nr:38, nume:'A&C Metal Industry',          scop:'Confecții metalice'}
+    {nr:35, nume:'Coneco Romania',              scop:'Vopsea termospumantă', rest:0, renuntare:0},
+    {nr:36, nume:'Oxyroof',                     scop:'Terasă verde', mod:true, rest:0, renuntare:0},
+    {nr:37, nume:'OVO Design',                  scop:'Dotări', rest:732739.61, renuntare:0},
+    {nr:38, nume:'A&C Metal Industry',          scop:'Confecții metalice', rest:104801.02, restNota:'19.940,45 EUR la curs BNR 11.09.2026 (5,2557 lei/EUR)', renuntare:0}
 ];
 
 function getFacturatSubMap(){
@@ -4381,7 +4381,7 @@ function renderContracteSubantreprize() {
     var renuntCell = (s.renuntare !== undefined)
       ? '<span style="color:#A32D2D;font-weight:700">' + fmtLei(s.renuntare) + '</span>' + (s.renuntNota ? '<div style="font-size:9px;color:#8A94A3;font-weight:500">' + s.renuntNota + '</div>' : '')
       : '<span style="color:#8A94A3;font-style:italic">de completat</span>';
-    var netRest = (s.rest !== undefined) ? (s.rest - (s.renuntare || 0)) : undefined;
+    var netRest = (s.netOverride !== undefined) ? s.netOverride : ((s.rest !== undefined) ? (s.rest - (s.renuntare || 0)) : undefined);
     var restFacturatCell;
     if (netRest === undefined) {
       restFacturatCell = '<span style="color:#8A94A3;font-style:italic">de completat</span>';
@@ -4420,13 +4420,13 @@ function renderContracteSubantreprize() {
   var renuntCompletate = subs.filter(function(s){ return s.renuntare !== undefined; });
   var totRenuntCompletat = renuntCompletate.reduce(function(a,s){ return a + s.renuntare; }, 0);
   var totRestFacturatNet = restCompletate.reduce(function(a,s){
-    var net = s.rest - (s.renuntare || 0);
+    var net = (s.netOverride !== undefined) ? s.netOverride : (s.rest - (s.renuntare || 0));
     return a + (facturatMap[s.nr] ? 0 : net);
   }, 0);
   var factCount = restCompletate.filter(function(s){ return !!facturatMap[s.nr]; }).length;
   var totIncasat = restCompletate.reduce(function(a,s){
     if (!facturatMap[s.nr]) return a;
-    return a + (s.rest - (s.renuntare || 0));
+    return a + ((s.netOverride !== undefined) ? s.netOverride : (s.rest - (s.renuntare || 0)));
   }, 0);
 
   var html = '';
@@ -4480,7 +4480,7 @@ function exportContracteSubantreprizeExcel() {
   var mainCount = subs.filter(function(s){ return !s.sub; }).length;
 
   var rowsHtml = subs.map(function(s){
-    var netRest = (s.rest !== undefined) ? (s.rest - (s.renuntare || 0)) : undefined;
+    var netRest = (s.netOverride !== undefined) ? s.netOverride : ((s.rest !== undefined) ? (s.rest - (s.renuntare || 0)) : undefined);
     var isFact = !!facturatMap[s.nr];
     var nrLabel = s.sub ? '' : s.nr;
     var numeLabel = s.sub ? ('↳ ' + s.nume) : s.nume;
@@ -4498,10 +4498,10 @@ function exportContracteSubantreprizeExcel() {
 
   var restTot = subs.reduce(function(a,s){ return a + (s.rest || 0); }, 0);
   var renuntTot = subs.reduce(function(a,s){ return a + (s.renuntare || 0); }, 0);
-  var netTot = subs.reduce(function(a,s){ return a + ((s.rest !== undefined) ? (s.rest - (s.renuntare || 0)) : 0); }, 0);
+  var netTot = subs.reduce(function(a,s){ return a + ((s.rest !== undefined) ? ((s.netOverride !== undefined) ? s.netOverride : (s.rest - (s.renuntare || 0))) : 0); }, 0);
   var netNeincasat = subs.reduce(function(a,s){
     if (s.rest === undefined) return a;
-    var net = s.rest - (s.renuntare || 0);
+    var net = (s.netOverride !== undefined) ? s.netOverride : (s.rest - (s.renuntare || 0));
     return a + (facturatMap[s.nr] ? 0 : net);
   }, 0);
 

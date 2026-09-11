@@ -425,6 +425,9 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
         <div class="submenu-item" id="item-campus-nrncs" onclick="renderCentralizatorNRNCS()">
           <i class="ti ti-table" style="color:#1A5276"></i> Centralizator NR-NCS final
         </div>
+        <div class="submenu-item" id="item-campus-subcontracte" onclick="renderContracteSubantreprize()">
+          <i class="ti ti-clipboard-check" style="color:#1E6E2D"></i> Finalizare — Contracte subantreprize
+        </div>
         <div class="submenu-item" id="item-campus-isu" onclick="renderIsuTest('campus')">
           <i class="ti ti-flame-off" style="color:#E74C3C"></i> Lucrări solicitate de ISU
         </div>
@@ -2033,15 +2036,6 @@ function renderHome() {
       '</div>' +
     '</div>' +
 
-    '<div class="proj-card" style="cursor:pointer" onclick="goModule(\'hangar\',\'edevizeregistru\')">' +
-      '<div class="proj-card-header" style="background:#1F3864;border-left:3px solid #2C4A6E">' +
-        '<div class="proj-icon" style="background:rgba(44,74,110,0.35)"><i class="ti ti-clipboard-check" style="color:#AEC6E4"></i></div>' +
-        '<div style="flex:1"><div style="font-size:13px;font-weight:600;color:#fff;display:flex;align-items:center;gap:7px"><span class="blink-nou6" style="background:#CC1515;color:#fff;border-radius:4px;padding:1px 7px;font-size:9px;letter-spacing:0.5px;font-weight:800">NOU</span>Liste revizuite — eDevize Kogălniceanu</div>' +
-        '<div style="font-size:10px;color:rgba(255,255,255,0.6)">Lucrări suplimentare · DN vs LS · trasabilitate + bază memorii</div></div>' +
-        '<i class="ti ti-chevron-right" style="color:rgba(255,255,255,0.7);font-size:18px"></i>' +
-      '</div>' +
-    '</div>' +
-
     (new Date() <= new Date('2026-09-06') ? '<div style="background:#FEF9E7;border:1px solid #F9E79F;border-left:4px solid #D4AC0D;border-radius:6px;padding:10px 14px;margin-bottom:12px">' +
       '<div style="font-size:11px;font-weight:700;color:#7D6608;margin-bottom:5px"><span class="blink-nou6" style="background:#D4AC0D;color:#fff;border-radius:4px;padding:1px 6px;font-size:9px;font-weight:800;margin-right:6px;letter-spacing:0.5px">NOU</span><i class="ti ti-tools" style="margin-right:4px"></i>Kogălniceanu — Au fost inițiate toate analizele comparative pe instalații' + _badgeTimp('2026-09-06','#D4AC0D') + '</div>' +
       '<div style="font-size:10px;color:#555;margin-bottom:4px"><b>Cale:</b> <span style="font-family:monospace;background:rgba(0,0,0,0.06);padding:1px 6px;border-radius:4px">Hangar Kogălniceanu → Analize Comparative → [capitol instalație]</span></div>' +
@@ -2053,6 +2047,15 @@ function renderHome() {
         '<div class="proj-icon" style="background:rgba(59,138,59,0.3)"><i class="ti ti-school" style="color:#7DC87D"></i></div>' +
         '<div style="flex:1"><div style="font-size:13px;font-weight:600;color:#fff">Campus DUAL Politehnica</div>' +
         '<div style="font-size:10px;color:rgba(255,255,255,0.6)">Îîn execuție · Corp C1</div></div>' +
+      '</div>' +
+    '</div>' +
+
+    '<div class="proj-card" style="cursor:pointer" onclick="renderContracteSubantreprize()">' +
+      '<div class="proj-card-header" style="background:#1E6E2D;border-left:3px solid #3B8A3B">' +
+        '<div class="proj-icon" style="background:rgba(59,138,59,0.3)"><i class="ti ti-clipboard-check" style="color:#A9E5B6"></i></div>' +
+        '<div style="flex:1"><div style="font-size:13px;font-weight:600;color:#fff;display:flex;align-items:center;gap:7px"><span class="blink-nou6" style="background:#CC1515;color:#fff;border-radius:4px;padding:1px 7px;font-size:9px;letter-spacing:0.5px;font-weight:800">NOU</span>Campus DUAL — Rest de facturat de Subantreprize</div>' +
+        '<div style="font-size:10px;color:rgba(255,255,255,0.6)">38 subantreprize · valori, facturat, rest de facturat, anexe de renunțare</div></div>' +
+        '<i class="ti ti-chevron-right" style="color:rgba(255,255,255,0.7);font-size:18px"></i>' +
       '</div>' +
     '</div>' +
 
@@ -4293,6 +4296,243 @@ function stopTour(silent){
 }
 function _tourEsc(e){ if (e.key === 'Escape') stopTour(); }
 
+
+  // Lista celor 38 subantreprize (contracte de subantrepriză, Campus DUAL Corp C1)
+  // Valorile financiare (contract / facturat / rest de facturat / anexă renunțare) sunt DE COMPLETAT — Gelu le transmite ulterior.
+var CONTRACTE_SUBANTREPRIZE = [
+    {nr:1,  nume:'ColtLaumi',                   scop:'Săpătură + umpluturi', rest:35061.90, renuntare:35061.90, renuntNota:'nu se mai execută — anexă de renunțare integrală'},
+    {nr:2,  nume:'Bodoli',                      scop:'Organizare de șantier (OS)', rest:0, renuntare:0},
+    {nr:3,  nume:'Light Design',                scop:'Organizare de șantier (OS)', rest:0, renuntare:0},
+    {nr:4,  nume:'ColtLaumi',                   scop:'Organizare de șantier (OS)', rest:0, renuntare:0},
+    {nr:5,  nume:'Light Design',                scop:'Împământare', rest:0, renuntare:0},
+    {nr:6,  nume:'Cris & Cris Mecanic',         scop:'Lucrări mecanice'},
+    {nr:7,  nume:'Topizol',                     scop:'Hidroizolații'},
+    {nr:8,  nume:'Bodoli',                      scop:'Instalații în radier'},
+    {nr:9,  nume:'New Mao',                     scop:'—'},
+    {nr:10, nume:'Nibaco',                      scop:'Instalații / rețele'},
+    {nr:11, nume:'ColtLaumi',                   scop:'Umpluturi — dif. îmbunătățire teren'},
+    {nr:12, nume:'BRT Consulting Tech',         scop:'Consultanță tehnică'},
+    {nr:13, nume:'Gabaadi Construct',           scop:'Structură / execuție'},
+    {nr:14, nume:'Aris',                        scop:'—'},
+    {nr:15, nume:'Smith New Big',               scop:'Manoperă necalificată'},
+    {nr:16, nume:'Gaabadi Construct',           scop:'Zidării — tencuieli'},
+    {nr:17, nume:'AKERO Industry',              scop:'—'},
+    {nr:18, nume:'Cris & Cris Mecanic',         scop:'Confecții metalice'},
+    {nr:19, nume:'Simplu Cons',                 scop:'Terase', rest:58736.54, renuntare:58736.54, renuntNota:'nu se mai execută — anexă de renunțare integrală'},
+    {nr:'19a', nume:'Simplu Cons',              scop:'AA1', sub:true, rest:46809.47},
+    {nr:20, nume:'CSM Leader Construct',        scop:'Șape'},
+    {nr:21, nume:'G.A. Baadi',                  scop:'Gips carton'},
+    {nr:22, nume:'Kleemann',                    scop:'Lift'},
+    {nr:23, nume:'Elda Interconstruct',         scop:'Termosistem fațade'},
+    {nr:24, nume:'G.A. Baadi Construct',        scop:'Glet'},
+    {nr:25, nume:'Solexpert',                   scop:'Șapă autonivelantă & covor PVC'},
+    {nr:26, nume:'KONE',                        scop:'Lift'},
+    {nr:27, nume:'Ganta Profil',                scop:'—'},
+    {nr:28, nume:'G.A. Baadi Construct',        scop:'Rest finisaje'},
+    {nr:29, nume:'Light Design',                scop:'Tablouri noi'},
+    {nr:30, nume:'AX Perpetuum Impex',          scop:'Covor PVC', mod:true, rest:64242.15, restNota:'contract de bază', renuntare:64242.15, renuntNota:'nu se mai execută — anexă de renunțare integrală'},
+    {nr:'30a', nume:'AX Perpetuum Impex',       scop:'AA1 — Compartimentări HPL', sub:true, rest:113093.67},
+    {nr:'30b', nume:'AX Perpetuum Impex',       scop:'AA2 — Pardoseală bucătărie & Plăcări MDF', sub:true, rest:182694.10},
+    {nr:31, nume:'Elda',                        scop:'Placări ceramice'},
+    {nr:32, nume:'General Construct',           scop:'Folie lichidă'},
+    {nr:33, nume:'Sabin Favorit Construct',     scop:'Trapă vizitare', mod:true},
+    {nr:34, nume:'Ceramic Compact Construct',   scop:'Zugrăveli'},
+    {nr:35, nume:'Coneco Romania',              scop:'Vopsea termospumantă'},
+    {nr:36, nume:'Oxyroof',                     scop:'Terasă verde', mod:true},
+    {nr:37, nume:'OVO Design',                  scop:'Dotări'},
+    {nr:38, nume:'A&C Metal Industry',          scop:'Confecții metalice'}
+];
+
+function getFacturatSubMap(){
+  try { return JSON.parse(localStorage.getItem('campusDualSubFacturat') || '{}'); }
+  catch(e){ return {}; }
+}
+function setFacturatSubMap(m){
+  try { localStorage.setItem('campusDualSubFacturat', JSON.stringify(m)); } catch(e){}
+}
+function toggleFacturatSub(nr){
+  var m = getFacturatSubMap();
+  m[nr] = !m[nr];
+  setFacturatSubMap(m);
+  renderContracteSubantreprize();
+}
+
+function renderContracteSubantreprize() {
+  document.querySelectorAll('.submenu-item').forEach(function(i){ i.classList.remove('active'); });
+  var item = document.getElementById('item-campus-subcontracte');
+  if (item) item.classList.add('active');
+  closeMenu();
+  document.getElementById('menu-btn').style.display = 'none';
+  var btn = document.getElementById('back-btn');
+  btn.style.display = 'flex';
+  btn.onclick = function() { renderProjHome('campus'); };
+
+  var subs = CONTRACTE_SUBANTREPRIZE;
+  var facturatMap = getFacturatSubMap();
+
+  function fmtLei(n){ return n.toLocaleString('ro-RO',{minimumFractionDigits:2,maximumFractionDigits:2}) + ' lei'; }
+
+  function rowHtml(s, i){
+    var bg = (i%2 ? '#fff' : '#F9FBF9');
+    var isFact = !!facturatMap[s.nr];
+    var deFacturatCell = (s.rest !== undefined)
+      ? '<span style="color:#1E6E2D;font-weight:700">' + fmtLei(s.rest) + '</span>' + (s.restNota ? '<div style="font-size:9px;color:#8A94A3;font-weight:500">' + s.restNota + '</div>' : '')
+      : '<span style="color:#8A94A3;font-style:italic">de completat</span>';
+    var renuntCell = (s.renuntare !== undefined)
+      ? '<span style="color:#A32D2D;font-weight:700">' + fmtLei(s.renuntare) + '</span>' + (s.renuntNota ? '<div style="font-size:9px;color:#8A94A3;font-weight:500">' + s.renuntNota + '</div>' : '')
+      : '<span style="color:#8A94A3;font-style:italic">de completat</span>';
+    var netRest = (s.rest !== undefined) ? (s.rest - (s.renuntare || 0)) : undefined;
+    var restFacturatCell;
+    if (netRest === undefined) {
+      restFacturatCell = '<span style="color:#8A94A3;font-style:italic">de completat</span>';
+    } else if (isFact) {
+      restFacturatCell = '<span style="color:#8A94A3;text-decoration:line-through">' + fmtLei(netRest) + '</span><div style="font-size:9px;color:#1E6E2D;font-weight:700"><i class="ti ti-circle-check"></i> Facturat</div>';
+    } else {
+      restFacturatCell = '<span style="color:#1A5276;font-weight:700">' + fmtLei(netRest) + '</span>';
+    }
+    var factCell = '<input type="checkbox" ' + (isFact ? 'checked' : '') + ' onchange="toggleFacturatSub(\'' + s.nr + '\')" style="width:16px;height:16px;cursor:pointer" title="Marchează rest de facturat ca încasat">';
+    if (s.sub) {
+      return '<tr style="background:' + (isFact ? '#F1F9F3' : bg) + ';border-bottom:1px solid #EEE">' +
+        '<td style="padding:5px 8px;font-size:10px;color:#B8BEC7"></td>' +
+        '<td style="padding:5px 8px 5px 20px;font-size:11px;color:#8A94A3;font-style:italic">↳ ' + s.nume + '</td>' +
+        '<td style="padding:5px 8px;font-size:11px;color:#555">' + s.scop + '</td>' +
+        '<td style="padding:5px 8px;text-align:right;font-size:11px">' + deFacturatCell + '</td>' +
+        '<td style="padding:5px 8px;text-align:right;font-size:11px">' + renuntCell + '</td>' +
+        '<td style="padding:5px 8px;text-align:right;font-size:11px">' + restFacturatCell + '</td>' +
+        '<td style="padding:5px 8px;text-align:center">' + factCell + '</td>' +
+      '</tr>';
+    }
+    return '<tr style="background:' + (isFact ? '#F1F9F3' : bg) + ';border-bottom:1px solid #EEE">' +
+      '<td style="padding:7px 8px;font-size:11px;color:#7A828E">' + s.nr + '</td>' +
+      '<td style="padding:7px 8px;font-size:12px;font-weight:600;color:#1F3864">' + s.nume + '</td>' +
+      '<td style="padding:7px 8px;font-size:11px;color:#555">' + s.scop + '</td>' +
+      '<td style="padding:7px 8px;text-align:right;font-size:11px">' + deFacturatCell + '</td>' +
+      '<td style="padding:7px 8px;text-align:right;font-size:11px">' + renuntCell + '</td>' +
+      '<td style="padding:7px 8px;text-align:right;font-size:11px">' + restFacturatCell + '</td>' +
+      '<td style="padding:7px 8px;text-align:center">' + factCell + '</td>' +
+    '</tr>';
+  }
+
+  var rows = subs.map(rowHtml).join('');
+  var mainCount = subs.filter(function(s){ return !s.sub; }).length;
+  var restCompletate = subs.filter(function(s){ return s.rest !== undefined; });
+  var totRestCompletat = restCompletate.reduce(function(a,s){ return a + s.rest; }, 0);
+  var renuntCompletate = subs.filter(function(s){ return s.renuntare !== undefined; });
+  var totRenuntCompletat = renuntCompletate.reduce(function(a,s){ return a + s.renuntare; }, 0);
+  var totRestFacturatNet = restCompletate.reduce(function(a,s){
+    var net = s.rest - (s.renuntare || 0);
+    return a + (facturatMap[s.nr] ? 0 : net);
+  }, 0);
+  var factCount = restCompletate.filter(function(s){ return !!facturatMap[s.nr]; }).length;
+  var totIncasat = restCompletate.reduce(function(a,s){
+    if (!facturatMap[s.nr]) return a;
+    return a + (s.rest - (s.renuntare || 0));
+  }, 0);
+
+  var html = '';
+  html += '<div class="proj-header"><div class="proj-title">Finalizare execuție — Contracte subantreprize</div>' +
+    '<div class="proj-meta">Campus DUAL Politehnica · Corp C1 · Notificare finalizare lucrări nr.13518/31.07.2026 · ' + mainCount + ' subantreprize</div></div>';
+  html += '<div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:14px">' +
+    '<div class="module-badge" style="background:#EAFAF1;color:#1E6E2D;margin-bottom:0"><i class="ti ti-clipboard-check" style="font-size:13px"></i> Registru contracte subantrepriză · valori, facturat, rest de facturat, anexe de renunțare</div>' +
+    '<button onclick="exportContracteSubantreprizeExcel()" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:#1E6E2D;color:#fff;border:none;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit"><i class="ti ti-file-spreadsheet"></i> Descarcă Excel</button>' +
+  '</div>';
+
+  html += '<div class="kpi-grid" style="margin-bottom:14px">';
+  html += '<div class="kpi"><div class="kpi-label">Subantreprize identificate</div><div class="kpi-val" style="color:#1E6E2D">' + mainCount + '</div><div class="kpi-sub">Corp C1 · listă confirmată</div></div>';
+  html += '<div class="kpi"><div class="kpi-label">De facturat</div>' + (restCompletate.length ? '<div class="kpi-val" style="color:#1E6E2D">' + fmtLei(totRestCompletat) + '</div><div class="kpi-sub">' + restCompletate.length + '/' + subs.length + ' poziții completate</div>' : '<div class="kpi-val" style="color:#8A94A3;font-style:italic">de completat</div><div class="kpi-sub">lei fără TVA</div>') + '</div>';
+  html += '<div class="kpi"><div class="kpi-label">Anexe de renunțare</div>' + (renuntCompletate.length ? '<div class="kpi-val" style="color:#A32D2D">' + fmtLei(totRenuntCompletat) + '</div><div class="kpi-sub">' + renuntCompletate.length + '/' + subs.length + ' poziții completate</div>' : '<div class="kpi-val" style="color:#8A94A3;font-style:italic">de completat</div><div class="kpi-sub">valoare ce nu se va mai plăti către subantreprenori</div>') + '</div>';
+  html += '<div class="kpi"><div class="kpi-label">Rest de facturat (net, neîncasat)</div>' + (restCompletate.length ? '<div class="kpi-val" style="color:#1A5276">' + fmtLei(totRestFacturatNet) + '</div><div class="kpi-sub">exclude pozițiile bifate „Facturat"</div>' : '<div class="kpi-val" style="color:#8A94A3;font-style:italic">de completat</div><div class="kpi-sub">lei fără TVA</div>') + '</div>';
+  html += '<div class="kpi" style="background:#EAFAF1;border-color:#C0DD97"><div class="kpi-label">Sume deja facturate (se bifează)</div><div class="kpi-val" style="color:#1E6E2D">' + fmtLei(totIncasat) + '</div><div class="kpi-sub">' + factCount + '/' + restCompletate.length + ' poziții bifate</div></div>';
+  html += '</div>';
+
+  html += '<div class="proj-card" style="margin-bottom:14px"><div style="overflow-x:auto">';
+  html += '<table style="width:100%;border-collapse:collapse">';
+  html += '<thead><tr style="background:#1E6E2D;color:#fff;text-align:left">' +
+    '<th style="padding:8px 8px;font-size:11px">Nr.</th>' +
+    '<th style="padding:8px 8px;font-size:11px">Subantreprenor</th>' +
+    '<th style="padding:8px 8px;font-size:11px">Scop lucrare</th>' +
+    '<th style="padding:8px 8px;font-size:11px;text-align:right">De facturat</th>' +
+    '<th style="padding:8px 8px;font-size:11px;text-align:right">Anexă renunțare</th>' +
+    '<th style="padding:8px 8px;font-size:11px;text-align:right">Rest de facturat</th>' +
+    '<th style="padding:8px 8px;font-size:11px;text-align:center">Facturat</th>' +
+  '</tr></thead><tbody>' + rows + '</tbody>';
+  html += '<tfoot><tr style="background:#F2F4F7;font-weight:700;border-top:2px solid #1E6E2D">' +
+    '<td style="padding:8px 8px" colspan="3">TOTAL (' + mainCount + ' subantreprize · ' + subs.length + ' poziții)</td>' +
+    '<td style="padding:8px 8px;text-align:right;' + (restCompletate.length ? 'color:#1E6E2D">' + fmtLei(totRestCompletat) + ' <span style="font-size:9px;font-weight:500;color:#8A94A3">(' + restCompletate.length + '/' + subs.length + ')</span>' : 'color:#8A94A3;font-style:italic">de completat') + '</td>' +
+    '<td style="padding:8px 8px;text-align:right;' + (renuntCompletate.length ? 'color:#A32D2D">' + fmtLei(totRenuntCompletat) + ' <span style="font-size:9px;font-weight:500;color:#8A94A3">(' + renuntCompletate.length + '/' + subs.length + ')</span>' : 'color:#8A94A3;font-style:italic">de completat') + '</td>' +
+    '<td style="padding:8px 8px;text-align:right;' + (restCompletate.length ? 'color:#1A5276">' + fmtLei(totRestFacturatNet) : 'color:#8A94A3;font-style:italic">de completat') + '</td>' +
+    '<td style="padding:8px 8px;text-align:center;color:#1E6E2D">' + factCount + '/' + restCompletate.length + '</td>' +
+  '</tr></tfoot></table></div>';
+  html += '<div style="font-size:10px;color:#8A94A3;padding:8px 12px;line-height:1.5"><b>De facturat</b> = valoare rămasă de facturat de subantreprenor din contract. <b>Anexă de renunțare</b> = valoare din contractul de subantrepriză la care se renunță — lucrare/cantitate ce nu se va mai executa/plăti către subantreprenor. <b>Rest de facturat</b> = De facturat − Anexă renunțare (valoarea netă care urmează efectiv să mai fie facturată).</div>';
+  html += '</div>';
+
+  html += "<button class=\"open-fisa-btn\" onclick=\"renderProjHome('campus')\"><i class=\"ti ti-arrow-left\"></i> Înapoi la proiect</button>";
+  html += '<div class="page-footer">PM Hub · EREN CONS SRL · 2026 · Campus DUAL Politehnica · Finalizare execuție Corp C1</div>';
+  document.getElementById('main').innerHTML = html;
+}
+
+function exportContracteSubantreprizeExcel() {
+  var subs = CONTRACTE_SUBANTREPRIZE;
+  var facturatMap = getFacturatSubMap();
+  function fmtNum(n){ return (typeof n === 'number') ? n.toFixed(2).replace('.', ',') : ''; }
+  function esc(s){ return (s === undefined || s === null) ? '' : String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+  var mainCount = subs.filter(function(s){ return !s.sub; }).length;
+
+  var rowsHtml = subs.map(function(s){
+    var netRest = (s.rest !== undefined) ? (s.rest - (s.renuntare || 0)) : undefined;
+    var isFact = !!facturatMap[s.nr];
+    var nrLabel = s.sub ? '' : s.nr;
+    var numeLabel = s.sub ? ('↳ ' + s.nume) : s.nume;
+    var scopLabel = s.scop + (s.restNota ? ' (' + s.restNota + ')' : '') + (s.renuntNota ? ' — ' + s.renuntNota : '');
+    return '<tr>' +
+      '<td>' + esc(nrLabel) + '</td>' +
+      '<td>' + esc(numeLabel) + '</td>' +
+      '<td>' + esc(scopLabel) + '</td>' +
+      '<td style="mso-number-format:\'0.00\'">' + fmtNum(s.rest) + '</td>' +
+      '<td style="mso-number-format:\'0.00\'">' + fmtNum(s.renuntare) + '</td>' +
+      '<td style="mso-number-format:\'0.00\'">' + fmtNum(netRest) + '</td>' +
+      '<td>' + (isFact ? 'Da' : (netRest !== undefined ? 'Nu' : '')) + '</td>' +
+    '</tr>';
+  }).join('');
+
+  var restTot = subs.reduce(function(a,s){ return a + (s.rest || 0); }, 0);
+  var renuntTot = subs.reduce(function(a,s){ return a + (s.renuntare || 0); }, 0);
+  var netTot = subs.reduce(function(a,s){ return a + ((s.rest !== undefined) ? (s.rest - (s.renuntare || 0)) : 0); }, 0);
+  var netNeincasat = subs.reduce(function(a,s){
+    if (s.rest === undefined) return a;
+    var net = s.rest - (s.renuntare || 0);
+    return a + (facturatMap[s.nr] ? 0 : net);
+  }, 0);
+
+  var htmlDoc =
+    '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">' +
+    '<head><meta charset="UTF-8">' +
+    '<!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet>' +
+    '<x:Name>Contracte subantreprize</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions>' +
+    '</x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]-->' +
+    '<style>table{border-collapse:collapse;font-family:Calibri,Arial,sans-serif;font-size:11pt} ' +
+    'th{background:#1E6E2D;color:#fff;font-weight:bold;padding:6px 8px;border:1px solid #999;text-align:left} ' +
+    'td{padding:5px 8px;border:1px solid #ccc} ' +
+    '.num{text-align:right} .tot{font-weight:bold;background:#F2F4F7}</style></head><body>' +
+    '<table>' +
+    '<tr><td colspan="7" style="font-size:14pt;font-weight:bold;border:none">Finalizare execuție — Contracte subantreprize</td></tr>' +
+    '<tr><td colspan="7" style="border:none">Campus DUAL Politehnica · Corp C1 · ' + mainCount + ' subantreprize · exportat ' + new Date().toLocaleDateString('ro-RO') + '</td></tr>' +
+    '<tr><td colspan="7" style="border:none"></td></tr>' +
+    '<tr><th>Nr.</th><th>Subantreprenor</th><th>Scop lucrare</th><th>De facturat (lei)</th><th>Anexă renunțare (lei)</th><th>Rest de facturat (lei)</th><th>Facturat</th></tr>' +
+    rowsHtml +
+    '<tr class="tot"><td colspan="3">TOTAL</td><td class="num">' + fmtNum(restTot) + '</td><td class="num">' + fmtNum(renuntTot) + '</td><td class="num">' + fmtNum(netTot) + '</td><td></td></tr>' +
+    '<tr class="tot"><td colspan="3">Neîncasat (nebifat)</td><td></td><td></td><td class="num">' + fmtNum(netNeincasat) + '</td><td></td></tr>' +
+    '</table></body></html>';
+
+  var blob = new Blob(['﻿' + htmlDoc], {type: 'application/vnd.ms-excel;charset=utf-8'});
+  var link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = 'Campus_DUAL_Contracte_Subantreprize_' + new Date().toISOString().slice(0,10) + '.xls';
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
 
 function renderCentralizatorNRNCS() {
   document.querySelectorAll('.submenu-item').forEach(function(i){ i.classList.remove('active'); });

@@ -4343,6 +4343,10 @@ var CONTRACTE_SUBANTREPRIZE = [
     {nr:38, nume:'A&C Metal Industry',          scop:'Confecții metalice', rest:104801.02, restNota:'19.940,45 EUR la curs BNR 11.09.2026 (5,2557 lei/EUR)', renuntare:0}
 ];
 
+// URL de deployment Apps Script (Deploy > Web app) — sincronizează bifele 'Facturat' între dispozitive printr-un Google Sheet.
+// Lasă gol '' ca să funcționeze doar local (ca până acum). Vezi instrucțiunile de configurare transmise separat.
+var FACTURAT_SYNC_URL = 'https://script.google.com/macros/s/AKfycbzrqwK4g2ZYseXAcZ_zGxEn60Qgs3Q51DT-Tt2EFVr8iLrgKhOcDUTjryVtClOeYhPmug/exec';
+
 function getFacturatSubMap(){
   try { return JSON.parse(localStorage.getItem('campusDualSubFacturat') || '{}'); }
   catch(e){ return {}; }
@@ -4350,14 +4354,32 @@ function getFacturatSubMap(){
 function setFacturatSubMap(m){
   try { localStorage.setItem('campusDualSubFacturat', JSON.stringify(m)); } catch(e){}
 }
+function syncFacturatCloudThenRerender(){
+  if (!FACTURAT_SYNC_URL) return;
+  fetch(FACTURAT_SYNC_URL)
+    .then(function(r){ return r.json(); })
+    .then(function(remote){
+      setFacturatSubMap(remote || {});
+      var item = document.getElementById('item-campus-subcontracte');
+      if (item && item.classList.contains('active')) renderContracteSubantreprize(true);
+    })
+    .catch(function(e){ console.warn('Nu am putut sincroniza bifele din cloud:', e); });
+}
 function toggleFacturatSub(nr){
   var m = getFacturatSubMap();
   m[nr] = !m[nr];
   setFacturatSubMap(m);
-  renderContracteSubantreprize();
+  renderContracteSubantreprize(true);
+  if (FACTURAT_SYNC_URL) {
+    fetch(FACTURAT_SYNC_URL, {
+      method: 'POST',
+      headers: {'Content-Type': 'text/plain;charset=utf-8'},
+      body: JSON.stringify({nr: nr, val: m[nr]})
+    }).catch(function(e){ console.warn('Sincronizare cloud eșuată:', e); });
+  }
 }
 
-function renderContracteSubantreprize() {
+function renderContracteSubantreprize(skipSync) {
   document.querySelectorAll('.submenu-item').forEach(function(i){ i.classList.remove('active'); });
   var item = document.getElementById('item-campus-subcontracte');
   if (item) item.classList.add('active');
@@ -4366,6 +4388,7 @@ function renderContracteSubantreprize() {
   var btn = document.getElementById('back-btn');
   btn.style.display = 'flex';
   btn.onclick = function() { renderProjHome('campus'); };
+  if (!skipSync) syncFacturatCloudThenRerender();
 
   var subs = CONTRACTE_SUBANTREPRIZE;
   var facturatMap = getFacturatSubMap();

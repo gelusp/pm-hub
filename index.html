@@ -4356,7 +4356,7 @@ function setFacturatSubMap(m){
 }
 function syncFacturatCloudThenRerender(){
   if (!FACTURAT_SYNC_URL) return;
-  fetch(FACTURAT_SYNC_URL)
+  fetch(FACTURAT_SYNC_URL + '?t=' + Date.now(), {cache: 'no-store'})
     .then(function(r){ return r.json(); })
     .then(function(remote){
       setFacturatSubMap(remote || {});

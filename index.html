@@ -288,6 +288,9 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
         <div class="submenu-item" id="item-hangar-sinteza" onclick="goModule('hangar','sinteza')">
           <i class="ti ti-clipboard-list"></i> Acțiuni / Riscuri / Rec.
         </div>
+        <div class="submenu-item" id="item-hangar-regpd" onclick="goModule('hangar','regpd')">
+          <i class="ti ti-alert-triangle" style="color:#C0392B"></i> Probleme Identificate în Execuție
+        </div>
         <div class="submenu-item" id="item-hangar-plan" onclick="openLink('https://docs.google.com/spreadsheets/d/1ZTLxiHNHZSoIqa3BoH7MNvyArLelJpGm/edit?gid=514226828#gid=514226828','item-hangar-plan')">
           <i class="ti ti-layout-list"></i> Plan Proiect
         </div>
@@ -637,6 +640,7 @@ function goModule(proj, module) {
   else if (module === 'validare') renderValidare(proj);
   else if (module === 'analize') renderAnalize(proj);
   else if (module === 'sinteza') renderSinteza(proj);
+  else if (module === 'regpd') renderRegPD(proj);
   else if (module === 'powerbi') renderPowerBI(proj);
   else if (module === 'erp') renderERP(proj);
   else if (module === 'doccontract') renderDocContract(proj);
@@ -2114,10 +2118,51 @@ function deleteAlert(id) {
     fetch(ALERTS_API + '?action=delete&id=' + String(id)).catch(function(){});
   }
 }
+function _peAlertsDismissed() {
+  try { return JSON.parse(localStorage.getItem('pm_pe_alerts_dismissed') || '[]'); } catch(e) { return []; }
+}
+function _peAlertsDismissedSave(arr) {
+  try { localStorage.setItem('pm_pe_alerts_dismissed', JSON.stringify(arr)); } catch(e) {}
+}
+function dismissPEAlert(cod) {
+  var arr = _peAlertsDismissed();
+  if (arr.indexOf(cod) === -1) arr.push(cod);
+  _peAlertsDismissedSave(arr);
+  renderAlerts();
+}
+function _termenToISO(t) {
+  var m = /^(\d{2})\.(\d{2})\.(\d{4})$/.exec(t || '');
+  return m ? (m[3] + '-' + m[2] + '-' + m[1]) : null;
+}
+function getPEAlerts() {
+  var dismissed = _peAlertsDismissed();
+  if (typeof REGPD === 'undefined') return [];
+  return REGPD.filter(function(x){
+    return x.termen && x.termen !== '—' && x.status !== 'Închis' && dismissed.indexOf(x.cod) === -1;
+  }).map(function(x){
+    var iso = _termenToISO(x.termen);
+    return {id: 'pe-' + x.cod, cod: x.cod, text: x.cod + ' — ' + x.detaliu, date: iso || '9999-12-31', kind: 'pe'};
+  });
+}
+function goToPE(cod) {
+  goModule('hangar', 'regpd');
+  setTimeout(function(){
+    var row = document.getElementById('pe-row-' + cod);
+    if (!row) return;
+    row.scrollIntoView({behavior:'smooth', block:'center'});
+    row.style.transition = 'background-color 0.4s';
+    var prevBg = row.style.backgroundColor;
+    row.style.backgroundColor = '#FFF3CD';
+    setTimeout(function(){ row.style.backgroundColor = prevBg; }, 1800);
+  }, 60);
+}
 function renderAlerts() {
   var el = document.getElementById('alerts-list');
   if (!el) return;
-  var alerts = getAlerts().slice().reverse();
+  var manual = getAlerts().slice().map(function(a){ a.kind = 'manual'; return a; });
+  var alerts = manual.concat(getPEAlerts());
+  alerts.sort(function(x,y){ return String(x.date).localeCompare(String(y.date)); });
+  alerts.reverse();
   if (!alerts.length) {
     el.innerHTML = '<div style="font-size:11px;color:var(--text-tertiary);padding:4px 0">Nicio alertă adăugată.</div>';
     return;
@@ -2140,11 +2185,19 @@ function renderAlerts() {
       diffDays = Math.round((tDate - dDate) / msDay);
     }
     var lbl = isPast ? '+' + diffDays + ' zi' + (diffDays === 1 ? '' : 'le') : isToday ? 'Azi' : isTmw ? 'Mâine' : d.split('-').reverse().join('.');
+    var isPE = a.kind === 'pe';
+    var peTitle = isPE ? ('Deschide punctul ' + a.cod + ' în registru') : '';
+    var textHtml = isPE
+      ? '<span style="cursor:pointer" onclick="goToPE(\'' + a.cod + '\')" title="' + peTitle + '"><i class="ti ti-alert-triangle" style="font-size:11px;color:#C0392B;margin-right:4px"></i>' + a.text + '</span>'
+      : a.text;
+    var delHtml = isPE
+      ? '<button onclick="dismissPEAlert(\'' + a.cod + '\')" title="Ascunde din Alerte (nu afectează registrul/Excel)" style="background:none;border:none;cursor:pointer;color:var(--text-tertiary);font-size:16px;padding:0 2px;line-height:1">×</button>'
+      : '<button onclick="deleteAlert(' + a.id + ')" style="background:none;border:none;cursor:pointer;color:var(--text-tertiary);font-size:16px;padding:0 2px;line-height:1">×</button>';
     html += '<div style="display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:6px;background:' + bg + ';margin-bottom:4px">';
     html += '<span style="width:8px;height:8px;border-radius:50%;background:' + dot + ';flex-shrink:0"></span>';
-    html += '<span style="flex:1;font-size:12px;color:var(--text)">' + a.text + '</span>';
+    html += '<span style="flex:1;font-size:12px;color:var(--text)">' + textHtml + '</span>';
     html += '<span style="font-size:10px;color:' + dot + ';font-weight:600;white-space:nowrap;margin-right:4px">' + lbl + '</span>';
-    html += '<button onclick="deleteAlert(' + a.id + ')" style="background:none;border:none;cursor:pointer;color:var(--text-tertiary);font-size:16px;padding:0 2px;line-height:1">×</button>';
+    html += delHtml;
     html += '</div>';
   });
   el.innerHTML = html;
@@ -2188,11 +2241,13 @@ function renderHome() {
     '</div>' : '') +
 
     '<div class="proj-card">' +
-      '<div class="proj-card-header" style="background:#A03535;border-left:3px solid #CC1515">' +
+      '<div class="proj-card-header" style="background:#C0392B;border-left:3px solid #E74C3C">' +
         '<div class="proj-icon" style="background:rgba(204,21,21,0.25)"><i class="ti ti-building" style="color:#CC1515"></i></div>' +
         '<div style="flex:1"><div style="font-size:13px;font-weight:600;color:#fff">Hangar Kogălniceanu</div>' +
         '<div style="font-size:10px;color:rgba(255,255,255,0.6)">În validare / execuție · Start: 19.06.2026</div></div>' +
         '<button onclick="goModule(\'hangar\',\'contractsinteza\')" style="display:inline-flex;align-items:center;gap:6px;padding:7px 14px;background:rgba(255,255,255,0.16);color:#fff;border:1px solid rgba(255,255,255,0.45);border-radius:7px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap" onmouseover="this.style.background=\'rgba(255,255,255,0.28)\'" onmouseout="this.style.background=\'rgba(255,255,255,0.16)\'"><i class="ti ti-file-dollar" style="font-size:14px"></i> Sinteză contract</button>' +
+        '<button onclick="goModule(\'hangar\',\'regpd\')" style="display:inline-flex;align-items:center;gap:6px;padding:7px 14px;background:rgba(255,255,255,0.16);color:#fff;border:1px solid rgba(255,255,255,0.45);border-radius:7px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap;margin-left:6px" onmouseover="this.style.background=\'rgba(255,255,255,0.28)\'" onmouseout="this.style.background=\'rgba(255,255,255,0.16)\'"><i class="ti ti-alert-triangle" style="font-size:14px"></i> Probleme Identificate în Execuție</button>' +
+        '<span class="blink-nou6" style="display:inline-block;margin-left:5px;background:#CC1515;color:#fff;font-size:9px;font-weight:800;padding:2px 6px;border-radius:99px;letter-spacing:.3px;vertical-align:middle">NOU</span>' +
       '</div>' +
     '</div>' +
 
@@ -2308,10 +2363,11 @@ function renderHome() {
     '</div>' : '') +
 
     '<div style="margin-bottom:12px">' +
-      '<div style="display:flex;align-items:center;gap:6px;margin-bottom:8px">' +
+      '<div style="display:flex;align-items:center;gap:6px;margin-bottom:4px">' +
         '<i class="ti ti-bell-ringing" style="color:#CC1515;font-size:14px"></i>' +
         '<span style="font-size:12px;font-weight:600;color:var(--text)">Alerte</span>' +
       '</div>' +
+      '<div style="display:flex;align-items:center;gap:6px;background:#FDEDEC;border:1px solid #F5B7B1;border-left:3px solid #C0392B;border-radius:6px;padding:6px 10px;margin-bottom:8px"><i class="ti ti-alert-triangle" style="font-size:13px;color:#C0392B;flex-shrink:0"></i><span style="font-size:11px;font-weight:600;color:#922B21">Alertele setate automat (din termenele Registrului de Probleme) se deschid cu un click direct pe punctul respectiv.</span></div>' +
       '<div style="display:flex;gap:6px;margin-bottom:8px">' +
         '<input type="text" id="alert-text" placeholder="Descrie alerta..." onkeydown="if(event.key===\'Enter\')addAlert()" style="flex:1;min-width:0;padding:7px 10px;border:1px solid var(--border);border-radius:var(--radius);font-size:12px;font-family:\'Inter\',sans-serif;outline:none;background:var(--white)">' +
         '<input type="date" id="alert-date" style="padding:7px 8px;border:1px solid var(--border);border-radius:var(--radius);font-size:12px;outline:none;background:var(--white)">' +
@@ -2843,6 +2899,201 @@ function renderSinteza(proj) {
   html += '</div>';
   document.getElementById('main').innerHTML = html;
 }
+var REGPD = [
+  {cod:'PE01', categorie:'Contractual', detaliu:'Personal-cheie', valoare:20000, termen:'—', status:'Închis', dataStatus:'11.09.2026',
+   problema:'Revendicarea Beneficiarului nr.2 — penalitate 20.000 lei fără TVA pentru înlocuirea a 2 experți-cheie fără consimțământ prealabil (subcl.14.3/14.4/50.3): Gelu Spătaru (PM) și Gabriel Peltea (Șef Șantier), înlocuiți cu experții propuși în licitație.',
+   explicatii:'Au fost înlocuiți fără consimțământul prealabil al beneficiarului (subcl.14.3/14.4): Gelu Spătaru (PM) → Nastase Gabriel (Responsabil tehnic execuție dom.1.1, expert propus în licitație); Gabriel Peltea (Șef Șantier) → Linca Alexandru (Responsabil CQ, expert propus în licitație).',
+   cauza:'<b style="color:#000">Personal-cheie comun, nominalizat pe mai multe oferte/licitații</b> — fără cauză obiectivă de indisponibilitate.',
+   impactTimp:'Nu se aplică',
+   actiune:'ÎNCHISĂ — Decizia Supervizorului nr. A5-1155 (11.09.2026) admite integral Revendicarea Finală nr.2; penalitate 20.000 lei fără TVA, de facturat către EREN.',
+   sursa:'Detaliere finală Revendicare 2 (transmisă 22.08.2026, dosar local Beneficiar)'},
+  {cod:'PE02', categorie:'Contractual', detaliu:'Personal-cheie', valoare:20000, termen:'—', status:'Închis', dataStatus:'19.09.2026',
+   problema:'Revendicarea Beneficiarului nr.3 — penalitate 20.000 lei (2×10.000 lei/eveniment) pentru înlocuirea a 2 experți-cheie fără consimțământ prealabil (subcl.14.3/14.4/50.3). Identică ca structură cu Revendicarea nr.2 (deja închisă, admisă integral).',
+   explicatii:'Au fost înlocuiți 2 experți-cheie fără consimțământul prealabil al beneficiarului (subcl.14.3/14.4): Olariu Vlad Octavian → Nastase Gabriel; Udeanu Adelin → Linca Alexandru.',
+   cauza:'<b style="color:#000">Personal-cheie comun, nominalizat pe mai multe oferte/licitații</b> — fără cauză obiectivă de indisponibilitate.',
+   impactTimp:'Nu se aplică',
+   actiune:'ÎNCHISĂ — Decizia Supervizorului admite Revendicarea nr.3; penalitatea de 20.000 lei se aplică (identic cu Revendicarea nr.2). De facturat/achitat conform aceluiași mecanism.',
+   sursa:''},
+  {cod:'PE03', categorie:'Tehnic', detaliu:'Cap.3 · Confecții metalice', valoare:44621, termen:'30.09.2026', status:'Deschis', dataStatus:'19.09.2026',
+   problema:'Neconcordanță cantitativă confecții metalice A&C Metal: bugetul intern are 109.000 kg, oferta/contractul A&C Metal menționează 112.100 kg — diferență de 3.100 kg.',
+   explicatii:'Diferența de 3.100 kg (2,8%) între cantitatea bugetată și cea ofertată de A&C Metal poate afecta bugetul Cap.3 dacă se confirmă la valoarea ofertantului. Estimare impact: 3.100 kg × 2,7342 EUR/kg ≈ 8.476 EUR ≈ 44.621 lei la cursul BNR din 19.09.2026 (1 EUR = 5,2644 lei).',
+   cauza:'<b style="color:#000">Neconcordanță încă neidentificată.</b>',
+   impactTimp:'În curs de evaluare',
+   actiune:'De verificat sursa diferenței (cantitate reală de pus în operă vs. ofertă) și de clarificat cu A&C Metal înainte de finalizarea contractului.',
+   sursa:''},
+  {cod:'PE04', categorie:'Bugetar', detaliu:'Control Calitate (CQ)', valoare:94759, termen:'—', status:'Închis', dataStatus:'19.09.2026',
+   problema:'În buget nu au fost introduse sume pentru CQ — eroare de ofertare. Contractul semnat cu CQ: 2.000 EUR/lună × 9 luni = 18.000 EUR ≈ 94.759 lei la cursul BNR din 19.09.2026 (1 EUR = 5,2644 lei).',
+   explicatii:'Linia de buget pentru serviciile CQ a fost omisă la faza de ofertare; contractarea reală (2.000 EUR/lună × 9 luni) s-a făcut în afara bugetului inițial.',
+   cauza:'<b style="color:#000">Eroare de ofertare</b> — linie de buget omisă pentru CQ.',
+   impactTimp:'Nu se aplică',
+   actiune:'ÎNCHIS — cost asumat în afara bugetului inițial; contract CQ semnat la 2.000 EUR/lună × 9 luni.',
+   sursa:''},
+  {cod:'PE05', categorie:'Tehnic', detaliu:'Rețete articole vs. caiet de sarcini (problemă extinsă, nu doar un articol izolat)', valoare:0, valoareText:'În curs de evaluare', termen:'—', status:'În curs', dataStatus:'19.09.2026',
+   problema:'Rețetele articolelor introduse în eDevize nu corespund tehnologiilor solicitate prin caietul de sarcini — problemă sistemică, nu un caz izolat. Exemplu concret (unul dintre mai multe posibile): Art. "Umplutură executată mecanizat" — CS solicită umplutură cu pământ, realizată în straturi de 20 cm, compactată.',
+   explicatii:'La articolul-exemplu, rețeta de la ofertare conține doar excavator + muncitor necalificat, fără utilaj de compactare; subcontractorul execută real cu buldoexcavator, autobasculantă, cilindru compactor și muncitori necalificați — tehnologie corectă tehnic, dar diferită de ce a fost ofertat. Acesta este doar exemplul folosit pentru identificarea problemei; ea se extrapolează și la alte articole din eDevize, care urmează a fi verificate rețetă cu rețetă.',
+   cauza:'<b style="color:#000">Eroare de ofertare</b> — rețete neconforme cu tehnologia solicitată prin caietul de sarcini.',
+   impactTimp:'Nu se aplică',
+   actiune:'Discuții cu subcontractorul în curs pe articolul-exemplu; decontarea nu se poate face conform bugetului/rețetei ofertate — necesită NAPS-uri pentru tehnologia real executată. Urmează verificarea sistematică a rețetelor pentru celelalte articole din eDevize.',
+   sursa:''},
+  {cod:'PE06', categorie:'Tehnic', detaliu:'Fundații — teren de fundare neconform', valoare:0, valoareText:'În curs de evaluare', termen:'01.10.2026', status:'Deschis', dataStatus:'17.09.2026',
+   problema:'Act de constatare nr. A-1159/17.09.2026 — neconformitate teren de fundare (fundații anexe, ax A-G/1-3 și A-G/5-6): sol vegetal, rădăcini și umplutură cu pietre/pietriș, plus canivou și cămin dezafectate, diferit față de solul prevăzut în proiect.',
+   explicatii:'Proiectantul (DIGO Structuri) trebuie să emită dispoziție de șantier cu soluția tehnică. Necesită remediere, costuri în curs de evaluare.',
+   cauza:'Cauză dublă: <b style="color:#000">(1) Eroare de proiectare</b> — proiectantul nu a efectuat propriul studiu geotehnic conform clauzei 3.2; <b style="color:#000">(2) Eroare de execuție</b> — săpăturile nu au fost oprite la momentul descoperirii zonei afectate; s-a întocmit NC abia după ce săpătura a fost efectuată pe întreaga zonă (aprox. 130 mc).',
+   impactTimp:'În curs de evaluare',
+   actiune:'Necesită remediere; costuri în curs de evaluare. Se așteaptă dispoziția de șantier de la proiectant (DIGO Structuri) cu soluția tehnică.',
+   sursa:'Act de constatare nr. A-1159/17.09.2026 — Fundații Hangar J'},
+  {cod:'PE07', categorie:'Tehnic', detaliu:'Structură metalică — panouri învelitoare, clasă rezistență la foc (REI)', valoare:326393, termen:'30.09.2026', status:'Deschis', dataStatus:'19.09.2026',
+   problema:'Clarificări structură metalică / panouri de învelitoare — email "Clarificari structura metalica" din 19.09.2026: proiectantul confirmă că panourile sandwich cu miez de vată minerală au fost prevăzute încă din SF și avizate MApN, însă furnizorii de panouri (Isopan, Joriside) nu pot certifica interax-ul proiectat de 3700 mm la clasa de rezistență la foc (REI) solicitată prin proiect; lipsește avizul ISU. Alternativa cu miez PIR necesită o dispoziție de șantier la solicitarea beneficiarului, aprobată de verificatorul de specialitate la foc.',
+   explicatii:'Poziția proiectantului (transmisă în email): soluția cu panouri cu miez de vată minerală a fost prevăzută din faza SF și avizată de MApN — deci, din punctul lor de vedere, conformă. Problema reală: la interax-ul de 3700 mm proiectat, niciun furnizor (Isopan, Joriside) nu poate certifica performanța la foc REI cerută prin proiect, iar avizul ISU lipsește; trecerea la panouri cu miez PIR ca soluție alternativă nu se poate face fără o dispoziție de șantier solicitată de beneficiar și aprobată de verificatorul de specialitate la foc, plus documentație NC/DS/NR/NCS tip 2 și memoriu justificativ, obligatorii contractual (proiectare+execuție). EREN a solicitat proiectantului răspuns URGENT. Impact cost estimat: confecție metalică suplimentară ~52.000 EUR + protecție la foc suplimentară a structurii metalice ~10.000 EUR (estimare) ≈ 62.000 EUR ≈ 326.393 lei (curs BNR 19.09.2026, 1 EUR = 5,2644 lei). Termen de soluționare: sfârșit septembrie 2026.',
+   cauza:'Cauză triplă: <b style="color:#000">(1) Eroare de proiectare</b> — soluție de proiectare (panouri sandwich, interax 3700 mm) care nu poate fi certificată de furnizori la clasa de rezistență la foc solicitată, decalaj între proiectare și posibilitățile reale de certificare ale pieței de panouri; <b style="color:#000">(2) Preluare fără verificare a PT de către Departamentul Tehnic</b>; <b style="color:#000">(3) Ofertare fără verificare tehnico-economică.</b>',
+   impactTimp:'În curs de evaluare',
+   actiune:'Solicitat de EREN proiectantului răspuns URGENT. Se așteaptă poziția oficială și, după caz, dispoziția de șantier / documentația NC-DS-NR-NCS tip 2 + memoriu justificativ pentru soluția aleasă (panouri PIR sau soluție de protecție la foc suplimentară a structurii metalice).',
+   sursa:'Email "Clarificari structura metalica", 19.09.2026'}
+];
+function renderRegPD(proj) {
+  var p = DATA[proj] || DATA['hangar'];
+  var STATUS_COL = {'Deschis':'#C0392B','În curs':'#B9770E','Închis':'#1E6E2D'};
+  var STATUS_BG  = {'Deschis':'#FDEDEC','În curs':'#FEF5E7','Închis':'#EAFAF1'};
+  var CAT_COL = {'Contractual':'#2E86C1','Tehnic':'#B9770E','Bugetar':'#7D3C98'};
+  var CAT_BG  = {'Contractual':'#EBF5FB','Tehnic':'#FEF5E7','Bugetar':'#F4ECF7'};
+
+  function fmtLei(v){ return v ? v.toLocaleString('ro-RO') + ' lei' : '—'; }
+
+  var items = REGPD.slice().sort(function(a,b){
+    return a.cod.localeCompare(b.cod);
+  });
+
+  var nDeschis = REGPD.filter(function(x){return x.status==='Deschis';}).length;
+  var nCurs = REGPD.filter(function(x){return x.status==='În curs';}).length;
+  var nInchis = REGPD.filter(function(x){return x.status==='Închis';}).length;
+  var valExpusa = REGPD.reduce(function(s,x){ return s + ((x.status!=='Închis' && x.valoare && !x.valoareText) ? x.valoare : 0); }, 0);
+
+  var html = '';
+  html += '<div class="proj-header"><div class="proj-title">Registrul Problemelor Identificate în Execuție</div><div class="proj-meta">' + p.title + ' \xb7 probleme identificate în execuție, actualizat punctual \xb7 19.09.2026</div></div>';
+  html += '<div class="module-badge" style="background:#FDEDEC;color:#C0392B"><i class="ti ti-alert-triangle" style="font-size:13px"></i> Problemă identificată \xb7 explicații \xb7 cauză \xb7 impact \xb7 acțiune</div>';
+  html += '<div style="display:flex;gap:8px;margin:10px 0"><button onclick="exportRegPDWord()" style="display:flex;align-items:center;gap:6px;padding:7px 14px;border:1px solid var(--border);border-radius:6px;background:#fff;font-size:12px;font-weight:600;color:#2C3E50;cursor:pointer"><i class="ti ti-file-type-doc" style="font-size:14px;color:#185ABC"></i> Descarcă Word</button><button onclick="exportRegPDPDF()" style="display:flex;align-items:center;gap:6px;padding:7px 14px;border:1px solid var(--border);border-radius:6px;background:#fff;font-size:12px;font-weight:600;color:#2C3E50;cursor:pointer"><i class="ti ti-file-type-pdf" style="font-size:14px;color:#C0392B"></i> Descarcă PDF</button></div>';
+
+  var valInchisa = REGPD.reduce(function(s,x){ return s + ((x.status==='Închis' && x.valoare && !x.valoareText) ? x.valoare : 0); }, 0);
+
+  var KPI_R = [
+    {label:'Total puncte', val:String(REGPD.length), sub:nDeschis+' deschise \xb7 '+nCurs+' în curs \xb7 '+nInchis+' închise'},
+    {label:'Valoare expusă (deschisă)', val:fmtLei(valExpusa), sub:'sumă puncte deschise/în curs cu impact cost cunoscut (lei)'},
+    {label:'Penalități / Sume plătite în afara bugetului (închise)', val:fmtLei(valInchisa), sub:'sumă puncte închise — penalități/sume plătite (lei)'},
+    {label:'Ultima actualizare', val:'19.09.2026', sub:'registru alimentat punctual de Manager de contract'}
+  ];
+  html += '<div class="kpi-grid">';
+  KPI_R.forEach(function(k){
+    html += '<div class="kpi"><div class="kpi-label" style="font-weight:700;color:var(--text);font-size:11.5px;text-transform:uppercase;letter-spacing:0.3px">'+k.label+'</div><div class="kpi-val">'+k.val+'</div><div class="kpi-sub">'+k.sub+'</div></div>';
+  });
+  html += '</div>';
+
+  var cols = ['Cod','Problemă identificată','Explicații','Cauză','Zonă','Impact timp','Impact cost','Status','Acțiune / Plan de măsuri','Termen','Actualizat'];
+  var html2 = '<div style="overflow:auto;max-height:min(65vh,640px);border:1px solid var(--border);border-radius:8px;margin-top:4px">';
+  html2 += '<table style="width:100%;border-collapse:collapse;font-size:11.5px;min-width:1400px">';
+  html2 += '<thead><tr style="background:#2C3E50">';
+  cols.forEach(function(c){ html2 += '<th style="position:sticky;top:0;background:#2C3E50;color:#fff;text-align:left;padding:9px 10px;font-weight:600;white-space:nowrap;z-index:1">'+c+'</th>'; });
+  html2 += '</tr></thead><tbody>';
+  items.forEach(function(x, idx){
+    var tc = STATUS_COL[x.status], tb = STATUS_BG[x.status];
+    var cc = CAT_COL[x.categorie], cb = CAT_BG[x.categorie];
+    var rowBg = idx % 2 === 0 ? '#FFFFFF' : '#FAFBFC';
+    var op = x.status === 'Închis' ? 'opacity:0.65' : '';
+    var activBorder = x.status !== 'Închis' ? 'border-left:4px solid '+tc+';' : 'border-left:4px solid transparent;';
+    var cauzaCell = x.cauza ? x.cauza : '<span style="color:var(--text-tertiary);font-style:italic">(de completat)</span>';
+    var actiuneCell = x.actiune + (x.sursa ? '<div style="margin-top:5px;font-size:10px;color:var(--text-tertiary)"><i class="ti ti-paperclip" style="font-size:10px"></i> Sursă: '+x.sursa+'</div>' : '');
+    html2 += '<tr id="pe-row-'+x.cod+'" style="background:'+rowBg+';border-top:1px solid var(--border);vertical-align:top;'+activBorder+op+'">';
+    html2 += '<td style="padding:9px 10px;font-weight:700;white-space:nowrap">'+x.cod+(x.status!=='Închis' ? ' <span style="font-size:8.5px;font-weight:700;background:'+tb+';color:'+tc+';padding:1px 6px;border-radius:99px;vertical-align:middle">ACTIV</span>' : '')+'</td>';
+    html2 += '<td style="padding:9px 10px;min-width:260px;line-height:1.45">'+x.problema+'</td>';
+    html2 += '<td style="padding:9px 10px;min-width:200px;line-height:1.45;color:var(--text-secondary)">'+x.explicatii+'</td>';
+    html2 += '<td style="padding:9px 10px;min-width:180px;line-height:1.45">'+cauzaCell+'</td>';
+    html2 += '<td style="padding:9px 10px;white-space:nowrap"><span style="font-size:9.5px;font-weight:700;background:'+cb+';color:'+cc+';padding:2px 8px;border-radius:99px">'+x.categorie+'</span><div style="margin-top:3px;font-size:10.5px;color:var(--text-secondary)">'+x.detaliu+'</div></td>';
+    html2 += '<td style="padding:9px 10px;min-width:160px;line-height:1.45">'+x.impactTimp+'</td>';
+    html2 += '<td style="padding:9px 10px;white-space:nowrap;font-weight:600">'+(x.valoareText || fmtLei(x.valoare))+'</td>';
+    html2 += '<td style="padding:9px 10px;white-space:nowrap"><span style="font-size:9.5px;font-weight:700;background:'+tb+';color:'+tc+';padding:2px 8px;border-radius:99px">'+x.status+'</span></td>';
+    html2 += '<td style="padding:9px 10px;min-width:260px;line-height:1.45">'+actiuneCell+'</td>';
+    html2 += '<td style="padding:9px 10px;white-space:nowrap">'+x.termen+'</td>';
+    html2 += '<td style="padding:9px 10px;white-space:nowrap;color:var(--text-tertiary)">'+x.dataStatus+'</td>';
+    html2 += '</tr>';
+  });
+  html2 += '</tbody></table></div>';
+
+  html += html2;
+  html += '<div style="padding:9px 13px;background:#FDFEFE;border:1px solid var(--border);border-radius:6px;font-size:11px;color:var(--text-secondary);margin-top:10px"><i class="ti ti-info-circle" style="color:#2E86C1"></i> Registru propriu de probleme de execuție, alimentat punctual de Manager de contract (Gelu Spătaru).</div>';
+  html += '<div class="page-footer">PM Hub \xb7 EREN CONS SRL \xb7 2026 \xb7 Registrul Problemelor Identificate în Execuție</div>';
+  document.getElementById('main').innerHTML = html;
+}
+
+function fmtLeiExport(v) { return v ? v.toLocaleString('ro-RO') + ' lei' : '\u2014'; }
+
+function regPDExportBody() {
+  var items = REGPD.slice().sort(function(a,b){ return a.cod.localeCompare(b.cod); });
+  var nDeschis = REGPD.filter(function(x){return x.status==='Deschis';}).length;
+  var nCurs = REGPD.filter(function(x){return x.status==='În curs';}).length;
+  var nInchis = REGPD.filter(function(x){return x.status==='Închis';}).length;
+  var valExpusa = REGPD.reduce(function(s,x){ return s + ((x.status!=='Închis' && x.valoare && !x.valoareText) ? x.valoare : 0); }, 0);
+  var valInchisa = REGPD.reduce(function(s,x){ return s + ((x.status==='Închis' && x.valoare && !x.valoareText) ? x.valoare : 0); }, 0);
+  var today = new Date().toLocaleDateString('ro-RO');
+  var STATUS_COL = {'Deschis':'#C0392B','În curs':'#B9770E','Închis':'#1E6E2D'};
+
+  var out = '';
+  out += '<h1 style="font-size:18px;margin-bottom:2px">Registrul Problemelor Identificate în Execuție</h1>';
+  out += '<div style="font-size:11px;color:#555;margin-bottom:14px">Hangar Kogălniceanu &middot; EREN CONS SRL &middot; generat ' + today + '</div>';
+  out += '<table style="width:100%;border-collapse:collapse;margin-bottom:18px;font-size:11px" cellpadding="6">';
+  out += '<tr style="background:#F4F6F7">' +
+    '<td style="border:1px solid #ccc"><b>Total puncte</b><br>' + REGPD.length + '</td>' +
+    '<td style="border:1px solid #ccc"><b>Deschise / în curs / închise</b><br>' + nDeschis + ' / ' + nCurs + ' / ' + nInchis + '</td>' +
+    '<td style="border:1px solid #ccc"><b>Valoare expusă (deschisă)</b><br>' + fmtLeiExport(valExpusa) + '</td>' +
+    '<td style="border:1px solid #ccc"><b>Penalități / sume plătite (închise)</b><br>' + fmtLeiExport(valInchisa) + '</td>' +
+  '</tr></table>';
+
+  items.forEach(function(x){
+    var stColor = STATUS_COL[x.status] || '#555';
+    out += '<div style="page-break-inside:avoid;margin-bottom:16px;border:1px solid #ddd;padding:10px 12px">';
+    out += '<h2 style="font-size:13px;margin:0 0 6px 0;border-bottom:1px solid #ccc;padding-bottom:4px">' + x.cod + ' \u2014 ' + x.categorie + (x.detaliu ? ' (' + x.detaliu + ')' : '') + ' \u2014 <span style="color:' + stColor + '">' + x.status + '</span></h2>';
+    out += '<div style="margin-bottom:4px"><b>Problemă identificată:</b> ' + x.problema + '</div>';
+    out += '<div style="margin-bottom:4px"><b>Explicații:</b> ' + x.explicatii + '</div>';
+    out += '<div style="margin-bottom:4px"><b>Cauză:</b> ' + (x.cauza || '\u2014') + '</div>';
+    out += '<div style="margin-bottom:4px"><b>Impact timp:</b> ' + x.impactTimp + ' &nbsp;&nbsp; <b>Impact cost:</b> ' + (x.valoareText || fmtLeiExport(x.valoare)) + '</div>';
+    out += '<div style="margin-bottom:4px"><b>Acțiune / Plan de măsuri:</b> ' + x.actiune + '</div>';
+    out += '<div style="margin-bottom:4px"><b>Termen:</b> ' + x.termen + ' &nbsp;&nbsp; <b>Actualizat:</b> ' + x.dataStatus + '</div>';
+    if (x.sursa) out += '<div style="font-size:10px;color:#777"><b>Sursă:</b> ' + x.sursa + '</div>';
+    out += '</div>';
+  });
+
+  out += '<div style="font-size:10px;color:#888;margin-top:20px">PM Hub &middot; EREN CONS SRL &middot; 2026 &middot; Registrul Problemelor Identificate în Execuție</div>';
+  return out;
+}
+
+function exportRegPDWord() {
+  var body = regPDExportBody();
+  var html = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">' +
+    '<head><meta charset="utf-8"><title>Registrul Problemelor Identificate in Executie</title>' +
+    '<style>body{font-family:Calibri,Arial,sans-serif;color:#222}</style></head><body>' + body + '</body></html>';
+  var blob = new Blob(['\ufeff' + html], { type: 'application/msword' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  var d = new Date();
+  var stamp = d.getFullYear() + String(d.getMonth()+1).padStart(2,'0') + String(d.getDate()).padStart(2,'0');
+  a.download = 'Registrul_Probleme_Executie_Kogalniceanu_' + stamp + '.doc';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(function(){ URL.revokeObjectURL(url); }, 2000);
+}
+
+function exportRegPDPDF() {
+  var body = regPDExportBody();
+  var w = window.open('', '_blank');
+  if (!w) { alert('Permite ferestrele pop-up pentru a genera PDF-ul.'); return; }
+  w.document.open();
+  w.document.write('<!DOCTYPE html><html><head><meta charset="utf-8"><title>Registrul Problemelor Identificate in Executie</title>' +
+    '<style>@page{size:A4;margin:16mm} body{font-family:Arial,Helvetica,sans-serif;color:#222;font-size:11px}</style></head><body>' + body + '</body></html>');
+  w.document.close();
+  w.focus();
+  setTimeout(function(){ w.print(); }, 350);
+}
+
 function renderSL1(proj) {
   var p = DATA[proj] || DATA['hangar'];
   document.getElementById('main').innerHTML =
@@ -3939,7 +4190,7 @@ function renderContractSinteza(proj) {
      ctx:'Depășire buget semnificativă (+52,6%): buget alocat 694.896 lei vs valoare contractată 1.060.252 lei. Negociere finalizată la 5,0% discount față de oferta inițială — marja de negociere obținută parțial (EREN solicita 13,3%).'},
     {scope:'Confecții metalice — Structură Hangar (Cap.3)', furnizor:'A&C Metal Industry SRL', nr:'ofertă 03.09.2026 · în semnare', buget:1434571, contract:1610276, venit:1586706, stare:'În semnare',
      nota:'Uzinare și montaj structură metalică: acoperiș hală 85.000 kg + spații anexe 14.200 kg + structură secundară pereți 12.900 kg + organe asamblare + transport (112.100 kg uzinat total) — 306.509 EUR, la curs BNR 03.09.2026 (5,2536 lei/EUR). Exclude: carcase buloane/ancoraje, protecție antifoc (firmă specializată după montaj), utilaj montaj (macara — de clarificat). Depășire vs buget art.38: +175.705 lei (+12,2%). Marjă vs venit (bază, fără indexare): −23.570 lei (−1,5%) — negativă la cursul actual. <b>Marjă vs venit CU indexare SL3 (An=1,149617):</b> +213.828 lei (+11,7%) — indexarea (aplicată doar veniturilor, subcontractul A&amp;C Metal e preț fix) recuperează integral și depășește pierderea de curs valutar.',
-     ctx:'Cel mai mare risc bugetar neacoperit al Cap.3 (37,9% din buget) — rezolvat tehnic. Marja de bază a devenit NEGATIVĂ odată actualizat cursul EUR la valoarea BNR de azi (de la +3,4% la −1,5%), dar indexarea de preț SL3 (subcl. 48.5, coef. 1,149617) o readuce pe plus la +11,7%, pentru că subcontractul e la preț fix iar indexarea se aplică integral veniturilor de la beneficiar. Atenție: utilaj montaj (macara) fără linie de buget identificată; antetul ofertei conține referințe la alt proiect (DIGO STRUCTURI/AEON BUILDING) — de clarificat înainte de semnare.'}
+     ctx:'Cel mai mare risc bugetar neacoperit al Cap.3 (37,9% din buget) — rezolvat tehnic. Marja de bază a devenit NEGATIVĂ odată actualizat cursul EUR la valoarea BNR de azi (de la +3,4% la −1,5%), dar indexarea de preț SL3 (subcl. 48.5, coef. 1,149617) o readuce pe plus la +11,7%, pentru că subcontractul e la preț fix iar indexarea se aplică integral veniturilor de la beneficiar. Atenție: utilaj montaj (macara) fără linie de buget identificată.'}
   ];
   var totContract = 0, totBugetCmp = 0, totContractCmp = 0, pendingCount = 0;
   contracte.forEach(function(c){

@@ -408,6 +408,9 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
           <div class="submenu-item" id="item-academia-seapclarif" onclick="renderAcademiaLicitatie('clarificari')">
             <i class="ti ti-message-question" style="color:#6C3483"></i> Clarificări SEAP
           </div>
+          <div class="submenu-item" id="item-academia-sintezalicitatie" onclick="renderAcademiaSintezaLicitatie()">
+            <i class="ti ti-clipboard-text" style="color:#6C3483"></i> Sinteză licitație
+          </div>
         </div>
         <div class="submenu-item" id="item-academia-docbenef" onclick="goModule('academia','docbenef')">
           <i class="ti ti-files" style="color:#1A5276"></i> Documente Contract
@@ -951,6 +954,45 @@ function renderAcademiaLicitatie(tip) {
         '</div>';
     });
   }
+  html += '<div class="page-footer">PM Hub · EREN CONS SRL · 2026</div>';
+  document.getElementById('main').innerHTML = html;
+}
+
+var SINTEZA_LICITATIE_ACADEMIA = [
+  { titlu: 'Sinteză cerințe — Pavilion Bloc Alimentar Cazarma 1369', desc: 'Document principal: date cheie contract, cerințe pe specialități (arhitectură, structură, instalații, NZEB), documentații de proiectare de livrat, riscuri și acțiuni.', icon: 'ti-file-text', url: 'https://docs.google.com/document/d/1upMfdO_4rCvA1DNOcWeskPx59-9bYsfc/edit?usp=sharing&ouid=117065013684644556205&rtpof=true&sd=true' },
+  { titlu: 'Anexă — Dotări tehnologice bucătării și mobilier', desc: 'Listă detaliată a utilajelor de bucătărie/bar/cafenea, mobilierului și camerelor frigorifice, cu cantități și specificații pe zone.', icon: 'ti-tools-kitchen-2', url: 'https://docs.google.com/document/d/1IG6deINffWJssBGF-TcFiBbTBbb1QyOw/edit?usp=sharing&ouid=117065013684644556205&rtpof=true&sd=true' },
+  { titlu: 'Anexă — Cronologie clarificări și contestații CNSC', desc: 'Cronologia clarificărilor, erate și deciziilor CNSC care modifică sau clarifică oficial cerințele din Caietul de sarcini inițial.', icon: 'ti-gavel', url: 'https://docs.google.com/document/d/1jI3PpJZJDJo5sr0d8qm-Nxg5CPPp_lCo/edit?usp=sharing&ouid=117065013684644556205&rtpof=true&sd=true' }
+];
+
+function renderAcademiaSintezaLicitatie() {
+  _activateAcademiaItem('item-academia-sintezalicitatie');
+  var html =
+    '<div class="proj-header"><div class="proj-title">Sinteză licitație</div>' +
+    '<div class="proj-meta">Academia Navală - Mircea cel Bătrân · Documente licitație</div></div>' +
+    '<div class="module-badge" style="background:#F5EEF8;color:#6C3483"><i class="ti ti-clipboard-text" style="font-size:13px"></i> Sinteză licitație</div>' +
+    '<div style="padding:10px 14px;background:#EEF2FF;border:1px solid #C7D2FE;border-radius:6px;font-size:12px;color:#3730A3;margin-bottom:14px">' +
+      '<i class="ti ti-info-circle"></i> Sinteza cerințelor din documentația de licitație (Caiet de sarcini, Fișă de date, clarificări CNSC), pregătită pentru faza de proiectare.</div>';
+  SINTEZA_LICITATIE_ACADEMIA.forEach(function(x) {
+    var hasUrl = !!x.url;
+    html +=
+      '<div class="nivel-card" style="margin-bottom:10px;border-left:4px solid #6C3483;display:flex;gap:14px;align-items:center;flex-wrap:wrap;padding:14px 16px">' +
+        '<div style="width:38px;height:38px;border-radius:9px;background:#F5EEF8;display:flex;align-items:center;justify-content:center;flex-shrink:0">' +
+          '<i class="ti ' + x.icon + '" style="font-size:19px;color:#6C3483"></i></div>' +
+        '<div style="flex:1;min-width:210px">' +
+          '<div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:3px">' + x.titlu + '</div>' +
+          '<div style="font-size:11.5px;color:var(--text-secondary);line-height:1.45">' + x.desc + '</div>' +
+        '</div>' +
+        (hasUrl ?
+          ('<a href="' + x.url + '" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;' +
+            'background:#6C3483;color:#fff;border-radius:6px;font-size:11.5px;font-weight:600;text-decoration:none;' +
+            'flex-shrink:0;cursor:pointer"><i class="ti ti-external-link"></i> Deschide</a>')
+          :
+          ('<span style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:var(--grey-100,#f1f3f5);' +
+            'color:var(--text-tertiary);border-radius:6px;font-size:11.5px;font-weight:600;flex-shrink:0">' +
+            '<i class="ti ti-link-off"></i> Link în așteptare</span>')
+        ) +
+      '</div>';
+  });
   html += '<div class="page-footer">PM Hub · EREN CONS SRL · 2026</div>';
   document.getElementById('main').innerHTML = html;
 }

@@ -343,6 +343,9 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
           <div class="submenu-item" id="item-hangar-ansap" onclick="goModule('hangar','ansap')">
             <i class="ti ti-file-spreadsheet" style="color:#1A5276"></i> Săpături Platformă și Structură
           </div>
+          <div class="submenu-item" id="item-hangar-anrigole" onclick="goModule('hangar','anrigole')">
+            <i class="ti ti-droplet" style="color:#1A5276"></i> Analiză Rigole
+          </div>
           <div class="submenu-item" id="item-hangar-inst-toggle" onclick="toggleSubSub('hangar-inst')">
             <i class="ti ti-building-factory-2" style="color:#4338CA"></i> Analiză Instalații
             <i class="ti ti-chevron-down chevron" id="chev-hangar-inst" style="font-size:11px"></i>
@@ -674,6 +677,7 @@ function goModule(proj, module) {
   else if (module === 'anpref') renderAnPref(proj);
   else if (module === 'anconfmetal') renderConfMetalice(proj);
   else if (module === 'ansap') renderAnSap(proj);
+  else if (module === 'anrigole') renderAnRigole(proj);
   else if (module === 'instdash') renderInstDashboard(proj);
   else if (module === 'inst7') renderInstCapitol(proj, 'cap7');
   else if (module === 'inst9') renderInstCapitol(proj, 'cap9');
@@ -3532,6 +3536,8 @@ var PREFAB_SHEET_URL = 'https://docs.google.com/spreadsheets/d/1NqHEFBRS3yYQY6XE
 var CONFMETAL_SHEET_URL = 'https://docs.google.com/spreadsheets/d/1yte-RGiAxqZc_zz6PGP8-kLIHU4GpARC/edit?usp=sharing&ouid=117065013684644556205&rtpof=true&sd=true';
 // Analiză săpături — pune aici URL-ul de Google Sheets/Drive (ca la Prefabricate) și butonul îl folosește automat. Lasă gol pentru fișier local.
 var SAP_SHEET_URL = 'https://docs.google.com/spreadsheets/d/1i7IadQeEaMA4e_QA6IZHWvZkjkm4EqhyqV6ieshq4ZA/edit?usp=sharing';
+// Analiză rigole / bazine retenție / separator hidrocarburi — fișier local (Analiza_Comparativa_Rigole_BazineRetentie_v1.xlsx). Pune aici link Google Sheets dacă se publică.
+var RIGOLE_SHEET_URL = 'https://docs.google.com/spreadsheets/d/1Wy07jlFvvNGqKLxxJ9p_Pd6YboRCsLAoU4WD0ay29g4/edit?usp=sharing';
 
 function renderAnSap(proj) {
   document.querySelectorAll('.submenu-item').forEach(function(i){ i.classList.remove('active'); });
@@ -3686,6 +3692,98 @@ function renderAnSap(proj) {
   html += '</table></div></div>';
   html += '<button class="open-fisa-btn" onclick="renderProjHome(\'hangar\')"><i class="ti ti-arrow-left"></i> Înapoi la proiect</button>';
   html += '<div class="page-footer">PM Hub · EREN CONS SRL · 2026 · Surse: Ideal Max F3 lista cantități 2_1 + 3_31 (21.07), Salt «SAPATURI - salt.pdf» + material 35 lei/t, Deviz F3 · scope terasamente</div>';
+  document.getElementById('main').innerHTML = html;
+}
+
+function renderAnRigole(proj) {
+  document.querySelectorAll('.submenu-item').forEach(function(i){ i.classList.remove('active'); });
+  var itm = document.getElementById('item-hangar-anrigole');
+  if (itm) itm.classList.add('active');
+  closeMenu();
+  document.getElementById('menu-btn').style.display = 'none';
+  var bb = document.getElementById('back-btn');
+  bb.style.display = 'flex';
+  bb.onclick = function() { renderProjHome('hangar'); };
+  var html = '';
+  html += '<div class="proj-header"><div class="proj-title">Analiză Comparativă — Rigole, Bazine Retenție, Separator Hidrocarburi</div>';
+  html += '<div class="proj-meta">Hangar Kogălniceanu · Obiectul 6 — Rețele exterioare sanitare · Buget contract original (eDevize) vs Ofertă Profimat rev.3 (22.09.2026) · comparație la scop real confirmat · fără TVA · 27.09.2026</div></div>';
+  html += '<div class="module-badge" style="background:#EEF2FF;color:#4338CA"><i class="ti ti-droplet" style="font-size:13px"></i> Analiză Comparativă Ofertă Profimat (unic ofertant)</div>';
+  // NOTĂ TEMPORARĂ — se elimină la finalizarea ofertei
+  html += '<div style="margin-bottom:12px;background:#FFF3CD;border:1px solid #FFE69C;border-radius:6px;padding:10px 14px;font-size:12px;color:#664D03;display:flex;gap:10px;align-items:flex-start"><i class="ti ti-alert-triangle" style="font-size:15px;flex:0 0 auto"></i><span><strong>Analiză în lucru:</strong> mai sunt subiecte deschise de clarificat înainte de finalizarea ofertei (vezi secțiunea Riscuri rămase deschise mai jos). Această notă se elimină după finalizare.</span></div>';
+  if (typeof RIGOLE_SHEET_URL !== 'undefined' && RIGOLE_SHEET_URL) {
+    html += '<div style="margin-bottom:14px"><a href="' + RIGOLE_SHEET_URL + '" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 18px;background:#1A5276;color:#fff;border-radius:var(--radius);font-size:12px;font-weight:600;text-decoration:none"><i class="ti ti-table"></i> Deschide analiza comparativă</a></div>';
+  } else {
+    html += '<div style="margin-bottom:14px"><span style="display:inline-flex;align-items:center;gap:6px;padding:8px 18px;background:#E5E7EB;color:#6B7280;border-radius:var(--radius);font-size:12px;font-weight:600"><i class="ti ti-file-spreadsheet"></i> Analiza_Comparativa_Rigole_BazineRetentie_v1.xlsx (fișier local)</span></div>';
+  }
+  // KPIs
+  html += '<div class="kpi-grid" style="margin-bottom:14px">';
+  html += '<div class="kpi"><div class="kpi-label">Rigolă + cămin (19 buc + 1 cămin)</div><div class="kpi-val" style="color:#1E6E2D">88.769 lei</div><div class="kpi-sub">buget echiv. 94.127 lei · −5,7% · cantitate identică</div></div>';
+  html += '<div class="kpi"><div class="kpi-label">Separator hidrocarburi (80L/s)</div><div class="kpi-val" style="color:#C0392B">47.240 lei</div><div class="kpi-sub">buget 38.256 lei · +23,5% · scop OK, preț de justificat</div></div>';
+  html += '<div class="kpi"><div class="kpi-label">Bazin vidanjabil (~20-21mc)</div><div class="kpi-val" style="color:#1E6E2D">34.650 lei</div><div class="kpi-sub">buget 50.286 lei · −31,1% · montaj de confirmat</div></div>';
+  html += '<div class="kpi"><div class="kpi-label">TOTAL comparabil (fără bazin pluvial + stație pompare)</div><div class="kpi-val" style="color:#1E6E2D">170.659 lei</div><div class="kpi-sub">buget echiv. 182.668 lei · −6,6%</div></div>';
+  html += '</div>';
+  // Tabel sinteza comparativa
+  html += '<div class="proj-card" style="margin-bottom:12px">';
+  html += '<div class="proj-card-header" style="background:#2C4A6E"><span style="font-size:13px;font-weight:600;color:#fff">Sinteză comparativă (aceeași cantitate/scop)</span></div>';
+  html += '<div class="proj-card-body" style="padding:0;overflow-x:auto">';
+  html += '<table style="width:100%;border-collapse:collapse;font-size:11px">';
+  html += '<tr style="background:#2E5090;color:#fff"><th style="padding:7px 8px;text-align:left">Poziție</th><th style="padding:7px 6px;text-align:right">Buget echivalent</th><th style="padding:7px 6px;text-align:right">Profimat</th><th style="padding:7px 6px;text-align:right">Δ</th><th style="padding:7px 8px;text-align:left">Comparabil?</th></tr>';
+  var rows = [
+    {a:'Rigolă + cămin (19 buc + 1 cămin, scop confirmat)',d:'94.127',o:'88.769',delta:'−5,7%',c:'DA — cantitate identică',ok:1},
+    {a:'Bazin retenție pluvială (furnizare, fără pompare, 80mc)',d:'187.277',o:'119.700',delta:'−36,1%',c:'PARȚIAL — material diferit',ok:0},
+    {a:'Stație de pompare',d:'—',o:'61.040',delta:'—',c:'NU — fără poziție de buget echivalentă',ok:-1},
+    {a:'Separator hidrocarburi (furnizare, 80L/s)',d:'38.256',o:'47.240',delta:'+23,5%',c:'DA pe scop/debit — NU pe conținut preț',ok:0},
+    {a:'Bazin vidanjabil (furnizare, ~20-21mc)',d:'50.286',o:'34.650',delta:'−31,1%',c:'DA pe volum (aprox.) — NU pe conținut preț',ok:0}
+  ];
+  rows.forEach(function(r){
+    var bg = r.ok===1 ? '#EAF7EE' : (r.ok===-1 ? '#F3F3F3' : '#FFF7E6');
+    var dc = r.ok===1 ? '#1E6E2D' : (r.delta.indexOf('+')===0 ? '#C0392B' : '#856404');
+    html += '<tr style="background:'+bg+'"><td style="padding:6px 8px;border-bottom:1px solid #eee">'+r.a+'</td>' +
+      '<td style="padding:6px 6px;border-bottom:1px solid #eee;text-align:right">'+r.d+'</td>' +
+      '<td style="padding:6px 6px;border-bottom:1px solid #eee;text-align:right">'+r.o+'</td>' +
+      '<td style="padding:6px 6px;border-bottom:1px solid #eee;text-align:right;font-weight:600;color:'+dc+'">'+r.delta+'</td>' +
+      '<td style="padding:6px 8px;border-bottom:1px solid #eee;font-size:10px;color:#444">'+r.c+'</td></tr>';
+  });
+  html += '<tr style="background:#FCE4D6"><td style="padding:7px 8px;font-weight:700">TOTAL (exclus bazin pluvial + stație pompare)</td>' +
+    '<td style="padding:7px 6px;text-align:right;font-weight:700">182.668</td>' +
+    '<td style="padding:7px 6px;text-align:right;font-weight:700">170.659</td>' +
+    '<td style="padding:7px 6px;text-align:right;font-weight:700;color:#1E6E2D">−6,6%</td><td></td></tr>';
+  html += '</table><div style="padding:9px 12px;font-size:10px;color:#666;background:#FAFAFA;border-top:1px solid #eee">Metodologie: „buget echivalent" = preț unitar contract original × cantitate reală confirmată (nu cantitatea inițială din deviz, care era supraestimată — 29 buc rigolă / 4 cămine / 4 guri de scurgere vs. scopul real de 19 buc + 1 cămin, confirmat de proiectant). Poziții fără poziție de buget echivalentă sau cu material diferit sunt semnalate separat, nu incluse în procentul total. Curs EUR asumat 5,00 lei — de confirmat la contractare.</div>';
+  html += '</div></div>';
+  // Riscuri deschise
+  html += '<div class="proj-card" style="margin-bottom:12px">';
+  html += '<div class="proj-card-header" style="background:#7B4B18"><span style="font-size:13px;font-weight:600;color:#fff">Riscuri rămase deschise</span></div>';
+  html += '<div class="proj-card-body" style="display:flex;flex-direction:column;gap:6px">';
+  var risks = [
+    {tag:'REZOLVAT',bg:'#E8F5E9',tc:'#1E6E2D',txt:'Un singur tronson de rigolă, un singur cămin — confirmat 23.09.2026 de proiectant, via email Lucian Ilea. Cantitatea inițială din deviz (29 buc + 4 cămine) era o supraestimare preliminară.'},
+    {tag:'PREȚ RIGOLĂ',bg:'#FFF8E1',tc:'#856404',txt:'Justificare preț solicitată către Ilea — răspuns în curs.'},
+    {tag:'MONTAJ',bg:'#FFF8E1',tc:'#856404',txt:'Montaj stație de pompare și montaj separator/bazin vidanjabil — solicitat către Ilea, răspuns în curs.'},
+    {tag:'GURI SCURGERE',bg:'#FCE4E4',tc:'#C0392B',txt:'Necesitate guri de scurgere — depinde de răspunsul departamentului de ofertare, apoi se transmite lui Ilea (follow-up promis, NU se uită).'},
+    {tag:'MATERIAL BAZIN',bg:'#FCE4E4',tc:'#C0392B',txt:'GRP vs. oțel corugat — depinde de răspunsul departamentului de ofertare, apoi se transmite lui Ilea (follow-up promis, NU se uită).'}
+  ];
+  risks.forEach(function(c){
+    html += '<div style="background:'+c.bg+';border-radius:6px;padding:8px 12px;font-size:12px;display:flex;gap:12px;align-items:flex-start">';
+    html += '<span style="font-weight:700;color:'+c.tc+';flex:0 0 120px;width:120px;line-height:1.3">'+c.tag+'</span>';
+    html += '<span style="flex:1">'+c.txt+'</span></div>';
+  });
+  html += '</div></div>';
+  // Actiuni
+  html += '<div class="proj-card" style="margin-bottom:12px">';
+  html += '<div class="proj-card-header" style="background:#7B1818"><span style="font-size:13px;font-weight:600;color:#fff">Acțiuni (responsabil · termen)</span></div>';
+  html += '<div class="proj-card-body" style="padding:0;overflow-x:auto">';
+  html += '<table style="width:100%;border-collapse:collapse;font-size:11px">';
+  html += '<tr style="background:#2E5090;color:#fff"><th style="padding:7px 10px;text-align:left">Acțiune</th><th style="padding:7px 8px;text-align:left;white-space:nowrap">Responsabil</th><th style="padding:7px 8px;text-align:center">Termen</th></tr>';
+  var acts = [
+    {a:'Așteaptă răspuns departament ofertare (5 puncte: origine cantități, guri scurgere, material GRP, gap buget stație pompare, spec. separator)',r:'G. Spătaru',t:'în curs'},
+    {a:'Așteaptă răspuns Ilea/Profimat (3 puncte: justificare preț rigolă, montaj stație pompare, montaj separator/bazin vidanjabil)',r:'G. Spătaru',t:'în curs'},
+    {a:'Transmite lui Ilea follow-up cu cele 2 puncte rămase (guri scurgere, material GRP) după răspunsul ofertării',r:'G. Spătaru',t:'după ofertare'}
+  ];
+  acts.forEach(function(x){
+    html += '<tr><td style="padding:6px 10px;border-bottom:1px solid #eee">'+x.a+'</td><td style="padding:6px 8px;border-bottom:1px solid #eee;color:#444">'+x.r+'</td><td style="padding:6px 8px;border-bottom:1px solid #eee;text-align:center;white-space:nowrap;font-weight:600">'+x.t+'</td></tr>';
+  });
+  html += '</table></div></div>';
+  html += '<button class="open-fisa-btn" onclick="renderProjHome(\'hangar\')"><i class="ti ti-arrow-left"></i> Înapoi la proiect</button>';
+  html += '<div class="page-footer">PM Hub · EREN CONS SRL · 2026 · Surse: Contract original eDevize (Obiectul 6), Ofertă Profimat rev.3 (22.09.2026), email Lucian Ilea 23.09.2026, Lista cantități Profimat (sheet COMPLETATION)</div>';
   document.getElementById('main').innerHTML = html;
 }
 
@@ -6207,33 +6305,34 @@ var INST_DATA = {
   },
   cap11: {
     key:'cap11', mod:'inst11', nume:'Cap.11 — Curenți Slabi', icon:'ti-antenna', color:'#5B2C87',
-    fisierLink:'https://docs.google.com/spreadsheets/d/1nkiEotreaHpkmvBkgEdmuA84z329jwrS_Uhe182D6Vk/edit?usp=sharing',
-    ofertanti:['IMSAT','Nibaco','Honeywell','Polon-Alfa'],
-    f3Label:'F3 — pe structura Centralizator_Cereri_Oferta_CurentiSlabi_cu_Pret_30_08_2026 (34 articole, detaliu în xlsx)',
+    fisierLink:'https://docs.google.com/spreadsheets/d/1SIZd1BEUYz-_GoWZzIe8gc-qgzZeKtZXX7qiOBmhA1A/edit?usp=sharing',
+    ofertanti:['IMSAT','Nibaco 2026','Nibaco 2024','Honeywell','Polon-Alfa'],
+    f3Label:'F3 — pe structura contractului original eDevize (buget confirmat 27.09.2026, 34 articole, detaliu în xlsx)',
     f3: [
-      {cod:'IDSAI', den:'IDSAI — detecție, semnalizare, avertizare incendiu (22 articole)', buget:274740.99, of:{IMSAT:339767.01, Nibaco:199669.35, Honeywell:139100.90, 'Polon-Alfa':52557.10}, obs:'Honeywell cea mai apropiată de buget (-49,4%). IMSAT cea mai scumpă (+23,7%). Polon-Alfa mult sub buget (-80,9%) — de verificat dacă oferta e completă/echivalentă tehnic înainte de a o trata ca economie.'},
-      {cod:'RETDATE', den:'Rețea de date (5 articole)', buget:26983.20, of:{IMSAT:59143.68, Nibaco:52701.68, Honeywell:34701.83}, obs:'Toate 3 peste buget. Polon-Alfa nu a ofertat rețea de date.'}
+      {cod:'IDSAI', den:'IDSAI — detecție, semnalizare, avertizare incendiu (22 articole)', buget:253568.85, of:{IMSAT:339767.01, 'Nibaco 2026':223303.94, 'Nibaco 2024':199669.35, Honeywell:139100.90, 'Polon-Alfa':52557.10}, obs:'Honeywell cea mai ieftină (-45,1%). IMSAT cea mai scumpă (+34%). Nibaco 2026 -11,9% vs buget dar conține anomalii de preț (vezi Riscuri). Polon-Alfa mult sub buget (-79,3%) — de verificat dacă oferta e completă/echivalentă tehnic înainte de a o trata ca economie.'},
+      {cod:'RETDATE', den:'Rețea de date (5 articole)', buget:25138.90, of:{IMSAT:59143.68, 'Nibaco 2026':22515.85, 'Nibaco 2024':52701.68, Honeywell:34701.83}, obs:'Nibaco 2026 singura ofertă sub buget (-10,4%). Restul peste buget. Polon-Alfa nu a ofertat rețea de date.'}
     ],
-    f4Label:'F3+F4 combinat + Extra (scop nebugetat) — detaliu complet în xlsx',
+    f4Label:'Montaj echipamente (F3) + Utilaj ECS/Rack (F4) combinat + Extra (scop nebugetat) — detaliu complet în xlsx',
     f4: [
-      {cod:'ECS', den:'Centrala ECS — montaj (F3) + utilaj (F4) combinat', buget:21830.17, bugetNote:'1.456,82 (montaj) + 20.373,35 (utilaj)', of:{IMSAT:10580.58}, obs:'Doar IMSAT ofertă separat (-51,5%, fără Rack). Nibaco/Honeywell/Polon-Alfa au centrala inclusă deja în IDSAI — nu se poate separa din oferta lor turnkey.'},
-      {cod:'EXTRA.1', den:'CCTV — sistem supraveghere video', buget:null, of:{Nibaco:60957.26, Honeywell:33768.23, 'Polon-Alfa':5577.65}, obs:'Fără subcapitol explicit în deviz. IMSAT nu ofertează.'},
-      {cod:'EXTRA.2', den:'Control acces', buget:null, of:{Nibaco:61379.76, Honeywell:27212.13, 'Polon-Alfa':9853.90}, obs:'Fără subcapitol explicit în deviz. IMSAT nu ofertează.'},
+      {cod:'MNT+UTIL', den:'Montaj echipamente + Centrala ECS + Rack Principal/Secundar', buget:34456.39, bugetNote:'2.943,79 (montaj F3) + 31.512,60 (utilaj F4: ECS 17.939,02 + Rack 2×6.786,79)', of:{IMSAT:10580.58, 'Nibaco 2026':34017.92}, obs:'IMSAT ofertă doar ECS, fără Rack (-69,3% — comparație parțială, nu economie reală). Nibaco 2026 ofertă ambele (-1,3% vs buget). Nibaco 2024/Honeywell/Polon-Alfa au totul inclus deja în IDSAI — nu se poate separa din oferta lor turnkey.'},
+      {cod:'EXTRA.1', den:'CCTV — sistem supraveghere video', buget:null, of:{'Nibaco 2024':60957.26, Honeywell:33768.23, 'Polon-Alfa':5577.65}, obs:'Fără subcapitol explicit în deviz. IMSAT și Nibaco 2026 nu ofertează.'},
+      {cod:'EXTRA.2', den:'Control acces', buget:null, of:{'Nibaco 2024':61379.76, Honeywell:27212.13, 'Polon-Alfa':9853.90}, obs:'Fără subcapitol explicit în deviz. IMSAT și Nibaco 2026 nu ofertează.'},
       {cod:'EXTRA.3', den:'Polon-Alfa — completare surse tensiune 24V (20 buc) + acumulatori (40 buc)', buget:null, of:{'Polon-Alfa':15549.30}, obs:'Ofertă separată (fișier distinct, oct.2024), alocare neclară — posibilă suprapunere cu sursele deja incluse în IDSAI. DE CLARIFICAT cu Polon-Alfa.'}
     ],
     riscuri:[
-      {sev:'MARE', text:'IMSAT cea mai scumpă ofertă pe IDSAI (339.767 lei, +23,7%) — Honeywell (139.101 lei) rămâne opțiunea logică pe acest pachet.'},
-      {sev:'MARE', text:'Polon-Alfa la doar 52.557 lei pe IDSAI (-80,9% vs buget) — diferență prea mare pentru a fi doar preț de listă; verificare tehnică obligatorie înainte de a o considera opțiune reală.'},
+      {sev:'MARE', text:'IMSAT cea mai scumpă ofertă pe IDSAI (339.767 lei, +34% vs buget) — Honeywell (139.101 lei) rămâne opțiunea cea mai ieftină pe acest subcapitol, dar oferta ei e din nov.2024 (de reverificat valabilitatea).'},
+      {sev:'MARE', text:'Polon-Alfa la doar 52.557 lei pe IDSAI (-79,3% vs buget) — diferență prea mare pentru a fi doar preț de listă; verificare tehnică obligatorie înainte de a o considera opțiune reală.'},
+      {sev:'MEDIU', text:'Nibaco 2026 (ofertă 24.09.2026): preț suspect de mic la cablul NHXH (2,48 lei/m vs 19,56 lei/m buget) și preț de ~5x peste buget la programare/PIF centrală (15.556,65 vs 3.014,12 lei) — de clarificat cu Nibaco înainte de decizie de contractare.'},
       {sev:'MEDIU', text:'Oferta separată Polon-Alfa de surse/acumulatori (15.549 lei) are alocare neclară — risc de dublă numărare dacă se însumează necondiționat cu IDSAI.'},
-      {sev:'MEDIU', text:'CCTV + Control acces (Nibaco 122.337 / Honeywell 60.980 / Polon-Alfa 15.431 lei) nu au subcapitol explicit în deviz — de clarificat dacă sunt scop contractual sau extra-scop.'},
-      {sev:'MIC', text:'Centrala trape desfumare — preț 0 lei atât în deviz cât și la Nibaco/oferte vechi, nespecificat. Necesită ofertă separată.'}
+      {sev:'MEDIU', text:'CCTV + Control acces (doar în ofertele 2024) nu au subcapitol explicit în deviz — de clarificat dacă sunt scop contractual sau extra-scop.'},
+      {sev:'MIC', text:'Centrala trape desfumare — preț 0 lei atât în deviz/contract cât și la Nibaco/oferte vechi, nespecificat. Necesită ofertă separată.'}
     ],
     actiuni:[
-      {a:'Nu continua cu IMSAT pe detecție incendiu — rămâi pe Honeywell (139.101 lei)', r:'PM', t:'—'},
-      {a:'Cere Polon-Alfa confirmare scop/specificații complete pt. IDSAI — diferența de -80,9% trebuie explicată tehnic, nu doar comercial', r:'G. Spătaru / Proiectant', t:'—'},
-      {a:'Clarifică cu Polon-Alfa alocarea ofertei separate de surse/acumulatori (15.549 lei) față de IDSAI', r:'Achiziții', t:'—'},
-      {a:'Clarifică cu proiectantul/beneficiarul dacă CCTV și Control acces sunt scop contractual', r:'G. Spătaru', t:'—'},
-      {a:'Solicită ofertă separată pentru centrala de acționare trape desfumare (preț 0 în deviz)', r:'Achiziții', t:'—'}
+      {a:'Clarificări trimise Nibaco 2026 (27.09.2026): poziții lipsă IDSAI1/12/13, programare/PIF (+5x), modul buclă, sirenă int/ext, cantități butoane — ÎN AȘTEPTARE răspuns + ofertă revizuită. Cablul NHXH se tratează separat direct cu Nibaco.', r:'G. Spătaru', t:'—'},
+      {a:'Verifică dacă oferta Honeywell (nov.2024) mai e valabilă înainte de a o considera reper de decizie', r:'Achiziții', t:'—'},
+      {a:'Nu continua cu IMSAT pe detecție incendiu — necompetitivă (+34% vs buget)', r:'PM', t:'—'},
+      {a:'Cere Polon-Alfa confirmare scop/specificații complete pt. IDSAI — diferența de -79,3% trebuie explicată tehnic, nu doar comercial', r:'G. Spătaru / Proiectant', t:'—'},
+      {a:'Clarifică cu proiectantul/beneficiarul dacă CCTV și Control acces sunt scop contractual', r:'G. Spătaru', t:'—'}
     ]
   }
 };

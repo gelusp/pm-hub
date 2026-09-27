@@ -4281,22 +4281,36 @@ function renderContractSinteza(proj) {
   var contracte = [
     {scope:'Demolări hangar + platformă (Cap.1)', furnizor:'General Util Cons', nr:'ctr 153 · 09.07.2026', buget:403282, contract:240554, venit:507634, stare:'Semnat',
      nota:'Demolare hangar existent și platformă din BCR, dezechipare instalații și transport evacuare moloz. Acoperă integral scope-ul Cap.1. Preia în execuție și săpătura stratului de piatră spartă (975 mc, buget 21.187 lei), fără modificarea valorii contractului.'},
-    {scope:'Structură prefabricate (Cap.3)', furnizor:'Bauelemente', nr:'ctr · 31.07.2026', buget:564814, contract:502415, venit:546070, venitAprox:true, stare:'Semnat',
-     nota:'Pachet complet: stâlpi, pereți soclu, pahare prefabricate, fundații și montaj gulere, manoperă monolitizare. Betonul de monolitizare rămâne în sarcina AG.'},
+    {scope:'Structură prefabricate (Cap.3)', furnizor:'Bauelemente', nr:'ctr 171 · 06.08.2026', buget:564814, contract:502415, venit:584795, venitAprox:true, stare:'Semnat',
+     nota:'Pachet complet: stâlpi (poz.34), pahare (poz.21), pereți soclu (poz.22-28), manoperă turnare beton egalizare+tălpi și montaj armătură fundații (subset poz.7/13/19, fără poziție DG proprie). Betonul de monolitizare stâlpilor rămâne în sarcina AG/EREN (exclus expres din ofertă).',
+     ctx:'Venit = stâlpi 437.734 + pahare 108.336 + pereți soclu 38.725 = 584.795 lei (mapare pe poziții DG, 27.09.2026).',
+     ctxDetail:'Poz.34 stâlpi și poz.21 pahare + poz.22-28 pereți soclu (parapete tristrat, 7 poziții, corespondență 1:1 cu cei 43 mp/32.487,50 lei ofertați) au linie de venit proprie clară în devizul beneficiarului — incluse integral. Manopera de turnare beton egalizare+tălpi și montaj armătură fundații (subset poz.7/13/19) NU are venit propriu: acele poziții DG includ integral și materialul (beton, oțel) furnizat separat de EREN, deci venitul lor total nu poate fi atribuit curat doar manoperei Bauelemente fără o ipoteză arbitrară de împărțire. Rămâne tratat ca „fără linie de venit distinctă" — marja reală e cel puțin cât arată acum (584.795), posibil ceva mai mare.'},
     {scope:'Săpături / terasamente', furnizor:'Ideal Max Construct', nr:'ctr 166 · 27.07.2026 · AA1', buget:407222, contract:468573, venit:493459, stare:'Semnat', soft:true,
-     mkt:'Cea mai avantajoasă din ofertele de piață (cu ~180.000 lei sub Salt). Bugetul prevedea doar transportul pământului, nu și depozitarea la groapă — Ideal Max acoperă și această lucrare nebugetată, evitând o pierdere mult mai mare.',
+     mkt:'Cea mai avantajoasă ofertă de piață — acoperă și depozitarea la groapă, nebugetată.',
+     mktDetail:'Cu ~180.000 lei sub oferta Salt. Bugetul prevedea doar transportul pământului, nu și depozitarea la groapă — Ideal Max acoperă și această lucrare nebugetată, evitând o pierdere mult mai mare.',
      nota:'Terasamente — săpătură, transport evacuare + depozitare pământ și umplutură cu pământ propriu (fundații hangar, rezervor, platformă). Articolul de săpătură strat piatră spartă (975 mc) preluat de General Util prin AA1, fără cost. Umpluturile din piatră spartă și balast se contractează separat. Prețul de piață la săpătură (~36 lei/mc) este peste referința de deviz (21,73), de unde diferența față de buget.'},
+    {scope:'Rezervor + Cameră pompe incendiu — montaj armare, turnare beton, cofraje (Cap.3)', furnizor:'Ideal Max Construct', nr:'ctr 166 · AA2 · 18.09.2026', buget:172902, contract:188462, venit:185237, venitAprox:true, stare:'Semnat', soft:true,
+     mkt:'<b>Saving negativ (−9,0%)</b> — dar Ideal Max rezolvă și evacuarea pământului, nebugetată (v. Terasamente).',
+     mktDetail:'Buget = strict partea de manoperă (+ material cofraje, incluse în prețul Ideal Max) aferentă articolelor efectiv contractate: manoperă egalizare C12/15 1.721,47 + manoperă turnare C30/37 13.379,96 + manoperă montaj armătură 47.519,76 + cofraje (M+L) 110.281,14 = 172.902,33 lei, vs contract AA2 188.462,31 lei → Δ = −15.559,98 lei (−9,0%). Bugetul integral al articolelor Art.48/50/52/53 (M+L+U+T = 412.071,99 lei) nu se compară aici — acela e folosit doar pentru gradul de contractare (articolele sunt 100% acoperite: parte prin Ideal Max, parte prin achiziție directă de material oțel+beton, ~231.744 lei, analiză separată a achizițiilor).',
+     nota:'Acoperă montare armături BST500S (23.294 kg), turnare beton egalizare C12/15 (33,83 mc) și C30/37 (262,94 mc), cofraje rezervor (808,22 mp) — cantități în oglindă cu devizul intern (Art.48/50/52/53, capitolul Rezervor + Cameră pompe incendiu). Materialul pentru armătură și beton rămâne în sarcina EREN, procurat direct (nu prin Ideal Max); materialul de cofrare e inclus în prețul Ideal Max (148 lei/mp). Transportul betoanelor (Art.49/51, 13.690 lei) rămâne necontractat separat.',
+     ctx:'Venit 185.237 lei — estimat pe articol, cu raportul real venit/buget al fiecărui articol (nu 12% generic).',
+     ctxDetail:'Nu există linie de venit separată pt. doar scope-ul Ideal Max — s-a aplicat raportul venit/buget (F/K) al fiecărui articol din devizul beneficiarului la partea de buget deja scope-matched: egalizare ×1,1174 (1.721,47→1.923,68), turnare C30/37 ×1,1194 (13.379,96→14.979,50), armătură ×1,0871 (47.519,76→51.665,00), cofraje ×1,0579 (110.281,14→116.669, identic cu venitul total al poz.53, fiindcă aici bugetul scope-matched = bugetul integral al articolului). Total 185.237 lei vs contract 188.462,31 → marjă vs venit −3.225 lei (−1,7%). Rapoartele individuale (5,8%-19,4%) sunt apropiate de media de ~12% marjă buget→venit valabilă pe majoritatea articolelor Cap.3.'},
     {scope:'OS electric — TEG / TED + proiectoare (Cap.5)', furnizor:'Light Design', nr:'ctr 161 · 20.07.2026', buget:39840, contract:70148, venit:45077, stare:'Semnat',
-     ctx:'Sub-recuperare de OS de la beneficiar: „Tablouri și cabluri OS" (cod 170) + „Proiectoare OS" (cod 171) recunoscute la 45.077 lei, sub costul real. Nu este supra-preț Light Design, ci OS insuficient recuperat prin contract (temă OS ascuns).',
+     ctx:'Sub-recuperare OS de la beneficiar, nu supra-preț furnizor.',
+     ctxDetail:'„Tablouri și cabluri OS" (cod 170) + „Proiectoare OS" (cod 171) recunoscute la 45.077 lei, sub costul real. Nu este supra-preț Light Design, ci OS insuficient recuperat prin contract (temă OS ascuns).',
      nota:'Branșamente și tablouri OS: TEG cu contorizare, TED distribuție, prize de pământ, buletine PRAM, proiectoare OS, manoperă și PIF. Buget = cod 170 (32.370) + cod 171 proiectoare (7.470).'},
-    {scope:'OS muncitori necalificați (Cap.5)', furnizor:'Ideal Max Construct', nr:'ctr 154 · 09.07.2026', buget:45360, contract:45360, venit:null, stare:'Semnat',
-     nota:'Manoperă necalificată OS — 6 luni × 7.560 lei, exact pe buget. Deviz 5.1.3 prevede 2 articole cod 194 (câte 45.360 lei); contractat momentan unul (Ideal Max). Al doilea articol (45.360 lei) rămâne de contractat. Cheltuială OS distribuită în prețuri — fără linie de venit distinctă la beneficiar.'},
-    {scope:'Cap.2.1 — Amenajare Platformă Exterioară (BCR)', furnizor:'DITO Grup', nr:'decizie 03.09.2026 · în semnare', buget:694896, contract:1060252, venit:null, stare:'În semnare',
+    {scope:'OS muncitori necalificați (Cap.5)', furnizor:'Ideal Max Construct', nr:'ctr 154 · 09.07.2026', buget:45360, contract:45360, venit:50803, venitAprox:true, stare:'Semnat',
+     nota:'Manoperă necalificată OS — 6 luni × 7.560 lei, exact pe buget. Deviz 5.1.3 prevede 2 articole cod 194 (câte 45.360 lei); contractat momentan unul (Ideal Max). Al doilea articol (45.360 lei) rămâne de contractat.',
+     ctx:'Venit 50.803 lei — estimat la +12% (marja medie buget→venit pe Cap.3/Cap.5), nu o linie de venit reală.',
+     ctxDetail:'OS (organizare de șantier) e distribuită procentual în prețurile generale ale devizului beneficiarului, fără poziție proprie de venit — nu există o linie „OS muncitori" separată de căutat. Estimarea de 50.803 lei (45.360 × 1,12) folosește marja medie venit/buget observată pe articolele documentate din Cap.3 (~9-19%, medie ~12%), doar ca proxy orientativ pentru marjă — nu e o cifră confirmată din devizul beneficiarului.'},
+    {scope:'Cap.2.1 — Amenajare Platformă Exterioară (BCR)', furnizor:'DITO Grup', nr:'decizie 03.09.2026 · în semnare', buget:694896, contract:1060252, venit:774513, stare:'În semnare',
      nota:'Platformă din beton de ciment rezistent (BCR 5.0): strat separator P8, dală BCR all-in P9, rosturi BCR P10, marcaje rutiere P11 (3.249 mp). Discount final acceptat DITO: −5,0% (−55.803 lei față de oferta inițială 1.116.054 lei). EREN solicitase −13,3%; diferență nerecuperată vs propunerea EREN: +93.107 lei. Depășire vs buget: +365.355 lei (+52,6%). Curs 5,2429 lei/EUR.',
-     ctx:'Depășire buget semnificativă (+52,6%): buget alocat 694.896 lei vs valoare contractată 1.060.252 lei. Negociere finalizată la 5,0% discount față de oferta inițială — marja de negociere obținută parțial (EREN solicita 13,3%).'},
+     ctx:'Depășire +52,6% vs buget; negociat doar 5,0% discount din 13,3% cerut de EREN.',
+     ctxDetail:'Buget alocat 694.896 lei vs valoare contractată 1.060.252 lei. Negociere finalizată la 5,0% discount față de oferta inițială — marja de negociere obținută parțial (EREN solicita 13,3%). Venit beneficiar 774.513 lei = suma exactă P8-P11 din devizul beneficiarului (strat separator 12.541 + carosabil BCR 642.555 + transport beton BCR 44.189 + gujoane 3.955 + emulsie 4.201 + colmatare 10/30 13.563 + colmatare 10/60 14.054 + colmatare 20mm 1.924 + colmatare 25mm 6.423 + marcaje galbenă 17.304 + marcaje neagră 13.803) — corespondență 1:1 confirmată (suma bugetelor acelorași poziții = exact 694.896 lei). Marjă vs venit: −285.739 lei (−36,9%) — pe lângă depășirea de buget, EREN pierde și pe marja reală vs venitul beneficiarului pentru acest scope.'},
     {scope:'Confecții metalice — Structură Hangar (Cap.3)', furnizor:'A&C Metal Industry SRL', nr:'ofertă 03.09.2026 · în semnare', buget:1434571, contract:1610276, venit:1586706, stare:'În semnare',
      nota:'Uzinare și montaj structură metalică: acoperiș hală 85.000 kg + spații anexe 14.200 kg + structură secundară pereți 12.900 kg + organe asamblare + transport (112.100 kg uzinat total) — 306.509 EUR, la curs BNR 03.09.2026 (5,2536 lei/EUR). Exclude: carcase buloane/ancoraje, protecție antifoc (firmă specializată după montaj), utilaj montaj (macara — de clarificat). Depășire vs buget art.38: +175.705 lei (+12,2%). Marjă vs venit (bază, fără indexare): −23.570 lei (−1,5%) — negativă la cursul actual. <b>Marjă vs venit CU indexare SL3 (An=1,149617):</b> +213.828 lei (+11,7%) — indexarea (aplicată doar veniturilor, subcontractul A&amp;C Metal e preț fix) recuperează integral și depășește pierderea de curs valutar.',
-     ctx:'Cel mai mare risc bugetar neacoperit al Cap.3 (37,9% din buget) — rezolvat tehnic. Marja de bază a devenit NEGATIVĂ odată actualizat cursul EUR la valoarea BNR de azi (de la +3,4% la −1,5%), dar indexarea de preț SL3 (subcl. 48.5, coef. 1,149617) o readuce pe plus la +11,7%, pentru că subcontractul e la preț fix iar indexarea se aplică integral veniturilor de la beneficiar. Atenție: utilaj montaj (macara) fără linie de buget identificată.'}
+     ctx:'Cel mai mare risc bugetar Cap.3 — rezolvat tehnic prin indexare SL3.',
+     ctxDetail:'37,9% din buget Cap.3. Marja de bază a devenit NEGATIVĂ odată actualizat cursul EUR la valoarea BNR de azi (de la +3,4% la −1,5%), dar indexarea de preț SL3 (subcl. 48.5, coef. 1,149617) o readuce pe plus la +11,7%, pentru că subcontractul e la preț fix iar indexarea se aplică integral veniturilor de la beneficiar. Atenție: utilaj montaj (macara) fără linie de buget identificată.'}
   ];
   var totContract = 0, totBugetCmp = 0, totContractCmp = 0, pendingCount = 0;
   contracte.forEach(function(c){
@@ -4313,12 +4327,20 @@ function renderContractSinteza(proj) {
   var margVenit = totVenit - totCostVenit;            // marjă absolută vs venit
   var margVenitPct = totVenit>0 ? (margVenit/totVenit*100) : 0;
   // Influența indexării (subcl. 48.5): venit execuție C+M × An; subcontracte preț fix → rămâne la EREN
-  var AN_INDEX = 1.149617;                             // coeficient indexare SL3 simulat (In iun.2026 / Io ian.2025) — actualizat de la 1,143354 (SL2)
+  var AN_INDEX = 1.150313152;                          // coeficient indexare SL2 DEFINITIV (In iun.2026=165,3 rectificat / Io ian.2025=143,70) — sursă "Calcul Actualizare SL4 - Septembrie 2026" ver.25.09.2026. SL3=1,149617258 și SL4=1,160055672 sunt PROVIZORII — se înlocuiește cu coef. SL3 final, pt. restul de executat, când va fi confirmat
   var venitIndexat = totVenit * AN_INDEX;
   var margVenitIdx = venitIndexat - totCostVenit;
   var margVenitIdxPct = venitIndexat>0 ? (margVenitIdx/venitIndexat*100) : 0;
   var indexUplift = totVenit * (AN_INDEX - 1);         // plusul de marjă din indexare
-  var EXEC = 18521332; // valoare execuție din contract (fără proiectare)
+  // Waterfall SL (Gelu, 27.09.2026): SL2 e REAL/fix; potențialul pe rest se calculează cu coef. cunoscut curent (SL2),
+  // ca loc de placeholder — la SL3 final se înlocuiește (rest după SL2 și SL3) cu coef. SL3, ș.a.m.d.
+  var SL2_BASE = 638203;                                // valoarea lucrărilor SL2 (Iulie 2026), din "Calcul Actualizare SL4"
+  var SL2_COEF = 1.150313152;                           // DEFINITIV
+  var SL2_REAL = SL2_BASE * (SL2_COEF - 1);             // 95.930,30 lei — fix, nu se mai recalculează
+  var CM_TOTAL = 16096516;                              // valoare execuție C+M supusă indexării (fără proiectare, fără OS)
+  var CM_REST_DUPA_SL2 = CM_TOTAL - SL2_BASE;
+  var indexPotential = SL2_REAL + CM_REST_DUPA_SL2 * (SL2_COEF - 1); // SL2 real + (Val ctr − Val SL2) × indice cunoscut curent
+  var EXEC = 17075952; // buget intern total eDevize (Cap.1-13 + Org. Șantier) — numitor grad de contractare (Gelu, 27.09.2026: raportare la buget, nu la suma asigurată CAR 18.521.332, folosită greșit anterior)
   var gradAcoperire = (totContract / EXEC * 100);
 
   function fmt(n){ return n.toLocaleString('ro-RO'); }
@@ -4338,7 +4360,8 @@ function renderContractSinteza(proj) {
   html += '<div class="kpi"><div class="kpi-label">Valoare contract (cu AA2)</div><div class="kpi-val" style="color:#185FA5">19,31 mil</div><div class="kpi-sub">lei fără TVA · 69,2% din estimarea autorității (27,84 mil)</div></div>';
   html += '<div class="kpi"><div class="kpi-label">Buget alocat (Deviz General)</div><div class="kpi-val" style="color:#3B6D11">17,08 mil</div><div class="kpi-sub">−11,4% față de contract · include proiectarea</div></div>';
   html += '<div class="kpi"><div class="kpi-label">Bani reali pentru lucrări</div><div class="kpi-val" style="color:#854F0B">56,5%</div><div class="kpi-sub">Cap.4 = 14,73 mil (fără OS) din estimarea execuției</div></div>';
-  html += '<div class="kpi"><div class="kpi-label">Grad acoperire cu contracte semnate</div><div class="kpi-val" style="color:#A32D2D">' + gradAcoperire.toFixed(1).replace('.',',') + '%</div><div class="kpi-sub">' + fmt(totContract) + ' lei contractați din 18,52 mil execuție</div></div>';
+  var gradAcopCol = gradAcoperire>=70 ? '#3B6D11' : (gradAcoperire>=40 ? '#B9770E' : '#1F3864');
+  html += '<div class="kpi"><div class="kpi-label">Grad acoperire cu contracte semnate</div><div class="kpi-val" style="color:' + gradAcopCol + '">' + gradAcoperire.toFixed(1).replace('.',',') + '%</div><div class="kpi-sub">' + fmt(totContract) + ' lei contractați din 17,08 mil buget intern eDevize</div></div>';
   html += '</div>';
 
   // ── Cascada valorii ──
@@ -4368,11 +4391,13 @@ function renderContractSinteza(proj) {
   html += '<div class="proj-card-header" style="background:#1E5631"><span style="font-size:13px;font-weight:600;color:#fff"><i class="ti ti-trending-up"></i> Indexare prețuri (ajustare) — sub-clauza 48.5 · venit suplimentar peste contract</span></div>';
   html += '<div class="proj-card-body">';
   html += '<div style="display:flex;gap:22px;flex-wrap:wrap;margin-bottom:10px">';
-  html += '<div><div style="font-size:22px;font-weight:700;color:#3B6D11">+14,3%</div><div style="font-size:11px;color:#5A6472">coeficient curent · An = 1,1434</div></div>';
-  html += '<div><div style="font-size:22px;font-weight:700;color:#1F3864">91.489</div><div style="font-size:11px;color:#5A6472">lei ajustare realizată (SL2, iul.2026)</div></div>';
-  html += '<div><div style="font-size:22px;font-weight:700;color:#3B6D11">~2,31 mil</div><div style="font-size:11px;color:#5A6472">lei potențial pe execuția C+M (la coef. curent)</div></div>';
+  html += '<div><div style="font-size:22px;font-weight:700;color:#3B6D11">+15,0%</div><div style="font-size:11px;color:#5A6472">coeficient SL2 DEFINITIV · An = 1,150313</div></div>';
+  html += '<div><div style="font-size:22px;font-weight:700;color:#1F3864">95.930</div><div style="font-size:11px;color:#5A6472">lei ajustare SL2 — REALĂ, fixă (iul.2026, definitiv — se transmite la plată)</div></div>';
+  html += '<div><div style="font-size:22px;font-weight:700;color:#3B6D11">~2,42 mil</div><div style="font-size:11px;color:#5A6472">lei potențial total (SL2 real + rest proiectat la coef. SL2)</div></div>';
   html += '</div>';
-  html += '<div style="font-size:11px;color:#444;line-height:1.55"><b>An = av + (1−av)·In/Io</b> · av=0 · Io=143,70 (ian.2025, Data de Referință) · In=164,30 (mai.2026, provizoriu) · sursă Buletin Statistic INS nr.05/2026. Se aplică DOAR execuției (C+M ≈ 16,10 mil lei), NU proiectării. Ajustarea crește cu indicii ICC pe măsură ce se decontează lucrările; subcontractele fiind la preț fix, indexarea rămâne integral câștig pentru EREN. <b>Efect în analiză:</b> ridică marja reală vs venit de la +19,5% (bază) la ~+29,6% (cu indexare) — vezi KPI-urile din Derulare.</div>';
+  html += '<details><summary style="font-size:11px;color:#8A94A3;cursor:pointer">detalii formulă și metodologie</summary><div style="font-size:11px;color:#444;line-height:1.55;margin-top:6px"><b>An = av + (1−av)·In/Io</b> · av=0 · Io=143,70 (ian.2025, Data de Referință) · In=165,30 (iun.2026, rectificat) · sursă Buletin Statistic de Prețuri INS nr.07/2026 ("Calcul Actualizare SL4 - Septembrie 2026", ver.25.09.2026). Cumulat ajustări SL2–SL4 (SL3/SL4 provizorii) = 429.072,58 lei. Se aplică DOAR execuției (C+M ≈ 16,10 mil lei), NU proiectării.<br>' +
+    '<b>Formulă potențial (waterfall SL, nu coeficient unic pe tot):</b> ' + fmt(Math.round(indexPotential)) + ' lei = SL2 real (' + fmt(Math.round(SL2_REAL)) + ' lei, bază ' + fmt(SL2_BASE) + ') + rest neacoperit de SL2 (' + fmt(CM_REST_DUPA_SL2) + ' lei) × coef. SL2 (singurul definitiv, cât timp SL3 nu e final). La SL3 final, termenul de „rest" se recalculează pe (C+M − SL2 − SL3) cu coeficientul SL3, iar totalul devine SL2 real + SL3 real + proiecție pe rest — ș.a.m.d.<br>' +
+    'Ajustarea crește cu indicii ICC pe măsură ce se decontează lucrările; subcontractele fiind la preț fix, indexarea rămâne integral câștig pentru EREN. <b>Efect în analiză:</b> ridică marja reală vs venit — vezi KPI-urile din Derulare.</div></details>';
   html += '</div></div>';
 
   // ── Marjă + documentare (2 carduri pe rând) ──
@@ -4399,10 +4424,10 @@ function renderContractSinteza(proj) {
   // KPI derulare
   html += '<div class="kpi-grid" style="margin-bottom:14px">';
   html += '<div class="kpi"><div class="kpi-label">Total contractat</div><div class="kpi-val">' + fmt(totContract) + '</div><div class="kpi-sub">lei fără TVA · ' + contracte.length + ' contract(e) semnat(e)</div></div>';
-  html += '<div class="kpi"><div class="kpi-label">Saving vs buget</div><div class="kpi-val" style="color:' + (totDelta>=0?'#3B6D11':'#A32D2D') + '">' + (totDelta>=0?'+':'−') + Math.abs(totDelta/totBugetCmp*100).toFixed(1).replace('.',',') + '%</div><div class="kpi-sub">' + (totDelta>=0?'+':'−') + fmt(Math.abs(totDelta)) + ' lei · buget ' + fmt(totBugetCmp) + ' → contractat ' + fmt(totContractCmp) + '</div></div>';
-  html += '<div class="kpi"><div class="kpi-label">Marjă vs venit (bază)</div><div class="kpi-val" style="color:' + (margVenit>=0?'#3B6D11':'#A32D2D') + '">' + (margVenit>=0?'+':'−') + Math.abs(margVenitPct).toFixed(1).replace('.',',') + '%</div><div class="kpi-sub">' + (margVenit>=0?'+':'−') + fmt(Math.abs(Math.round(margVenit))) + ' lei · venit ' + fmt(totVenit) + ' → cost ' + fmt(totCostVenit) + ' (fără indexare)</div></div>';
-  html += '<div class="kpi" style="background:#EAF3DE;border-color:#C0DD97"><div class="kpi-label">Marjă vs venit + indexare</div><div class="kpi-val" style="color:#3B6D11">+' + margVenitIdxPct.toFixed(1).replace('.',',') + '%</div><div class="kpi-sub">+' + fmt(Math.round(margVenitIdx)) + ' lei · venit indexat ' + fmt(Math.round(venitIndexat)) + ' (coef. 1,1434 · +' + fmt(Math.round(indexUplift)) + ' din indexare)</div></div>';
-  html += '<div class="kpi"><div class="kpi-label">Grad acoperire execuție</div><div class="kpi-val" style="color:#A32D2D">' + gradAcoperire.toFixed(1).replace('.',',') + '%</div><div class="kpi-sub">din 18,52 mil lei lucrări de execuție</div></div>';
+  html += '<div class="kpi"><div class="kpi-label">Saving vs buget</div><div class="kpi-val" style="color:' + (totDelta>=0?'#3B6D11':'#5B3A73') + '">' + (totDelta>=0?'+':'−') + Math.abs(totDelta/totBugetCmp*100).toFixed(1).replace('.',',') + '%</div><div class="kpi-sub">' + (totDelta>=0?'+':'−') + fmt(Math.abs(totDelta)) + ' lei · buget ' + fmt(totBugetCmp) + ' → contractat ' + fmt(totContractCmp) + '</div></div>';
+  html += '<div class="kpi"><div class="kpi-label">Marjă vs venit (bază)</div><div class="kpi-val" style="color:' + (margVenit>=0?'#3B6D11':'#5B3A73') + '">' + (margVenit>=0?'+':'−') + Math.abs(margVenitPct).toFixed(1).replace('.',',') + '%</div><div class="kpi-sub">' + (margVenit>=0?'+':'−') + fmt(Math.abs(Math.round(margVenit))) + ' lei · venit ' + fmt(totVenit) + ' → cost ' + fmt(totCostVenit) + ' (fără indexare)</div></div>';
+  html += '<div class="kpi" style="background:#EAF3DE;border-color:#C0DD97"><div class="kpi-label">Marjă vs venit + indexare</div><div class="kpi-val" style="color:#3B6D11">+' + margVenitIdxPct.toFixed(1).replace('.',',') + '%</div><div class="kpi-sub">+' + fmt(Math.round(margVenitIdx)) + ' lei · venit indexat ' + fmt(Math.round(venitIndexat)) + ' (coef. ' + AN_INDEX.toFixed(4).replace(".",",") + ' · +' + fmt(Math.round(indexUplift)) + ' din indexare)</div></div>';
+  html += '<div class="kpi"><div class="kpi-label">Grad acoperire vs buget intern</div><div class="kpi-val" style="color:' + gradAcopCol + '">' + gradAcoperire.toFixed(1).replace('.',',') + '%</div><div class="kpi-sub">din 17,08 mil lei buget intern eDevize (Cap.1-13 + Org. Șantier)</div></div>';
   html += '</div>';
 
   // gauge grad acoperire
@@ -4423,7 +4448,7 @@ function renderContractSinteza(proj) {
       dCell = '<span style="color:#8A94A3">—</span>';
     } else {
       var d = c.buget - c.contract;
-      dcol = d>=0 ? '#3B6D11' : (c.soft ? '#854F0B' : '#A32D2D');
+      dcol = d>=0 ? '#3B6D11' : (c.soft ? '#854F0B' : '#5B3A73');
       dCell = (d>=0?'+':'−') + fmt(Math.abs(d));
       if (c.buget>0) dCell += '<div style="font-size:9px;font-weight:500">' + (d>=0?'+':'−') + Math.abs(d/c.buget*100).toFixed(1).replace('.',',') + '%</div>';
     }
@@ -4433,19 +4458,22 @@ function renderContractSinteza(proj) {
     var mvCell, mvcol = '#5A6472';
     if (hasVenit) {
       var mv = c.venit - c.contract;
-      mvcol = mv>=0 ? '#3B6D11' : '#A32D2D';
+      mvcol = mv>=0 ? '#3B6D11' : '#5B3A73';
       mvCell = (mv>=0?'+':'−') + fmt(Math.abs(mv)) + '<div style="font-size:9px;font-weight:500">' + (mv>=0?'+':'−') + Math.abs(mv/c.venit*100).toFixed(1).replace('.',',') + '%</div>';
       var venitIdxRow = c.venit * AN_INDEX;
       var mvIdx = venitIdxRow - c.contract;
-      var mvIdxCol = mvIdx>=0 ? '#1E6E2D' : '#A32D2D';
-      mvCell += '<div style="font-size:9px;font-weight:600;color:' + mvIdxCol + ';margin-top:2px;border-top:1px dashed #D8DEE6;padding-top:2px">cu index SL3: ' + (mvIdx>=0?'+':'−') + fmt(Math.round(Math.abs(mvIdx))) + ' (' + (mvIdx>=0?'+':'−') + Math.abs(mvIdx/venitIdxRow*100).toFixed(1).replace('.',',') + '%)</div>';
+      var mvIdxCol = mvIdx>=0 ? '#1E6E2D' : '#5B3A73';
+      mvCell += '<details style="margin-top:2px"><summary style="font-size:9px;color:#8A94A3;cursor:pointer">index</summary><div style="font-size:9px;font-weight:600;color:' + mvIdxCol + ';margin-top:2px">cu index SL2: ' + (mvIdx>=0?'+':'−') + fmt(Math.round(Math.abs(mvIdx))) + ' (' + (mvIdx>=0?'+':'−') + Math.abs(mvIdx/venitIdxRow*100).toFixed(1).replace('.',',') + '%)</div></details>';
     } else { mvCell = '<span style="color:#8A94A3">—</span>'; }
     var badge = c.stare==='Semnat' ? '#3B6D11' : (c.stare==='În semnare' ? '#C77C0A' : '#6B7280');
     var statusChip = '<span style="background:' + badge + ';color:#fff;padding:1px 7px;border-radius:9px;font-size:9px;font-weight:700;white-space:nowrap;margin-left:6px">' + c.stare + '</span>';
-    var mktLine = c.mkt ? '<div style="font-size:10px;color:#2F6B1E;background:#EAF3DE;border-radius:5px;padding:5px 8px;margin-top:5px"><i class="ti ti-award"></i> ' + c.mkt + '</div>' : '';
-    var ctxLine = c.ctx ? '<div style="font-size:10px;color:#3A5573;background:#EAF0F6;border-radius:5px;padding:5px 8px;margin-top:5px"><i class="ti ti-info-circle"></i> ' + c.ctx + '</div>' : '';
+    var detailBits = [];
+    if (c.nota) detailBits.push(c.nota);
+    if (c.mkt) detailBits.push('<b style="color:#2F6B1E">'+ c.mkt + (c.mktDetail ? ' ' + c.mktDetail : '') +'</b>');
+    if (c.ctx) detailBits.push('<b style="color:#3A5573">'+ c.ctx + (c.ctxDetail ? ' ' + c.ctxDetail : '') +'</b>');
+    var detailLine = detailBits.length ? '<details style="margin-top:2px"><summary style="font-size:10px;color:#8A94A3;cursor:pointer">detalii</summary><div style="font-size:10px;color:#5A6472;margin-top:3px;line-height:1.5">' + detailBits.join(' · ') + '</div></details>' : '';
     html += '<tr style="border-bottom:1px solid #E8E8E8">';
-    html += '<td style="padding:8px 10px"><b>' + c.scope + '</b>' + statusChip + '<div style="font-size:10px;color:#7A828E;margin-top:2px">' + (c.nr?'<span style="color:#9AA3B0">'+c.nr+'</span> · ':'') + c.nota + '</div>' + mktLine + ctxLine + '</td>';
+    html += '<td style="padding:8px 10px"><b>' + c.scope + '</b>' + statusChip + (c.nr?'<div style="font-size:10px;color:#9AA3B0;margin-top:2px">'+c.nr+'</div>':'') + detailLine + '</td>';
     html += '<td style="padding:8px 10px;white-space:nowrap">' + c.furnizor + '</td>';
     html += '<td style="padding:8px 10px;text-align:right;white-space:nowrap">' + bugetCell + '</td>';
     html += '<td style="padding:8px 10px;text-align:right;white-space:nowrap;font-weight:600">' + fmt(c.contract) + '</td>';
@@ -4458,11 +4486,11 @@ function renderContractSinteza(proj) {
   html += '<td style="padding:8px 10px" colspan="2">TOTAL contractat</td>';
   html += '<td style="padding:8px 10px;text-align:right">' + fmt(totBugetCmp) + '</td>';
   html += '<td style="padding:8px 10px;text-align:right">' + fmt(totContract) + '</td>';
-  html += '<td style="padding:8px 10px;text-align:right;color:' + (totDelta>=0?'#3B6D11':'#A32D2D') + '">' + (totDelta>=0?'+':'−') + fmt(Math.abs(totDelta)) + '<div style="font-size:9px">' + (totDelta>=0?'+':'−') + Math.abs(totDelta/totBugetCmp*100).toFixed(1).replace('.',',') + '%</div></td>';
+  html += '<td style="padding:8px 10px;text-align:right;color:' + (totDelta>=0?'#3B6D11':'#5B3A73') + '">' + (totDelta>=0?'+':'−') + fmt(Math.abs(totDelta)) + '<div style="font-size:9px">' + (totDelta>=0?'+':'−') + Math.abs(totDelta/totBugetCmp*100).toFixed(1).replace('.',',') + '%</div></td>';
   html += '<td style="padding:8px 10px;text-align:right">' + fmt(totVenit) + '</td>';
-  html += '<td style="padding:8px 10px;text-align:right;color:' + (margVenit>=0?'#3B6D11':'#A32D2D') + '">' + (margVenit>=0?'+':'−') + fmt(Math.abs(Math.round(margVenit))) + '<div style="font-size:9px">' + (margVenit>=0?'+':'−') + Math.abs(margVenitPct).toFixed(1).replace('.',',') + '%</div>' + '<div style="font-size:9px;font-weight:600;color:' + (margVenitIdx>=0?'#1E6E2D':'#A32D2D') + ';margin-top:2px;border-top:1px dashed #C7CEDA;padding-top:2px">cu index SL3: ' + (margVenitIdx>=0?'+':'−') + fmt(Math.round(Math.abs(margVenitIdx))) + ' (' + (margVenitIdx>=0?'+':'−') + Math.abs(margVenitIdxPct).toFixed(1).replace('.',',') + '%)</div></td>';
+  html += '<td style="padding:8px 10px;text-align:right;color:' + (margVenit>=0?'#3B6D11':'#5B3A73') + '">' + (margVenit>=0?'+':'−') + fmt(Math.abs(Math.round(margVenit))) + '<div style="font-size:9px">' + (margVenit>=0?'+':'−') + Math.abs(margVenitPct).toFixed(1).replace('.',',') + '%</div>' + '<div style="font-size:9px;font-weight:600;color:' + (margVenitIdx>=0?'#1E6E2D':'#5B3A73') + ';margin-top:2px;border-top:1px dashed #C7CEDA;padding-top:2px">cu index SL2: ' + (margVenitIdx>=0?'+':'−') + fmt(Math.round(Math.abs(margVenitIdx))) + ' (' + (margVenitIdx>=0?'+':'−') + Math.abs(margVenitIdxPct).toFixed(1).replace('.',',') + '%)</div></td>';
   html += '</tr></tfoot></table></div>';
-  html += '<div style="font-size:10px;color:#8A94A3;padding:8px 12px;line-height:1.5"><b>Saving vs buget</b> = buget alocat − valoare contract (eficiența la achiziție, pe scope-urile cu buget). <b>Marjă vs venit</b> = venit beneficiar (deviz cu CI+profit) − valoare contract = profitabilitatea reală pe scope. Venitul se ia din anexa la contractul cu beneficiarul. <b>Cu index SL3</b> = venitul indexat conform sub-clauzei 48.5 (coef. An=' + AN_INDEX.toFixed(6).replace('.',',') + ', simulare SL3, provizoriu — se aplică UNIFORM tuturor contractelor semnate până acum, indiferent de data semnării, pentru că indicii INS sunt aceiași pe toată execuția curentă) − valoare contract. Subcontractele sunt la preț fix, deci tot uplift-ul de indexare rămâne câștig la EREN. <span style="color:#9AA3B0">* Prefabricate: venit conservator (doar stâlpi + pahare); marja reală este cel puțin atât.</span> OS necalificați nu are venit distinct (furnizare de manoperă). Grad acoperire ' + gradAcoperire.toFixed(1).replace('.',',') + '% = contractat / 18,52 mil lei execuție.</div></div>';
+  html += '<div style="font-size:10px;color:#8A94A3;padding:8px 12px;line-height:1.5"><b>Saving vs buget</b> = buget alocat − valoare contract (eficiența la achiziție, pe scope-urile cu buget). <b>Marjă vs venit</b> = venit beneficiar (deviz cu CI+profit) − valoare contract = profitabilitatea reală pe scope. Venitul se ia din anexa la contractul cu beneficiarul. <b>Cu index SL2</b> = venitul indexat conform sub-clauzei 48.5 (coef. An=' + AN_INDEX.toFixed(6).replace('.',',') + ', SL2 FINAL — se aplică tuturor contractelor semnate până acum, indiferent de data semnării; la finalizarea SL3, coeficientul final SL3 va înlocui SL2 ca referință pentru restul de executat) − valoare contract. Subcontractele sunt la preț fix, deci tot uplift-ul de indexare rămâne câștig la EREN. <span style="color:#9AA3B0">* Prefabricate: venit conservator (doar stâlpi + pahare); marja reală este cel puțin atât.</span> OS necalificați nu are venit distinct (furnizare de manoperă). Grad acoperire ' + gradAcoperire.toFixed(1).replace('.',',') + '% = contractat / 17,08 mil lei buget intern eDevize (Cap.1-13 + Org. Șantier).</div></div>';
 
   html += "<button class=\"open-fisa-btn\" onclick=\"renderProjHome('hangar')\"><i class=\"ti ti-arrow-left\"></i> Înapoi la proiect</button>";
   html += '<div class="page-footer">PM Hub · EREN CONS SRL · 2026 · Sinteză execuție contract · Surse: Fișa de date SEAP, Contract 997/2025 + AA2, Deviz General buget, analize Cap.1-13, decizii contractare</div>';

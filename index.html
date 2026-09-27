@@ -4424,8 +4424,8 @@ function renderContractSinteza(proj) {
   // KPI derulare
   html += '<div class="kpi-grid" style="margin-bottom:14px">';
   html += '<div class="kpi"><div class="kpi-label">Total contractat</div><div class="kpi-val">' + fmt(totContract) + '</div><div class="kpi-sub">lei fără TVA · ' + contracte.length + ' contract(e) semnat(e)</div></div>';
-  html += '<div class="kpi"><div class="kpi-label">Saving vs buget</div><div class="kpi-val" style="color:' + (totDelta>=0?'#3B6D11':'#5B3A73') + '">' + (totDelta>=0?'+':'−') + Math.abs(totDelta/totBugetCmp*100).toFixed(1).replace('.',',') + '%</div><div class="kpi-sub">' + (totDelta>=0?'+':'−') + fmt(Math.abs(totDelta)) + ' lei · buget ' + fmt(totBugetCmp) + ' → contractat ' + fmt(totContractCmp) + '</div></div>';
-  html += '<div class="kpi"><div class="kpi-label">Marjă vs venit (bază)</div><div class="kpi-val" style="color:' + (margVenit>=0?'#3B6D11':'#5B3A73') + '">' + (margVenit>=0?'+':'−') + Math.abs(margVenitPct).toFixed(1).replace('.',',') + '%</div><div class="kpi-sub">' + (margVenit>=0?'+':'−') + fmt(Math.abs(Math.round(margVenit))) + ' lei · venit ' + fmt(totVenit) + ' → cost ' + fmt(totCostVenit) + ' (fără indexare)</div></div>';
+  html += '<div class="kpi"><div class="kpi-label">Saving vs buget</div><div class="kpi-val" style="color:' + (totDelta>=0?'#3B6D11':'#9B59B6') + '">' + (totDelta>=0?'+':'−') + Math.abs(totDelta/totBugetCmp*100).toFixed(1).replace('.',',') + '%</div><div class="kpi-sub">' + (totDelta>=0?'+':'−') + fmt(Math.abs(totDelta)) + ' lei · buget ' + fmt(totBugetCmp) + ' → contractat ' + fmt(totContractCmp) + '</div></div>';
+  html += '<div class="kpi"><div class="kpi-label">Marjă vs venit (bază)</div><div class="kpi-val" style="color:' + (margVenit>=0?'#3B6D11':'#9B59B6') + '">' + (margVenit>=0?'+':'−') + Math.abs(margVenitPct).toFixed(1).replace('.',',') + '%</div><div class="kpi-sub">' + (margVenit>=0?'+':'−') + fmt(Math.abs(Math.round(margVenit))) + ' lei · venit ' + fmt(totVenit) + ' → cost ' + fmt(totCostVenit) + ' (fără indexare)</div></div>';
   html += '<div class="kpi" style="background:#EAF3DE;border-color:#C0DD97"><div class="kpi-label">Marjă vs venit + indexare</div><div class="kpi-val" style="color:#3B6D11">+' + margVenitIdxPct.toFixed(1).replace('.',',') + '%</div><div class="kpi-sub">+' + fmt(Math.round(margVenitIdx)) + ' lei · venit indexat ' + fmt(Math.round(venitIndexat)) + ' (coef. ' + AN_INDEX.toFixed(4).replace(".",",") + ' · +' + fmt(Math.round(indexUplift)) + ' din indexare)</div></div>';
   html += '<div class="kpi"><div class="kpi-label">Grad acoperire vs buget intern</div><div class="kpi-val" style="color:' + gradAcopCol + '">' + gradAcoperire.toFixed(1).replace('.',',') + '%</div><div class="kpi-sub">din 17,08 mil lei buget intern eDevize (Cap.1-13 + Org. Șantier)</div></div>';
   html += '</div>';
@@ -4448,7 +4448,7 @@ function renderContractSinteza(proj) {
       dCell = '<span style="color:#8A94A3">—</span>';
     } else {
       var d = c.buget - c.contract;
-      dcol = d>=0 ? '#3B6D11' : (c.soft ? '#854F0B' : '#5B3A73');
+      dcol = d>=0 ? '#3B6D11' : (c.soft ? '#854F0B' : '#9B59B6');
       dCell = (d>=0?'+':'−') + fmt(Math.abs(d));
       if (c.buget>0) dCell += '<div style="font-size:9px;font-weight:500">' + (d>=0?'+':'−') + Math.abs(d/c.buget*100).toFixed(1).replace('.',',') + '%</div>';
     }
@@ -4458,11 +4458,11 @@ function renderContractSinteza(proj) {
     var mvCell, mvcol = '#5A6472';
     if (hasVenit) {
       var mv = c.venit - c.contract;
-      mvcol = mv>=0 ? '#3B6D11' : '#5B3A73';
+      mvcol = mv>=0 ? '#3B6D11' : '#9B59B6';
       mvCell = (mv>=0?'+':'−') + fmt(Math.abs(mv)) + '<div style="font-size:9px;font-weight:500">' + (mv>=0?'+':'−') + Math.abs(mv/c.venit*100).toFixed(1).replace('.',',') + '%</div>';
       var venitIdxRow = c.venit * AN_INDEX;
       var mvIdx = venitIdxRow - c.contract;
-      var mvIdxCol = mvIdx>=0 ? '#1E6E2D' : '#5B3A73';
+      var mvIdxCol = mvIdx>=0 ? '#1E6E2D' : '#9B59B6';
       mvCell += '<details style="margin-top:2px"><summary style="font-size:9px;color:#8A94A3;cursor:pointer">index</summary><div style="font-size:9px;font-weight:600;color:' + mvIdxCol + ';margin-top:2px">cu index SL2: ' + (mvIdx>=0?'+':'−') + fmt(Math.round(Math.abs(mvIdx))) + ' (' + (mvIdx>=0?'+':'−') + Math.abs(mvIdx/venitIdxRow*100).toFixed(1).replace('.',',') + '%)</div></details>';
     } else { mvCell = '<span style="color:#8A94A3">—</span>'; }
     var badge = c.stare==='Semnat' ? '#3B6D11' : (c.stare==='În semnare' ? '#C77C0A' : '#6B7280');
@@ -4471,7 +4471,7 @@ function renderContractSinteza(proj) {
     if (c.nota) detailBits.push(c.nota);
     if (c.mkt) detailBits.push('<b style="color:#2F6B1E">'+ c.mkt + (c.mktDetail ? ' ' + c.mktDetail : '') +'</b>');
     if (c.ctx) detailBits.push('<b style="color:#3A5573">'+ c.ctx + (c.ctxDetail ? ' ' + c.ctxDetail : '') +'</b>');
-    var detailLine = detailBits.length ? '<details style="margin-top:2px"><summary style="font-size:10px;color:#8A94A3;cursor:pointer">detalii</summary><div style="font-size:10px;color:#5A6472;margin-top:3px;line-height:1.5">' + detailBits.join(' · ') + '</div></details>' : '';
+    var detailLine = detailBits.length ? '<details style="margin-top:2px"><summary style="font-size:10px;color:#8A94A3;cursor:pointer">detalii</summary><div style="font-size:10px;color:#5A6472;margin-top:3px;line-height:1.5;width:280px;max-width:80vw;white-space:normal">' + detailBits.join(' · ') + '</div></details>' : '';
     html += '<tr style="border-bottom:1px solid #E8E8E8">';
     html += '<td style="padding:8px 10px"><b>' + c.scope + '</b>' + statusChip + (c.nr?'<div style="font-size:10px;color:#9AA3B0;margin-top:2px">'+c.nr+'</div>':'') + detailLine + '</td>';
     html += '<td style="padding:8px 10px;white-space:nowrap">' + c.furnizor + '</td>';
@@ -4486,9 +4486,9 @@ function renderContractSinteza(proj) {
   html += '<td style="padding:8px 10px" colspan="2">TOTAL contractat</td>';
   html += '<td style="padding:8px 10px;text-align:right">' + fmt(totBugetCmp) + '</td>';
   html += '<td style="padding:8px 10px;text-align:right">' + fmt(totContract) + '</td>';
-  html += '<td style="padding:8px 10px;text-align:right;color:' + (totDelta>=0?'#3B6D11':'#5B3A73') + '">' + (totDelta>=0?'+':'−') + fmt(Math.abs(totDelta)) + '<div style="font-size:9px">' + (totDelta>=0?'+':'−') + Math.abs(totDelta/totBugetCmp*100).toFixed(1).replace('.',',') + '%</div></td>';
+  html += '<td style="padding:8px 10px;text-align:right;color:' + (totDelta>=0?'#3B6D11':'#9B59B6') + '">' + (totDelta>=0?'+':'−') + fmt(Math.abs(totDelta)) + '<div style="font-size:9px">' + (totDelta>=0?'+':'−') + Math.abs(totDelta/totBugetCmp*100).toFixed(1).replace('.',',') + '%</div></td>';
   html += '<td style="padding:8px 10px;text-align:right">' + fmt(totVenit) + '</td>';
-  html += '<td style="padding:8px 10px;text-align:right;color:' + (margVenit>=0?'#3B6D11':'#5B3A73') + '">' + (margVenit>=0?'+':'−') + fmt(Math.abs(Math.round(margVenit))) + '<div style="font-size:9px">' + (margVenit>=0?'+':'−') + Math.abs(margVenitPct).toFixed(1).replace('.',',') + '%</div>' + '<div style="font-size:9px;font-weight:600;color:' + (margVenitIdx>=0?'#1E6E2D':'#5B3A73') + ';margin-top:2px;border-top:1px dashed #C7CEDA;padding-top:2px">cu index SL2: ' + (margVenitIdx>=0?'+':'−') + fmt(Math.round(Math.abs(margVenitIdx))) + ' (' + (margVenitIdx>=0?'+':'−') + Math.abs(margVenitIdxPct).toFixed(1).replace('.',',') + '%)</div></td>';
+  html += '<td style="padding:8px 10px;text-align:right;color:' + (margVenit>=0?'#3B6D11':'#9B59B6') + '">' + (margVenit>=0?'+':'−') + fmt(Math.abs(Math.round(margVenit))) + '<div style="font-size:9px">' + (margVenit>=0?'+':'−') + Math.abs(margVenitPct).toFixed(1).replace('.',',') + '%</div>' + '<div style="font-size:9px;font-weight:600;color:' + (margVenitIdx>=0?'#1E6E2D':'#9B59B6') + ';margin-top:2px;border-top:1px dashed #C7CEDA;padding-top:2px">cu index SL2: ' + (margVenitIdx>=0?'+':'−') + fmt(Math.round(Math.abs(margVenitIdx))) + ' (' + (margVenitIdx>=0?'+':'−') + Math.abs(margVenitIdxPct).toFixed(1).replace('.',',') + '%)</div></td>';
   html += '</tr></tfoot></table></div>';
   html += '<div style="font-size:10px;color:#8A94A3;padding:8px 12px;line-height:1.5"><b>Saving vs buget</b> = buget alocat − valoare contract (eficiența la achiziție, pe scope-urile cu buget). <b>Marjă vs venit</b> = venit beneficiar (deviz cu CI+profit) − valoare contract = profitabilitatea reală pe scope. Venitul se ia din anexa la contractul cu beneficiarul. <b>Cu index SL2</b> = venitul indexat conform sub-clauzei 48.5 (coef. An=' + AN_INDEX.toFixed(6).replace('.',',') + ', SL2 FINAL — se aplică tuturor contractelor semnate până acum, indiferent de data semnării; la finalizarea SL3, coeficientul final SL3 va înlocui SL2 ca referință pentru restul de executat) − valoare contract. Subcontractele sunt la preț fix, deci tot uplift-ul de indexare rămâne câștig la EREN. <span style="color:#9AA3B0">* Prefabricate: venit conservator (doar stâlpi + pahare); marja reală este cel puțin atât.</span> OS necalificați nu are venit distinct (furnizare de manoperă). Grad acoperire ' + gradAcoperire.toFixed(1).replace('.',',') + '% = contractat / 17,08 mil lei buget intern eDevize (Cap.1-13 + Org. Șantier).</div></div>';
 

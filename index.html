@@ -4434,11 +4434,14 @@ function renderContractSinteza(proj) {
   html += '<div style="margin-bottom:14px"><div style="display:flex;justify-content:space-between;font-size:11px;color:#5A6472;margin-bottom:3px"><span>Acoperire contract cu contracte semnate</span><span style="font-weight:700;color:#1F3864">' + gradAcoperire.toFixed(1).replace('.',',') + '% din 100%</span></div>';
   html += '<div style="height:18px;background:#EEF0F3;border-radius:6px;overflow:hidden"><div style="height:100%;width:' + Math.max(gradAcoperire,1.2) + '%;background:linear-gradient(90deg,#1F3864,#378ADD);min-width:2px"></div></div></div>';
 
-  // tabel contracte
-  html += '<div class="proj-card" style="margin-bottom:14px"><div style="overflow-x:auto">';
-  html += '<table style="width:100%;border-collapse:collapse;font-size:11px">';
-  html += '<thead><tr style="background:#1F3864;color:#fff;text-align:left">';
-  html += '<th style="padding:8px 10px">Scope</th><th style="padding:8px 10px">Furnizor</th><th style="padding:8px 10px;text-align:right">Buget alocat</th><th style="padding:8px 10px;text-align:right">Valoare contract</th><th style="padding:8px 10px;text-align:right">Saving vs buget</th><th style="padding:8px 10px;text-align:right">Venit beneficiar</th><th style="padding:8px 10px;text-align:right">Marjă vs venit</th></tr></thead><tbody>';
+  // tabel contracte — container cu scroll intern + header sticky (ca la Probleme identificate în execuție), ca lista să nu tot lungească pagina pe măsură ce se adaugă contracte
+  html += '<div class="proj-card" style="margin-bottom:14px"><div style="overflow:auto;max-height:min(65vh,640px);border-radius:8px">';
+  html += '<table style="width:100%;border-collapse:collapse;font-size:11px;min-width:900px">';
+  html += '<thead><tr>';
+  ['Scope','Furnizor','Buget alocat','Valoare contract','Saving vs buget','Venit beneficiar','Marjă vs venit'].forEach(function(h,i){
+    html += '<th style="position:sticky;top:0;z-index:1;background:#1F3864;color:#fff;text-align:' + (i>=2?'right':'left') + ';padding:8px 10px;white-space:nowrap">' + h + '</th>';
+  });
+  html += '</tr></thead><tbody>';
   contracte.forEach(function(c){
     var pending = (c.buget === null);
     var nebug = (c.buget === 0);

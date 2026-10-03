@@ -2364,6 +2364,12 @@ function renderHome() {
       '<div style="font-size:11px;color:#7D6608">Cap.8 Sanitare · Cap.9 HVAC · Cap.10 Curenți tari · Cap.11 Curenți slabi</div>' +
     '</div>' : '') +
 
+    (new Date() <= new Date('2026-10-12T23:59:59') ? '<div style="background:#EAF7EF;border:1px solid #A9D6B5;border-left:4px solid #1A7F45;border-radius:6px;padding:10px 14px;margin-bottom:12px;cursor:pointer" onclick="goModule(\'hangar\',\'edevizeregistru\')">' +
+      '<div style="font-size:11px;font-weight:700;color:#145A32;margin-bottom:5px"><span class="blink-nou6" style="background:#1A7F45;color:#fff;border-radius:4px;padding:1px 6px;font-size:9px;font-weight:800;margin-right:6px;letter-spacing:0.5px">NOU</span><i class="ti ti-refresh" style="margin-right:4px"></i>Kogălniceanu — Listele eDevize au fost revizuite' + _badgeTimp('2026-10-12','#1A7F45') + '</div>' +
+      '<div style="font-size:10px;color:#555;margin-bottom:4px"><b>Cale:</b> <span style="font-family:monospace;background:rgba(0,0,0,0.06);padding:1px 6px;border-radius:4px">Hangar Kogălniceanu → Liste revizuite — eDevize</span></div>' +
+      '<div style="font-size:11px;color:#1A5C34">Revizuire 03.10.2026 — dispare distincția DN/LS, doar NCS1/NCS2/NR (acord cu beneficiarul)</div>' +
+    '</div>' : '') +
+
     '<div class="proj-card" style="cursor:pointer" onclick="renderProjHome(\'academia\')">' +
       '<div class="proj-card-header" style="background:#154360;border-left:3px solid #1A5276">' +
         '<div class="proj-icon" style="background:rgba(26,82,118,0.3)"><i class="ti ti-anchor" style="color:#7FB3D5"></i></div>' +

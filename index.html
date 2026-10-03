@@ -3062,12 +3062,12 @@ var REGPD = [
    impactTimp:'În curs de evaluare',
    actiune:'Solicitat de EREN proiectantului răspuns URGENT. Se așteaptă poziția oficială și, după caz, dispoziția de șantier / documentația NC-DS-NR-NCS tip 2 + memoriu justificativ pentru soluția aleasă (panouri PIR sau soluție de protecție la foc suplimentară a structurii metalice).',
    sursa:'Email "Clarificari structura metalica", 19.09.2026'},
-  {cod:'PE08', categorie:'Bugetar', detaliu:'Cap.11 Curenți slabi · F4 poz.2 — centrală acționare trape', valoare:0, valoareText:'În curs de evaluare', termen:'—', status:'Deschis', dataStatus:'03.10.2026',
+  {cod:'PE08', categorie:'Bugetar', detaliu:'Cap.11 Curenți slabi · F4 poz.2 — centrală acționare trape', valoare:0, valoareText:'Cost suportat de EREN — de cuantificat', termen:'—', status:'Deschis', dataStatus:'03.10.2026',
    problema:'Centrala universală de acționare trape pentru 5 zone /40Ah (v.10) — obiect 11 Curenți slabi, Formular F4, poziția 2 (1 buc) — apare cu valoare 0,00 lei atât în buget, cât și în contract.',
-   explicatii:'Echipamentul este prevăzut în lista de utilaje și echipamente a obiectului 11, dar fără preț unitar și fără valoare. Nu este clar dacă se execută/furnizează sau dacă a fost omis din ofertare. Dacă se execută, costul de procurare și montaj nu este acoperit în buget/contract.',
-   cauza:'',
+   explicatii:'Echipamentul este prevăzut în lista de utilaje și echipamente a obiectului 11, dar a fost ofertat la preț 0,00 lei. Fiind poziție contractuală, trebuie furnizată și montată, însă nu poate fi tratată prin NCS către Beneficiar (prețul de contract e 0,00): EREN suportă integral costul, fără încasare.',
+   cauza:'<b style="color:#000">Eroare de ofertare</b> — poziție ofertată la 0,00 lei.',
    impactTimp:'În curs de evaluare',
-   actiune:'Clarificare solicitată prin email (03.10.2026) către Bogdan Ștefănescu și Tudor Ștefancu (cc Costin Trif): se execută sau nu. În funcție de răspuns: dacă se execută, cerere de ofertă și tratare prin NCS; dacă nu, renunțare (NR).',
+   actiune:'Clarificare solicitată prin email (03.10.2026) către Bogdan Ștefănescu și Tudor Ștefancu (cc Costin Trif) privind execuția. Se adaugă în execuție la cost EREN, fără încasare de la Beneficiar: cerere de ofertă furnizor pentru cuantificarea costului și includere în buget ca pierdere asumată.',
    sursa:'Email „Centrala actionare trape”, 03.10.2026 17:52 (Formular F4, obiect 11, pag. 4/5)'}
 ];
 function renderRegPD(proj) {

@@ -3095,6 +3095,36 @@ function renderRegPD(proj) {
 
   var valInchisa = REGPD.reduce(function(s,x){ return s + ((x.status==='Închis' && x.valoare && !x.valoareText) ? x.valoare : 0); }, 0);
 
+  // Sinteză toate punctele din registru pe tip de eroare (cauza principală = prima menționată) + sumă identificată
+  function _tipEroare(x){
+    var c = (x.cauza || '').toLowerCase(), best = null, bestPos = 1e9;
+    [['Eroare de proiectare','eroare de proiectare'],['Eroare de ofertare','eroare de ofertare'],['Eroare de ofertare','ofertare fără verificare'],['Preluare PT fără verificare','preluare fără verificare'],['Personal-cheie (penalități)','personal-cheie']].forEach(function(p){
+      var i = c.indexOf(p[1]); if (i >= 0 && i < bestPos) { bestPos = i; best = p[0]; }
+    });
+    return best || 'Cauză neidentificată';
+  }
+  var _grp = {};
+  REGPD.forEach(function(x){
+    var t = _tipEroare(x);
+    var g = _grp[t] = _grp[t] || {n:0, sum:0, desch:0, inch:0, fara:0, cods:[]};
+    g.n++; g.cods.push(x.cod);
+    if (x.status === 'Închis') g.inch++; else g.desch++;
+    if (x.valoare && !x.valoareText) g.sum += x.valoare; else g.fara++;
+  });
+  var _totSum = REGPD.reduce(function(s,x){ return s + ((x.valoare && !x.valoareText) ? x.valoare : 0); }, 0);
+  var _TIP_COL = {'Eroare de proiectare':'#2E86C1','Eroare de ofertare':'#B9770E','Preluare PT fără verificare':'#7D3C98','Personal-cheie (penalități)':'#1F3864','Cauză neidentificată':'#7F8C8D'};
+  var _chips = Object.keys(_grp).sort(function(a,b){ return _grp[b].n - _grp[a].n; }).map(function(k){
+    var g = _grp[k], col = _TIP_COL[k] || '#1F3864';
+    return '<div style="border:1px solid var(--border);border-left:4px solid '+col+';border-radius:6px;background:#fff;padding:8px 12px;min-width:0">' +
+      '<div style="display:flex;align-items:baseline;gap:8px"><span style="font-size:22px;font-weight:800;color:'+col+'">'+g.n+'</span><b style="font-size:12px;overflow-wrap:break-word">'+k+'</b></div>' +
+      '<div style="font-size:12.5px;font-weight:700;margin-top:3px">'+(g.sum ? g.sum.toLocaleString('ro-RO')+' lei identificat' : 'fără sumă identificată')+'</div>' +
+      '<div style="font-size:10px;color:var(--text-tertiary);margin-top:2px">'+g.desch+' deschise · '+g.inch+' închise'+(g.fara && g.sum ? ' · '+g.fara+' fără valoare încă' : '')+'<br>'+g.cods.join(' · ')+'</div></div>';
+  }).join('');
+  html += '<div class="proj-card" style="margin:10px 0 14px">' +
+    '<div style="font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.3px;color:var(--text);margin-bottom:4px">Probleme pe tip de eroare — '+REGPD.length+' puncte · '+_totSum.toLocaleString('ro-RO')+' lei identificat</div>' +
+    '<div style="font-size:10.5px;color:var(--text-tertiary);margin-bottom:8px">Toate punctele din registru (deschise + închise), după cauza principală. Suma = valorile cunoscute până acum; punctele „în curs de evaluare" nu sunt incluse.</div>' +
+    '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px">' + _chips + '</div></div>';
+
   var KPI_R = [
     {label:'Total puncte', val:String(REGPD.length), sub:nDeschis+' deschise \xb7 '+nCurs+' în curs \xb7 '+nInchis+' închise'},
     {label:'Valoare expusă (deschisă)', val:fmtLei(valExpusa), sub:'sumă puncte deschise/în curs cu impact cost cunoscut (lei)'},

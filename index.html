@@ -630,6 +630,14 @@ function toggleSub(proj) {
   }
 }
 
+// Deschide (nu comută) submeniul unui proiect — folosit de cardurile din pagina principală
+function openSub(proj) {
+  var sub = document.getElementById('sub-' + proj);
+  if (!sub) return;
+  if (!sub.classList.contains('open')) toggleSub(proj);
+  else renderProjHome(proj);
+}
+
 function toggleSubSub(id) {
   var sub = document.getElementById('sub-' + id);
   var chev = document.getElementById('chev-' + id);
@@ -2343,11 +2351,12 @@ function renderHome() {
       '</div>' +
     '</div>' : '') +
 
-    '<div class="proj-card">' +
+    '<div class="proj-card" style="cursor:pointer" onclick="openSub(\'hangar\')">' +
       '<div class="proj-card-header" style="background:#C0392B;border-left:3px solid #E74C3C">' +
         '<div class="proj-icon" style="background:rgba(204,21,21,0.25)"><i class="ti ti-building" style="color:#CC1515"></i></div>' +
         '<div style="flex:1"><div style="font-size:13px;font-weight:600;color:#fff">Hangar Kogălniceanu</div>' +
         '<div style="font-size:10px;color:rgba(255,255,255,0.6)">În validare / execuție · Start: 19.06.2026</div></div>' +
+        '<i class="ti ti-chevron-right" style="color:rgba(255,255,255,0.7);font-size:18px"></i>' +
       '</div>' +
     '</div>' +
       '<div style="display:flex;justify-content:center;margin:-2px 0 14px">' +
@@ -2369,7 +2378,7 @@ function renderHome() {
       '<div style="font-size:11px;color:#1A5C34">Revizuire 03.10.2026 — dispare distincția DN/LS, doar NCS1/NCS2/NR (acord cu beneficiarul)</div>' +
     '</div>' : '') +
 
-    '<div class="proj-card" style="cursor:pointer" onclick="renderProjHome(\'academia\')">' +
+    '<div class="proj-card" style="cursor:pointer" onclick="openSub(\'academia\')">' +
       '<div class="proj-card-header" style="background:#154360;border-left:3px solid #1A5276">' +
         '<div class="proj-icon" style="background:rgba(26,82,118,0.3)"><i class="ti ti-anchor" style="color:#7FB3D5"></i></div>' +
         '<div style="flex:1"><div style="font-size:13px;font-weight:600;color:#fff">Academia Navală - Mircea cel Bătrân</div>' +
@@ -2378,11 +2387,12 @@ function renderHome() {
       '</div>' +
     '</div>' +
 
-    '<div class="proj-card">' +
+    '<div class="proj-card" style="cursor:pointer" onclick="openSub(\'campus\')">' +
       '<div class="proj-card-header" style="background:#1F5C1F;border-left:3px solid #3B8A3B">' +
         '<div class="proj-icon" style="background:rgba(59,138,59,0.3)"><i class="ti ti-school" style="color:#7DC87D"></i></div>' +
         '<div style="flex:1"><div style="font-size:13px;font-weight:600;color:#fff">Campus DUAL Politehnica</div>' +
-        '<div style="font-size:10px;color:rgba(255,255,255,0.6)">Îîn execuție · Corp C1</div></div>' +
+        '<div style="font-size:10px;color:rgba(255,255,255,0.6)">În execuție · Corp C1</div></div>' +
+        '<i class="ti ti-chevron-right" style="color:rgba(255,255,255,0.7);font-size:18px"></i>' +
       '</div>' +
     '</div>' +
 

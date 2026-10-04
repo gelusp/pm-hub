@@ -2350,6 +2350,12 @@ function renderHome() {
         '<div style="font-size:10px;color:rgba(255,255,255,0.6)">În validare / execuție · Start: 19.06.2026</div></div>' +
       '</div>' +
     '</div>' +
+      '<div style="display:flex;justify-content:center;margin:-2px 0 14px">' +
+        '<button onclick="goModule(\'hangar\',\'regpd\')" style="display:flex;align-items:center;gap:8px;padding:9px 14px;background:#EBF0F8;color:#1F3864;border:1px solid #C9D6F2;border-radius:8px;font-size:12.5px;font-weight:700;cursor:pointer;font-family:inherit">' +
+          '<i class="ti ti-alert-triangle" style="font-size:15px"></i> Registrul problemelor în execuție' +
+          '<span style="font-size:10.5px;font-weight:700;background:#1F3864;color:#fff;border-radius:99px;padding:2px 9px;margin-left:4px">' + (typeof REGPD !== 'undefined' ? REGPD.filter(function(x){ return x.status !== 'Închis'; }).length : 0) + ' deschise</span>' +
+        '</button>' +
+      '</div>' +
 
     (new Date() <= new Date('2026-09-06') ? '<div style="background:#FEF9E7;border:1px solid #F9E79F;border-left:4px solid #D4AC0D;border-radius:6px;padding:10px 14px;margin-bottom:12px">' +
       '<div style="font-size:11px;font-weight:700;color:#7D6608;margin-bottom:5px"><span class="blink-nou6" style="background:#D4AC0D;color:#fff;border-radius:4px;padding:1px 6px;font-size:9px;font-weight:800;margin-right:6px;letter-spacing:0.5px">NOU</span><i class="ti ti-tools" style="margin-right:4px"></i>Kogălniceanu — Au fost inițiate toate analizele comparative pe instalații' + _badgeTimp('2026-09-06','#D4AC0D') + '</div>' +
@@ -3061,7 +3067,14 @@ var REGPD = [
    cauza:'<b style="color:#000">Eroare de ofertare</b> — poziție ofertată la 0,00 lei.',
    impactTimp:'În curs de evaluare',
    actiune:'Clarificare solicitată prin email (03.10.2026) către Bogdan Ștefănescu și Tudor Ștefancu (cc Costin Trif) privind execuția. Se adaugă în execuție la cost EREN, fără încasare de la Beneficiar: cerere de ofertă furnizor pentru cuantificarea costului și includere în buget ca pierdere asumată.',
-   sursa:'Email „Centrala actionare trape”, 03.10.2026 17:52 (Formular F4, obiect 11, pag. 4/5)'}
+   sursa:'Email „Centrala actionare trape”, 03.10.2026 17:52 (Formular F4, obiect 11, pag. 4/5)'},
+  {cod:'PE09', categorie:'Bugetar', detaliu:'Obiect 6 · Rețele ext. sanitare — rigole, bazine retenție, separator hidrocarburi', valoare:0, valoareText:'În curs de evaluare', termen:'—', status:'Deschis', dataStatus:'04.10.2026',
+   problema:'Neconcordanțe între devizul de contract (Obiect 6) și soluția reală / oferta Profimat, la 5 poziții: (1) rigolă cu fantă CAN20+CAN21 (29 buc) și cămin de scurgere CAN14 (4 buc) vs. 19 buc rigolă și un singur cămin de descărcare confirmate de proiectant; (2) guri de scurgere trafic greu F900kN CAN15 (4 buc, 3.098,04 lei) — absente din oferta Profimat și din confirmarea proiectantului; (3) rezervor/bazin retenție ape pluviale 80 mc — deviz GRP (testat ICECON) vs. oțel corugat galvanizat ofertat de Profimat; (4) stație de pompare bazin pluvial — fără poziție dedicată în deviz (doar „Pompa Basa”, mult sub necesarul cerut de Profimat: 2 pompe submersibile + tablou automatizare); (5) separator hidrocarburi 80 L/s — specificația din deviz de confirmat cu cea cerută de proiect.',
+   explicatii:'Bugetul contractual pentru rigole/cămine/guri (CAN20, CAN21, CAN14, CAN15) însumează 160.719,64 lei și pare construit pe cantități estimative/preliminare, depășite de proiectul de detaliu. Dacă cantitățile din deviz nu se confirmă, ele ar urma să fie renunțate (NR), ceea ce scade valoarea contractului — de evitat dacă există motiv tehnic. Punctele 1 și 2 ar putea ține de listele suplimentare încă neimplementate. Punctul 4 este risc de subfinanțare: stația de pompare (2 pompe + automatizare) nu are poziție dedicată în buget, iar punctul 3 poate genera diferență de preț între GRP și oțel. Răspunsurile sunt necesare înainte de continuarea clarificărilor cu Profimat și de contractare.',
+   cauza:'',
+   impactTimp:'În curs de evaluare — blochează contractarea cu Profimat',
+   actiune:'Email de clarificare trimis (27.09.2026) către Costin Trif și Bogdan Ștefănescu (cc Gabriel Peltea, Alexandru Ene) cu cele 5 întrebări. În așteptarea răspunsului; ulterior, follow-up către Profimat (guri de scurgere CAN15 și material bazin GRP/oțel) și, după caz, NR / cerere de ofertă pentru stația de pompare.',
+   sursa:'Email „Clarificări buget — rigole, bazine retenție, separator hidrocarburi (Obiectul 6, Hangar Kogălniceanu)”, 27.09.2026 21:32; ofertă Profimat'}
 ];
 function renderRegPD(proj) {
   var p = DATA[proj] || DATA['hangar'];
@@ -3082,7 +3095,7 @@ function renderRegPD(proj) {
   var valExpusa = REGPD.reduce(function(s,x){ return s + ((x.status!=='Închis' && x.valoare && !x.valoareText) ? x.valoare : 0); }, 0);
 
   var html = '';
-  html += '<div class="proj-header"><div class="proj-title">Registrul Problemelor Identificate în Execuție</div><div class="proj-meta">' + p.title + ' \xb7 probleme identificate în execuție, actualizat punctual \xb7 03.10.2026</div></div>';
+  html += '<div class="proj-header"><div class="proj-title">Registrul Problemelor Identificate în Execuție</div><div class="proj-meta">' + p.title + ' \xb7 probleme identificate în execuție, actualizat punctual \xb7 04.10.2026</div></div>';
   html += '<div class="module-badge" style="background:#FDEDEC;color:#C0392B"><i class="ti ti-alert-triangle" style="font-size:13px"></i> Problemă identificată \xb7 explicații \xb7 cauză \xb7 impact \xb7 acțiune</div>';
   html += '<div style="display:flex;gap:8px;margin:10px 0"><button onclick="exportRegPDWord()" style="display:flex;align-items:center;gap:6px;padding:7px 14px;border:1px solid var(--border);border-radius:6px;background:#fff;font-size:12px;font-weight:600;color:#2C3E50;cursor:pointer"><i class="ti ti-file-type-doc" style="font-size:14px;color:#185ABC"></i> Descarcă Word</button><button onclick="exportRegPDPDF()" style="display:flex;align-items:center;gap:6px;padding:7px 14px;border:1px solid var(--border);border-radius:6px;background:#fff;font-size:12px;font-weight:600;color:#2C3E50;cursor:pointer"><i class="ti ti-file-type-pdf" style="font-size:14px;color:#C0392B"></i> Descarcă PDF</button></div>';
 
@@ -3122,7 +3135,7 @@ function renderRegPD(proj) {
     {label:'Total puncte', val:String(REGPD.length), sub:nDeschis+' deschise \xb7 '+nCurs+' în curs \xb7 '+nInchis+' închise'},
     {label:'Valoare expusă (deschisă)', val:fmtLei(valExpusa), sub:'sumă puncte deschise/în curs cu impact cost cunoscut (lei)'},
     {label:'Penalități / Sume plătite în afara bugetului (închise)', val:fmtLei(valInchisa), sub:'sumă puncte închise — penalități/sume plătite (lei)'},
-    {label:'Ultima actualizare', val:'03.10.2026', sub:'registru alimentat punctual de Manager de contract'}
+    {label:'Ultima actualizare', val:'04.10.2026', sub:'registru alimentat punctual de Manager de contract'}
   ];
   html += '<div class="kpi-grid">';
   KPI_R.forEach(function(k){

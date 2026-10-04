@@ -636,6 +636,8 @@ function openSub(proj) {
   if (!sub) return;
   if (!sub.classList.contains('open')) toggleSub(proj);
   else renderProjHome(proj);
+  // Pe telefon bara laterală e ascunsă — o deschidem ca să se vadă submeniul
+  if (window.matchMedia('(max-width:768px)').matches) openMenu();
 }
 
 function toggleSubSub(id) {

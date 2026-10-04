@@ -2266,7 +2266,7 @@ function renderAlerts() {
 
   // 1) Alertele introduse manual — primele
   html += '<div style="display:flex;align-items:center;gap:6px;margin:2px 0 6px">' +
-    '<i class="ti ti-user-edit" style="font-size:13px;color:#1F3864"></i>' +
+    '<span style="display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:#1F3864;color:#fff;flex-shrink:0"><i class="ti ti-bell-ringing" style="font-size:10px"></i></span>' +
     '<span style="font-size:12px;font-weight:600;color:var(--text)">Alerte setate manual</span></div>';
   var manual = getAlerts().slice();
   manual.sort(function(x,y){ return String(x.date).localeCompare(String(y.date)); });
@@ -2277,7 +2277,7 @@ function renderAlerts() {
   manual.forEach(function(a) {
     var d = (a.date || '').slice(0,10), c = _col(d);
     html += '<div style="display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:6px;background:' + c[0] + ';margin-bottom:4px">' +
-      '<i class="ti ti-bell-ringing" style="font-size:13px;color:' + c[1] + ';flex-shrink:0"></i>' +
+      '<span style="display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:#1F3864;color:#fff;flex-shrink:0"><i class="ti ti-bell-ringing" style="font-size:10px"></i></span>' +
       '<span style="flex:1;font-size:12px;color:var(--text)">' + a.text + '</span>' +
       '<span style="font-size:10px;color:' + c[1] + ';font-weight:600;white-space:nowrap;margin-right:4px">' + _lbl(d) + '</span>' +
       '<button onclick="deleteAlert(' + a.id + ')" style="background:none;border:none;cursor:pointer;color:var(--text-tertiary);font-size:16px;padding:0 2px;line-height:1">×</button>' +
@@ -2292,7 +2292,7 @@ function renderAlerts() {
       return dx === dy ? x.cod.localeCompare(y.cod) : dx.localeCompare(dy);
     });
     html += '<div style="display:flex;align-items:center;gap:6px;margin:12px 0 6px;padding-top:8px;border-top:1px dashed var(--border)">' +
-      '<i class="ti ti-alert-triangle" style="font-size:13px;color:#1F3864"></i>' +
+      '<span style="display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:#B9770E;color:#fff;flex-shrink:0"><i class="ti ti-alert-triangle" style="font-size:10px"></i></span>' +
       '<span style="font-size:12px;font-weight:600;color:var(--text)">Alerte automate — probleme deschise din registru <span style="font-weight:400;color:var(--text-tertiary)">(click pe alertă)</span></span>' +
       '<span style="font-size:10.5px;font-weight:700;background:#1F3864;color:#fff;border-radius:99px;padding:1px 8px">' + open.length + '</span></div>';
     if (!open.length) html += '<div style="font-size:11px;color:var(--text-tertiary);padding:4px 0">Nicio problemă deschisă.</div>';
@@ -2300,7 +2300,7 @@ function renderAlerts() {
       var iso = _termenToISO(x.termen), c = iso ? _col(iso) : ['var(--grey-100)','#6B7280'];
       var stCol = x.status === 'Deschis' ? '#C0392B' : '#B9770E', stBg = x.status === 'Deschis' ? '#FDEDEC' : '#FEF5E7';
       html += '<div onclick="goToPE(\'' + x.cod + '\')" title="Deschide punctul ' + x.cod + ' în registru" style="cursor:pointer;display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:6px;background:' + c[0] + ';margin-bottom:4px">' +
-        '<i class="ti ti-alert-triangle" style="font-size:13px;color:' + (iso ? c[1] : '#7F8C8D') + ';flex-shrink:0"></i>' +
+        '<span style="display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:' + (iso ? '#B9770E' : '#7F8C8D') + ';color:#fff;flex-shrink:0"><i class="ti ti-alert-triangle" style="font-size:10px"></i></span>' +
         '<span style="flex:1;font-size:12px;color:var(--text);min-width:0;overflow-wrap:break-word"><b>' + x.cod + '</b> — ' + x.detaliu + '</span>' +
         '<span style="font-size:9.5px;font-weight:700;background:' + stBg + ';color:' + stCol + ';padding:1px 7px;border-radius:99px;white-space:nowrap">' + x.status + '</span>' +
         '<span style="font-size:10px;color:' + c[1] + ';font-weight:600;white-space:nowrap;min-width:52px;text-align:right">' + (iso ? _lbl(iso) : 'fără termen') + '</span>' +
@@ -2485,7 +2485,7 @@ function renderHome() {
         '<i class="ti ti-bell-ringing" style="color:#CC1515;font-size:14px"></i>' +
         '<span style="font-size:12px;font-weight:600;color:var(--text)">Alerte</span>' +
       '</div>' +
-      '<div style="display:flex;align-items:center;gap:6px;background:#FDEDEC;border:1px solid #F5B7B1;border-left:3px solid #C0392B;border-radius:6px;padding:6px 10px;margin-bottom:8px"><i class="ti ti-alert-triangle" style="font-size:13px;color:#C0392B;flex-shrink:0"></i><span style="font-size:11px;font-weight:600;color:#922B21">Legendă: <i class="ti ti-bell-ringing"></i> = alerte setate manual · <i class="ti ti-alert-triangle"></i> = alerte automate din Registrul de Probleme (click pe ele deschide punctul în registru).</span></div>' +
+      '<div style="display:flex;align-items:center;gap:6px;background:#FDEDEC;border:1px solid #F5B7B1;border-left:3px solid #C0392B;border-radius:6px;padding:6px 10px;margin-bottom:8px"><span style="font-size:11px;font-weight:600;color:#922B21">Legendă: <span style="display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:#1F3864;color:#fff;flex-shrink:0;vertical-align:middle"><i class="ti ti-bell-ringing" style="font-size:10px"></i></span> = alerte setate manual · <span style="display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:#B9770E;color:#fff;flex-shrink:0"><i class="ti ti-alert-triangle" style="font-size:10px"></i></span> = alerte automate din Registrul de Probleme (click pe ele deschide punctul în registru).</span></div>' +
       '<div style="display:flex;gap:6px;margin-bottom:8px">' +
         '<input type="text" id="alert-text" placeholder="Descrie alerta..." onkeydown="if(event.key===\'Enter\')addAlert()" style="flex:1;min-width:0;padding:7px 10px;border:1px solid var(--border);border-radius:var(--radius);font-size:12px;font-family:\'Inter\',sans-serif;outline:none;background:var(--white)">' +
         '<input type="date" id="alert-date" style="padding:7px 8px;border:1px solid var(--border);border-radius:var(--radius);font-size:12px;outline:none;background:var(--white)">' +

@@ -3079,7 +3079,14 @@ var REGPD = [
    cauza:'',
    impactTimp:'În curs de evaluare — blochează contractarea cu Profimat',
    actiune:'Email de clarificare trimis (27.09.2026) către Costin Trif și Bogdan Ștefănescu (cc Gabriel Peltea, Alexandru Ene) cu cele 5 întrebări. În așteptarea răspunsului; ulterior, follow-up către Profimat (guri de scurgere CAN15 și material bazin GRP/oțel) și, după caz, NR / cerere de ofertă pentru stația de pompare.',
-   sursa:'Email „Clarificări buget — rigole, bazine retenție, separator hidrocarburi (Obiectul 6, Hangar Kogălniceanu)”, 27.09.2026 21:32; ofertă Profimat'}
+   sursa:'Email „Clarificări buget — rigole, bazine retenție, separator hidrocarburi (Obiectul 6, Hangar Kogălniceanu)”, 27.09.2026 21:32; ofertă Profimat'},
+  {cod:'PE10', categorie:'Bugetar', detaliu:'RTE domeniul 2.2 — Consulting Expert Construct', valoare:6000, termen:'09.10.2026', status:'Deschis', dataStatus:'07.10.2026',
+   problema:'În buget nu există cost pentru un specialist RTE (responsabil tehnic cu execuția) pe domeniul 2.2. Este necesar pentru faza determinantă de marți (13.10.2026), iar contractul cu prestatorul și accesul în bază trebuie asigurate până vineri (09.10.2026), pentru pregătirea documentelor.',
+   explicatii:'Contract cadru cu SC Consulting Expert Construct SRL (Constanța), în draft la 07.10.2026: urmărire și verificare ca RTE dom. 2.2 pe durata execuției, 1.000 lei/vizită + TVA, estimat 6 vizite = 6.000 lei fără TVA (sumă estimativă, depinde de numărul real de vizite). Costul nu a fost prevăzut la ofertare și se suportă în afara bugetului inițial.',
+   cauza:'<b style="color:#000">Eroare de ofertare</b> — specialist RTE dom. 2.2 omis din buget.',
+   impactTimp:'Termen strâns — faza determinantă marți 13.10.2026; acces în bază necesar până vineri 09.10.2026',
+   actiune:'Draft contract trimis la Contracte Interne și V. Luca (cc L. Mihalcea, Al. Ene) pentru revizie (07.10.2026). De semnat contractul și de asigurat accesul în bază până vineri; costul se trece în Registru ca depășire de buget.',
+   sursa:'Email „Draft contract - RTE domeniul 2.2”, 07.10.2026; contract cadru Consulting Expert Construct SRL'}
 ];
 function renderRegPD(proj) {
   var p = DATA[proj] || DATA['hangar'];
@@ -3100,7 +3107,7 @@ function renderRegPD(proj) {
   var valExpusa = REGPD.reduce(function(s,x){ return s + ((x.status!=='Închis' && x.valoare && !x.valoareText) ? x.valoare : 0); }, 0);
 
   var html = '';
-  html += '<div class="proj-header"><div class="proj-title">Registrul Problemelor Identificate în Execuție</div><div class="proj-meta">' + p.title + ' \xb7 probleme identificate în execuție, actualizat punctual \xb7 04.10.2026</div></div>';
+  html += '<div class="proj-header"><div class="proj-title">Registrul Problemelor Identificate în Execuție</div><div class="proj-meta">' + p.title + ' \xb7 probleme identificate în execuție, actualizat punctual \xb7 07.10.2026</div></div>';
   html += '<div class="module-badge" style="background:#FDEDEC;color:#C0392B"><i class="ti ti-alert-triangle" style="font-size:13px"></i> Problemă identificată \xb7 explicații \xb7 cauză \xb7 impact \xb7 acțiune</div>';
   html += '<div style="display:flex;gap:8px;margin:10px 0"><button onclick="exportRegPDWord()" style="display:flex;align-items:center;gap:6px;padding:7px 14px;border:1px solid var(--border);border-radius:6px;background:#fff;font-size:12px;font-weight:600;color:#2C3E50;cursor:pointer"><i class="ti ti-file-type-doc" style="font-size:14px;color:#185ABC"></i> Descarcă Word</button><button onclick="exportRegPDPDF()" style="display:flex;align-items:center;gap:6px;padding:7px 14px;border:1px solid var(--border);border-radius:6px;background:#fff;font-size:12px;font-weight:600;color:#2C3E50;cursor:pointer"><i class="ti ti-file-type-pdf" style="font-size:14px;color:#C0392B"></i> Descarcă PDF</button></div>';
 
@@ -3140,7 +3147,7 @@ function renderRegPD(proj) {
     {label:'Total puncte', val:String(REGPD.length), sub:nDeschis+' deschise \xb7 '+nCurs+' în curs \xb7 '+nInchis+' închise'},
     {label:'Valoare expusă (deschisă)', val:fmtLei(valExpusa), sub:'sumă puncte deschise/în curs cu impact cost cunoscut (lei)'},
     {label:'Penalități / Sume plătite în afara bugetului (închise)', val:fmtLei(valInchisa), sub:'sumă puncte închise — penalități/sume plătite (lei)'},
-    {label:'Ultima actualizare', val:'04.10.2026', sub:'registru alimentat punctual de Manager de contract'}
+    {label:'Ultima actualizare', val:'07.10.2026', sub:'registru alimentat punctual de Manager de contract'}
   ];
   html += '<div class="kpi-grid">';
   KPI_R.forEach(function(k){

@@ -3086,7 +3086,14 @@ var REGPD = [
    cauza:'<b style="color:#000">Eroare de ofertare</b> — specialist RTE dom. 2.2 omis din buget.',
    impactTimp:'Termen strâns — faza determinantă marți 13.10.2026; acces în bază necesar până vineri 09.10.2026',
    actiune:'Draft contract trimis la Contracte Interne și V. Luca (cc L. Mihalcea, Al. Ene) pentru revizie (07.10.2026). De semnat contractul și de asigurat accesul în bază până vineri; costul se trece în Registru ca depășire de buget.',
-   sursa:'Email „Draft contract - RTE domeniul 2.2”, 07.10.2026; contract cadru Consulting Expert Construct SRL'}
+   sursa:'Email „Draft contract - RTE domeniul 2.2”, 07.10.2026; contract cadru Consulting Expert Construct SRL'},
+  {cod:'PE11', categorie:'Tehnic', detaliu:'Fundații — lățime talpă 45 cm vs. min. 60 cm din studiul geotehnic', valoare:0, valoareText:'Necuantificat', termen:'—', status:'Deschis', dataStatus:'07.10.2026',
+   problema:'Studiul geotehnic (INGVISION, august 2023, verificat Af ref. 3047/30.08.2023) specifică, având în vedere natura terenului, o lățime a fundațiilor de minimum 60 cm: calculul terenului de fundare (pct. 4.5, Tabel 3, NP 112/2014 pct. A.3) pornește de la lățimea de 0,6 m (0,6 / 0,8 / 1,5 / 8,0 m, la adâncime de fundare 1,50 m). Proiectantul a proiectat fundațiile cu lățimea de 45 cm.',
+   explicatii:'Aspect sesizat de șeful de șantier; nu a fost sesizat de Beneficiar și nu este cuantificat. Studiul indică teren de tip praf nisipos/loessoid cu presiune convențională de bază pconv = 140 kPa; presiunea plastică calculată în Tabel 3 este 231–269 kPa, pentru lățimi ≥ 0,6 m la adâncime de 1,50 m. De verificat și adâncimea de fundare: studiul recomandă minimum 1,50 m, iar fundațiile din proiect sunt la cote de -1,05 / -1,10 m. Se solicită punct de vedere tehnic intern: dacă lățimea de 45 cm este acceptabilă sau dacă se impune lărgirea fundațiilor (cu impact posibil pe săpătură, beton, cofraj și armare), caz în care proiectantul trebuie sesizat și impactul cuantificat.',
+   cauza:'<b style="color:#000">Eroare de proiectare</b> — lățimea fundațiilor (45 cm) sub minimul din studiul geotehnic (60 cm).',
+   impactTimp:'Necuantificat — în analiză tehnică',
+   actiune:'Solicitat punct de vedere tehnic intern (email către departamentul Tehnic, 07.10.2026). După răspuns: decizie privind sesizarea proiectantului și cuantificarea impactului; dacă se confirmă că 45 cm este acceptabil, punctul se închide. De citat în registru pagina exactă din studiul geotehnic.',
+   sursa:'Studiu geotehnic INGVISION (08.2023, ref. 3047/30.08.2023), pct. 4.5 Tabel 3 — extras în emailul G. Peltea „clarificari teren fundare zona anexelor”, 23.09.2026; planșele RBH1 / RBH1-1 (fundații); aspect sesizat de șeful de șantier'}
 ];
 function renderRegPD(proj) {
   var p = DATA[proj] || DATA['hangar'];

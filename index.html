@@ -289,8 +289,14 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
           <div class="submenu-item" id="item-hangar-prodsed1" onclick="goModule('hangar','prodsed1')">
             <i class="ti ti-calendar-event" style="color:#1A5276"></i> 1. Ședință producție 14.08.2026
           </div>
-          <div class="submenu-item" id="item-hangar-prodsed2" onclick="goModule('hangar','prodsed2')">
-            <i class="ti ti-calendar-event" style="color:#1A5276"></i> 2. Ședință producție Septembrie 2026
+          <div class="submenu-item" id="item-hangar-prodsed2" onclick="openProdSed2()">
+            <i class="ti ti-calendar-event" style="color:#1A5276"></i> 2. Ședință producție 14.10.2026
+            <i class="ti ti-chevron-down chevron" id="chev-hangar-prodsed2" style="font-size:11px"></i>
+          </div>
+          <div class="submenu" id="sub-hangar-prodsed2" style="margin-left:14px;border-left:2px solid var(--grey-200)">
+            <div class="submenu-item" id="item-hangar-prodcauze" onclick="goModule('hangar','prodcauze')">
+              <i class="ti ti-chart-bar" style="color:#1A5276"></i> Analiză pe cauze
+            </div>
           </div>
         </div>
         <div class="submenu-item" id="item-hangar-sl" onclick="toggleSubSub('hangar-sl')">
@@ -671,6 +677,7 @@ function goModule(proj, module) {
   else if (module === 'stab02' || module === 'hozone' || module === 'koizone' || module === 'notapm') renderHandoverSoon(proj, module);
   else if (module === 'prodsed1') renderProdSed1(proj);
   else if (module === 'prodsed2') renderProdSed2(proj);
+  else if (module === 'prodcauze') renderProdCauze(proj);
   else renderProductie(proj);
 }
 
@@ -2372,8 +2379,8 @@ function renderHome() {
       '<div style="font-size:11px;color:#7D6608">Cap.8 Sanitare · Cap.9 HVAC · Cap.10 Curenți tari · Cap.11 Curenți slabi</div>' +
     '</div>' : '') +
 
-    (new Date() <= new Date('2026-10-12T23:59:59') ? '<div style="background:#EAF7EF;border:1px solid #A9D6B5;border-left:4px solid #1A7F45;border-radius:6px;padding:10px 14px;margin-bottom:12px;cursor:pointer" onclick="goModule(\'hangar\',\'edevizeregistru\')">' +
-      '<div style="font-size:11px;font-weight:700;color:#145A32;margin-bottom:5px"><span class="blink-nou6" style="background:#1A7F45;color:#fff;border-radius:4px;padding:1px 6px;font-size:9px;font-weight:800;margin-right:6px;letter-spacing:0.5px">NOU</span><i class="ti ti-refresh" style="margin-right:4px"></i>Kogălniceanu — Listele eDevize au fost revizuite' + _badgeTimp('2026-10-12','#1A7F45') + '</div>' +
+    (new Date() <= new Date('2026-10-14T23:59:59') ? '<div style="background:#EAF7EF;border:1px solid #A9D6B5;border-left:4px solid #1A7F45;border-radius:6px;padding:10px 14px;margin-bottom:12px;cursor:pointer" onclick="goModule(\'hangar\',\'edevizeregistru\')">' +
+      '<div style="font-size:11px;font-weight:700;color:#145A32;margin-bottom:5px"><span class="blink-nou6" style="background:#1A7F45;color:#fff;border-radius:4px;padding:1px 6px;font-size:9px;font-weight:800;margin-right:6px;letter-spacing:0.5px">NOU</span><i class="ti ti-refresh" style="margin-right:4px"></i>Kogălniceanu — Listele eDevize au fost revizuite' + _badgeTimp('2026-10-14','#1A7F45') + '</div>' +
       '<div style="font-size:10px;color:#555;margin-bottom:4px"><b>Cale:</b> <span style="font-family:monospace;background:rgba(0,0,0,0.06);padding:1px 6px;border-radius:4px">Hangar Kogălniceanu → Liste revizuite — eDevize</span></div>' +
       '<div style="font-size:11px;color:#1A5C34">Revizuire 03.10.2026 — dispare distincția DN/LS, doar NCS1/NCS2/NR (acord cu beneficiarul)</div>' +
     '</div>' : '') +
@@ -4074,26 +4081,27 @@ function renderProdSed1(proj) {
 }
 
 // Ședință producție Septembrie 2026 — lipește aici link-ul Google Drive/Sheets al raportului; butonul îl folosește automat. Gol => „link în pregătire".
-var PRODSED2_URL = '';
+var PRODSED2_URL = 'https://docs.google.com/spreadsheets/d/1IJ-lJpTEGK3FN0yyPA0OQ2QN3OBjnP5OuCZGHf6yuSE/edit?usp=sharing';
 
 function renderProdSed2(proj) {
   document.querySelectorAll('.submenu-item').forEach(function(i){ i.classList.remove('active'); });
   var it = document.getElementById('item-hangar-prodsed2'); if (it) it.classList.add('active');
   var html = '';
-  html += '<div class="proj-header"><div class="proj-title">Ședință de producție — Septembrie 2026</div><div class="proj-meta">Hangar Kogălniceanu · Luna de raportare: Septembrie 2026 · SL4 (26.08–25.09.2026) · valori fără TVA · date preliminare, de validat înainte de ședință</div></div>';
+  html += '<div class="proj-header"><div class="proj-title">Ședință de producție — 14.10.2026</div><div class="proj-meta">Hangar Kogălniceanu · Luna de raportare: Septembrie 2026 · SL4 (26.08–25.09.2026) · status la 12.10.2026 · valori fără TVA · date preliminare, de validat înainte de ședință</div></div>';
   html += '<div class="module-badge productie"><i class="ti ti-calendar-stats" style="font-size:13px"></i> Raportare lunară producție — SL4</div>';
   if (PRODSED2_URL) {
     html += '<div style="margin-bottom:12px"><a href="'+PRODSED2_URL+'" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 18px;background:#1A5276;color:#fff;border-radius:var(--radius);font-size:12px;font-weight:600;text-decoration:none"><i class="ti ti-table"></i> Deschide raportul complet</a></div>';
   } else {
     html += '<div style="margin-bottom:12px"><span style="display:inline-flex;align-items:center;gap:6px;padding:8px 18px;background:#E5E7EB;color:#6B7280;border-radius:var(--radius);font-size:12px;font-weight:600"><i class="ti ti-file-spreadsheet"></i> Fișier: Raport_Lunar_Prezentare_Proiect_v4_completat_Septembrie_2026.xlsx · link în pregătire</span></div>';
   }
-  html += '<div style="background:#FCE4E4;border-left:3px solid #C0392B;border-radius:6px;padding:8px 12px;font-size:11px;color:#8B1E14;margin-bottom:14px"><b>ESCALADARE:</b> CA lună −8,8% vs plan (prag 5%) și marjă directă YTD preliminară −12,2% vs +11,5% buget (prag 0,5 pp). Costurile din ERP (04.10.2026) sunt preliminare — de reconciliat cu Financiar.</div>';
-  html += '<div style="background:#FFF8E1;border-left:3px solid #B7791F;border-radius:6px;padding:8px 12px;font-size:11px;color:#7A5B12;margin-bottom:14px"><b>De reținut:</b> progresul este <b>valoric</b> (ponderi F6), nu procentul MS Project (durată).</div>';
+  html += '<div style="background:#FCE4E4;border-left:3px solid #C0392B;border-radius:6px;padding:8px 12px;font-size:11px;color:#8B1E14;margin-bottom:14px"><b>ESCALADARE:</b> CA lună −8,8% vs plan (prag 5%). Costurile și marja directă nu sunt validate: bugetul de cost nu poate fi exportat din ERP, iar costurile (ERP 04.10.2026) pot fi incomplete — se validează în ședința cu Financiarul.</div>';
+  html += '<div style="background:#FFF8E1;border-left:3px solid #B7791F;border-radius:6px;padding:8px 12px;font-size:11px;color:#7A5B12;margin-bottom:14px"><b>De reținut:</b> progresul din tabel este <b>valoric/decontat</b> (ponderi F6). Progresul <b>fizic</b> din graficul MS Project (09.10) este procent pe durată: faza de execuție 19%, Obiect 2 16%, Obiect 4 12%; e orientativ, nu pe cantități.</div>';
   html += '<div class="kpi-grid" style="margin-bottom:14px">';
   html += '<div class="kpi"><div class="kpi-label">Progres valoric realizat</div><div class="kpi-val" style="color:#C0392B">17,62%</div><div class="kpi-sub">3.402.088 lei · SL1–SL4 din 19.305.182</div></div>';
   html += '<div class="kpi"><div class="kpi-label">Progres valoric planificat</div><div class="kpi-val">22,30%</div><div class="kpi-sub">4.305.030 lei · execuție −887.070 lei vs grafic</div></div>';
   html += '<div class="kpi"><div class="kpi-label">CA lună SL4</div><div class="kpi-val">1.427.531</div><div class="kpi-sub">plan 1.565.408 · −8,8%</div></div>';
-  html += '<div class="kpi"><div class="kpi-label">Zile întârziere vs contract</div><div class="kpi-val">0 zile</div><div class="kpi-sub">termen 13.04.2027 · grafic actualizat 09.10.2026</div></div>';
+  html += '<div class="kpi"><div class="kpi-label">Progres fizic estimat (grafic 09.10)</div><div class="kpi-val" style="color:#1A5276">19%</div><div class="kpi-sub">execuție, % pe durată · decontat 14,9% → ≈0,75 mil. lei executat nedecontat</div></div>';
+  html += '<div class="kpi"><div class="kpi-label">Întârziere vs contract (DS04)</div><div class="kpi-val" style="color:#C0392B">27 zile</div><div class="kpi-sub">finish 16.04 → 13.05.2027 · 17 zile lucrătoare · grafic revendicare 12.10</div></div>';
   html += '</div>';
   html += '<div class="proj-card" style="margin-bottom:12px">';
   html += '<div class="proj-card-header" style="background:#2C4A6E"><span style="font-size:13px;font-weight:600;color:#fff">Stadiu pe categorii (pondere valorică din F6, la SL4)</span></div>';
@@ -4124,24 +4132,26 @@ function renderProdSed2(proj) {
   var fin = [
     ["CA lună (SL4)","1.565.408","1.427.531","−137.877 (−8,8%)"],
     ["CA YTD (SL1–SL4 + ajustare SL2 definitivă 95.930)","4.305.030","3.498.018","−807.012"],
-    ["Costuri directe YTD (ERP 04.10.2026, preliminar)","3.807.914*","3.924.768","+116.854"],
-    ["Marjă directă YTD","497.115 (11,5%)","−426.750 (−12,2%)","−923.865 (−23,7 pp)"]
+    ["WIP – executat nedecontat (estimare)","—","521.003","377k (jumătate din estimarea grafic 09.10) + 144k rezervor în revendicare (+TVA)"],
+    ["Costuri directe YTD (ERP 04.10.2026, nevalidat)","indisponibil","3.924.768 (înreg.)","de validat"],
+    ["Marjă directă YTD","indisponibil","nevalidată","după ședința cu Financiarul"]
   ];
   fin.forEach(function(x){
     html += '<tr><td style="padding:6px 8px;border-bottom:1px solid #eee">'+x[0]+'</td><td style="padding:6px;text-align:right;border-bottom:1px solid #eee">'+x[1]+'</td><td style="padding:6px;text-align:right;border-bottom:1px solid #eee">'+x[2]+'</td><td style="padding:6px;text-align:right;border-bottom:1px solid #eee;font-weight:600">'+x[3]+'</td></tr>';
   });
   html += '</table></div></div>';
-  html += '<div style="font-size:10.5px;color:#666;margin:-6px 0 14px">* Buget cost YTD derivat (88,45% din planul de venit; buget intern 17.075.952 / ofertă 19.305.182), nealocat pe linii. Ajustările de preț SL3 (104.658) și SL4 (228.484) sunt provizorii și nu sunt recunoscute ca venit.</div>';
+  html += '<div style="font-size:10.5px;color:#666;margin:-6px 0 14px">Bugetul de cost pe linii nu poate fi exportat din ERP — se obține în ședința cu Financiarul. Ajustările de preț SL3 (104.658) și SL4 (228.484) sunt provizorii și nu sunt recunoscute ca venit.</div>';
   html += '<div class="proj-card" style="margin-bottom:12px">';
   html += '<div class="proj-card-header" style="background:#2C4A6E"><span style="font-size:13px;font-weight:600;color:#fff">Abateri &amp; puncte deschise</span></div>';
   html += '<div class="proj-card-body" style="padding:10px 12px">';
   var ab = [
-    {tag:"Execuție",bg:"#FCE4E4",tc:"#C0392B",txt:"Structură 38,4% vs 57,4% plan (−899.345 lei): teren de fundare neconform (PV 07.09 / 18.09), clarificări fundații (PE06, PE11), start montaj prefabricate 03.09. Arhitectura (366.669 lei plan sept.) neînceput."},
-    {tag:"Cost / ERP",bg:"#FCE4E4",tc:"#C0392B",txt:"Costuri 3,92 mil. > venit recunoscut 3,50 mil. Triptic 1.169.000 (factură de sosit) vs proiectare decontată 636.850; SUBA în ERP peste contracte (General Util +235.743, Light Design +70.148). De reconciliat cu Financiar."},
+    {tag:"Execuție",bg:"#FCE4E4",tc:"#C0392B",txt:"Structură 38,4% vs 57,4% plan (−899.345 lei): teren de fundare neconform (PV 07.09 / 18.09), clarificări fundații (PE06, PE11), start montaj prefabricate 03.09. Arhitectura (366.669 lei plan sept.) neînceput. DS04: oprire 07.09–29.09 (22 zile); grafic revendicare 12.10: finish 16.04 → 13.05.2027 (+27 zile calendaristice). Montaj structură metalică acoperiș (plan 01–14.09) neînceput."},
+    {tag:"Cost / ERP",bg:"#FCE4E4",tc:"#C0392B",txt:"Costuri ERP (04.10, nevalidate) 3,92 mil.; ERP raportează și venituri 4,82 mil. (incl. note contabile 2,79 mil.). Triptic 1.169.000 (factură de sosit) de verificat; SUBA în ERP peste contractele cunoscute (General Util +235.743, Light Design +70.148). Buget de cost indisponibil — se validează cu Financiarul."},
     {tag:"Tehnic",bg:"#FFF8E1",tc:"#856404",txt:"Panouri învelitoare REI / aviz ISU (PE07, 326.393 lei); lățime fundații 45 vs min. 60 cm (PE11); neconcordanțe Obiect 6 (PE09); rețete ≠ caiet de sarcini (PE05)."},
     {tag:"Ofertare",bg:"#FFF8E1",tc:"#856404",txt:"Costuri nebugetate suportate de EREN: CQ 94.759 (PE04), RTE dom. 2.2 6.000 (PE10), centrală trape 0 lei (PE08)."},
     {tag:"Contracte în semnare",bg:"#FFF8E1",tc:"#856404",txt:"DITO Grup 1.060.252 (+365.355 lei, +52,6% vs buget); A&C Metal 1.610.276 (+175.705 lei, +12,2%; marjă −1,5% fără indexare, +11,7% cu indexare SL3; macara montaj nebugetată)."},
-    {tag:"Contractual",bg:"#E8F5E9",tc:"#1E6E2D",txt:"Revendicările Beneficiarului nr.2 și nr.3 (penalități 2×20.000 lei) închise. NCS1/NCS2/NR (+5.668.485 lei; contract nou 24.843.317) în revizie juridică. Revendicare Antreprenor 01 (DS04) și Notificare teren fundare (16.09) în lucru."}
+    {tag:"Contractual",bg:"#E8F5E9",tc:"#1E6E2D",txt:"Revendicările Beneficiarului nr.2 și nr.3 (penalități 2×20.000 lei) închise. Listele suplimentare (NCS1/NCS2/NR, +5.668.485 lei; contract nou 24.843.317) au fost predate Beneficiarului. DS04 emisă: Revendicare Antreprenor 01 se transmite oficial miercuri 14.10. Grup pompare spumă: revendicare cl.69a în pregătire."},
+    {tag:"În așteptare",bg:"#FFF8E1",tc:"#856404",txt:"Răspuns ISU la clarificarea depusă de proiectant pentru panourile de învelitoare (PIR); act de constatare al Beneficiarului pentru înlocuirea balastului cu piatră spartă; soluție pentru întreruperea grinzii de fundare. Toate necuantificate."}
   ];
   ab.forEach(function(c){
     html += '<div style="display:flex;gap:10px;align-items:flex-start;margin-bottom:8px"><span style="background:'+c.bg+';color:'+c.tc+';font-size:10.5px;font-weight:700;padding:3px 8px;border-radius:4px;white-space:nowrap">'+c.tag+'</span><span style="font-size:11.5px;color:#333">'+c.txt+'</span></div>';
@@ -4157,9 +4167,9 @@ function renderProdSed2(proj) {
   html += '<tr style="background:#2E5090;color:#fff"><th style="padding:7px 10px;text-align:left">Risc</th><th style="padding:7px 8px;text-align:center">Scor</th><th style="padding:7px 8px;text-align:left">Măsură</th></tr>';
   var rk = [
     {d:"Buget fundamentat 49,8% (~8,6 mil. nedocumentat) + rețete ≠ caiet de sarcini",s:"16",m:"Reofertare capitole critice"},
-    {d:"GPU 400Hz — livrare 20–24 săpt.; decizie furnizor neluată",s:"16",m:"Decizie + comandă după NCS2"},
+    {d:"Grup pompare spumă: 155,25 vs ~430 mc/h necesar (breviar TRIPTIC) — fără aviz ISU",s:"20",m:"Revendicare cl.69a; retragere aeronavă în scris"},
     {d:"Decalaj execuție structură (−899k)",s:"16",m:"Echipe suplimentare, replanificare"},
-    {d:"Costuri ERP > venit — MD preliminară negativă",s:"16",m:"Reconciliere cu Financiar"},
+    {d:"Marjă directă nevalidată: buget de cost indisponibil, costuri la 04.10 posibil incomplete",s:"12",m:"Ședință Financiar: buget cost, reconciliere"},
     {d:"Panouri REI / aviz ISU (PE07)",s:"16",m:"Dispoziție de șantier cu verificator foc"},
     {d:"NCS/NR neaprobate — risc cash utilaje",s:"15",m:"Escaladare aprobare"}
   ];
@@ -4176,10 +4186,11 @@ function renderProdSed2(proj) {
     {a:"Fază determinantă RTE dom. 2.2 + contract Consulting Expert Construct",o:"G. Spătaru",t:"13.10"},
     {a:"Punct de vedere tehnic fundații (lățime 60 cm, adâncime) — PE11/PE06",o:"Tehnic intern",t:"14.10"},
     {a:"Soluție panouri REI + aviz ISU (PE07)",o:"G. Spătaru",t:"16.10"},
-    {a:"Reconciliere CH41 cu Financiar (Triptic, SUBA, bonuri consum)",o:"G. Spătaru / Financiar",t:"16.10"},
+    {a:"Ședință Financiar: export buget cost ERP + reconciliere CH41; rata CAR 6.713,75 (16.10)",o:"G. Spătaru / Financiar",t:"16.10"},
     {a:"Răspuns ofertare la PE05, PE08, PE09 + cuantificare CQ/RTE",o:"Dep. ofertare",t:"16.10"},
     {a:"Semnare A&C Metal (negociere 7–8%, cantitate, macara) ",o:"G. Spătaru",t:"23.10"},
-    {a:"Decizie furnizor + comandă GPU 400Hz",o:"A. Ichim (Achiziții)",t:"23.10"},
+    {a:"Transmitere oficială Revendicare Antreprenor 01 (DS04)",o:"G. Spătaru",t:"14.10"},
+    {a:"Urmărire: răspuns ISU (panouri PIR), act constatare balast→piatră spartă, soluție grindă fundare",o:"G. Spătaru",t:"de confirmat"},
     {a:"Urmărire aprobare NCS/NR + AA durată (DS04)",o:"G. Spătaru",t:"23.10"},
     {a:"Recuperare structură: echipe suplimentare fundații/prefabricate",o:"G. Peltea (SS)",t:"31.10"}
   ];
@@ -4189,6 +4200,84 @@ function renderProdSed2(proj) {
   html += '</table></div></div>';
   html += '<button class="open-fisa-btn" onclick="renderProjHome(\'hangar\')"><i class="ti ti-arrow-left"></i> Înapoi la proiect</button>';
   html += '<div class="page-footer">PM Hub · EREN CONS SRL · 2026 · Sursă: Raport_Lunar_Prezentare_Proiect_v4_completat_Septembrie_2026.xlsx + F6 SL4 + CH41 (04.10.2026) + grafic actualizat 09.10.2026</div>';
+  document.getElementById('main').innerHTML = html;
+}
+
+
+function openProdSed2() {
+  var sub = document.getElementById('sub-hangar-prodsed2');
+  var chev = document.getElementById('chev-hangar-prodsed2');
+  if (sub) sub.classList.add('open');
+  if (chev) chev.classList.add('open');
+  goModule('hangar', 'prodsed2');
+}
+
+var PRODCAUZE = [
+  {c:"Proiectare / soluție tehnică", n:4, imp:1213463, rec:400000, note:"Decalaj structură 887.070 (venit amânat) + panouri REI 326.393; fundații și grup pompare necuantificate"},
+  {c:"Planificare internă", n:5, imp:100759, rec:0, note:"Erori de ofertare: CQ 94.759, RTE 6.000, centrală trape 0 lei; CA lună și costuri ERP fără impact propriu"},
+  {c:"Cantitate / consum suplimentar", n:1, imp:44621, rec:22000, note:"Confecții metalice: 112,1 t ofertate vs 109 t buget"},
+  {c:"Subantreprenor", n:1, imp:0, rec:0, note:"SUBA din ERP vs contracte — impact inclus în alt rând, de reconciliat"},
+  {c:"Altele", n:4, imp:0, rec:0, note:"Necuantificate: balast→piatră spartă, grindă fundare, Obiect 6, rețete vs caiet de sarcini"}
+];
+
+function renderProdCauze(proj) {
+  document.querySelectorAll('.submenu-item').forEach(function(i){ i.classList.remove('active'); });
+  var it = document.getElementById('item-hangar-prodcauze'); if (it) it.classList.add('active');
+  var sub = document.getElementById('sub-hangar-prodsed2'); if (sub) sub.classList.add('open');
+  var chev = document.getElementById('chev-hangar-prodsed2'); if (chev) chev.classList.add('open');
+  var fmt = function(n){ return n.toLocaleString('ro-RO'); };
+  var totN = 0, totImp = 0, totRec = 0;
+  PRODCAUZE.forEach(function(x){ totN += x.n; totImp += x.imp; totRec += x.rec; });
+  var pct = function(a,b){ return b>0 ? (Math.round(a/b*1000)/10).toString().replace('.',',') + '%' : '0%'; };
+  var html = '';
+  html += '<div class="proj-header"><div class="proj-title">Analiză pe cauze — Registrul deviațiilor</div><div class="proj-meta">Hangar Kogălniceanu · Ședința de producție 14.10.2026 · Septembrie 2026 · calculat din Registrul deviațiilor (raport v4)</div></div>';
+  html += '<div class="module-badge productie"><i class="ti ti-chart-bar" style="font-size:13px"></i> Unde se pierd banii, pe cauză principală</div>';
+  html += '<div class="kpi-grid" style="margin-bottom:14px">';
+  html += '<div class="kpi"><div class="kpi-label">Deviații înregistrate</div><div class="kpi-val">'+totN+'</div><div class="kpi-sub">rânduri în registru</div></div>';
+  html += '<div class="kpi"><div class="kpi-label">Impact financiar</div><div class="kpi-val" style="color:#C0392B">'+fmt(totImp)+'</div><div class="kpi-sub">lei · + = nefavorabil</div></div>';
+  html += '<div class="kpi"><div class="kpi-label">Recuperabil</div><div class="kpi-val" style="color:#1E6E2D">'+fmt(totRec)+'</div><div class="kpi-sub">lei · '+pct(totRec,totImp)+' din impact</div></div>';
+  html += '<div class="kpi"><div class="kpi-label">Impact termen</div><div class="kpi-val">27 zile</div><div class="kpi-sub">DS04 · cal. (17 lucr.)</div></div>';
+  html += '</div>';
+  html += '<div class="proj-card" style="margin-bottom:12px">';
+  html += '<div class="proj-card-header" style="background:#2C4A6E"><span style="font-size:13px;font-weight:600;color:#fff">Cauze, în ordinea impactului</span></div>';
+  html += '<div class="proj-card-body" style="padding:12px 14px">';
+  html += '<div style="display:flex;gap:16px;font-size:11px;color:#555;margin-bottom:10px"><span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#2a78d6;margin-right:4px"></span>Impact total</span><span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:#1baf7a;margin-right:4px"></span>Din care recuperabil</span></div>';
+  var maxImp = PRODCAUZE.reduce(function(m,x){ return Math.max(m,x.imp); }, 1);
+  PRODCAUZE.forEach(function(x, idx){
+    var w = Math.round(x.imp / maxImp * 1000)/10;
+    var wr = x.imp>0 ? Math.round(x.rec / maxImp * 1000)/10 : 0;
+    var col = idx===0 ? '#2a78d6' : '#b4b2a9';
+    html += '<div style="display:grid;grid-template-columns:190px minmax(0,1fr) 120px;gap:10px;align-items:center;margin-bottom:10px">';
+    html += '<div style="font-size:12px;font-weight:600">'+x.c+' <span style="color:#777;font-weight:400">('+x.n+')</span></div>';
+    html += '<div style="position:relative;height:20px;background:#f1efe8;border-radius:4px">';
+    if (x.imp>0) html += '<div style="position:absolute;left:0;top:0;height:20px;width:'+w+'%;background:'+col+';border-radius:0 4px 4px 0"></div>';
+    if (wr>0) html += '<div style="position:absolute;left:0;top:0;height:20px;width:'+wr+'%;background:#1baf7a"></div>';
+    html += '</div>';
+    html += '<div style="font-size:12px;text-align:right"><b>'+fmt(x.imp)+'</b> lei<br><span style="color:#777">'+pct(x.imp,totImp)+(x.rec>0?' · rec. '+fmt(x.rec):'')+'</span></div>';
+    html += '</div>';
+    html += '<div style="font-size:11px;color:#666;margin:-6px 0 10px 200px">'+x.note+'</div>';
+  });
+  html += '</div></div>';
+  html += '<div class="proj-card" style="margin-bottom:12px">';
+  html += '<div class="proj-card-header" style="background:#2C4A6E"><span style="font-size:13px;font-weight:600;color:#fff">Cum se citește tabelul din Excel</span></div>';
+  html += '<div class="proj-card-body" style="padding:0;overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:11px">';
+  html += '<tr style="background:#2E5090;color:#fff"><th style="padding:7px 10px;text-align:left">Coloană</th><th style="padding:7px 10px;text-align:left">Ce arată</th></tr>';
+  var cols = [
+    ['Cauză','Categoria aleasă în coloana „CAUZĂ principală" a registrului.'],
+    ['Nr. deviații','Câte rânduri din registru au acea cauză.'],
+    ['Impact total (lei)','Suma impactului financiar pe cauză. Celulele roșii = impact mare.'],
+    ['% din impactul total','Ponderea cauzei în totalul impactului.'],
+    ['Recuperabil (lei)','Suma valorilor recuperabile completate la fiecare deviație.'],
+    ['Concluzie / acțiune sistemică','Celulă galbenă, completată de PM: măsura care previne repetarea cauzei.']
+  ];
+  cols.forEach(function(r){
+    html += '<tr><td style="padding:6px 10px;border-bottom:1px solid #eee;font-weight:600;white-space:nowrap">'+r[0]+'</td><td style="padding:6px 10px;border-bottom:1px solid #eee">'+r[1]+'</td></tr>';
+  });
+  html += '</table></div></div>';
+  html += '<div style="background:#FFF8E1;border-left:3px solid #B7791F;border-radius:6px;padding:8px 12px;font-size:11px;color:#7A5B12;margin-bottom:8px"><b>Venit amânat, nu pierdere:</b> din cei 1.213.463 lei de la proiectare, 887.070 sunt decalajul de execuție față de grafic — bani încasați mai târziu, nu pierduți.</div>';
+  html += '<div style="background:#FFF8E1;border-left:3px solid #B7791F;border-radius:6px;padding:8px 12px;font-size:11px;color:#7A5B12;margin-bottom:14px"><b>Impact subestimat:</b> fundațiile (PE11), grupul de pompare, balastul, grinda de fundare și Obiect 6 sunt necuantificate și apar la 0 lei.</div>';
+  html += '<button class="open-fisa-btn" onclick="renderProjHome(\'hangar\')"><i class="ti ti-arrow-left"></i> Înapoi la proiect</button>';
+  html += '<div class="page-footer">PM Hub · EREN CONS SRL · 2026 · Sursă: Raport_Lunar_Prezentare_Proiect_v4_completat_Septembrie_2026 — foaia „R. Registru Deviații"</div>';
   document.getElementById('main').innerHTML = html;
 }
 

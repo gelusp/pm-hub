@@ -1590,6 +1590,16 @@ function renderDocContract(proj) {
 // automat cronologic invers (cel mai recent primul) după cheia "k" (AAAALLZZ + rang zi).
 var DOCBENEF_DIR = '13. Documente transmise de beneficiar/';
 var DOCS_BENEF = [
+  { k:202610141, d:'14.10.2026', cat:'REVENDICARE', nr:'13835', serie:'EREN',
+    titlu:'Revendicarea Antreprenorului nr. 3 — extindere durată de execuție (DS04, teren de fundare anexe)',
+    desc:'Detalierea revendicării (subcl. 69a.2), în baza subcl. 21.4 lit.(a) și 35.1: prelungirea Duratei de Execuție cu 27 zile calendaristice (finalizare 16.04.2027 → 13.05.2027; 17 zile lucrătoare), ca efect al opririi frontului de lucru la fundațiile anexelor 07.09–29.09.2026 (22 zile), până la DS04/29.09.2026. Fără costuri suplimentare; se cere neaplicarea penalităților (subcl. 36.4) și act adițional. Anexe: A-1159 + AE-1106, DS04, rapoarte de șantier 07/08/29.09, program revizuit 12.10.2026. Depusă la 14.10.2026 (nr. 13835).',
+    color:'#C0392B', bg:'#FDEDEC', icon:'ti-file-alert',
+    url:'https://drive.google.com/file/d/1D3CQzhMBwvPeXkybiaNMUTbdokDxHPJm/view?usp=sharing' },
+  { k:202610121, d:'12.10.2026', cat:'COMUNICARE', nr:'AE-1289', serie:'AE',
+    titlu:'Înlocuire diriginte de șantier — domeniul 3.1 (email UM 02311)',
+    desc:'UM 02311 Constanța comunică înlocuirea dirigintelui de șantier pentru domeniul 3.1: col. ing. Adrian-Marius FILIP (desemnat pentru domeniile 3.1 și 6.1) este înlocuit pentru domeniul 3.1 cu col. ing. Robert PIRNECI. Rămâne neschimbat pentru domeniul 6.1.',
+    color:'#1A5276', bg:'#EAF2F8', icon:'ti-user-exchange',
+    url:'https://drive.google.com/file/d/1L7s7ehhDQQuH9dcxktqWfId0RcAO8CMX/view?usp=sharing' },
   { k:202609291, d:'29.09.2026', cat:'DISPOZIȚIE', nr:'DS04', serie:'',
     titlu:'Dispoziție de șantier nr. 04 — teren de fundare zona anexelor (îndepărtarea umpluturilor, coborârea cotei de fundare)',
     desc:'Emisă de proiectant (DIGO Structuri) ca urmare a Actului de constatare A-1159/17.09.2026. Săpătura se continuă sub cota din proiect până la stratul natural de praf nisipos loessoid (ax A–G/5–6 la -2,00 m, conform PV 18.09.2026; ax A–G/1–3 stabilită prin PV pentru fiecare tronson); revenirea la cota inferioară a fundațiilor (-1,05 / -1,10 m) se face cu beton simplu C12/15; fundațiile din beton armat rămân conform planșei RBH1; cantitățile se stabilesc prin măsurători confirmate de dirigintele de șantier.',
@@ -4150,7 +4160,7 @@ function renderProdSed2(proj) {
     {tag:"Tehnic",bg:"#FFF8E1",tc:"#856404",txt:"Panouri învelitoare REI / aviz ISU (PE07, 326.393 lei); lățime fundații 45 vs min. 60 cm (PE11); neconcordanțe Obiect 6 (PE09); rețete ≠ caiet de sarcini (PE05)."},
     {tag:"Ofertare",bg:"#FFF8E1",tc:"#856404",txt:"Costuri nebugetate suportate de EREN: CQ 94.759 (PE04), RTE dom. 2.2 6.000 (PE10), centrală trape 0 lei (PE08)."},
     {tag:"Contracte în semnare",bg:"#FFF8E1",tc:"#856404",txt:"DITO Grup 1.060.252 (+365.355 lei, +52,6% vs buget); A&C Metal 1.610.276 (+175.705 lei, +12,2%; marjă −1,5% fără indexare, +11,7% cu indexare SL3; macara montaj nebugetată)."},
-    {tag:"Contractual",bg:"#E8F5E9",tc:"#1E6E2D",txt:"Revendicările Beneficiarului nr.2 și nr.3 (penalități 2×20.000 lei) închise. Listele suplimentare (NCS1/NCS2/NR, +5.668.485 lei; contract nou 24.843.317) au fost predate Beneficiarului. DS04 emisă: Revendicare Antreprenor 01 se transmite oficial miercuri 14.10. Grup pompare spumă: revendicare cl.69a în pregătire."},
+    {tag:"Contractual",bg:"#E8F5E9",tc:"#1E6E2D",txt:"Revendicările Beneficiarului nr.2 și nr.3 (penalități 2×20.000 lei) închise. Listele suplimentare (NCS1/NCS2/NR, +5.668.485 lei; contract nou 24.843.317) au fost predate Beneficiarului. DS04 emisă: Revendicarea Antreprenorului nr. 3 (DS04) se transmite oficial miercuri 14.10. Grup pompare spumă: revendicare cl.69a în pregătire."},
     {tag:"În așteptare",bg:"#FFF8E1",tc:"#856404",txt:"Răspuns ISU la clarificarea depusă de proiectant pentru panourile de învelitoare (PIR); act de constatare al Beneficiarului pentru înlocuirea balastului cu piatră spartă; soluție pentru întreruperea grinzii de fundare. Toate necuantificate."}
   ];
   ab.forEach(function(c){
@@ -4189,7 +4199,7 @@ function renderProdSed2(proj) {
     {a:"Ședință Financiar: export buget cost ERP + reconciliere CH41; rata CAR 6.713,75 (16.10)",o:"G. Spătaru / Financiar",t:"16.10"},
     {a:"Răspuns ofertare la PE05, PE08, PE09 + cuantificare CQ/RTE",o:"Dep. ofertare",t:"16.10"},
     {a:"Semnare A&C Metal (negociere 7–8%, cantitate, macara) ",o:"G. Spătaru",t:"23.10"},
-    {a:"Transmitere oficială Revendicare Antreprenor 01 (DS04)",o:"G. Spătaru",t:"14.10"},
+    {a:"Transmitere oficială Revendicarea Antreprenorului nr. 3 (DS04) (DS04)",o:"G. Spătaru",t:"14.10"},
     {a:"Urmărire: răspuns ISU (panouri PIR), act constatare balast→piatră spartă, soluție grindă fundare",o:"G. Spătaru",t:"de confirmat"},
     {a:"Urmărire aprobare NCS/NR + AA durată (DS04)",o:"G. Spătaru",t:"23.10"},
     {a:"Recuperare structură: echipe suplimentare fundații/prefabricate",o:"G. Peltea (SS)",t:"31.10"}

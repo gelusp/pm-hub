@@ -3114,7 +3114,14 @@ var REGPD = [
    cauza:'<b style="color:#000">Eroare de proiectare</b> — lățimea fundațiilor (45 cm) sub minimul din studiul geotehnic (60 cm).',
    impactTimp:'Necuantificat — în analiză tehnică',
    actiune:'Solicitat punct de vedere tehnic intern (email către departamentul Tehnic, 07.10.2026). După răspuns: decizie privind sesizarea proiectantului și cuantificarea impactului; dacă se confirmă că 45 cm este acceptabil, punctul se închide. De citat în registru pagina exactă din studiul geotehnic.',
-   sursa:'Studiu geotehnic INGVISION (08.2023, ref. 3047/30.08.2023), pct. 4.5 Tabel 3 — extras în emailul G. Peltea „clarificari teren fundare zona anexelor”, 23.09.2026; planșele RBH1 / RBH1-1 (fundații); aspect sesizat de șeful de șantier'}
+   sursa:'Studiu geotehnic INGVISION (08.2023, ref. 3047/30.08.2023), pct. 4.5 Tabel 3 — extras în emailul G. Peltea „clarificari teren fundare zona anexelor”, 23.09.2026; planșele RBH1 / RBH1-1 (fundații); aspect sesizat de șeful de șantier'},
+  {cod:'PE12', categorie:'Bugetar', detaliu:'Geotehnician — verificare teren de fundare (Ana Proiect Design)', valoare:4000, termen:'—', status:'Deschis', dataStatus:'13.10.2026',
+   problema:'În buget nu există cost pentru un geotehnician care să urmărească execuția fundațiilor și să încheie procesele-verbale de verificare a naturii terenului la cota de fundare (cerute de proiect și de Beneficiar; vezi PV 07.09 și 18.09.2026 la anexe).',
+   explicatii:'Contract de colaborare cu Ana Proiect Design SRL (Constanța): servicii de urmărire lucrări și întocmire procese-verbale natura teren la fundare; durată nedeterminată, preaviz 30 zile; preț pe lucrare, pe bază de ofertă scrisă (art. 4), plată la 30 zile. Estimare: 8 vizite × 500 lei/vizită = 4.000 lei fără TVA (sumă estimativă, depinde de numărul real de vizite; mai multe vizite dacă fundațiile se extind peste anexe). Costul nu a fost prevăzut la ofertare și se suportă în afara bugetului inițial. În documentul din dosar, rolurile părților (Beneficiar/Colaborator) apar inversate față de situația reală — de corectat înainte de semnare.',
+   cauza:'<b style="color:#000">Eroare de ofertare</b> — geotehnician pe fundații omis din buget.',
+   impactTimp:'Fără impact direct pe termen; necesar la fiecare verificare a cotei de fundare (afectează reluarea sapăturilor)',
+   actiune:'De corectat rolurile părților și de semnat contractul de colaborare; de cerut oferta scrisă pe lucrare (art. 4); costul se trece în Registru ca depășire de buget.',
+   sursa:'Contract de colaborare Ana Proiect Design (draft) — 9. Contracte / 8. Ana Proiect Design - geotehnist; preț indicat de Manager de contract: 8 vizite × 500 lei'}
 ];
 function renderRegPD(proj) {
   var p = DATA[proj] || DATA['hangar'];
@@ -3135,7 +3142,7 @@ function renderRegPD(proj) {
   var valExpusa = REGPD.reduce(function(s,x){ return s + ((x.status!=='Închis' && x.valoare && !x.valoareText) ? x.valoare : 0); }, 0);
 
   var html = '';
-  html += '<div class="proj-header"><div class="proj-title">Registrul Problemelor Identificate în Execuție</div><div class="proj-meta">' + p.title + ' \xb7 probleme identificate în execuție, actualizat punctual \xb7 07.10.2026</div></div>';
+  html += '<div class="proj-header"><div class="proj-title">Registrul Problemelor Identificate în Execuție</div><div class="proj-meta">' + p.title + ' \xb7 probleme identificate în execuție, actualizat punctual \xb7 13.10.2026</div></div>';
   html += '<div class="module-badge" style="background:#FDEDEC;color:#C0392B"><i class="ti ti-alert-triangle" style="font-size:13px"></i> Problemă identificată \xb7 explicații \xb7 cauză \xb7 impact \xb7 acțiune</div>';
   html += '<div style="display:flex;gap:8px;margin:10px 0"><button onclick="exportRegPDWord()" style="display:flex;align-items:center;gap:6px;padding:7px 14px;border:1px solid var(--border);border-radius:6px;background:#fff;font-size:12px;font-weight:600;color:#2C3E50;cursor:pointer"><i class="ti ti-file-type-doc" style="font-size:14px;color:#185ABC"></i> Descarcă Word</button><button onclick="exportRegPDPDF()" style="display:flex;align-items:center;gap:6px;padding:7px 14px;border:1px solid var(--border);border-radius:6px;background:#fff;font-size:12px;font-weight:600;color:#2C3E50;cursor:pointer"><i class="ti ti-file-type-pdf" style="font-size:14px;color:#C0392B"></i> Descarcă PDF</button></div>';
 
@@ -3175,7 +3182,7 @@ function renderRegPD(proj) {
     {label:'Total puncte', val:String(REGPD.length), sub:nDeschis+' deschise \xb7 '+nCurs+' în curs \xb7 '+nInchis+' închise'},
     {label:'Valoare expusă (deschisă)', val:fmtLei(valExpusa), sub:'sumă puncte deschise/în curs cu impact cost cunoscut (lei)'},
     {label:'Penalități / Sume plătite în afara bugetului (închise)', val:fmtLei(valInchisa), sub:'sumă puncte închise — penalități/sume plătite (lei)'},
-    {label:'Ultima actualizare', val:'07.10.2026', sub:'registru alimentat punctual de Manager de contract'}
+    {label:'Ultima actualizare', val:'13.10.2026', sub:'registru alimentat punctual de Manager de contract'}
   ];
   html += '<div class="kpi-grid">';
   KPI_R.forEach(function(k){

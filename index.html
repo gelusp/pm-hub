@@ -1728,6 +1728,30 @@ var DOCS_BENEF = [
     color:'#1A5276', bg:'#D6EAF8', icon:'ti-file-certificate', mod:'doccontract' }
 ];
 
+var _docbCat = '';
+function docbNorm(t) { return (t || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ''); }
+function docbFilter() {
+  var qEl = document.getElementById('docb-q');
+  var words = docbNorm(qEl ? qEl.value.trim() : '').split(/\s+/).filter(Boolean);
+  var shown = 0;
+  document.querySelectorAll('.docb-card').forEach(function(c) {
+    if (c._t === undefined) c._t = docbNorm(c.textContent + ' ' + c.getAttribute('data-d') + ' ' + c.getAttribute('data-cat'));
+    var ok = (!_docbCat || c.getAttribute('data-cat') === _docbCat) && words.every(function(w) { return c._t.indexOf(w) > -1; });
+    c.style.display = ok ? '' : 'none';
+    if (ok) shown++;
+  });
+  var cnt = document.getElementById('docb-count'); if (cnt) cnt.textContent = shown;
+  var em = document.getElementById('docb-empty'); if (em) em.style.display = shown ? 'none' : 'block';
+  document.querySelectorAll('.docb-chip[data-c]').forEach(function(b) {
+    b.classList.toggle('on', b.getAttribute('data-c') === _docbCat);
+  });
+}
+function docbSetCat(c) { _docbCat = c; docbFilter(); }
+function docbReset() {
+  var qEl = document.getElementById('docb-q'); if (qEl) qEl.value = '';
+  _docbCat = ''; docbFilter();
+}
+
 function renderDocBenef(proj) {
   if (proj === 'academia') { return renderDocBenefAcademia(); }
   var p = DATA[proj] || DATA['hangar'];
@@ -1742,7 +1766,7 @@ function renderDocBenef(proj) {
     var actIcon = x.mod ? 'ti-arrow-right' : 'ti-file-type-pdf';
     var actLabel = x.mod ? 'Deschide' : 'Vizualizează';
     cards +=
-      '<div class="nivel-card" style="margin-bottom:10px;border-left:4px solid ' + x.color + ';' +
+      '<div class="nivel-card docb-card" data-cat="' + x.cat + '" data-d="' + x.d + '" style="margin-bottom:10px;border-left:4px solid ' + x.color + ';' +
         'display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap;padding:14px 16px">' +
 
         // Data (bloc stânga)
@@ -1778,6 +1802,27 @@ function renderDocBenef(proj) {
       '</div>';
   });
 
+  _docbCat = '';
+  var catCount = {};
+  docs.forEach(function(x){ catCount[x.cat] = (catCount[x.cat] || 0) + 1; });
+  var catList = Object.keys(catCount).sort(function(a,b){ return catCount[b] - catCount[a]; });
+  var chips = '<button class="docb-chip" data-c="" onclick="docbSetCat(\'\')">Toate (' + docs.length + ')</button>';
+  catList.forEach(function(c){
+    chips += '<button class="docb-chip" data-c="' + c + '" onclick="docbSetCat(\'' + c + '\')">' + c + ' (' + catCount[c] + ')</button>';
+  });
+  var filterBar =
+    '<style>.docb-chip{font-size:10.5px;font-weight:600;padding:4px 11px;border-radius:99px;border:1px solid var(--border);background:#fff;color:var(--text-secondary);cursor:pointer;font-family:inherit}' +
+    '.docb-chip.on{background:#1A5276;color:#fff;border-color:#1A5276}</style>' +
+    '<div style="background:#FDFEFE;border:1px solid var(--border);border-radius:8px;padding:10px 12px;margin-bottom:14px">' +
+      '<div style="display:flex;gap:8px;align-items:center;margin-bottom:8px">' +
+        '<i class="ti ti-search" style="color:var(--text-tertiary)"></i>' +
+        '<input id="docb-q" type="search" placeholder="Caută: număr, dată (ex. 14.10), cuvânt din titlu sau descriere…" oninput="docbFilter()" ' +
+          'style="flex:1;padding:7px 10px;border:1px solid var(--border);border-radius:6px;font-size:12px;font-family:inherit;outline:none">' +
+        '<button class="docb-chip" onclick="docbReset()" title="Șterge filtrele"><i class="ti ti-x"></i> Resetează</button>' +
+      '</div>' +
+      '<div style="display:flex;gap:6px;flex-wrap:wrap">' + chips + '</div>' +
+    '</div>';
+
   document.getElementById('main').innerHTML =
     '<div class="proj-header"><div class="proj-title">Documente Contract</div>' +
     '<div class="proj-meta">' + p.title + ' \xb7 Contract A997/01.08.2025 \xb7 registru cronologic</div></div>' +
@@ -1787,12 +1832,14 @@ function renderDocBenef(proj) {
     // Bară recap
     '<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:14px">' +
       '<span style="font-size:11px;background:#EBF5FB;color:#1A5276;padding:4px 12px;border-radius:99px;font-weight:700">' +
-        '<i class="ti ti-files"></i> ' + docs.length + ' documente</span>' +
+        '<i class="ti ti-files"></i> <span id="docb-count">' + docs.length + '</span> / ' + docs.length + ' documente</span>' +
       '<span style="font-size:11px;background:#F4F6F7;color:var(--text-secondary);padding:4px 12px;border-radius:99px;font-weight:600">' +
         '<i class="ti ti-sort-descending"></i> Cronologic invers (cel mai recent primul)</span>' +
     '</div>' +
 
-    cards +
+    filterBar +
+    '<div id="docb-list">' + cards + '</div>' +
+    '<div id="docb-empty" style="display:none;padding:18px;text-align:center;font-size:12px;color:var(--text-tertiary)">Niciun document pentru filtrele alese.</div>' +
 
     '<div style="padding:9px 13px;background:#FDFEFE;border:1px solid var(--border);border-radius:6px;font-size:11px;' +
       'color:var(--text-secondary);margin-top:6px">' +
@@ -1803,6 +1850,7 @@ function renderDocBenef(proj) {
     '</div>' +
 
     '<div class="page-footer">PM Hub \xb7 EREN CONS SRL \xb7 2026</div>';
+  docbFilter();
 }
 
 

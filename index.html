@@ -1590,6 +1590,21 @@ function renderDocContract(proj) {
 // automat cronologic invers (cel mai recent primul) după cheia "k" (AAAALLZZ + rang zi).
 var DOCBENEF_DIR = '13. Documente transmise de beneficiar/';
 var DOCS_BENEF = [
+  { k:202610142, d:'14.10.2026', cat:'CONSTATARE', nr:'A5-1240', serie:'A5',
+    titlu:'Act de constatare nr. 2 — platformă Obiect 4 (balast stabilizat → piatră spartă) și poziție rigolă (calea de rulare FOXTROT)',
+    desc:'Încheiat la 12.10.2026 (înregistrat 14.10.2026). Situația 1 — platforma betonată dintre hangar și calea de rulare FOXTROT (30 cm dale Bcr5.0, 20 cm balast stabilizat cu ciment, 40 cm piatră spartă, 20 cm pământ stabilizat): se cere proiectantului să analizeze înlocuirea stratului de balast stabilizat cu agregate naturale de carieră, pe motiv de capacitate portantă superioară; proiectantul detaliază stratificația fundației din piatră spartă (40 cm) pe sorturi. Situația 2 — Beneficiarul cere să nu se intervină pe calea de rulare FOXTROT: se recomandă mutarea rigolei cu ~30–35 cm spre hangar și se analizează păstrarea peretelui ca strat de protecție. Proiectantul stabilește soluțiile în vederea unei dispoziții de șantier în 14 zile (termen 28.10.2026).',
+    color:'#B9770E', bg:'#FEF5E7', icon:'ti-alert-triangle',
+    url:'https://drive.google.com/file/d/1V9FfMfyrYgK6M8sALcD73eGos9E1rg99/view?usp=sharing' },
+  { k:202610143, d:'14.10.2026', cat:'CONSTATARE', nr:'AE-1301', serie:'AE',
+    titlu:'Transmitere Act de constatare nr. 2 (email UM 02311)',
+    desc:'Emailul UM 02311 Constanța prin care se transmite către EREN CONS Actul de constatare nr. 2, înregistrat la U.M. 02311 cu nr. A5-1240/14.10.2026.',
+    color:'#B9770E', bg:'#FEF5E7', icon:'ti-mail-forward',
+    url:'https://drive.google.com/file/d/1z8DgtL3B6Kwq7f2scPEtvs5eZKoAzxwn/view?usp=sharing' },
+  { k:202610021, d:'02.10.2026', cat:'ADRESĂ EREN', nr:'13783', serie:'EREN',
+    titlu:'Adresă — ajustare preț SL2 definitivă (subcl. 48.5) și solicitare act adițional',
+    desc:'Transmisă de EREN CONS către UM 02311: calculul de actualizare a prețurilor aferent SL2 (execuție iulie 2026), devenit definitiv după publicarea indicelui final INS (iunie 2026 = 165,30, Buletin statistic nr. 07/2026). Ajustare: 95.930,30 lei fără TVA (TVA 20.145,36; total 116.075,66 lei). Se solicită act adițional la contractul 997/01.08.2025 pentru decontarea sumei. Anexe: calcul actualizare SL2 + extras buletin INS (3 pagini).',
+    color:'#1A5276', bg:'#EAF2F8', icon:'ti-file-export',
+    url:'https://drive.google.com/file/d/1YEn0IGlMAarQTS_2YdA0794jGsXU-G-m/view?usp=sharing' },
   { k:202610091, d:'09.10.2026', cat:'ADRESĂ EREN', nr:'13821', serie:'EREN',
     titlu:'Adresă de înaintare — Note de Renunțare, NCS tip 1 și NCS tip 2 (liste de lucrări suplimentare)',
     desc:'Transmisă de EREN CONS către UM 02311 (cu proiectantul Triptic): Anexa 1 Centralizator modificări solicitate (net +5.668.484,91 lei fără TVA); Anexa 2 Note de Renunțare −2.058.160,36 lei; Anexa 3 NCS tip 1 1.510.654,54 lei; Anexa 4 NCS tip 2 6.215.990,73 lei (cu liste F3 și F4); Anexa 5 încadrare articole (trasabilitate, fără însumare). Temei: clauzele de revizuire din documentele achiziției și clarificările A5-158, A5-159, A5-189, A5-203. Transmitere sub rezerva tuturor drepturilor; se păstrează dreptul la revendicare.',
@@ -4173,7 +4188,7 @@ function renderProdSed2(proj) {
     {tag:"Ofertare",bg:"#FFF8E1",tc:"#856404",txt:"Costuri nebugetate suportate de EREN: CQ 94.759 (PE04), RTE dom. 2.2 6.000 (PE10), centrală trape 0 lei (PE08)."},
     {tag:"Contracte în semnare",bg:"#FFF8E1",tc:"#856404",txt:"DITO Grup 1.060.252 (+365.355 lei, +52,6% vs buget); A&C Metal 1.610.276 (+175.705 lei, +12,2%; marjă −1,5% fără indexare, +11,7% cu indexare SL3; macara montaj nebugetată)."},
     {tag:"Contractual",bg:"#E8F5E9",tc:"#1E6E2D",txt:"Revendicările Beneficiarului nr.2 și nr.3 (penalități 2×20.000 lei) închise. Listele suplimentare (NCS1/NCS2/NR, +5.668.485 lei; contract nou 24.843.317) au fost predate Beneficiarului. DS04 emisă: Revendicarea Antreprenorului nr. 3 (DS04) se transmite oficial miercuri 14.10. Grup pompare spumă: revendicare cl.69a în pregătire."},
-    {tag:"În așteptare",bg:"#FFF8E1",tc:"#856404",txt:"Răspuns ISU la clarificarea depusă de proiectant pentru panourile de învelitoare (PIR); act de constatare al Beneficiarului pentru înlocuirea balastului cu piatră spartă; soluție pentru întreruperea grinzii de fundare. Toate necuantificate."}
+    {tag:"În așteptare",bg:"#FFF8E1",tc:"#856404",txt:"Răspuns ISU la clarificarea depusă de proiectant pentru panourile de învelitoare (PIR); Act de constatare nr. 2 primit (A5-1240/14.10.2026: balast→piatră spartă, rigolă FOXTROT) — proiectantul emite dispoziția de șantier până la 28.10.2026; soluție pentru întreruperea grinzii de fundare. Toate necuantificate."}
   ];
   ab.forEach(function(c){
     html += '<div style="display:flex;gap:10px;align-items:flex-start;margin-bottom:8px"><span style="background:'+c.bg+';color:'+c.tc+';font-size:10.5px;font-weight:700;padding:3px 8px;border-radius:4px;white-space:nowrap">'+c.tag+'</span><span style="font-size:11.5px;color:#333">'+c.txt+'</span></div>';
@@ -4212,7 +4227,7 @@ function renderProdSed2(proj) {
     {a:"Răspuns ofertare la PE05, PE08, PE09 + cuantificare CQ/RTE",o:"Dep. ofertare",t:"16.10"},
     {a:"Semnare A&C Metal (negociere 7–8%, cantitate, macara) ",o:"G. Spătaru",t:"23.10"},
     {a:"Transmitere oficială Revendicarea Antreprenorului nr. 3 (DS04) (DS04)",o:"G. Spătaru",t:"14.10"},
-    {a:"Urmărire: răspuns ISU (panouri PIR), act constatare balast→piatră spartă, soluție grindă fundare",o:"G. Spătaru",t:"de confirmat"},
+    {a:"Urmărire: răspuns ISU (panouri PIR), dispoziție de șantier balast→piatră spartă / rigolă FOXTROT (Act constatare nr. 2), soluție grindă fundare",o:"G. Spătaru",t:"28.10"},
     {a:"Urmărire aprobare NCS/NR + AA durată (DS04)",o:"G. Spătaru",t:"23.10"},
     {a:"Recuperare structură: echipe suplimentare fundații/prefabricate",o:"G. Peltea (SS)",t:"31.10"}
   ];
@@ -4239,7 +4254,7 @@ var PRODCAUZE = [
   {c:"Planificare internă", n:5, imp:100759, rec:0, note:"Erori de ofertare: CQ 94.759, RTE 6.000, centrală trape 0 lei; CA lună și costuri ERP fără impact propriu"},
   {c:"Cantitate / consum suplimentar", n:1, imp:44621, rec:22000, note:"Confecții metalice: 112,1 t ofertate vs 109 t buget"},
   {c:"Subantreprenor", n:1, imp:0, rec:0, note:"SUBA din ERP vs contracte — impact inclus în alt rând, de reconciliat"},
-  {c:"Altele", n:4, imp:0, rec:0, note:"Necuantificate: balast→piatră spartă, grindă fundare, Obiect 6, rețete vs caiet de sarcini"}
+  {c:"Altele", n:4, imp:0, rec:0, note:"Necuantificate: balast→piatră spartă / rigolă FOXTROT (act primit 14.10, DS până la 28.10), grindă fundare, Obiect 6, rețete vs caiet de sarcini"}
 ];
 
 function renderProdCauze(proj) {

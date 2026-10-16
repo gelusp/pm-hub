@@ -2446,6 +2446,7 @@ function renderHome() {
       '</div>' +
     '</div>' : '') +
 
+    '<div style="margin-bottom:12px"><a href="https://docs.google.com/spreadsheets/d/1YQojr6WWAJIo76NfLpt976AYFcGK_ensmaXGvSD0Kqw/edit?usp=sharing" target="_blank" style="display:flex;align-items:center;justify-content:center;gap:8px;padding:11px 16px;background:#FEF7F7;color:#C0392B;border:1px solid #F2C9C9;border-radius:8px;font-size:13px;font-weight:700;text-decoration:none"><i class="ti ti-table"></i> Matrice NCS — puncte tari / slabe (Kogălniceanu)</a></div>' +
     '<div class="proj-card" style="cursor:pointer" onclick="openSub(\'hangar\')">' +
       '<div class="proj-card-header" style="background:#C0392B;border-left:3px solid #E74C3C">' +
         '<div class="proj-icon" style="background:rgba(204,21,21,0.25)"><i class="ti ti-building" style="color:#CC1515"></i></div>' +
@@ -4808,7 +4809,11 @@ function renderContractSinteza(proj) {
   var CM_REST_DUPA_SL2 = CM_TOTAL - SL2_BASE;
   var indexPotential = SL2_REAL + CM_REST_DUPA_SL2 * (SL2_COEF - 1); // SL2 real + (Val ctr − Val SL2) × indice cunoscut curent
   var EXEC = 17075952; // buget intern total eDevize (Cap.1-13 + Org. Șantier) — numitor grad de contractare (Gelu, 27.09.2026: raportare la buget, nu la suma asigurată CAR 18.521.332, folosită greșit anterior)
-  var gradAcoperire = (totContract / EXEC * 100);
+  var gradAcoperire = (totContract / EXEC * 100); // semnat + în semnare
+  var totInSemnare = 0, nInSemnare = 0;
+  contracte.forEach(function(c){ if (/în semnare/.test(c.nr || '')) { totInSemnare += c.contract; nInSemnare++; } });
+  var totSemnat = totContract - totInSemnare, nSemnat = contracte.length - nInSemnare;
+  var gradSemnat = (totSemnat / EXEC * 100);
 
   function fmt(n){ return n.toLocaleString('ro-RO'); }
   function milfmt(n){ return (n/1000000).toFixed(2).replace('.',',') + ' mil'; }
@@ -4828,7 +4833,7 @@ function renderContractSinteza(proj) {
   html += '<div class="kpi"><div class="kpi-label">Buget alocat (Deviz General)</div><div class="kpi-val" style="color:#3B6D11">17,08 mil</div><div class="kpi-sub">−11,4% față de contract · include proiectarea</div></div>';
   html += '<div class="kpi"><div class="kpi-label">Bani reali pentru lucrări</div><div class="kpi-val" style="color:#854F0B">56,5%</div><div class="kpi-sub">Cap.4 = 14,73 mil (fără OS) din estimarea execuției</div></div>';
   var gradAcopCol = gradAcoperire>=70 ? '#3B6D11' : (gradAcoperire>=40 ? '#B9770E' : '#1F3864');
-  html += '<div class="kpi"><div class="kpi-label">Grad acoperire cu contracte semnate</div><div class="kpi-val" style="color:' + gradAcopCol + '">' + gradAcoperire.toFixed(1).replace('.',',') + '%</div><div class="kpi-sub">' + fmt(totContract) + ' lei contractați din 17,08 mil buget intern eDevize</div></div>';
+  html += '<div class="kpi"><div class="kpi-label">Grad acoperire — contracte semnate</div><div class="kpi-val" style="color:' + gradAcopCol + '">' + gradSemnat.toFixed(1).replace('.',',') + '%</div><div class="kpi-sub">' + fmt(totSemnat) + ' lei semnați din 17,08 mil buget intern · cu cele în semnare: ' + gradAcoperire.toFixed(1).replace('.',',') + '%</div></div>';
   html += '</div>';
 
   // ── Cascada valorii ──
@@ -4890,16 +4895,16 @@ function renderContractSinteza(proj) {
 
   // KPI derulare
   html += '<div class="kpi-grid" style="margin-bottom:14px">';
-  html += '<div class="kpi"><div class="kpi-label">Total contractat</div><div class="kpi-val">' + fmt(totContract) + '</div><div class="kpi-sub">lei fără TVA · ' + contracte.length + ' contract(e) semnat(e)</div></div>';
+  html += '<div class="kpi"><div class="kpi-label">Total contractat</div><div class="kpi-val">' + fmt(totContract) + '</div><div class="kpi-sub">lei fără TVA · ' + nSemnat + ' semnate (' + fmt(totSemnat) + ') + ' + nInSemnare + ' în semnare (' + fmt(totInSemnare) + ')</div></div>';
   html += '<div class="kpi"><div class="kpi-label">Saving vs buget</div><div class="kpi-val" style="color:' + (totDelta>=0?'#3B6D11':'#9B59B6') + '">' + (totDelta>=0?'+':'−') + Math.abs(totDelta/totBugetCmp*100).toFixed(1).replace('.',',') + '%</div><div class="kpi-sub">' + (totDelta>=0?'+':'−') + fmt(Math.abs(totDelta)) + ' lei · buget ' + fmt(totBugetCmp) + ' → contractat ' + fmt(totContractCmp) + '</div></div>';
   html += '<div class="kpi"><div class="kpi-label">Marjă vs venit (bază)</div><div class="kpi-val" style="color:' + (margVenit>=0?'#3B6D11':'#9B59B6') + '">' + (margVenit>=0?'+':'−') + Math.abs(margVenitPct).toFixed(1).replace('.',',') + '%</div><div class="kpi-sub">' + (margVenit>=0?'+':'−') + fmt(Math.abs(Math.round(margVenit))) + ' lei · venit ' + fmt(totVenit) + ' → cost ' + fmt(totCostVenit) + ' (fără indexare)</div></div>';
   html += '<div class="kpi" style="background:#EAF3DE;border-color:#C0DD97"><div class="kpi-label">Marjă vs venit + indexare</div><div class="kpi-val" style="color:#3B6D11">+' + margVenitIdxPct.toFixed(1).replace('.',',') + '%</div><div class="kpi-sub">+' + fmt(Math.round(margVenitIdx)) + ' lei · venit indexat ' + fmt(Math.round(venitIndexat)) + ' (coef. ' + AN_INDEX.toFixed(4).replace(".",",") + ' · +' + fmt(Math.round(indexUplift)) + ' din indexare)</div></div>';
-  html += '<div class="kpi"><div class="kpi-label">Grad acoperire vs buget intern</div><div class="kpi-val" style="color:' + gradAcopCol + '">' + gradAcoperire.toFixed(1).replace('.',',') + '%</div><div class="kpi-sub">din 17,08 mil lei buget intern eDevize (Cap.1-13 + Org. Șantier)</div></div>';
+  html += '<div class="kpi"><div class="kpi-label">Grad acoperire (semnat + în semnare)</div><div class="kpi-val" style="color:' + gradAcopCol + '">' + gradAcoperire.toFixed(1).replace('.',',') + '%</div><div class="kpi-sub">din 17,08 mil lei buget intern eDevize (Cap.1-13 + Org. Șantier) · din care semnat ' + gradSemnat.toFixed(1).replace('.',',') + '%</div></div>';
   html += '</div>';
 
   // gauge grad acoperire
-  html += '<div style="margin-bottom:14px"><div style="display:flex;justify-content:space-between;font-size:11px;color:#5A6472;margin-bottom:3px"><span>Acoperire contract cu contracte semnate</span><span style="font-weight:700;color:#1F3864">' + gradAcoperire.toFixed(1).replace('.',',') + '% din 100%</span></div>';
-  html += '<div style="height:18px;background:#EEF0F3;border-radius:6px;overflow:hidden"><div style="height:100%;width:' + Math.max(gradAcoperire,1.2) + '%;background:linear-gradient(90deg,#1F3864,#378ADD);min-width:2px"></div></div></div>';
+  html += '<div style="margin-bottom:14px"><div style="display:flex;justify-content:space-between;font-size:11px;color:#5A6472;margin-bottom:3px"><span>Acoperire vs buget intern: <b style="color:#1F3864">semnat</b> + <b style="color:#85B7EB">în semnare</b></span><span style="font-weight:700;color:#1F3864">' + gradSemnat.toFixed(1).replace('.',',') + '% semnat · ' + gradAcoperire.toFixed(1).replace('.',',') + '% cu cele în semnare</span></div>';
+  html += '<div style="height:18px;background:#EEF0F3;border-radius:6px;overflow:hidden"><div style="display:flex;height:100%"><div style="height:100%;width:' + Math.max(gradSemnat,1.2) + '%;background:#1F3864;min-width:2px"></div><div style="height:100%;width:' + (gradAcoperire - gradSemnat) + '%;background:#85B7EB"></div></div></div></div>';
 
   // tabel contracte — container cu scroll intern + header sticky (ca la Probleme identificate în execuție), ca lista să nu tot lungească pagina pe măsură ce se adaugă contracte
   html += '<div class="proj-card" style="margin-bottom:14px"><div style="overflow:auto;max-height:min(65vh,640px);border-radius:8px">';

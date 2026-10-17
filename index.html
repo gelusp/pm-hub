@@ -7838,7 +7838,13 @@ function renderInstDashboard(proj) {
     silent = true;
     try {
       if (!st || st.t === 'home') _goHome();
-      else if (st.t === 'proj') { _renderProjHome(st.p); document.getElementById('menu-btn').style.display = 'none'; document.getElementById('back-btn').style.display = 'flex'; document.getElementById('back-btn').onclick = function(){ goHome(); }; closeMenu(); }
+      else if (st.t === 'proj') { _renderProjHome(st.p); document.getElementById('menu-btn').style.display = 'none'; document.getElementById('back-btn').style.display = 'flex'; document.getElementById('back-btn').onclick = function(){ goHome(); };
+        var sub = document.getElementById('sub-' + st.p), chev = document.getElementById('chev-' + st.p);
+        document.querySelectorAll('.submenu-item').forEach(function(i){ i.classList.remove('active'); });
+        if (sub) sub.classList.add('open'); if (chev) chev.classList.add('open');
+        closeMenu();
+        if (window.matchMedia('(max-width:768px)').matches) openMenu();   // pe telefon: revii în submeniul din care ai plecat
+      }
       else if (st.t === 'mod') _goModule(st.p, st.m);
     } finally { silent = false; }
     window.scrollTo(0, 0);

@@ -7814,6 +7814,36 @@ function renderInstDashboard(proj) {
 }
 
 
+
+// ═══ Butonul „înapoi” al telefonului/browserului (History API) ═══
+// Fiecare navigare (prima pagină, submeniu proiect, modul) adaugă o intrare în istoric; „înapoi” revine la ecranul anterior din aplicație.
+(function(){
+  var silent = false;
+  function cur(){ return history.state && history.state.t ? history.state : null; }
+  function same(a,b){ return a && b && a.t===b.t && a.p===b.p && a.m===b.m; }
+  function rec(st){
+    if (silent) return;
+    var c = cur();
+    if (same(c, st)) return;
+    if (!c) history.replaceState(st, ''); else history.pushState(st, '');
+  }
+  var _goHome = goHome, _renderProjHome = renderProjHome, _goModule = goModule;
+  goHome = function(){ rec({t:'home'}); return _goHome.apply(this, arguments); };
+  renderProjHome = function(p){ rec({t:'proj', p:p}); return _renderProjHome.apply(this, arguments); };
+  goModule = function(p, m){ rec({t:'mod', p:p, m:m}); return _goModule.apply(this, arguments); };
+  window.addEventListener('popstate', function(e){
+    if (window._pmhub_user == null) return;            // nu e autentificat — ignoră
+    var st = e.state;
+    var ov = document.getElementById('pe-calc-overlay'); if (ov) ov.remove();
+    silent = true;
+    try {
+      if (!st || st.t === 'home') _goHome();
+      else if (st.t === 'proj') { _renderProjHome(st.p); document.getElementById('menu-btn').style.display = 'none'; document.getElementById('back-btn').style.display = 'flex'; document.getElementById('back-btn').onclick = function(){ goHome(); }; closeMenu(); }
+      else if (st.t === 'mod') _goModule(st.p, st.m);
+    } finally { silent = false; }
+    window.scrollTo(0, 0);
+  });
+})();
 </script>
 
 <!-- MODAL Cronologie si Date Tehnice (grup pompare) -->

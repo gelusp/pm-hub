@@ -278,11 +278,17 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
         <div class="submenu-item" id="item-hangar-sinteza" onclick="goModule('hangar','sinteza')">
           <i class="ti ti-clipboard-list"></i> Acțiuni / Riscuri / Rec.
         </div>
+        <div class="submenu-item" id="item-hangar-calendar" onclick="goModule('hangar','calendar')">
+          <i class="ti ti-calendar-event" style="color:#1A5276"></i> Calendar de termene
+        </div>
         <div class="submenu-item" id="item-hangar-termene" onclick="goModule('hangar','termene')">
           <i class="ti ti-hourglass" style="color:#C0392B"></i> Termene contractuale
         </div>
         <div class="submenu-item" id="item-hangar-evenimente" onclick="goModule('hangar','evenimente')">
           <i class="ti ti-timeline-event" style="color:#C0392B"></i> Evenimente și notificări
+        </div>
+        <div class="submenu-item" id="item-hangar-previziune" onclick="goModule('hangar','previziune')">
+          <i class="ti ti-chart-line" style="color:#3B6D11"></i> Previziune marjă și numerar
         </div>
         <div class="submenu-item" id="item-hangar-regpd" onclick="goModule('hangar','regpd')">
           <i class="ti ti-alert-triangle" style="color:#C0392B"></i> Probleme Identificate în Execuție
@@ -645,7 +651,7 @@ function toggleSubSub(id) {
 }
 
 function goModule(proj, module) {
-  var _mm = document.getElementById('main'); if (_mm) _mm.style.maxWidth = (module === 'termene' || module === 'regpd' || module === 'evenimente' || module === 'probe') ? '1500px' : '';
+  var _mm = document.getElementById('main'); if (_mm) _mm.style.maxWidth = (module === 'termene' || module === 'regpd' || module === 'evenimente' || module === 'probe' || module === 'negociere' || module === 'previziune' || module === 'calendar') ? '1500px' : '';
   document.querySelectorAll('.submenu-item').forEach(function(i){ i.classList.remove('active'); });
   var item = document.getElementById('item-' + proj + '-' + module);
   if (item) item.classList.add('active');
@@ -663,6 +669,9 @@ function goModule(proj, module) {
   else if (module === 'termene') renderTermene(proj);
   else if (module === 'evenimente') renderEvenimente(proj);
   else if (module === 'probe') renderProbe(proj);
+  else if (module === 'negociere') renderNegociere(proj);
+  else if (module === 'previziune') renderPrevizi(proj);
+  else if (module === 'calendar') renderCalendar(proj);
   else if (module === 'powerbi') renderPowerBI(proj);
   else if (module === 'erp') renderERP(proj);
   else if (module === 'doccontract') renderDocContract(proj);
@@ -3384,7 +3393,7 @@ function renderProbe(proj) {
   var html = '';
   html += '<div class="proj-header"><div class="proj-title">Dosar probe — liste suplimentare</div><div class="proj-meta">Hangar Kogălniceanu · pe temele din Matricea NCS (net ' + fm(net) + ' lei) · ce probă avem, ce lipsește · ' + _tFmt(_tAzi()) + '</div></div>';
   html += '<div class="module-badge" style="background:#EAF2F8;color:#1A5276"><i class="ti ti-folders" style="font-size:13px"></i> Probe · lipsuri critice · responsabil · termen</div>';
-  html += '<div style="margin:8px 0 4px"><a href="https://docs.google.com/spreadsheets/d/1YQojr6WWAJIo76NfLpt976AYFcGK_ensmaXGvSD0Kqw/edit?usp=sharing" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:7px 14px;background:#1A5276;color:#fff;border-radius:6px;font-size:12px;font-weight:600;text-decoration:none"><i class="ti ti-table"></i> Deschide matricea NCS (Excel, Drive)</a></div>';
+  html += '<div style="margin:8px 0 4px"><a href="https://docs.google.com/spreadsheets/d/1YQojr6WWAJIo76NfLpt976AYFcGK_ensmaXGvSD0Kqw/edit?usp=sharing" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:7px 14px;background:#1A5276;color:#fff;border-radius:6px;font-size:12px;font-weight:600;text-decoration:none"><i class="ti ti-table"></i> Deschide matricea NCS (Excel, Drive)</a> <button onclick="goModule(\'hangar\',\'negociere\')" style="margin-left:8px;padding:7px 14px;background:#7D3C98;color:#fff;border:none;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer"><i class="ti ti-scale"></i> Panou de negociere</button></div>';
   html += '<div class="kpi-grid" style="margin:10px 0 14px">' +
     '<div class="kpi"><div class="kpi-label">Probe urmărite</div><div class="kpi-val">' + st.n + '</div><div class="kpi-sub">' + st.ok + ' în dosar · ' + st.ver + ' de verificat · ' + st.lips + ' lipsesc</div></div>' +
     '<div class="kpi"><div class="kpi-label">Lipsuri critice</div><div class="kpi-val" style="color:#C0392B">' + st.crit + '</div><div class="kpi-sub">probe esențiale încă nedepuse</div></div>' +
@@ -3425,6 +3434,378 @@ function renderProbe(proj) {
   html += '</tbody></table></div>';
   html += '<div style="font-size:10.5px;color:var(--text-tertiary);margin-top:8px">Forța = apreciere de lucru EREN pe baza documentelor din dosar (Matricea NCS), nu opinie juridică. Termenele marcate „propus” sunt propuneri din ședința internă, de confirmat.</div>';
   html += '<div class="page-footer">PM Hub · EREN CONS SRL · 2026 · Dosar probe — liste suplimentare</div>';
+  document.getElementById('main').innerHTML = html;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// PANOU DE NEGOCIERE — net +5.668.485 lei pe cele 11 teme din Matricea NCS (PROBE_TEME)
+// tinta/minim = ipoteze de lucru EREN (% din valoarea temei), derivate din forța argumentului — EDITABILE aici.
+// dep = temele de care depinde (dacă acelea sunt respinse, tema nu se mai poate susține).
+// ═══════════════════════════════════════════════════════════════
+var NEG_BAZA_EXEC = 18521332.02;   // valoare execuție contract (AA2), fără proiectare, fără TVA
+var NEG_PLAFON_PCT = 15;           // cerința Beneficiarului: încadrare în 15% din valoarea contractului
+var NEG_VAL_INITIALA = 19261832.02; // valoarea contractului înainte de AA2 (lei fără TVA) — de confirmat baza de calcul cu juristul
+var NEG_AA2 = 43350;               // AA2 consumă din plafon dacă modificările se cumulează (de confirmat)
+var NEG_MARJA = 11.35;             // marja ofertată, % (Sinteză contract) — editabilă în panou
+var NEG_META = {
+  1:  { tinta:100, minim:70, dep:[],     miza:'Eroare de metodă în SF + reanaliză cerută de autoritate; determină temele 2, 4 și 5.', schimb:'Alinierea F4 la PT (denumire, presiuni, motorină/diesel); legarea explicită a cifrei de breviarul de calcul.' },
+  2:  { tinta:90,  minim:60, dep:[1],    miza:'Consecința directă a sistemului de spumă; liniile 8.1–8.3 nu sunt toate validate.', schimb:'Renunțare la liniile cu preț nevalidat (ex. gong hidraulic) până la fundamentare.' },
+  3:  { tinta:90,  minim:60, dep:[8],    miza:'Valoare mică; depinde de dovada platformei extinse.', schimb:'Poate fi „dat" în pachet fără pierdere majoră dacă se obține platforma.' },
+  4:  { tinta:90,  minim:60, dep:[1,3],  miza:'Lucrare deja executată (144.095 lei), fără Ordin Administrativ; urmează temele 1 și 3.', schimb:'Notificare 69a + Ordin/acord scris pentru ce e executat, indiferent de rezultatul negocierii.' },
+  5:  { tinta:60,  minim:30, dep:[1],    miza:'Nicio cerere scrisă pentru 1.400 kVA; poate fi respins ca soluție EREN/Triptic.', schimb:'Redimensionare la puterea reală de pornire a pompelor (breviar C1400D5) — moneda de schimb principală.' },
+  6:  { tinta:30,  minim:0,  dep:[],     miza:'Diferențe de cantități = riscul antreprenorului (37.5), dacă nu sunt cauzate de Modificare.', schimb:'Renunțare la liniile nejustificate după măsurători reale (traseu spre postul trafo).' },
+  7:  { tinta:40,  minim:15, dep:[],     miza:'45% din net; SF descrie sursele statice; nicio cerere scrisă cu cantitatea. Cea mai mare expunere.', schimb:'Etapizare: acum cele existente, extinderea (2 → 4+1) doar la cerere scrisă; clarificare „sursă statică 3"; prize aviație pe LS.' },
+  8:  { tinta:100, minim:90, dep:[],     miza:'Poziția cea mai solidă dacă se dovedește cererea (plan 13.11.2025, tabel Triptic). Prețuri din contract.', schimb:'Nu se cedează; se uniformizează suprafața (3.955 / 3.920 mp).' },
+  9:  { tinta:90,  minim:60, dep:[8],    miza:'Urmează platforma; rigole cu denumiri/cantități de corectat.', schimb:'Corectarea rigolelor și verificarea dublării cu 6.1 din contract.' },
+  10: { tinta:40,  minim:15, dep:[],     miza:'Unele schimbări sunt optimizări EREN/Triptic, refuzate de Beneficiar (08.08.2025).', schimb:'Retragerea optimizărilor refuzate; tavan/ferestre prezentate ca renunțări.' },
+  11: { tinta:90,  minim:60, dep:[],     miza:'Valoare mică; consecință a instalațiilor suplimentare.', schimb:'Negociabilă ca monedă mică.' }
+};
+var NEG_STATE = null;
+function _negLoad() {
+  if (NEG_STATE) return NEG_STATE;
+  var st = null;
+  try { st = JSON.parse(localStorage.getItem('pmhub_neg_state') || 'null'); } catch (e) {}
+  NEG_STATE = (st && st.p) ? st : {p:{}, marja:NEG_MARJA};
+  PROBE_TEME.forEach(function(t){ if (NEG_STATE.p[t.nr] === undefined) NEG_STATE.p[t.nr] = NEG_META[t.nr].tinta; });
+  return NEG_STATE;
+}
+function _negSave() { try { localStorage.setItem('pmhub_neg_state', JSON.stringify(NEG_STATE)); } catch (e) {} }
+function negPreset(kind) {
+  var st = _negLoad();
+  PROBE_TEME.forEach(function(t){
+    var m = NEG_META[t.nr], v;
+    if (kind === 'tinta') v = m.tinta;
+    else if (kind === 'minim') v = m.minim;
+    else if (kind === 'tot') v = 100;
+    else if (kind === 'tari') v = /^(Mare|Medie)/.test(t.forta) ? 100 : 0;
+    else if (kind === 'plafon') v = 0;
+    else v = 0;
+    st.p[t.nr] = v;
+  });
+  if (kind === 'plafon') {
+    var cap = NEG_VAL_INITIALA * NEG_PLAFON_PCT / 100 - NEG_AA2, rem = cap;
+    var rank = function(f){ return /^Mare/.test(f) ? 0 : (/^Medie–Mare/.test(f) ? 1 : (/^Medie–Mică/.test(f) ? 4 : (/^Medie/.test(f) ? 2 : (/^Mică–Medie/.test(f) ? 5 : 6)))); };
+    PROBE_TEME.slice().sort(function(a, b){ return rank(a.forta) - rank(b.forta) || a.nr - b.nr; }).forEach(function(t){
+      if (rem <= 0) return;
+      var p = Math.min(100, Math.floor(rem / t.valoare * 20) * 5);
+      st.p[t.nr] = p; rem -= t.valoare * p / 100;
+    });
+  }
+  _negSave(); renderNegociere('hangar');
+}
+function negUpd(nr, v) {
+  var st = _negLoad(); st.p[nr] = parseInt(v, 10); _negSave(); negRefresh();
+}
+function negMarja(v) { var st = _negLoad(); var x = parseFloat(String(v).replace(',', '.')); if (!isNaN(x)) { st.marja = x; _negSave(); negRefresh(); } }
+function negRefresh() {
+  var st = _negLoad();
+  function fm(n){ return Math.round(n).toLocaleString('ro-RO'); }
+  var cerut = 0, acc = 0, warn = [];
+  PROBE_TEME.forEach(function(t){
+    var p = st.p[t.nr], a = t.valoare * p / 100;
+    cerut += t.valoare; acc += a;
+    var e = document.getElementById('ng-acc-' + t.nr), l = document.getElementById('ng-pct-' + t.nr), w = document.getElementById('ng-warn-' + t.nr);
+    if (e) e.textContent = fm(a);
+    if (l) l.textContent = p + '%';
+    var dw = '';
+    NEG_META[t.nr].dep.forEach(function(d){
+      if (p > 0 && st.p[d] < p - 20) dw += 'Depinde de tema ' + d + ' (acceptată ' + st.p[d] + '%). ';
+    });
+    if (w) w.textContent = dw;
+    if (dw) warn.push(t.nr);
+  });
+  var neac = cerut - acc, marja = st.marja / 100;
+  var set = function(id, txt){ var x = document.getElementById(id); if (x) x.textContent = txt; };
+  set('ng-s-cerut', fm(cerut));
+  set('ng-s-acc', fm(acc));
+  set('ng-s-pct', (acc / cerut * 100).toFixed(1).replace('.', ',') + '% din cerut');
+  set('ng-s-neac', fm(neac));
+  set('ng-s-exec', fm(NEG_BAZA_EXEC + acc));
+  set('ng-s-profit', fm(acc * marja));
+  set('ng-s-cost', fm(neac * (1 - marja)));
+  var cap = NEG_VAL_INITIALA * NEG_PLAFON_PCT / 100 - NEG_AA2;
+  set('ng-s-cap', fm(cap));
+  set('ng-s-capst', acc <= cap ? 'ÎNCADRAT — rămân ' + fm(cap - acc) + ' lei' : 'DEPĂȘIT cu ' + fm(acc - cap) + ' lei (' + (acc / (NEG_VAL_INITIALA) * 100).toFixed(1).replace('.', ',') + '% din contract)');
+  var cs = document.getElementById('ng-s-capst'); if (cs) cs.style.color = acc <= cap ? '#1E6E2D' : '#C0392B';
+  var cb = document.getElementById('ng-s-capbar'); if (cb) { cb.style.width = Math.min(100, acc / cap * 100) + '%'; cb.style.background = acc <= cap ? '#3B6D11' : '#C0392B'; }
+  set('ng-s-warn', warn.length ? 'Atenție: temele ' + warn.join(', ') + ' depind de teme acceptate mai puțin.' : 'Fără incoerențe între teme dependente.');
+  var ws = document.getElementById('ng-s-warn'); if (ws) ws.style.color = warn.length ? '#C0392B' : '#1E6E2D';
+}
+function renderNegociere(proj) {
+  document.querySelectorAll('.submenu-item').forEach(function(i){ i.classList.remove('active'); });
+  var st = _negLoad();
+  var FC = function(f){ return /^Mare/.test(f) ? ['#EAFAF1','#1E6E2D'] : (/^Medie–Mare/.test(f) ? ['#EAFAF1','#1E6E2D'] : (/^Medie/.test(f) ? ['#FEF5E7','#B9770E'] : ['#FDEDEC','#C0392B'])); };
+  var html = '';
+  html += '<div class="proj-header"><div class="proj-title">Panou de negociere — liste suplimentare</div><div class="proj-meta">Hangar Kogălniceanu · net cerut +5.668.485 lei (NR −2.058.160 · NCS1 1.510.655 · NCS2 6.215.991) · simulare pe cele 11 teme · ' + _tFmt(_tAzi()) + '</div></div>';
+  html += '<div class="module-badge" style="background:#F4ECF7;color:#7D3C98"><i class="ti ti-scale" style="font-size:13px"></i> Simulare · ipoteze de lucru EREN, nu cifre convenite</div>';
+  html += '<div style="margin:8px 0"><a onclick="goModule(\'hangar\',\'probe\');return false;" href="#" style="color:#1A5276;font-weight:700;font-size:12px;text-decoration:none">‹ Înapoi la matricea NCS · dosar probe</a></div>';
+  // rezumat (sticky)
+  html += '<div style="position:sticky;top:0;z-index:5;background:#fff;padding:8px 0;border-bottom:1px solid var(--border);margin-bottom:10px"><div class="kpi-grid">' +
+    '<div class="kpi"><div class="kpi-label">Net cerut</div><div class="kpi-val" id="ng-s-cerut">—</div><div class="kpi-sub">lei fără TVA</div></div>' +
+    '<div class="kpi" style="background:#EAF3DE;border-color:#C0DD97"><div class="kpi-label">Net acceptat (simulare)</div><div class="kpi-val" style="color:#3B6D11" id="ng-s-acc">—</div><div class="kpi-sub" id="ng-s-pct">—</div></div>' +
+    '<div class="kpi"><div class="kpi-label">Neacceptat</div><div class="kpi-val" style="color:#C0392B" id="ng-s-neac">—</div><div class="kpi-sub">expunere la preț · cost estimat neacoperit <b id="ng-s-cost">—</b></div></div>' +
+    '<div class="kpi"><div class="kpi-label">Execuție după modificare</div><div class="kpi-val" id="ng-s-exec">—</div><div class="kpi-sub">18.521.332 + net acceptat · profit estimat pe acceptat <b id="ng-s-profit">—</b></div></div></div>' +
+    '<div style="margin-top:8px;padding:8px 12px;border:1px solid var(--border);border-radius:8px;background:#FAFBFC"><div style="display:flex;justify-content:space-between;font-size:11.5px;margin-bottom:4px"><span><b>Plafon 15%</b> din valoarea inițială a contractului (' + NEG_VAL_INITIALA.toLocaleString('ro-RO') + ' lei) minus AA2 (' + NEG_AA2.toLocaleString('ro-RO') + ') = <b id="ng-s-cap">—</b> lei</span><b id="ng-s-capst">—</b></div><div style="height:10px;background:#EEF0F3;border-radius:5px;overflow:hidden"><div id="ng-s-capbar" style="height:100%;width:0"></div></div><div style="font-size:10px;color:#7A828E;margin-top:3px">Cerința Beneficiarului. Baza (net sau brut, cu/fără AA2, valoarea inițială sau actuală) și încadrarea juridică se confirmă cu juristul; calculul presupune plafonul pe net.</div></div>' +
+    '<div style="font-size:11px;margin-top:6px" id="ng-s-warn"></div></div>';
+  html += '<div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:10px;font-size:11px"><b>Scenarii:</b>' +
+    [['plafon','Încadrat în 15% (cele mai puternice întâi)'],['tinta','Țintă (ipoteze EREN)'],['minim','Minim acceptabil'],['tari','Doar pozițiile puternice (Mare / Medie)'],['tot','Tot cerut (100%)'],['zero','Nimic acceptat']].map(function(p){
+      return '<button onclick="negPreset(\'' + p[0] + '\')" style="padding:4px 12px;border-radius:99px;border:1px solid var(--border);background:#fff;color:#2C3E50;font-size:11px;font-weight:600;cursor:pointer">' + p[1] + '</button>'; }).join('') +
+    '<span style="margin-left:10px">Marja pe liste: <input type="number" step="0.05" value="' + st.marja + '" oninput="negMarja(this.value)" style="width:64px;padding:3px 6px;border:1px solid var(--border);border-radius:6px;font-size:11px"> %</span></div>';
+  html += '<div style="border:1px solid var(--border);border-radius:8px;overflow:hidden"><table style="width:100%;border-collapse:collapse;font-size:12px;table-layout:fixed"><thead><tr style="background:#2C3E50;color:#fff;text-align:left">' +
+    [['Nr.','4%'],['Temă · miza · ce putem da în schimb','38%'],['Valoare (lei)','10%'],['Forța','9%'],['Țintă · minim','8%'],['Acceptat (slider)','17%'],['Acceptat (lei)','10%'],['','4%']].map(function(h){ return '<th style="width:'+h[1]+';padding:8px 10px;font-weight:600">'+h[0]+'</th>'; }).join('') + '</tr></thead><tbody>';
+  PROBE_TEME.forEach(function(t){
+    var m = NEG_META[t.nr], fc = FC(t.forta);
+    html += '<tr style="border-top:1px solid var(--border);vertical-align:top">' +
+      '<td style="padding:8px 10px;font-weight:700">' + t.nr + '</td>' +
+      '<td style="padding:8px 10px;overflow-wrap:break-word"><b>' + t.tema + '</b>' +
+        '<div style="font-size:10.5px;color:#444;margin-top:3px"><b>Miza:</b> ' + m.miza + '</div>' +
+        '<div style="font-size:10.5px;color:#1A5276;margin-top:2px"><b>Putem da în schimb:</b> ' + m.schimb + '</div>' +
+        '<div style="font-size:10.5px;color:#7A5B12;margin-top:2px"><b>Contra-argument:</b> ' + t.contra + '</div>' +
+        '<div style="font-size:10.5px;color:#C0392B;margin-top:2px;font-weight:600" id="ng-warn-' + t.nr + '"></div></td>' +
+      '<td style="padding:8px 10px;font-weight:600">' + Math.round(t.valoare).toLocaleString('ro-RO') + '</td>' +
+      '<td style="padding:8px 10px"><span style="background:' + fc[0] + ';color:' + fc[1] + ';font-weight:700;font-size:10px;padding:2px 8px;border-radius:99px">' + t.forta + '</span></td>' +
+      '<td style="padding:8px 10px;color:#555">' + m.tinta + '% · ' + m.minim + '%</td>' +
+      '<td style="padding:8px 10px"><input type="range" min="0" max="100" step="5" value="' + st.p[t.nr] + '" oninput="negUpd(' + t.nr + ',this.value)" style="width:100%"><div style="font-weight:700;color:#1F3864" id="ng-pct-' + t.nr + '">' + st.p[t.nr] + '%</div></td>' +
+      '<td style="padding:8px 10px;font-weight:700;color:#3B6D11" id="ng-acc-' + t.nr + '">—</td>' +
+      '<td></td></tr>';
+  });
+  html += '</tbody></table></div>';
+  html += '<div style="font-size:10.5px;color:var(--text-tertiary);margin-top:8px;line-height:1.5">Țintă / minim = ipoteze de lucru derivate din forța argumentului (editabile în <code>NEG_META</code>), nu poziții convenite și nu opinie juridică. „Cost estimat neacoperit" = neacceptat × (1 − marja), dacă lucrările se execută oricum. Simularea se salvează în browser. Valorile sunt nete (NCS − NR) la nivelul temelor din Matricea NCS.</div>';
+  html += '<div class="page-footer">PM Hub · EREN CONS SRL · 2026 · Panou de negociere — liste suplimentare</div>';
+  document.getElementById('main').innerHTML = html;
+  negRefresh();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// PREVIZIUNE MARJĂ ȘI NUMERAR — Hangar Kogălniceanu
+// Realizat = export ERP CH41 din 04.10.2026 (venituri/cheltuieli pe document, fără defalcare lunară).
+// Ipotezele (profil lunar, termene de plată) sunt ESTIMĂRI — se înlocuiesc cu exportul lunar cerut de la financiar (PREV_LUNAR_REAL).
+// ═══════════════════════════════════════════════════════════════
+var PREV = {
+  erpData: '04.10.2026',
+  costReal: 4087902,          // cheltuieli + manoperă înregistrate (CH41, 2024–2026)
+  venitReal: 4990650,         // venituri înregistrate (CH41): facturate + de întocmit + note contabile
+  facturat: 1346707,          // facturi client emise (QV): ERN0182 647.203 + ERN0219 699.504
+  deIntocmit: 683611,         // facturi de întocmit (FDI) către client
+  noteContabile: 2960332,     // note contabile diverse (venit recunoscut, lucrări în curs)
+  realizatSL: 3402088,        // valoare lucrări SL1–SL4 (raport producție septembrie 2026), fără TVA
+  contractBase: 19305182.02,  // contract după AA2
+  buget: 17075952,            // Deviz General intern (cost țintă)
+  indexareReal: 95930.30,     // ajustare SL2 definitivă (48.5)
+  indexarePot: 2420000,       // potențial total indexare (Sinteză contract) — estimare
+  luni: ['oct 2026','nov 2026','dec 2026','ian 2027','feb 2027','mar 2027','apr 2027','mai 2027'],
+  wVenit: [8, 10, 12, 15, 17, 17, 13, 8],   // % din venitul rămas de facturat — ESTIMARE (înlocuiți cu graficul valoric)
+  wCost:  [10, 13, 15, 16, 16, 14, 10, 6]   // % din costul rămas — ESTIMARE
+};
+// După export lunar din ERP: [{luna:'sep 2026', venit:..., cost:..., incasat:..., platit:...}, ...]
+var PREV_LUNAR_REAL = [];
+
+var PREV_STATE = null;
+function _prevLoad() {
+  if (PREV_STATE) return PREV_STATE;
+  var st = null;
+  try { st = JSON.parse(localStorage.getItem('pmhub_prev_state') || 'null'); } catch (e) {}
+  PREV_STATE = st || {};
+  if (PREV_STATE.grad === undefined) PREV_STATE.grad = 50;
+  if (PREV_STATE.lagInc === undefined) PREV_STATE.lagInc = 1;
+  if (PREV_STATE.lagPl === undefined) PREV_STATE.lagPl = 1;
+  if (PREV_STATE.acc === undefined) {
+    var ns = (typeof _negLoad === 'function') ? _negLoad() : null, tot = 0, acc = 0;
+    PROBE_TEME.forEach(function(t){ tot += t.valoare; acc += t.valoare * (ns ? ns.p[t.nr] : 60) / 100; });
+    PREV_STATE.acc = Math.round(acc / tot * 100 / 5) * 5;
+  }
+  return PREV_STATE;
+}
+function prevSet(k, v) { var st = _prevLoad(); st[k] = parseFloat(v); try { localStorage.setItem('pmhub_prev_state', JSON.stringify(st)); } catch (e) {} renderPrevizi('hangar'); }
+function prevCalc() {
+  var st = _prevLoad(), marja = ((typeof _negLoad === 'function') ? _negLoad().marja : 11.35) / 100;
+  var netTot = PROBE_TEME.reduce(function(a, t){ return a + t.valoare; }, 0);
+  var acc = netTot * st.acc / 100;
+  var idx = PREV.indexareReal + (PREV.indexarePot - PREV.indexareReal) * st.grad / 100;
+  var pe = (typeof REGPD !== 'undefined') ? REGPD.reduce(function(a, x){ return a + ((x.valoare && !x.valoareText) ? x.valoare : 0); }, 0) : 0;
+  var costListe = netTot * (1 - marja);
+  var venit = PREV.contractBase + acc + idx;
+  var cost = PREV.buget + pe + costListe;
+  return {st:st, marja:marja, netTot:netTot, acc:acc, idx:idx, pe:pe, costListe:costListe, venit:venit, cost:cost, marjaF:venit - cost, marjaOf:PREV.contractBase - PREV.buget};
+}
+function renderPrevizi(proj) {
+  document.querySelectorAll('.submenu-item').forEach(function(i){ i.classList.remove('active'); });
+  var c = prevCalc(), st = c.st;
+  function fm(n){ return Math.round(n).toLocaleString('ro-RO'); }
+  function pc(a, b){ return (b ? (a / b * 100) : 0).toFixed(1).replace('.', ',') + '%'; }
+  var html = '';
+  html += '<div class="proj-header"><div class="proj-title">Previziune marjă și numerar</div><div class="proj-meta">Hangar Kogălniceanu · marja la finalul proiectului și fluxul de numerar lunar · realizat din ERP (CH41, ' + PREV.erpData + ') · valori fără TVA · ' + _tFmt(_tAzi()) + '</div></div>';
+  html += '<div class="module-badge" style="background:#EAF3DE;color:#3B6D11"><i class="ti ti-chart-line" style="font-size:13px"></i> Estimare · ipoteze editabile · nu e raport contabil</div>';
+  // controale
+  function sl(label, key, min, max, step, unit, val){
+    return '<div style="flex:1;min-width:210px"><div style="font-size:11px;font-weight:600;color:#2C3E50">' + label + ': <b style="color:#1F3864">' + val + unit + '</b></div><input type="range" min="' + min + '" max="' + max + '" step="' + step + '" value="' + val + '" onchange="prevSet(\'' + key + '\',this.value)" style="width:100%"></div>';
+  }
+  html += '<div style="display:flex;gap:18px;flex-wrap:wrap;padding:10px 14px;border:1px solid var(--border);border-radius:8px;background:#FAFBFC;margin:10px 0 14px">' +
+    sl('Net acceptat din liste (din ' + fm(c.netTot) + ' lei)', 'acc', 0, 100, 5, '%', st.acc) +
+    sl('Indexare prețuri realizată (din potențial)', 'grad', 0, 100, 10, '%', st.grad) +
+    sl('Termen de încasare', 'lagInc', 0, 3, 1, ' luni', st.lagInc) +
+    sl('Termen de plată furnizori', 'lagPl', 0, 3, 1, ' luni', st.lagPl) +
+    '<div style="align-self:end"><button onclick="goModule(\'hangar\',\'negociere\')" style="padding:6px 12px;background:#7D3C98;color:#fff;border:none;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer">Panou de negociere ›</button></div></div>';
+  var colM = c.marjaF >= 0 ? '#3B6D11' : '#C0392B';
+  html += '<div class="kpi-grid" style="margin-bottom:14px">' +
+    '<div class="kpi"><div class="kpi-label">Venit la final</div><div class="kpi-val">' + fm(c.venit) + '</div><div class="kpi-sub">contract + liste acceptate + indexare</div></div>' +
+    '<div class="kpi"><div class="kpi-label">Cost la final</div><div class="kpi-val">' + fm(c.cost) + '</div><div class="kpi-sub">buget + depășiri + cost liste</div></div>' +
+    '<div class="kpi" style="border-color:' + colM + '"><div class="kpi-label">Marjă la final</div><div class="kpi-val" style="color:' + colM + '">' + fm(c.marjaF) + '</div><div class="kpi-sub">' + pc(c.marjaF, c.venit) + ' din venit · ofertată ' + fm(c.marjaOf) + ' (' + pc(c.marjaOf, PREV.contractBase) + ')</div></div>' +
+    '<div class="kpi"><div class="kpi-label">Realizat în ERP (' + PREV.erpData + ')</div><div class="kpi-val">' + fm(PREV.venitReal - PREV.costReal) + '</div><div class="kpi-sub">venituri ' + fm(PREV.venitReal) + ' − costuri ' + fm(PREV.costReal) + '</div></div></div>';
+  // tabel marjă
+  function row(l, v, note, bold, col){ return '<tr style="border-top:1px solid var(--border);' + (bold ? 'background:#F2F4F7;font-weight:700;' : '') + '"><td style="padding:7px 10px">' + l + '</td><td style="padding:7px 10px;text-align:right;white-space:nowrap;color:' + (col || '#222') + '">' + (v < 0 ? '−' : '') + fm(Math.abs(v)) + '</td><td style="padding:7px 10px;color:#666;font-size:11px">' + (note || '') + '</td></tr>'; }
+  html += '<div class="proj-card" style="margin-bottom:14px"><div class="proj-card-header" style="background:#1F3864"><span style="font-size:13px;font-weight:600;color:#fff"><i class="ti ti-calculator"></i> Din ce se compune marja la final</span></div><div style="overflow:hidden"><table style="width:100%;border-collapse:collapse;font-size:12px"><tbody>' +
+    row('Contract după AA2', PREV.contractBase, 'execuție 18.521.332 + proiectare 783.850') +
+    row('+ Liste suplimentare acceptate', c.acc, st.acc + '% din netul cerut (' + fm(c.netTot) + ' lei)') +
+    row('+ Indexare prețuri (48.5)', c.idx, 'SL2 real ' + fm(PREV.indexareReal) + ' + ' + st.grad + '% din restul potențialului (' + fm(PREV.indexarePot) + ' total, estimare)') +
+    row('= VENIT LA FINAL', c.venit, '', true) +
+    row('Buget intern (Deviz General)', PREV.buget, 'cost țintă, include proiectarea') +
+    row('+ Depășiri identificate în registrul de probleme', c.pe, 'toate punctele cu valoare (PE01–PE12), inclusiv penalități și sume suportate de EREN') +
+    row('+ Cost lucrări din liste (executate oricum)', c.costListe, 'net cerut × (1 − marja ' + (c.marja * 100).toFixed(2).replace('.', ',') + '%) — dacă PT se execută integral') +
+    row('= COST LA FINAL', c.cost, '', true) +
+    row('= MARJĂ LA FINAL', c.marjaF, pc(c.marjaF, c.venit) + ' din venit', true, colM) +
+    '</tbody></table></div></div>';
+  // ERP realizat
+  html += '<div class="proj-card" style="margin-bottom:14px"><div class="proj-card-header" style="background:#2C4A6E"><span style="font-size:13px;font-weight:600;color:#fff"><i class="ti ti-database"></i> Realizat în ERP — export CH41 (' + PREV.erpData + ')</span></div><div style="overflow:hidden"><table style="width:100%;border-collapse:collapse;font-size:12px"><tbody>' +
+    row('Facturi client emise', PREV.facturat, 'ERN0182 647.203 + ERN0219 699.504') +
+    row('Facturi de întocmit (FDI)', PREV.deIntocmit, 'de emis către client') +
+    row('Note contabile diverse (venit recunoscut / lucrări în curs)', PREV.noteContabile, 'nu sunt facturi: recunoaștere de venit') +
+    row('= Venituri înregistrate', PREV.venitReal, '', true) +
+    row('Costuri + manoperă înregistrate', PREV.costReal, 'facturi furnizori, bonuri de consum, pontaj, facturi de sosit') +
+    row('= Venituri − costuri înregistrate', PREV.venitReal - PREV.costReal, 'nu se compară cu marja la final: venitul include recunoaștere pe lucrări în curs', true) +
+    row('Valoare lucrări SL1–SL4 (raport producție)', PREV.realizatSL, 'valoare decontată/de decontat la prețul din contract') +
+    '</tbody></table></div></div>';
+  // numerar lunar
+  var remV = Math.max(0, c.venit - PREV.realizatSL), remC = Math.max(0, c.cost - PREV.costReal);
+  var n = PREV.luni.length, inc = [], pla = [], cum = 0, cumArr = [], bil = [], cst = [];
+  for (var i = 0; i < n; i++) { bil.push(remV * PREV.wVenit[i] / 100); cst.push(remC * PREV.wCost[i] / 100); inc.push(0); pla.push(0); }
+  for (var j = 0; j < n; j++) {
+    if (j + st.lagInc < n) inc[j + st.lagInc] += bil[j];
+    if (j + st.lagPl < n) pla[j + st.lagPl] += cst[j];
+  }
+  var restInc = 0, restPla = 0;
+  for (var k = 0; k < n; k++) { if (k + st.lagInc >= n) restInc += bil[k]; if (k + st.lagPl >= n) restPla += cst[k]; }
+  PREV_LUNAR_REAL.forEach(function(r){ var ix = PREV.luni.indexOf(r.luna); if (ix >= 0) { if (r.venit !== undefined) bil[ix] = r.venit; if (r.cost !== undefined) cst[ix] = r.cost; if (r.incasat !== undefined) inc[ix] = r.incasat; if (r.platit !== undefined) pla[ix] = r.platit; } });
+  var maxAbs = 1;
+  for (var m = 0; m < n; m++) { cum += inc[m] - pla[m]; cumArr.push(cum); maxAbs = Math.max(maxAbs, Math.abs(cum)); }
+  html += '<div class="proj-card" style="margin-bottom:14px"><div class="proj-card-header" style="background:#854F0B"><span style="font-size:13px;font-weight:600;color:#fff"><i class="ti ti-cash"></i> Flux de numerar lunar proiectat (față de ' + PREV.erpData + ', fără sold de deschidere)</span></div><div style="overflow:auto"><table style="width:100%;border-collapse:collapse;font-size:11.5px;min-width:700px"><thead><tr style="background:#EEF2F8;text-align:right"><th style="text-align:left;padding:6px 10px">Lună</th><th style="padding:6px 10px">Facturat</th><th style="padding:6px 10px">Încasări</th><th style="padding:6px 10px">Costuri</th><th style="padding:6px 10px">Plăți</th><th style="padding:6px 10px">Net lună</th><th style="padding:6px 10px">Cumulat</th><th style="padding:6px 10px;width:20%;text-align:left">Cumulat (grafic)</th></tr></thead><tbody>';
+  for (var q = 0; q < n; q++) {
+    var net = inc[q] - pla[q], pos = cumArr[q] >= 0;
+    html += '<tr style="border-top:1px solid var(--border);text-align:right"><td style="text-align:left;padding:6px 10px;font-weight:600">' + PREV.luni[q] + '</td><td style="padding:6px 10px">' + fm(bil[q]) + '</td><td style="padding:6px 10px;color:#3B6D11">' + fm(inc[q]) + '</td><td style="padding:6px 10px">' + fm(cst[q]) + '</td><td style="padding:6px 10px;color:#C0392B">' + fm(pla[q]) + '</td><td style="padding:6px 10px;font-weight:600;color:' + (net >= 0 ? '#3B6D11' : '#C0392B') + '">' + (net < 0 ? '−' : '') + fm(Math.abs(net)) + '</td><td style="padding:6px 10px;font-weight:700;color:' + (pos ? '#3B6D11' : '#C0392B') + '">' + (cumArr[q] < 0 ? '−' : '') + fm(Math.abs(cumArr[q])) + '</td><td style="padding:6px 10px;text-align:left"><div style="height:10px;background:#EEF0F3;border-radius:5px;position:relative"><div style="position:absolute;' + (pos ? 'left:50%' : 'right:50%') + ';width:' + (Math.abs(cumArr[q]) / maxAbs * 50) + '%;height:100%;background:' + (pos ? '#3B6D11' : '#C0392B') + ';border-radius:5px"></div></div></td></tr>';
+  }
+  html += '</tbody></table></div><div style="padding:8px 12px;font-size:10.5px;color:#7A828E;line-height:1.5">Facturat = venitul rămas (' + fm(remV) + ') distribuit după profilul din <code>PREV.wVenit</code>; costuri = costul rămas (' + fm(remC) + ') după <code>PREV.wCost</code>; încasări/plăți = decalate cu termenele de mai sus. După orizontul afișat rămân încasări de ' + fm(restInc) + ' și plăți de ' + fm(restPla) + '. Profilurile lunare sunt <b>estimări</b>; nu includ garanții de bună execuție, avansuri, TVA sau sold bancar.</div></div>';
+  // de cerut de la financiar
+  html += '<div style="border-left:4px solid #B7791F;background:#FFF8E1;border-radius:6px;padding:10px 14px;font-size:11.5px;line-height:1.55;color:#5C4510;margin-bottom:14px"><b>De cerut de la financiar (ca previziunea să treacă din estimare în date):</b><ul style="margin:6px 0 0 18px;padding:0">' +
+    '<li><b>Export CH41 pe luni</b> (cu „Perioada” completată), pentru proiectul Hangar Kogălniceanu: venituri și cheltuieli lunar, nu doar pe an.</li>' +
+    '<li><b>Data documentului și data scadenței / plății</b> pentru fiecare factură client și furnizor — ca să calculăm termenele reale de încasare și plată.</li>' +
+    '<li><b>Încasări și plăți efective</b> (extras de cont / registru de casă pe proiect) — exportul actual arată facturat și recunoscut, nu numerar.</li>' +
+    '<li>Regula de <b>recunoaștere a venitului</b> pentru „Note contabile diverse” (2,96 mil) și ce reprezintă facturile de întocmit (683.611).</li>' +
+    '<li><b>Garanția de bună execuție și eventualele reținerile</b> contractuale, ca să intre în flux.</li></ul>' +
+    '<div style="margin-top:6px">Datele lunare reale se pun în <code>PREV_LUNAR_REAL</code>; fiecare lună completată înlocuiește estimarea.</div></div>';
+  html += '<div class="page-footer">PM Hub · EREN CONS SRL · 2026 · Previziune marjă și numerar — surse: ERP CH41 (' + PREV.erpData + '), Sinteză contract, Registrul de probleme, Panoul de negociere</div>';
+  document.getElementById('main').innerHTML = html;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// CALENDAR DE TERMENE — adună automat: Motorul de termene, termenele din Registrul de probleme (PE),
+// termenele din Dosarul de probe (cele cu dată) și evenimentele manuale din CAL_EXTRA.
+// CAL_EXTRA: [{d:'AAAA-LL-ZZ', t:'text', k:'ședință'|'fază'|'plată'|'altele'}]
+// ═══════════════════════════════════════════════════════════════
+var CAL_EXTRA = [
+  // { d:'2026-10-28', t:'Ședință de producție octombrie', k:'ședință' },
+];
+var _calYM = null;   // {y, m} luna afișată (m = 0..11)
+var CAL_MONTHS = ['ianuarie','februarie','martie','aprilie','mai','iunie','iulie','august','septembrie','octombrie','noiembrie','decembrie'];
+
+function calEvents() {
+  var out = [], seen = {};
+  function add(d, t, k, st, ref) {
+    if (!d) return;
+    var key = d + '|' + t;
+    if (seen[key]) return; seen[key] = 1;
+    out.push({d:d, t:t, k:k, st:st || '', ref:ref || 'termene'});
+  }
+  termeneCalc().forEach(function(r) {
+    if (r.status === 'Respectat' || !r.scad) return;
+    add(r.scad, r.clauza + ' — ' + r.etapa + ' (' + r.dosar.split(' — ')[0] + ')', 'termen', r.status, 'termene');
+  });
+  if (typeof REGPD !== 'undefined') REGPD.forEach(function(x) {
+    if (x.status === 'Închis' || !x.termen || x.termen === '—') return;
+    var _iso = _termenToISO(x.termen); add(_iso, x.cod + ' — ' + x.detaliu, 'pe', (_iso && _iso < _tAzi()) ? 'Depășit' : 'Activ', 'regpd');
+  });
+  function fromProbe(p, tag) {
+    var m = /(\d{2})\.(\d{2})\.(\d{4})/.exec(p.termen || '');
+    if (!m || p.stare === 'În dosar') return;
+    add(m[3] + '-' + m[2] + '-' + m[1], 'Probă' + (tag ? ' T' + tag : '') + ': ' + p.doc.slice(0, 70) + (p.doc.length > 70 ? '…' : '') + ' (' + (p.resp || '—') + ')', 'actiune', 'Activ', 'probe');
+  }
+  if (typeof PROBE_TRANSV !== 'undefined') PROBE_TRANSV.forEach(function(p){ fromProbe(p, ''); });
+  if (typeof PROBE_TEME !== 'undefined') PROBE_TEME.forEach(function(t){ t.probe.forEach(function(p){ fromProbe(p, t.nr); }); });
+  CAL_EXTRA.forEach(function(e){ add(e.d, e.t, e.k || 'altele', 'Activ', 'cal'); });
+  out.sort(function(a, b){ return a.d.localeCompare(b.d); });
+  return out;
+}
+function _calColor(e) {
+  if (e.st === 'Depășit' || e.st === 'Tardiv') return ['#FDEDEC','#C0392B'];
+  if (e.st === 'Urgent') return ['#FEF5E7','#B9770E'];
+  if (e.st === 'De verificat' || e.st === 'De completat') return ['#F4ECF7','#7D3C98'];
+  if (e.k === 'pe') return ['#EAFAF1','#1E6E2D'];
+  if (e.k === 'actiune') return ['#E8F6F3','#117A65'];
+  if (e.k === 'ședință' || e.k === 'fază' || e.k === 'plată' || e.k === 'altele') return ['#F2F3F4','#2C3E50'];
+  return ['#EAF2F8','#1A5276'];
+}
+function _calGo(ref) { goModule('hangar', ref === 'cal' ? 'calendar' : ref); }
+function calNav(dm) {
+  var c = _calYM || (function(){ var d = new Date(); return {y:d.getFullYear(), m:d.getMonth()}; })();
+  var t = c.y * 12 + c.m + dm; _calYM = {y:Math.floor(t / 12), m:t % 12}; renderCalendar('hangar');
+}
+function calToday() { _calYM = null; renderCalendar('hangar'); }
+function renderCalendar(proj) {
+  document.querySelectorAll('.submenu-item').forEach(function(i){ i.classList.remove('active'); });
+  var it = document.getElementById('item-hangar-calendar'); if (it) it.classList.add('active');
+  var ev = calEvents(), azi = _tAzi();
+  var now = new Date(), ym = _calYM || {y:now.getFullYear(), m:now.getMonth()};
+  var peste7 = _tAdd(azi, 7), peste30 = _tAdd(azi, 30);
+  var late = ev.filter(function(e){ return e.d < azi && (e.st === 'Depășit' || e.st === 'Tardiv' || e.st === 'De verificat' || e.st === 'De completat'); });
+  var next7 = ev.filter(function(e){ return e.d >= azi && e.d <= peste7; });
+  var next30 = ev.filter(function(e){ return e.d >= azi && e.d <= peste30; });
+  var html = '';
+  html += '<div class="proj-header"><div class="proj-title">Calendar de termene</div><div class="proj-meta">Hangar Kogălniceanu · termene contractuale, termene din registrul de probleme, probe de adus și evenimente manuale · azi ' + _tFmt(azi) + '</div></div>';
+  html += '<div class="module-badge" style="background:#EAF2F8;color:#1A5276"><i class="ti ti-calendar-event" style="font-size:13px"></i> Alimentat automat din Motorul de termene, Registrul PE și Dosarul de probe</div>';
+  html += '<div class="kpi-grid" style="margin:10px 0 14px">' +
+    '<div class="kpi"><div class="kpi-label">În întârziere / de verificat</div><div class="kpi-val" style="color:#C0392B">' + late.length + '</div><div class="kpi-sub">scadență trecută, fără închidere</div></div>' +
+    '<div class="kpi"><div class="kpi-label">Următoarele 7 zile</div><div class="kpi-val" style="color:#B9770E">' + next7.length + '</div><div class="kpi-sub">până la ' + _tFmt(peste7) + '</div></div>' +
+    '<div class="kpi"><div class="kpi-label">Următoarele 30 de zile</div><div class="kpi-val">' + next30.length + '</div><div class="kpi-sub">până la ' + _tFmt(peste30) + '</div></div>' +
+    '<div class="kpi"><div class="kpi-label">Total în calendar</div><div class="kpi-val">' + ev.length + '</div><div class="kpi-sub">termene și acțiuni cu dată</div></div></div>';
+  // agenda
+  function line(e) {
+    var c = _calColor(e), d = _tDiff(e.d), when = d < 0 ? '+' + (-d) + ' zile' : (d === 0 ? 'azi' : (d === 1 ? 'mâine' : 'în ' + d + ' zile'));
+    return '<div onclick="_calGo(\'' + e.ref + '\')" style="cursor:pointer;display:flex;gap:10px;align-items:center;padding:6px 10px;border-radius:6px;background:' + c[0] + ';margin-bottom:4px"><b style="min-width:76px;color:' + c[1] + '">' + _tFmt(e.d) + '</b><span style="flex:1;font-size:12px;color:#222;overflow-wrap:break-word">' + e.t + '</span><span style="font-size:10.5px;font-weight:700;color:' + c[1] + ';white-space:nowrap">' + (e.st && e.st !== 'Activ' ? e.st + ' · ' : '') + when + '</span></div>';
+  }
+  html += '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(420px,1fr));gap:14px;margin-bottom:14px">' +
+    '<div class="proj-card" style="margin-bottom:0"><div class="proj-card-header" style="background:#C0392B"><span style="font-size:13px;font-weight:600;color:#fff"><i class="ti ti-alert-triangle"></i> În întârziere / de verificat (' + late.length + ')</span></div><div style="padding:10px 12px">' + (late.length ? late.map(line).join('') : '<div style="font-size:11px;color:var(--text-tertiary)">Nimic în întârziere.</div>') + '</div></div>' +
+    '<div class="proj-card" style="margin-bottom:0"><div class="proj-card-header" style="background:#1F3864"><span style="font-size:13px;font-weight:600;color:#fff"><i class="ti ti-calendar-time"></i> Următoarele 30 de zile (' + next30.length + ')</span></div><div style="padding:10px 12px">' + (next30.length ? next30.map(line).join('') : '<div style="font-size:11px;color:var(--text-tertiary)">Niciun termen în următoarele 30 de zile.</div>') + '</div></div></div>';
+  // grila lunii
+  var first = new Date(ym.y, ym.m, 1), startDow = (first.getDay() + 6) % 7, days = new Date(ym.y, ym.m + 1, 0).getDate();
+  var byDay = {};
+  ev.forEach(function(e){ (byDay[e.d] = byDay[e.d] || []).push(e); });
+  html += '<div class="proj-card" style="margin-bottom:14px"><div class="proj-card-header" style="background:#2C3E50;display:flex;align-items:center;gap:8px"><button onclick="calNav(-1)" style="border:none;background:rgba(255,255,255,0.18);color:#fff;border-radius:6px;padding:3px 10px;cursor:pointer">‹</button><span style="flex:1;text-align:center;font-size:13px;font-weight:700;color:#fff">' + CAL_MONTHS[ym.m] + ' ' + ym.y + '</span><button onclick="calToday()" style="border:none;background:rgba(255,255,255,0.18);color:#fff;border-radius:6px;padding:3px 10px;cursor:pointer;font-size:11px">Azi</button><button onclick="calNav(1)" style="border:none;background:rgba(255,255,255,0.18);color:#fff;border-radius:6px;padding:3px 10px;cursor:pointer">›</button></div>';
+  html += '<div style="display:grid;grid-template-columns:repeat(7,1fr);font-size:10.5px;font-weight:700;color:#5A6472;background:#EEF2F8;text-align:center">' + ['Lun','Mar','Mie','Joi','Vin','Sâm','Dum'].map(function(d){ return '<div style="padding:5px 0">' + d + '</div>'; }).join('') + '</div>';
+  html += '<div style="display:grid;grid-template-columns:repeat(7,1fr)">';
+  for (var i = 0; i < startDow; i++) html += '<div style="min-height:84px;background:#FAFBFC;border:1px solid #EEF0F3"></div>';
+  for (var d = 1; d <= days; d++) {
+    var iso = ym.y + '-' + ('0' + (ym.m + 1)).slice(-2) + '-' + ('0' + d).slice(-2), list = byDay[iso] || [], isToday = iso === azi, dow = (startDow + d - 1) % 7;
+    html += '<div style="min-height:84px;border:1px solid #EEF0F3;padding:3px;background:' + (isToday ? '#FFF8E1' : (dow > 4 ? '#FAFBFC' : '#fff')) + ';' + (isToday ? 'box-shadow:inset 0 0 0 2px #B7791F;' : '') + '"><div style="font-size:10.5px;font-weight:' + (isToday ? '800' : '600') + ';color:' + (isToday ? '#B7791F' : '#5A6472') + ';margin-bottom:2px">' + d + '</div>';
+    list.slice(0, 3).forEach(function(e){
+      var c = _calColor(e);
+      html += '<div onclick="_calGo(\'' + e.ref + '\')" title="' + e.t.replace(/"/g, '&quot;') + '" style="cursor:pointer;background:' + c[0] + ';color:' + c[1] + ';font-size:9.5px;font-weight:600;border-radius:4px;padding:1px 4px;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + e.t + '</div>';
+    });
+    if (list.length > 3) html += '<div style="font-size:9.5px;color:#5A6472" title="' + list.slice(3).map(function(e){ return e.t.replace(/"/g, '&quot;'); }).join(' | ') + '">+' + (list.length - 3) + ' altele</div>';
+    html += '</div>';
+  }
+  var tail = (startDow + days) % 7; if (tail) for (var j = tail; j < 7; j++) html += '<div style="min-height:84px;background:#FAFBFC;border:1px solid #EEF0F3"></div>';
+  html += '</div></div>';
+  html += '<div style="font-size:10.5px;color:var(--text-tertiary);line-height:1.5">Culori: roșu = depășit / notificare tardivă; chihlimbar = urgent (≤ 7 zile); violet = de verificat / de completat; albastru = termen activ; verde = termen din registrul de probleme; turcoaz = probă de adus. Evenimentele manuale (ședințe, faze determinante, plăți) se adaugă în <code>CAL_EXTRA</code>. Termenele marcate „propus” în Dosarul de probe sunt propuneri, de confirmat.</div>';
+  html += '<div class="page-footer">PM Hub · EREN CONS SRL · 2026 · Calendar de termene</div>';
   document.getElementById('main').innerHTML = html;
 }
 

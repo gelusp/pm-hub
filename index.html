@@ -723,13 +723,13 @@ var DATA = {
     kpis:[
       {label:"Buget total contract",val:"19,3 mil lei",sub:"Fără TVA · Fără lucrări suplimentare"},
       {label:"Buget intern eDevize",val:"17,1 mil lei",sub:"−11,4% față de contract · Completat Cap.1-13"},
-      {label:"Grad fundamentare (OP+VP+DO)",val:"49,8%",sub:"Cap.1 97,4% · Cap.2 54,4% · Cap.3 48,3% · Cap.4 51,7% · Cap.6 41,2% · Cap.7 26% · Cap.8 0% · Cap.9 28,4% · Cap.10 58,7% ⚠ · Cap.11 75% · Cap.12 0% · Cap.13 0% · Org.Șant. 100% (DO)"},
-      {label:"Valoare nedocumentată",val:"~8,6 mil lei",sub:"Cap.8: 898.778 lei (0%) · Cap.7 F3: 722.999 · Cap.9 F3+F4: 595.419 · Cap.10 F3: 788.116 · Cap.11 F3: 78.381 · Cap.12+13: 10.486"}
+      {label:"Grad fundamentare (OP+VP+DO)",val:"50,1%",sub:"Cap.1 97,4% · Cap.2 54,4% · Cap.3 48,3% · Cap.4 51,7% · Cap.6 41,2% · Cap.7 26% · Cap.8 0% · Cap.9 28,4% · Cap.10 58,7% ⚠ · Cap.11 89,8% (contract Nibaco) · Cap.12 0% · Cap.13 0% · Org.Șant. 100% (DO)"},
+      {label:"Valoare nedocumentată",val:"~8,5 mil lei",sub:"Cap.8: 898.778 lei (0%) · Cap.7 F3: 722.999 · Cap.9 F3+F4: 595.419 · Cap.10 F3: 788.116 · Cap.12+13: 10.486 · Cap.11: 32.057 (economie vs buget, contractat Nibaco)"}
     ],
     n1:[
-      {label:"Fundamentare OP+VP (față de eDevize 17,1 mil)",badge:"ok",text:"40,3%"},
+      {label:"Fundamentare OP+VP (față de eDevize 17,1 mil)",badge:"ok",text:"40,7%"},
       {label:"Buget intern eDevize",badge:"ok",text:"COMPLET — 17,1 mil lei (Cap.1-13)"},
-      {label:"Valoare nedocumentată (fără ofertă)",badge:"warn",text:"~8,6 mil lei"},
+      {label:"Valoare nedocumentată (fără ofertă)",badge:"warn",text:"~8,5 mil lei"},
       {label:"Org.Șantier 1,6 mil lei",badge:"ok",text:"Documentat intern DO — 100%"}
     ],
     bars:[
@@ -754,7 +754,7 @@ var DATA = {
       {cap:"8. Inst. sanitare int.",   buget:"616.244 lei",   doc:"0 lei",        nedoc:"616.244 lei",   pct:0,  bar:"#E24B4A", contractat:"—",            status:"risk", statusLabel:"0%"},
       {cap:"9. HVAC (F3+F4)",           buget:"506.915 lei",   doc:"144.283 lei (F4 parțial)", nedoc:"362.632 lei", pct:28, bar:"#EF9F27", contractat:"—", status:"warn", statusLabel:"28,4%"},
       {cap:"10. Curenți tari (F3+F4)",  buget:"1.270.288 lei", doc:"746.000 lei (F4 Dynell)", nedoc:"788.116 lei (F3)", pct:59, bar:"#EF9F27", contractat:"—", status:"warn", statusLabel:"58,7% ⚠"},
-      {cap:"11. Curenți slabi",        buget:"313.164 lei",   doc:"234.783 lei (Honeywell)", nedoc:"78.381 lei",  pct:75, bar:"#EF9F27", contractat:"—", status:"warn", statusLabel:"75,0%"},
+      {cap:"11. Curenți slabi",        buget:"313.164 lei",   doc:"281.107 lei (contract Nibaco)", nedoc:"32.057 lei (economie vs buget)",  pct:90, bar:"#639922", contractat:"Nibaco ctr 208 · 281.107 lei", status:"ok", statusLabel:"89,8% · contractat"},
       {cap:"12. Probe tehnologice",    buget:"10.189 lei",    doc:"0 lei",        nedoc:"10.189 lei",    pct:0,  bar:"#E24B4A", contractat:"—",            status:"risk", statusLabel:"Lipsă"},
       {cap:"13. Pregătire personal",   buget:"297 lei",       doc:"0 lei",        nedoc:"297 lei",       pct:0,  bar:"#E24B4A", contractat:"—",            status:"risk", statusLabel:"Lipsă"},
       {cap:"5.1 Org. Șantier",         buget:"1.600.888 lei", doc:"1.600.888 lei (DO)", nedoc:"0 lei",  pct:100, bar:"#639922", contractat:"Documentat intern", status:"ok", statusLabel:"100% (DO)"}
@@ -770,7 +770,7 @@ var DATA = {
     alerts:[
       {title:"Cap.2.1 — Ofertă Mithras REVIZUITĂ: −144.791 lei, dar rămâne +58,0% peste buget", meta:"Cap.2.1 · MTH-B 545: 381.947 € = 2.002.512 lei vs buget 1.267.781 lei (+734.731 lei) · manoperă BCR 43,85→35,35 €/mp · expiră 22.07", date:"18 iul", cls:"risk"},
       {title:"Cap.10 — GPU 400Hz: ofertă +54,7% față de buget (supracost major)", meta:"Cap.10 · Dynell Tip A 746.000 lei vs buget F4 482.171 lei (+263.829 lei) · F3 788.116 lei fără ofertă", date:"15 iul", cls:"risk"},
-      {title:"Cap.11 — CCTV și Control acces nelipsite din deviz", meta:"Cap.11 · Honeywell include CCTV+CtrlAcc={122.000 lei} nebugetate explicit în deviz curent", date:"15 iul", cls:"warn"},
+      {title:"Cap.11 — CCTV și Control acces rămân în afara contractului Nibaco", meta:"Cap.11 · Contract 208 (Nibaco, 281.107 lei) acoperă IDSAI + rețea de date + ECS/rack; CCTV și control acces (~122.000 lei în ofertele 2024) nu sunt în deviz și nu sunt contractate — de clarificat dacă sunt scop contractual", date:"18 oct", cls:"warn"},
       {title:"Cap.9 HVAC — Rezervor ingropat 20.000L fără ofertă", meta:"Cap.9 · 101.351 lei (37% din F4) nevalidat · VRF +67% supracost față de buget", date:"15 iul", cls:"risk"},
       {title:"Structură metalică hală URGENT", meta:"Cap.3 · 1.586.706 lei fără ofertă · Cap.3 total 48,3% fund.", date:"10 iul", cls:"risk"},
       {title:"Cap.4 pod rulant + echipamente (F4)", meta:"Cap.4 · 213.790 lei buget F4 — oferte în așteptare", date:"15 iul", cls:"warn"},
@@ -2808,12 +2808,12 @@ function renderAnalize(proj) {
       },
       {
         cap:"Cap.11 — Curenți Slabi (Fire detection, CCTV, Control acces)",
-        url:"https://docs.google.com/spreadsheets/d/1MKGKGXo2ocT6tN689weByqTQDCerubuTtsiUF13P4OQ/edit?gid=1185107595#gid=1185107595",
-        status:"warn",
-        label:"Finalizată (parțial) — 75,0%",
-        date:"Iul 2026",
+        url:"https://docs.google.com/spreadsheets/d/191QAFSTQNjJKYj8QfbXFVT6DfUdcQGI4Q2ZW9mhVWrw/edit?usp=sharing",
+        status:"ok",
+        label:"Contractat — Nibaco ctr 208 (19.10.2026)",
+        date:"Oct 2026",
         buget:"313.164 lei (F3+F4)",
-        desc:"VP Honeywell: 234.783 lei (−25% vs Nibaco) · CCTV + Control Acces absente din deviz (~122.000 lei nebugetate) — RISC CRITIC · Centrala trape desfumare F4: 0 lei — clarificare proiectant · F3 lucrări: 78.381 lei fără ofertă · 4 riscuri"
+        desc:"Contract Nibaco 281.107 lei vs buget 313.164 (−32.057 lei, −10,2%) · marjă vs venit +26,1% (+35,7% cu indexare) · anomalii de preț: cablu NHXH (−11,4 mii) și programare/PIF (+12,5 mii) · Centrala trape F4: 0 lei (PE08, cost EREN) · CCTV/control acces în afara contractului · anexa grafic doar anexe (ID 217/218) · 4 riscuri"
       },
       {
         cap:"Cap.12 — Probe Tehnologice și Verificări",
@@ -2883,10 +2883,10 @@ function renderSinteza(proj) {
   html += '</div>';
 
   var KPI_S = [
-    {label:"Grad fund. global",val:"49,8%",sub:"8.502.999 lei OP / 17.075.952 lei buget intern · 12 cap. + Org. Șantier"},
+    {label:"Grad fund. global",val:"50,1%",sub:"8.549.323 lei OP / 17.075.952 lei buget intern · 12 cap. + Org. Șantier"},
     {label:"Riscuri deschise",val:"47",sub:"14 Critice · 16 Medii/Mari · 8 Mici · +6 Cap.9 · +5 Cap.10 · +4 Cap.11"},
     {label:"Economie identificată",val:"583.199 lei",sub:"Cap.1-4: 419.053 + Cap.6: 94.762 + Cap.7: 65.500 + Cap.9: 3.884 lei (CAIROX)"},
-    {label:"Nedocumentat",val:"~8,6 mil lei",sub:"Cap.8: 898.778 lei 0% · Cap.9 F3: 232.787 · Cap.10 F3: 788.116 · Cap.11: 78.381 · Cap.12+13: 10.486 · 5.1 Org. Șant. 0 (100% DO)"}
+    {label:"Nedocumentat",val:"~8,5 mil lei",sub:"Cap.8: 898.778 lei 0% · Cap.9 F3: 232.787 · Cap.10 F3: 788.116 · Cap.11: 32.057 (economie vs buget, contractat Nibaco) · Cap.12+13: 10.486 · 5.1 Org. Șant. 0 (100% DO)"}
   ];
   html += '<div class="kpi-grid">';
   KPI_S.forEach(function(k){
@@ -3079,23 +3079,24 @@ function renderSinteza(proj) {
       ]
     },
     {
-      id:'cap11', label:'Cap.11 — Curenți Slabi', buget:'313.164 lei (F3+F4)', op:'234.783 lei (Honeywell)', grad:'75,0%', gradCls:'warn',
+      id:'cap11', label:'Cap.11 — Curenți Slabi', buget:'313.164 lei (F3+F4)', op:'281.107 lei (contract Nibaco ctr 208)', grad:'89,8% (contractat)', gradCls:'ok',
       riscuri:[
-        {cod:'R-11.1',prio:'Critic',text:'CCTV și Control acces: sisteme oferite de Nibaco/Honeywell dar ABSENTE ca subcapitol în deviz — risc omisiune bugetară!',term:'15 iul'},
-        {cod:'R-11.2',prio:'Critic',text:'Centrala trape desfumare (F4 poz.2): 0 lei în deviz — preț nespecificat. Necesită clarificare proiectant.',term:'11 iul'},
-        {cod:'R-11.3',prio:'Mare',text:'Nibaco (+19,7% față de buget): 374.708 lei vs buget 313.164 lei. Honeywell (-25%) mai avantajos.',term:'15 iul'},
-        {cod:'R-11.4',prio:'Mediu',text:'F3 montaj echipamente (11.3): 2.944 lei — verifică dacă montajul rack-urilor și cablajului structurat e inclus complet',term:'15 iul'}
+        {cod:'R-11.1',prio:'Mediu',text:'CCTV și Control acces: oferite în 2024 de Nibaco/Honeywell dar ABSENTE din deviz și din contractul Nibaco 208 (oferta 2026 nu le include) — de clarificat dacă sunt scop contractual.',term:'—'},
+        {cod:'R-11.2',prio:'Critic',text:'Centrala trape desfumare (F4 poz.2): 0 lei în deviz — preț nespecificat; NU este inclusă în contractul Nibaco 208 (cost EREN, PE08).',term:'11 iul'},
+        {cod:'R-11.3',prio:'Mediu',text:'Anomalii de preț Nibaco (ctr 208): cablu NHXH E30/PH30 2,48 lei/m vs 19,56 buget (−11.390 lei) — de confirmat în scris; programare/PIF centrală 15.557 vs 3.014 lei (+12.543 lei).',term:'—'},
+        {cod:'R-11.4',prio:'Mediu',text:'Graficul anexă la ctr 208 cuprinde doar anexele (ID 217/218, 21.12.2026–01.04.2027); lipsesc activități de curenți slabi pe hangar (IDSAI, rețea de date, centrală).',term:'—'}
       ],
       rec:[
-        {cod:'REC-11.1',text:'Honeywell (234.783 lei) recomandat față de Nibaco (374.708 lei) — diferență 139.925 lei. Verificare tehnică specificații obligatorie.'},
+        {cod:'REC-11.1',text:'Contract Nibaco 208 semnat: 281.107 lei, −32.057 lei (−10,2%) față de buget; marjă +26,1% vs venit. Honeywell (2024) și IMSAT nu au fost contractate.'},
         {cod:'REC-11.2',text:'Clarificare urgentă: CCTV și Control acces — există buget în alt capitol sau sunt omise? Impactul e estimat la 27.000-60.000 lei.'},
         {cod:'REC-11.3',text:'Solicitare preț centrala trape desfumare (F4 poz.2 = 0 lei) — posibil inclus în Cap.9 HVAC (verifică cu proiectantul)'}
       ],
       act:[
         {cod:'ACT-11.1',text:'Clarificare proiectant: CCTV și Control acces sunt bugetate în deviz curent sau omise? Identifică capitolul.',term:'11 iul',resp:'PM + Proiectant'},
         {cod:'ACT-11.2',text:'Clarificare preț centrala trape desfumare (F4 poz.2 = 0 lei)',term:'11 iul',resp:'PM + Proiectant'},
-        {cod:'ACT-11.3',text:'Analiza tehnică comparativă Honeywell vs Nibaco — specificații ECS, detectori, centrale. Decizie achiziție.',term:'18 iul',resp:'PM + Achiziții'},
-        {cod:'ACT-11.4',text:'Solicitare deviz actualizat cu CCTV și Control acces incluse explicit',term:'18 iul',resp:'Proiectant'}
+        {cod:'ACT-11.3',text:'Confirmare scrisă Nibaco: preț cablu NHXH E30/PH30 (2,48 lei/m) și programare/PIF centrală (15.557 lei) — incluse în ctr 208.',term:'—',resp:'G. Spătaru'},
+        {cod:'ACT-11.4',text:'Solicitare deviz actualizat cu CCTV și Control acces incluse explicit',term:'18 iul',resp:'Proiectant'},
+        {cod:'ACT-11.5',text:'Adăugare în graficul MS Project a activităților de curenți slabi pe hangar și refacere anexă grafic ctr 208',term:'—',resp:'G. Spătaru / Planificare'}
       ]
     },
     {
@@ -3227,7 +3228,7 @@ var REGPD = [
    explicatii:'Echipamentul este prevăzut în lista de utilaje și echipamente a obiectului 11, dar a fost ofertat la preț 0,00 lei. Fiind poziție contractuală, trebuie furnizată și montată, însă nu poate fi tratată prin NCS către Beneficiar (prețul de contract e 0,00): EREN suportă integral costul, fără încasare.',
    cauza:'<b style="color:#000">Eroare de ofertare</b> — poziție ofertată la 0,00 lei.',
    impactTimp:'În curs de evaluare',
-   actiune:'Clarificare solicitată prin email (03.10.2026) către Bogdan Ștefănescu și Tudor Ștefancu (cc Costin Trif) privind execuția. Se adaugă în execuție la cost EREN, fără încasare de la Beneficiar: cerere de ofertă furnizor pentru cuantificarea costului și includere în buget ca pierdere asumată.',
+   actiune:'Clarificare solicitată prin email (03.10.2026) către Bogdan Ștefănescu și Tudor Ștefancu (cc Costin Trif) privind execuția. Se adaugă în execuție la cost EREN, fără încasare de la Beneficiar: cerere de ofertă furnizor pentru cuantificarea costului și includere în buget ca pierdere asumată. Notă 18.10.2026: contractul Nibaco nr. 208 / 19.10.2026 (IDSAI, rețea de date, ECS, rack-uri) NU include această centrală.',
    sursa:'Email „Centrala actionare trape”, 03.10.2026 17:52 (Formular F4, obiect 11, pag. 4/5)'},
   {cod:'PE09', categorie:'Bugetar', detaliu:'Obiect 6 · Rețele ext. sanitare — rigole, bazine retenție, separator hidrocarburi', valoare:0, valoareText:'În curs de evaluare', termen:'—', status:'Deschis', dataStatus:'04.10.2026',
    problema:'Neconcordanțe între devizul de contract (Obiect 6) și soluția reală / oferta Profimat, la 5 poziții: (1) rigolă cu fantă CAN20+CAN21 (29 buc) și cămin de scurgere CAN14 (4 buc) vs. 19 buc rigolă și un singur cămin de descărcare confirmate de proiectant; (2) guri de scurgere trafic greu F900kN CAN15 (4 buc, 3.098,04 lei) — absente din oferta Profimat și din confirmarea proiectantului; (3) rezervor/bazin retenție ape pluviale 80 mc — deviz GRP (testat ICECON) vs. oțel corugat galvanizat ofertat de Profimat; (4) stație de pompare bazin pluvial — fără poziție dedicată în deviz (doar „Pompa Basa”, mult sub necesarul cerut de Profimat: 2 pompe submersibile + tablou automatizare); (5) separator hidrocarburi 80 L/s — specificația din deviz de confirmat cu cea cerută de proiect.',
@@ -5464,7 +5465,9 @@ function renderConfMetalice(proj) {
 
 
 // ── Sinteză execuție contract (validare contract / buget / ERP · saving) ─────────────
-var CONTRACTSINT_URL = ''; // link Google Sheets sinteză contract — de completat
+var REGISTRU_URL = 'https://docs.google.com/spreadsheets/d/15_ya18YSu4WmAJy12MZFCtsN_3jTGwZy/edit?usp=sharing'; // Registrul problemelor de execuție (Google Sheets)
+var SINTEZACAP_URL = 'https://docs.google.com/spreadsheets/d/1QpTnES_APYnTV2fSCeC_mSXnCOlByjoPMZiAn0Q-aq8/edit?usp=sharing'; // Sinteza concluzii analize capitole (Google Sheets)
+var CONTRACTSINT_URL = 'https://docs.google.com/spreadsheets/d/1TrcnXKDlrFqU5yqMwbosKbihDFf5MbCLrPa6GT5PaKc/edit?usp=sharing'; // Fișa de validare buget (Google Sheets)
 
 
 // ==== Registru decizii eDevize Kogalniceanu (structurat pe devize) ====
@@ -5747,7 +5750,11 @@ function renderContractSinteza(proj) {
     {scope:'OS — RTE domeniul 1.1, responsabil tehnic cu execuția (Cap.5, Echipa de proiect)', furnizor:'PFA Nastase Gabriel', nr:'ctr 152A · 08.07.2026 · AA1', buget:23008, contract:22500, stare:'Semnat',
      nota:'Responsabil tehnic cu execuția (domeniul 1.1): asistență tehnică în construcții, verificarea documentelor de calitate, participare la fazele determinante (contract 152A + AA1 din 08.07.2026), obiectiv Hangar Kogălniceanu. 9 luni de la 08.07.2026, 2.500 lei/lună fără TVA = 22.500 lei, în 9 rate lunare facturate pe 25 ale lunii, plată în 5 zile calendaristice. Etapa 1 a lucrărilor; pentru solicitări ulterioare se încheie act adițional. Întreruperea de comun acord suspendă tariful.',
      ctx:'Buget OS 5.2 „Responsabil tehnic cu execuția”: 6 luni × 3.834,60 = 23.008 lei (CH54 18.10.2026). Contract 22.500 lei pe 9 luni — sub buget ca sumă, dar acoperă 9 luni, nu 6.',
-     ctxDetail:'Contractul PFA Nastase Gabriel (RTE dom. 1.1) se compară cu linia „Responsabil tehnic cu execuția” (NR-033676) din devizul OS 5.2 — 6 luni × 3.834,60 lei = 23.007,60 lei. Saving aparent +508 lei, dar bugetul acoperă doar 6 luni, iar contractul 9 luni (2.500 lei/lună vs 3.834,60 lei/lună în buget): pe lună tariful e cu 35% sub buget, iar durata mai lungă consumă avantajul. Fără linie de venit proprie în devizul beneficiarului. ERP: 5.000 lei costuri înregistrate la 04.10.2026. RTE domeniul 2.2 și geotehnicianul rămân nebugetate (nu au linie în OS 5.2). Dacă lucrările depășesc 9 luni, se încheie act adițional.'}
+     ctxDetail:'Contractul PFA Nastase Gabriel (RTE dom. 1.1) se compară cu linia „Responsabil tehnic cu execuția” (NR-033676) din devizul OS 5.2 — 6 luni × 3.834,60 lei = 23.007,60 lei. Saving aparent +508 lei, dar bugetul acoperă doar 6 luni, iar contractul 9 luni (2.500 lei/lună vs 3.834,60 lei/lună în buget): pe lună tariful e cu 35% sub buget, iar durata mai lungă consumă avantajul. Fără linie de venit proprie în devizul beneficiarului. ERP: 5.000 lei costuri înregistrate la 04.10.2026. RTE domeniul 2.2 și geotehnicianul rămân nebugetate (nu au linie în OS 5.2). Dacă lucrările depășesc 9 luni, se încheie act adițional.'},
+    {scope:'Curenți slabi — IDSAI, rețea de date, montaj + utilaje ECS/rack (Cap.11)', furnizor:'Nibaco', nr:'ctr 208 · 19.10.2026', buget:313164, contract:281107, venit:380317, stare:'Semnat',
+     nota:'Instalații de curenți slabi la hangar și anexe: IDSAI (detecție, semnalizare, avertizare incendiu — 22 articole din deviz), rețea de date (prize RJ45, fibră optică, cablu cat.6A, tuburi de protecție), centrală de incendiu adresabilă și 2 rack-uri 42U (montaj + utilaj). Include 412 lei extra nebugetat (2 butoane declanșare manuală exterior IP55). NU include: centrala de acționare trape desfumare (F4 poz.2, 0 lei — PE08, cost EREN), CCTV și control acces (nebugetate în deviz). Valoare = oferta Nibaco 2026 (listă cantități cu prețuri, 30.09.2026). Anexa grafic de execuție: ID 217 (21.12.2026–05.01.2027) și ID 218 (19.03.2027–01.04.2027), doar anexe.',
+     ctx:'Buget = contractul original eDevize, obiect 11 (IDSAI 253.569 + rețea 25.139 + montaj/utilaj ECS+rack 34.456). Venit 380.317 lei = Fișa de validare (F3 344.528 + F4 echipamente 35.789).',
+     ctxDetail:'Saving +32.057 lei (+10,2%): IDSAI −28.996 (−11,4%), rețea de date −2.623 (−10,4%), montaj+utilaj −438 (−1,3%). Două anomalii de preț se compensează parțial: cablu NHXH E30/PH30 la 2,48 lei/m vs 19,56 buget (−11.390 lei) și programare/PIF centrală 15.556,65 vs 3.014,12 lei (+12.543 lei); prețul cablului de confirmat în scris — dacă se corectează, economia scade cu până la ~11 mii lei. Marjă vs venit +99.210 lei (+26,1%), cu indexare SL2 +156.376 lei (+35,7%). Graficul anexă cuprinde doar anexele (ID 217/218): lipsesc activități de curenți slabi pe hangar. Analiză detaliată: folderul 9. Contracte \\ 12. Nibaco - curenti slabi.'}
   ];
   var totContract = 0, totBugetCmp = 0, totContractCmp = 0, pendingCount = 0;
   contracte.forEach(function(c){
@@ -5788,10 +5795,10 @@ function renderContractSinteza(proj) {
   function milfmt(n){ return (n/1000000).toFixed(2).replace('.',',') + ' mil'; }
 
   var html = '';
-  html += '<div class="proj-header"><div class="proj-title">Sinteză execuție contract — Validare / Buget / Saving</div><div class="proj-meta">' + (DATA[proj]?DATA[proj].title:'Hangar Kogălniceanu') + ' · imaginea financiară a contractului, de la licitație la costul real · actualizat 27.09.2026</div></div>';
+  html += '<div class="proj-header"><div class="proj-title">Sinteză execuție contract — Validare / Buget / Saving</div><div class="proj-meta">' + (DATA[proj]?DATA[proj].title:'Hangar Kogălniceanu') + ' · imaginea financiară a contractului, de la licitație la costul real · actualizat 18.10.2026</div></div>';
   html += '<div class="module-badge" style="background:#E7ECF6;color:#1F3864"><i class="ti ti-file-dollar" style="font-size:13px"></i> Sinteză execuție contract · buget · contracte semnate · saving/pierderi</div>';
   if (CONTRACTSINT_URL) {
-    html += '<div style="margin-bottom:12px"><a href="' + CONTRACTSINT_URL + '" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 18px;background:#1A5276;color:#fff;border-radius:var(--radius);font-size:12px;font-weight:600;text-decoration:none"><i class="ti ti-table"></i> Deschide sinteza (Google Sheets)</a></div>';
+    html += '<div style="margin-bottom:12px"><a href="' + CONTRACTSINT_URL + '" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 18px;background:#1A5276;color:#fff;border-radius:var(--radius);font-size:12px;font-weight:600;text-decoration:none"><i class="ti ti-table"></i> Deschide Fișa de validare buget (Google Sheets)</a>'+(SINTEZACAP_URL?' <a href="'+SINTEZACAP_URL+'" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 18px;background:#1A5276;color:#fff;border-radius:var(--radius);font-size:12px;font-weight:600;text-decoration:none;margin-left:8px"><i class="ti ti-table"></i> Sinteza concluzii analize capitole</a>':'')+(REGISTRU_URL?' <a href="'+REGISTRU_URL+'" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 18px;background:#1A5276;color:#fff;border-radius:var(--radius);font-size:12px;font-weight:600;text-decoration:none;margin-left:8px"><i class="ti ti-table"></i> Registrul problemelor de execuție</a>':'')+'</div>';
   } else {
     html += '<div style="margin-bottom:12px"><span style="display:inline-flex;align-items:center;gap:6px;padding:8px 18px;background:#E5E7EB;color:#6B7280;border-radius:var(--radius);font-size:12px;font-weight:600"><i class="ti ti-table"></i> Link sinteză în pregătire</span></div>';
   }
@@ -5851,8 +5858,8 @@ function renderContractSinteza(proj) {
   html += '<div class="proj-card" style="margin-bottom:0">';
   html += '<div class="proj-card-header" style="background:#3B6D11"><span style="font-size:13px;font-weight:600;color:#fff"><i class="ti ti-checklist"></i> Documentare cu oferte de piață</span></div>';
   html += '<div class="proj-card-body">';
-  html += '<div style="font-size:26px;font-weight:700;color:#3B6D11;line-height:1">40,3%</div><div style="font-size:12px;color:#5A6472;margin-bottom:8px">oferte de piață (OP) · 49,8% cu OP+VP+DO</div>';
-  html += '<div style="height:14px;display:flex;border-radius:5px;overflow:hidden;margin-bottom:6px"><div style="width:40.3%;background:#639922" title="Oferte piață"></div><div style="width:9.5%;background:#EF9F27" title="Proiect anterior / estimare DO"></div><div style="width:50.2%;background:#E24B4A" title="Nedocumentat"></div></div>';
+  html += '<div style="font-size:26px;font-weight:700;color:#3B6D11;line-height:1">40,7%</div><div style="font-size:12px;color:#5A6472;margin-bottom:8px">oferte de piață (OP) · 50,1% cu OP+VP+DO</div>';
+  html += '<div style="height:14px;display:flex;border-radius:5px;overflow:hidden;margin-bottom:6px"><div style="width:40.7%;background:#639922" title="Oferte piață"></div><div style="width:9.4%;background:#EF9F27" title="Proiect anterior / estimare DO"></div><div style="width:49.9%;background:#E24B4A" title="Nedocumentat"></div></div>';
   html += '<div style="font-size:11px;color:#444;line-height:1.5"><b>~8,6 mil lei nedocumentat</b> (fără ofertă de piață). Critic: Cap.8 sanitare 0%, structură metalică 109 t, Cap.7 F3, Cap.10 F3.</div>';
   html += '</div></div>';
   html += '</div>';
@@ -7643,11 +7650,12 @@ var INST_DATA = {
   },
   cap11: {
     key:'cap11', mod:'inst11', nume:'Cap.11 — Curenți Slabi', icon:'ti-antenna', color:'#5B2C87',
-    fisierLink:'https://docs.google.com/spreadsheets/d/1SIZd1BEUYz-_GoWZzIe8gc-qgzZeKtZXX7qiOBmhA1A/edit?usp=sharing',
+    fisierLink:'https://docs.google.com/spreadsheets/d/191QAFSTQNjJKYj8QfbXFVT6DfUdcQGI4Q2ZW9mhVWrw/edit?usp=sharing',
     ofertanti:['IMSAT','Nibaco 2026','Nibaco 2024','Honeywell','Polon-Alfa'],
+    contract:{furnizor:'Nibaco', nr:'ctr 208 · 19.10.2026', val:281106.76, buget:313164.11, nota:'Valoare = oferta Nibaco 2026 (listă cantități cu prețuri, 30.09.2026), include 412 lei extra nebugetat (2 butoane exterior IP55). Nu include centrala trape F4 (0 lei, PE08), CCTV, control acces. Grafic anexă: ID 217 + 218 (anexe).'},
     f3Label:'F3 — pe structura contractului original eDevize (buget confirmat 27.09.2026, 34 articole, detaliu în xlsx)',
     f3: [
-      {cod:'IDSAI', den:'IDSAI — detecție, semnalizare, avertizare incendiu (22 articole)', buget:253568.85, of:{IMSAT:339767.01, 'Nibaco 2026':224160.99, 'Nibaco 2024':199669.35, Honeywell:139100.90, 'Polon-Alfa':52557.10}, obs:'Honeywell cea mai ieftină (-45,1%). IMSAT cea mai scumpă (+34%). Nibaco 2026 (rev. 30.09) -11,6% vs buget; pozițiile lipsă și neconcordanțele de spec./cantități au fost rezolvate, rămân 2 anomalii de preț (vezi Riscuri). Polon-Alfa mult sub buget (-79,3%) — de verificat dacă oferta e completă/echivalentă tehnic înainte de a o trata ca economie.'},
+      {cod:'IDSAI', den:'IDSAI — detecție, semnalizare, avertizare incendiu (22 articole)', buget:253568.85, of:{IMSAT:339767.01, 'Nibaco 2026':224160.99, 'Nibaco 2024':199669.35, Honeywell:139100.90, 'Polon-Alfa':52557.10}, obs:'CONTRACTAT cu Nibaco 2026 (ctr 208, 19.10.2026: 224.573 lei cu 412 lei extra, −11,4% vs buget). Honeywell cea mai ieftină (-45,1%, ofertă 2024, necontractată). IMSAT cea mai scumpă (+34%). Nibaco 2026 (rev. 30.09) -11,6% vs buget; pozițiile lipsă și neconcordanțele de spec./cantități au fost rezolvate, rămân 2 anomalii de preț (vezi Riscuri). Polon-Alfa mult sub buget (-79,3%) — de verificat dacă oferta e completă/echivalentă tehnic înainte de a o trata ca economie.'},
       {cod:'RETDATE', den:'Rețea de date (5 articole)', buget:25138.90, of:{IMSAT:59143.68, 'Nibaco 2026':22515.85, 'Nibaco 2024':52701.68, Honeywell:34701.83}, obs:'Nibaco 2026 singura ofertă sub buget (-10,4%). Restul peste buget. Polon-Alfa nu a ofertat rețea de date.'}
     ],
     f4Label:'Montaj echipamente (F3) + Utilaj ECS/Rack (F4) combinat + Extra (scop nebugetat) — detaliu complet în xlsx',
@@ -7658,19 +7666,17 @@ var INST_DATA = {
       {cod:'EXTRA.3', den:'Polon-Alfa — completare surse tensiune 24V (20 buc) + acumulatori (40 buc)', buget:null, of:{'Polon-Alfa':15549.30}, obs:'Ofertă separată (fișier distinct, oct.2024), alocare neclară — posibilă suprapunere cu sursele deja incluse în IDSAI. DE CLARIFICAT cu Polon-Alfa.'}
     ],
     riscuri:[
-      {sev:'MARE', text:'IMSAT cea mai scumpă ofertă pe IDSAI (339.767 lei, +34% vs buget) — Honeywell (139.101 lei) rămâne opțiunea cea mai ieftină pe acest subcapitol, dar oferta ei e din nov.2024 (de reverificat valabilitatea).'},
-      {sev:'MARE', text:'Polon-Alfa la doar 52.557 lei pe IDSAI (-79,3% vs buget) — diferență prea mare pentru a fi doar preț de listă; verificare tehnică obligatorie înainte de a o considera opțiune reală.'},
-      {sev:'MEDIU', text:'Nibaco 2026 (ofertă revizuită 30.09.2026): preț suspect de mic la cablul NHXH (2,48 lei/m vs 19,56 lei/m buget) și preț de ~5x peste buget la programare/PIF centrală (15.556,65 vs 3.014,12 lei) — de clarificat cu Nibaco înainte de decizie de contractare.'},
-      {sev:'MEDIU', text:'Oferta separată Polon-Alfa de surse/acumulatori (15.549 lei) are alocare neclară — risc de dublă numărare dacă se însumează necondiționat cu IDSAI.'},
-      {sev:'MEDIU', text:'CCTV + Control acces (doar în ofertele 2024) nu au subcapitol explicit în deviz — de clarificat dacă sunt scop contractual sau extra-scop.'},
-      {sev:'MIC', text:'Centrala trape desfumare — preț 0 lei atât în deviz/contract cât și la Nibaco/oferte vechi, nespecificat. Necesită ofertă separată.'}
+      {sev:'OK', text:'Decizie luată: contract Nibaco nr. 208 / 19.10.2026 — 281.107 lei, −32.057 lei (−10,2%) față de buget; marjă +26,1% vs venit (+35,7% cu indexare). Honeywell (139.101 lei IDSAI, nov.2024), IMSAT și Polon-Alfa nu au fost contractate; comparațiile rămân informative.'},
+      {sev:'MEDIU', text:'Anomalii de preț Nibaco (ctr 208): cablu NHXH E30/PH30 2,48 lei/m vs 19,56 buget (−11.390 lei) — de confirmat în scris, economia scade cu până la ~11 mii lei dacă se corectează; programare/PIF centrală 15.557 vs 3.014 lei (+12.543 lei).'},
+      {sev:'MEDIU', text:'CCTV + Control acces (doar în ofertele 2024) nu au subcapitol în deviz și nu sunt incluse în contractul Nibaco 208 — de clarificat dacă sunt scop contractual sau extra-scop.'},
+      {sev:'MEDIU', text:'Graficul anexă la ctr 208 cuprinde doar anexele (ID 217: 21.12.2026–05.01.2027 și ID 218: 19.03.2027–01.04.2027); lipsesc activități de curenți slabi pe hangar (IDSAI, rețea de date, centrală incendiu).'},
+      {sev:'MIC', text:'Centrala trape desfumare — preț 0 lei în deviz/contract beneficiar și neinclusă în ctr 208 Nibaco (PE08, cost EREN). Necesită ofertă separată.'}
     ],
     actiuni:[
-      {a:'Oferta revizuită Nibaco 2026 (30.09.2026) primită: poziții lipsă, modul buclă, sirenă ext. și cantități butoane REZOLVATE. Rămân de închis înainte de contractare: programare/PIF (15.556,65 vs 3.014,12 lei) și cablul NHXH (2,48 lei/m, tratat separat).', r:'G. Spătaru', t:'—'},
-      {a:'Verifică dacă oferta Honeywell (nov.2024) mai e valabilă înainte de a o considera reper de decizie', r:'Achiziții', t:'—'},
-      {a:'Nu continua cu IMSAT pe detecție incendiu — necompetitivă (+34% vs buget)', r:'PM', t:'—'},
-      {a:'Cere Polon-Alfa confirmare scop/specificații complete pt. IDSAI — diferența de -79,3% trebuie explicată tehnic, nu doar comercial', r:'G. Spătaru / Proiectant', t:'—'},
-      {a:'Clarifică cu proiectantul/beneficiarul dacă CCTV și Control acces sunt scop contractual', r:'G. Spătaru', t:'—'}
+      {a:'Contract Nibaco nr. 208 / 19.10.2026 — 281.107 lei; anexă grafic semnată (ID 217/218). Confirmare scrisă Nibaco pentru prețul cablului NHXH E30/PH30 și programare/PIF centrală.', r:'G. Spătaru', t:'—'},
+      {a:'Adaugă în graficul MS Project activitățile de curenți slabi pe hangar și refă anexa de grafic', r:'G. Spătaru / Planificare', t:'—'},
+      {a:'Clarifică cu proiectantul/beneficiarul dacă CCTV și Control acces sunt scop contractual', r:'G. Spătaru', t:'—'},
+      {a:'Cuantifică și contractează centrala de acționare trape desfumare (F4 poz.2 = 0 lei, PE08)', r:'G. Spătaru / Achiziții', t:'—'}
     ]
   }
 };
@@ -7746,6 +7752,10 @@ function renderInstCapitol(proj, capKey) {
     html += '<div style="margin-bottom:14px"><a href="' + cap.fisierLink + '" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 18px;background:#1A5276;color:#fff;border-radius:var(--radius);font-size:12px;font-weight:600;text-decoration:none"><i class="ti ti-table"></i> Deschide analiza comparativă</a></div>';
   }
 
+  if (cap.contract) {
+    var _cd = cap.contract.val - cap.contract.buget, _cp = _cd / cap.contract.buget * 100;
+    html += '<div style="background:#E8F5E9;border-left:4px solid #1E6E2D;border-radius:6px;padding:10px 14px;margin-bottom:14px;font-size:12px;color:#1E4620;line-height:1.5"><b><i class="ti ti-signature"></i> CONTRACTAT — ' + cap.contract.furnizor + ' · ' + cap.contract.nr + '</b><br>Valoare contract: <b>' + _instFmt(cap.contract.val) + '</b> vs buget ' + _instFmt(cap.contract.buget) + ' (' + (_cd>=0?'+':'−') + _instFmt(Math.abs(_cd)).replace(' lei','') + ' lei, ' + (_cp>=0?'+':'−') + Math.abs(_cp).toFixed(1).replace('.',',') + '%). ' + cap.contract.nota + '</div>';
+  }
   html += '<div class="kpi-grid" style="margin-bottom:14px">';
   html += '<div class="kpi"><div class="kpi-label">Buget total capitol</div><div class="kpi-val">' + _instFmt(bugetTotal) + '</div><div class="kpi-sub">F3+F4, poziții comparabile</div></div>';
   cap.ofertanti.forEach(function(o){
@@ -7811,7 +7821,7 @@ function renderInstDashboard(proj) {
     cap7: 'IMSAT singurul ofertant complet pe F3. Generator 1400kVA +90% peste eDevize — de clarificat.',
     cap9: 'Cel mai bine fundamentat — IMSAT ~aproape de buget (+17,6% combinat), umple gol F3.',
     cap10: 'IMSAT singurul ofertant F3, dar cu anomalii mari (tablouri +843%). Verificare tehnică necesară.',
-    cap11: '4 ofertanți acum (+ Polon-Alfa). Honeywell cel mai aproape de buget pe IDSAI; Polon-Alfa mult sub buget (-81%) — de verificat tehnic înainte de a-l considera opțiune reală.'
+    cap11: 'CONTRACTAT: Nibaco ctr 208 (281.107 lei, −10,2% vs buget). Honeywell/IMSAT/Polon-Alfa rămân doar referință. 2 anomalii de preț (cablu NHXH, programare/PIF) de confirmat.'
   };
   caps.forEach(function(k){
     var cap = INST_DATA[k];
@@ -7849,7 +7859,7 @@ function renderInstDashboard(proj) {
   var topRisks = [
     {cap:'Cap.10', sev:'CRITIC', text:'Tablouri electrice (10.1) +842,7% peste buget — cea mai mare anomalie din toată analiza. Verificare tehnică urgentă înainte de orice decizie.'},
     {cap:'Cap.7', sev:'CRITIC', text:'Generator 1400kVA — IMSAT cu 90,4% peste valoarea deja folosită în eDevize (834.674 lei). Impact direct pe plafonul DN Obiect 7.'},
-    {cap:'Cap.11', sev:'MARE', text:'Polon-Alfa la 52.557 lei pe IDSAI (-80,9% vs buget) — diferență prea mare pentru a fi doar preț; verificare tehnică obligatorie. IMSAT rămâne cea mai scumpă (339.767 lei), Honeywell (139.101 lei) opțiunea logică.'}
+    {cap:'Cap.11', sev:'MEDIU', text:'Contract Nibaco 208 (281.107 lei, −10,2% vs buget): prețul cablului NHXH E30/PH30 (2,48 lei/m vs 19,56) trebuie confirmat în scris; programare/PIF +12,5 mii lei peste buget; CCTV/control acces în afara contractului.'}
   ];
   topRisks.forEach(function(r){
     var sc = _instSevColor(r.sev);

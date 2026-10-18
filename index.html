@@ -357,6 +357,9 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
             <div class="submenu-item" id="item-hangar-instdash" onclick="goModule('hangar','instdash')">
               <i class="ti ti-layout-dashboard" style="color:#4338CA"></i> Dashboard General
             </div>
+            <div class="submenu-item" id="item-hangar-instspr" onclick="goModule('hangar','instspr')">
+            <i class="ti ti-droplet" style="color:#0E6E6E"></i> Cap.6/8 — Grup Sprinklere
+            </div>
             <div class="submenu-item" id="item-hangar-inst7" onclick="goModule('hangar','inst7')">
               <i class="ti ti-bolt" style="color:#B03A2E"></i> Cap.7 — Rețele Electrice Ext.
             </div>
@@ -687,6 +690,7 @@ function goModule(proj, module) {
   else if (module === 'ansap') renderAnSap(proj);
   else if (module === 'anrigole') renderAnRigole(proj);
   else if (module === 'instdash') renderInstDashboard(proj);
+  else if (module === 'instspr') renderInstSprinklere(proj);
   else if (module === 'inst7') renderInstCapitol(proj, 'cap7');
   else if (module === 'inst9') renderInstCapitol(proj, 'cap9');
   else if (module === 'inst10') renderInstCapitol(proj, 'cap10');
@@ -2563,6 +2567,11 @@ function renderHome() {
       '</div>' +
     '</div>' : '') +
 
+        (new Date() <= new Date('2026-11-16T23:59:59') ? '<div onclick="goModule(\'hangar\',\'instspr\')" style="cursor:pointer;background:#E8F6F3;border:1px solid #A3D9CE;border-left:4px solid #0E6E6E;border-radius:6px;padding:10px 14px;margin-bottom:12px">' +
+      '<div style="font-size:11px;font-weight:700;color:#0E6E6E;margin-bottom:4px"><i class="ti ti-droplet" style="margin-right:4px"></i>Grup sprinklere — achiziție în analiză ' + _sprNextBadge() + '</div>' +
+      '<div style="font-size:11px;color:#555">Ofertă Multigama vs PT vs F4 (NCS2): acordul Triptic și costul complet sunt în așteptare. Click pentru dashboard.</div>' +
+    '</div>' : '') +
+
         (new Date() <= new Date('2026-08-31T23:59:59') ? '<div style="background:#EEF2FF;border:1px solid #B9C4E8;border-left:4px solid #2C4A6E;border-radius:6px;padding:10px 14px;margin-bottom:12px;display:flex;align-items:flex-start;gap:10px">' +
       '<i class="ti ti-building-factory-2" style="color:#2C4A6E;font-size:16px;flex-shrink:0;margin-top:1px"></i>' +
       '<div style="flex:1">' +
@@ -2630,7 +2639,7 @@ function renderHome() {
         '<i class="ti ti-bell-ringing" style="color:#CC1515;font-size:14px"></i>' +
         '<span style="font-size:12px;font-weight:600;color:var(--text)">Alerte</span>' +
       '</div>' +
-      '<div style="display:flex;align-items:center;gap:6px;background:#FDEDEC;border:1px solid #F5B7B1;border-left:3px solid #C0392B;border-radius:6px;padding:6px 10px;margin-bottom:8px"><span style="font-size:11px;font-weight:600;color:#922B21">Legendă: <span style="display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:#1F3864;color:#fff;flex-shrink:0;vertical-align:middle"><i class="ti ti-bell-ringing" style="font-size:10px"></i></span> = alerte setate manual · <span style="display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:#B9770E;color:#fff;flex-shrink:0"><i class="ti ti-alert-triangle" style="font-size:10px"></i></span> = alerte automate din Registrul de Probleme (click pe ele deschide punctul în registru).</span></div>' +
+      '<div style="display:flex;align-items:center;gap:6px;background:#FDEDEC;border:1px solid #F5B7B1;border-left:3px solid #C0392B;border-radius:6px;padding:6px 10px;margin-bottom:8px"><span style="font-size:11px;font-weight:600;color:#922B21">Legendă: <span style="display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:#1F3864;color:#fff;flex-shrink:0;vertical-align:middle"><i class="ti ti-bell-ringing" style="font-size:10px"></i></span> = alerte setate manual · <span style="display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:#B9770E;color:#fff;flex-shrink:0"><i class="ti ti-alert-triangle" style="font-size:10px"></i></span> = alerte automate din Registrul de Probleme (click pe ele deschide punctul în registru) · <span style="display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:#C0392B;color:#fff;flex-shrink:0;vertical-align:middle"><i class="ti ti-hourglass" style="font-size:10px"></i></span> = termene contractuale din Motorul de termene (click pe ele deschide motorul de termene).</span></div>' +
       '<div style="display:flex;gap:6px;margin-bottom:8px">' +
         '<input type="text" id="alert-text" placeholder="Descrie alerta..." onkeydown="if(event.key===\'Enter\')addAlert()" style="flex:1;min-width:0;padding:7px 10px;border:1px solid var(--border);border-radius:var(--radius);font-size:12px;font-family:\'Inter\',sans-serif;outline:none;background:var(--white)">' +
         '<input type="date" id="alert-date" style="padding:7px 8px;border:1px solid var(--border);border-radius:var(--radius);font-size:12px;outline:none;background:var(--white)">' +
@@ -3276,7 +3285,9 @@ var PROBE_TEME = [
       { doc:'Minuta nr. 5 / 24.03.2026 (reanaliza scenariului de inundare)', stare:'În dosar', dovedeste:'Cerința autorității de reanaliză cu spumă.' },
       { doc:'Breviar de calcul 5 m, 28.04.2026 (430 mc/h @ 10,6 bar; 7.287 mc; 8 × GH800)', stare:'În dosar', dovedeste:'Subdimensionare dovedită prin calcul volumetric (SR EN 13565-2 / NFPA 11).' },
       { doc:'Breviar PT p.29–32 (429,24 mc/h) + planșa IS12 (430 mc/h)', stare:'În dosar', dovedeste:'Aceeași cifră în proiectul admis de comisie.' },
-      { doc:'F4 aliniat la PT (denumire „sprinklere”, 11,0/10,6 bar, diesel/motorină, 200 kW)', stare:'De verificat', resp:'Ofertare', dovedeste:'Elimină inconsecvențele pe care le poate exploata Beneficiarul.' }
+      { doc:'F4 aliniat la PT (denumire „sprinklere”, 11,0/10,6 bar, diesel/motorină, 200 kW)', stare:'De verificat', resp:'Ofertare', dovedeste:'Elimină inconsecvențele pe care le poate exploata Beneficiarul.' },
+      { doc:'Oferta Multigama OF_EQF_696 [EQF26-368-AO] / 17.10.2026 — 2 × TD20E FM 250 kW + pilot + tablouri (93.970 EUR)', stare:'De verificat', resp:'Ofertare', dovedeste:'Preț de piață și dimensionare 430 mc/h @ 11 bar pentru NCS2 poz. 2; incompletă (lipsesc skid, colectoare, alarmă, nivel, montaj) — de completat în Anexa 6.' },
+      { doc:'Acord scris Triptic: pompe NFPA 20 / FM, motor 250 kW, domeniu de livrare; fișa tehnică 2 din F4 corectată', stare:'Lipsește', resp:'GSP', dovedeste:'Elimină riscul de neconformitate cu PT (EN 12845 / 200 kW / diesel) și aliniază F4 cu soluția reală.' }
     ] },
   { nr:2, tema:'Spumă — lucrări interioare (cameră pompare, gospodărie spumă)', obiect:'8 (C+M)', valoare:466499.05, forta:'Medie',
     baza:'37.2 / 37.7; aceeași bază ca la spumă.', contra:'Liniile nu sunt toate validate (gong hidraulic repreciat, spumant suplimentat peste cel din contract).',
@@ -3951,7 +3962,24 @@ var TERM_FIX = [
     consec:'Neremedierea poate atrage penalități / revendicare Beneficiar.', nota:'A5-1240/14.10.2026. Data termenului: de confirmat din act.' },
   { id:'F5', titlu:'Termen final execuție contract (nemodificat)',
     clauza:'35', resp:'EREN', fix:'2027-04-16',
-    consec:'Penalități 36.4 dacă depășit fără prelungire. Revendicarea nr. 3 cere 13.05.2027.', nota:'Valabil până la acordarea prelungirii.' }
+    consec:'Penalități 36.4 dacă depășit fără prelungire. Revendicarea nr. 3 cere 13.05.2027.', nota:'Valabil până la acordarea prelungirii.' },
+  // ── Grup sprinklere (dashboard: Analiză Instalații → Cap.6/8 — Grup Sprinklere). Termene interne/furnizor, nu contractuale. ──
+  { id:'SPR1', titlu:'Grup sprinklere — răspuns Triptic: acord NFPA 20/FM, motor 250 kW, fișa 2 corectată, domeniu de livrare',
+    clauza:'Sprinklere', resp:'Triptic', fix:'2026-10-22',
+    consec:'Fără acord scris nu se lansează comanda; livrarea durează 12–14 săptămâni, deci întârzierea se transmite integral în termen.',
+    nota:'Cerere transmisă 18.10.2026 (cu fișele tehnice Multigama, fără ofertă). A se rectifica punctul despre presiune: PT cere 10,60 bar.' },
+  { id:'SPR2', titlu:'Grup sprinklere — cost complet stație (echipamente + elemente lipsă + montaj) vs NCS2, de la ofertare',
+    clauza:'Sprinklere', resp:'Ofertare', fix:'2026-10-22',
+    consec:'Necesar pentru Anexa 6 (oferte NCS2) și pentru decizia de comandă.', nota:'NCS2 poz. 2 = 683.970,96 lei fără TVA; oferta Multigama ≈ 509.000 lei (echipamente).' },
+  { id:'SPR3', titlu:'Grup sprinklere — răspuns Multigama la clarificări (curbe, pornire, domeniu, livrare)',
+    clauza:'Sprinklere', resp:'Multigama / Ofertare', fix:'2026-10-23',
+    consec:'Fără răspuns nu se poate stabili costul complet.', nota:'Cererea se transmite de ofertare luni 19.10.2026.' },
+  { id:'SPR4', titlu:'Grup sprinklere — expiră valabilitatea ofertei Multigama (EQF26-368-AO)',
+    clauza:'Sprinklere', resp:'GSP', fix:'2026-11-16',
+    consec:'După această dată prețul și termenul de livrare nu mai sunt garantate.', nota:'Condițiile comerciale (curs, plată, garanții) le negociază GSP.' },
+  { id:'SPR5', titlu:'Memoriu justificativ consolidat Triptic (include grupul de pompare / spumă) — termen estimat',
+    clauza:'Sprinklere', resp:'Triptic', fix:'2026-10-23',
+    consec:'Condiționează depunerea revendicării și detalierea 69a.2 (08.11.2026).', nota:'Dată estimată din corespondența cu Triptic; de confirmat.' }
 ];
 
 function _tAdd(iso, n) { if (!iso) return null; var d = new Date(iso + 'T00:00:00Z'); d.setUTCDate(d.getUTCDate() + n); return d.toISOString().slice(0,10); }
@@ -7790,6 +7818,16 @@ function renderInstDashboard(proj) {
     html += '<td style="padding:7px 8px;border-bottom:1px solid #eee;text-align:center"><button class="open-fisa-btn" style="font-size:10px;padding:4px 10px" onclick="goModule(\'hangar\',\'' + cap.mod + '\')">Deschide</button></td>';
     html += '</tr>';
   });
+  (function(){
+    var _c = _sprCalc();
+    html += '<tr style="background:#F0FAF8">';
+    html += '<td style="padding:7px 8px;border-bottom:1px solid #eee;font-weight:700;color:#0E6E6E"><i class="ti ti-droplet"></i> Cap.6/8 — Grup Sprinklere<div style="font-size:9.5px;font-weight:400;color:#777">NCS2 · nu intră în totalul de mai jos</div></td>';
+    html += '<td style="padding:7px 8px;border-bottom:1px solid #eee;text-align:right">' + _instFmt(SPR_DATA.bugetContract.val) + '<div style="font-size:9.5px;color:#777">NCS2: ' + _instFmt(SPR_DATA.ncs2.val) + '</div></td>';
+    html += '<td style="padding:7px 8px;border-bottom:1px solid #eee;font-size:10px">' + SPR_DATA.oferta.furnizor + ' (≈ ' + _instFmt(_c.lei) + ')</td>';
+    html += '<td style="padding:7px 8px;border-bottom:1px solid #eee;font-size:10.5px;color:#444;max-width:320px">Ofertă incompletă (fără montaj și elemente lipsă). Condiționat de acordul Triptic NFPA 20/FM și de fișa tehnică 2.</td>';
+    html += '<td style="padding:7px 8px;border-bottom:1px solid #eee;text-align:center"><button class="open-fisa-btn" style="font-size:10px;padding:4px 10px" onclick="goModule(\'hangar\',\'instspr\')">Deschide</button></td>';
+    html += '</tr>';
+  })();
   html += '<tr style="background:#F5F5F5;font-weight:700"><td style="padding:8px">TOTAL 4 CAPITOLE</td><td style="padding:8px;text-align:right">' + _instFmt(bugetGlobal) + '</td><td colspan="3"></td></tr>';
   html += '</table></div></div>';
 
@@ -7813,6 +7851,174 @@ function renderInstDashboard(proj) {
   document.getElementById('main').innerHTML = html;
 }
 
+
+
+// ═══════════════════════════════════════════════════════════════
+// GRUP SPRINKLERE — DASHBOARD (Analiză Instalații · NCS2 F4 ob. 6 poz. 2)
+// Valorile și constatările se actualizează AICI (SPR_DATA). Termenele (SPR1–SPR5) sunt în TERM_FIX — de acolo ajung
+// automat în Motorul de termene, Calendar, alertele de pe ecranul principal și rezumatul zilnic pe mail.
+// ═══════════════════════════════════════════════════════════════
+var SPR_DATA = {
+  actualizat: '2026-10-18',
+  decizie: 'CONDIȚIONAT — nu se comandă înainte de acordul scris al Triptic și de costul complet al stației.',
+  bugetContract: { poz:'F4 ob. 6 poz. 3 — Grup pompare amestec agent spumant', val:214456.38,
+    nota:'155,25 mc/h · 50 mCA · 25 kW · pilot 3,6 mc/h. Poziția este renunțată integral prin NR (−214.456,38 lei): valoarea NR este chiar BUGET (fără închideri).' },
+  ncs2: { poz:'F4 ob. 6 poz. 2 — Stație pompare sprinklere (1A+1R+1J), fișa tehnică nr. 2', val:683970.96,
+    nota:'NCS2 (preț nou). Obiect 6 NCS2 total 913.161,15 lei (include și GRP rezervor 229.190,19).' },
+  oferta: { furnizor:'Multigama', nr:'OF_EQF_696 [EQF26-368-AO]', data:'2026-10-17', valabila:'2026-11-16',
+    pompe:88640, pilot:2420, service:2910, curs:5.3368, cursData:'2026-10-16', adaos:0.015,
+    livrare:'12–14 săpt. lucrătoare, CIP Beneficiar', garantie:'18 luni PIF / 24 luni livrare', plata:'de stabilit la contractare' },
+  comandaEst: '2026-10-30',   // ipoteză de lucru pentru estimarea livrării
+  conf: [
+    { p:'Debit pompă principală', pt:'429,24 mc/h (breviar r01, 19.05.2026)', f4:'430 mc/h', of:'430 m³/h (TD20E FM)', st:'ok', nota:'Conform.' },
+    { p:'Presiune pompă principală', pt:'10,60 bar', f4:'11,0 bar', of:'11,00 bar la 430 m³/h (curbă TD20E); certificat FM 10,88 bar la 454,2 m³/h', st:'ok', nota:'Conform, +0,40 bar față de PT. 10,88 bar este alt punct de debit (2000 USGPM), nu o abatere.' },
+    { p:'Pompă pilot', pt:'3 mc/h · 11,1 bar', f4:'3 mc/h · 11,6 bar', of:'3 m³/h · 11,6 bar · 3 kW (MovitecV)', st:'ok', nota:'Conform.' },
+    { p:'Putere motor', pt:'nespecificată; breviar genset 250 kW', f4:'200 kW/pompă', of:'250 kW TEFC IE4 (necesar 219 kW la 150% debit, vârf 224 kW)', st:'risk', nota:'200 kW din fișa 2 este insuficient. De corectat F4 la 250 kW.' },
+    { p:'Acționare', pt:'motor electric (pompă activă + rezervă)', f4:'include verificare pompă diesel EN 12845', of:'electropompe (2 × electric)', st:'warn', nota:'F4 nealiniat cu PT: clarificare Triptic (diesel nu există în PT).' },
+    { p:'Standard / certificare', pt:'SR EN 12845+A1:2020', f4:'EN 12845 / FM Global', of:'NFPA 20, certificat FM/UL/cUL', st:'warn', nota:'Necesită acord scris Triptic (și, la nevoie, al Beneficiarului).' },
+    { p:'Pornire', pt:'automată la diferență de presiune, oprire manuală', f4:'—', of:'H800 stea-triunghi; pornire de urgență DOL', st:'warn', nota:'De verificat în breviarul de porniri genset (C1400D5, 250 kW).' },
+    { p:'Tablouri / automatizare', pt:'—', f4:'tablou electric și automatizare', of:'H800 (principale) + H350s (pilot)', st:'warn', nota:'Controllere incluse; tabloul general / automatizarea stației de confirmat.' },
+    { p:'Livrare / garanție / valabilitate', pt:'—', f4:'—', of:'12–14 săpt. CIP · 18/24 luni · valabilă până la 16.11.2026', st:'warn', nota:'Termenul de livrare intră pe drumul critic al stației de pompe.' }
+  ],
+  lipsa: [
+    'Șasiu / skid comun și fixare pe fundație',
+    'Colectoare de aspirație și refulare, armături, clapete, vane, racorduri de probă (inclusiv linie de probă cu debitmetru)',
+    'Conexiuni flexibile și reduceri de la distribuitor',
+    'Panou de alarmă A/B conform EN 12845 / FM Global, cu semnalizări către detecție',
+    'Detecție nivel apă',
+    'Accesorii pompă pilot (vas de expansiune etc.) și, dacă e cazul, tablou general / automatizare în afara H800 și H350s',
+    'Montaj, racordare, punere în funcțiune (oferta are doar asistență la montaj și PIF)'
+  ],
+  actiuni: [
+    { a:'Cerere de acord și clarificări către Triptic (NFPA 20/FM, 250 kW, fișa 2, pornire, domeniu de livrare)', resp:'GSP → Triptic', stare:'Transmis 18.10.2026' },
+    { a:'Observații ofertă către ofertare; ofertarea filtrează și transmite cererea către Multigama', resp:'GSP → Ofertare', stare:'Transmis 18.10.2026' },
+    { a:'Precizare pentru Triptic și ofertare: PT cere 10,60 bar (nu 11); 10,88 bar este la 454,2 m³/h; motor 250 kW justificat (219 kW la 150% debit)', resp:'GSP', stare:'Nu se trimite separat; se menționează la transmiterea curbelor către Triptic' },
+    { a:'Condiții comerciale cu Multigama (curs, plată, garanții, valabilitate) — după acordul Triptic', resp:'GSP', stare:'După acord' },
+    { a:'Costul complet al stației (echipamente + elemente lipsă + montaj) față de NCS2 — pentru Anexa 6 a revendicării', resp:'Ofertare', stare:'În lucru' },
+    { a:'Corectare fișa tehnică 2 din F4 (250 kW, fără diesel, 10,6/11 bar) și, dacă e cazul, Anexa 4 NCS2', resp:'Triptic / Ofertare', stare:'Deschis' }
+  ],
+  riscuri: [
+    { sev:'MARE', t:'Standard: oferta este NFPA 20/FM, PT-ul cere SR EN 12845. Fără acord scris Triptic, riscul de refuz la recepție rămâne la Eren.' },
+    { sev:'MARE', t:'Termen: livrare 12–14 săptămâni. Fiecare zi de întârziere a acordului mută livrarea cu aceeași durată.' },
+    { sev:'MEDIU', t:'Cost incomplet: oferta acoperă doar echipamentele. Comparația cu NCS2 (683.970,96 lei) nu e valabilă până nu se adaugă elementele lipsă și montajul.' },
+    { sev:'MEDIU', t:'Inconsecvențe F4 vs PT (diesel, 200 kW, 11,0 vs 10,6 bar) pot fi exploatate de Beneficiar în negociere; se aliniază fișa tehnică 2.' },
+    { sev:'MEDIU', t:'Dacă prețul real devine mai mic decât NCS2, valoarea din revendicare se ajustează conform cl. 37.7.' }
+  ]
+};
+
+function _sprFmt(n, z) { return Number(n).toLocaleString('ro-RO', {minimumFractionDigits: z || 0, maximumFractionDigits: z || 0}); }
+function _sprCalc() {
+  var o = SPR_DATA.oferta, eur = o.pompe + o.pilot + o.service, rate = o.curs * (1 + o.adaos);
+  return { eur:eur, eurEchip:o.pompe + o.pilot, rate:rate, lei:eur * rate, leiEchip:(o.pompe + o.pilot) * rate,
+           pct:eur * rate / SPR_DATA.ncs2.val * 100, delta:eur * rate - SPR_DATA.ncs2.val, deltaBuget:SPR_DATA.ncs2.val - SPR_DATA.bugetContract.val };
+}
+function _sprTermene() {
+  return termeneCalc().filter(function(r){ return /^SPR/.test(r.dosar); });
+}
+function _sprTermeneConexe() {
+  return termeneCalc().filter(function(r){ var id = r.dosar.split(' — ')[0]; return (id === 'RL' || id === 'F3') && r.status !== 'Respectat'; });
+}
+function _sprNextBadge() {
+  var r = _sprTermene().filter(function(x){ return x.status !== 'Respectat' && x.scad; })[0];
+  if (!r) return '';
+  var d = _tDiff(r.scad);
+  return '<span style="font-weight:600;color:' + (d < 0 ? '#C0392B' : (d <= 7 ? '#B9770E' : '#0E6E6E')) + '">· următorul termen ' + _tFmt(r.scad) + (d < 0 ? ' (+' + (-d) + ' zile)' : ' (în ' + d + ' zile)') + '</span>';
+}
+function _sprStCol(s) {
+  if (s === 'Depășit' || s === 'Tardiv') return ['#FDEDEC', '#C0392B'];
+  if (s === 'Urgent') return ['#FEF5E7', '#B9770E'];
+  if (s === 'De verificat' || s === 'De completat') return ['#F4ECF7', '#7D3C98'];
+  if (s === 'Respectat') return ['#EAFAF1', '#1E6E2D'];
+  return ['#EAF2F8', '#1A5276'];
+}
+
+function renderInstSprinklere(proj) {
+  document.querySelectorAll('.submenu-item').forEach(function(i){ i.classList.remove('active'); });
+  var itm = document.getElementById('item-hangar-instspr'); if (itm) itm.classList.add('active');
+  closeMenu();
+  document.getElementById('menu-btn').style.display = 'none';
+  var bb = document.getElementById('back-btn'); bb.style.display = 'flex';
+  bb.onclick = function() { renderProjHome(proj); };
+
+  var D = SPR_DATA, c = _sprCalc(), o = D.oferta, html = '';
+  var th = 'padding:7px 8px;text-align:left', td = 'padding:7px 8px;border-bottom:1px solid #eee;vertical-align:top';
+  html += '<div class="proj-header"><div class="proj-title">Grup sprinklere — Dashboard</div>';
+  html += '<div class="proj-meta">Hangar Kogălniceanu · F4 obiect 6 poz. 2 (NCS2) · ofertă ' + o.furnizor + ' · actualizat ' + _tFmt(D.actualizat) + '</div></div>';
+  html += '<div class="module-badge" style="background:#E8F6F3;color:#0E6E6E"><i class="ti ti-droplet" style="font-size:13px"></i> Analiză Instalații · Stație pompare sprinklere</div>';
+  html += '<div style="background:#FEF5E7;border-left:4px solid #B9770E;border-radius:6px;padding:10px 14px;font-size:12px;color:#7A5B12;margin-bottom:14px"><b>' + D.decizie + '</b></div>';
+
+  var dl = [_tAdd(D.comandaEst, 84), _tAdd(D.comandaEst, 98)];
+  html += '<div class="kpi-grid">';
+  html += '<div class="kpi"><div class="kpi-label">NR — renunțat din contract (= BUGET fără închideri)</div><div class="kpi-val">−' + _sprFmt(D.bugetContract.val) + ' lei</div><div class="kpi-sub">' + D.bugetContract.poz + '</div></div>';
+  html += '<div class="kpi"><div class="kpi-label">NCS2 — stație sprinklere</div><div class="kpi-val" style="color:#1A5276">' + _sprFmt(D.ncs2.val) + ' lei</div><div class="kpi-sub">+' + _sprFmt(c.deltaBuget, 2) + ' lei față de valoarea renunțată prin NR · fără TVA</div></div>';
+  html += '<div class="kpi"><div class="kpi-label">Ofertă ' + o.furnizor + ' (' + _sprFmt(c.eur) + ' EUR)</div><div class="kpi-val" style="color:#B9770E">≈ ' + _sprFmt(c.lei) + ' lei</div><div class="kpi-sub">curs BNR ' + _tFmt(o.cursData) + ' = ' + String(o.curs).replace('.', ',') + ' +' + String(o.adaos * 100).replace('.', ',') + '% · doar echipamente</div></div>';
+  html += '<div class="kpi"><div class="kpi-label">Ofertă față de NCS2</div><div class="kpi-val" style="color:#B9770E">' + _sprFmt(c.pct, 0) + '%</div><div class="kpi-sub">' + _sprFmt(c.delta) + ' lei · incomplet: fără montaj și elemente lipsă</div></div>';
+  html += '<div class="kpi"><div class="kpi-label">Livrare estimată</div><div class="kpi-val" style="font-size:15px;color:#0E6E6E">' + _tFmt(dl[0]) + ' – ' + _tFmt(dl[1]) + '</div><div class="kpi-sub">ipoteză: comandă la ' + _tFmt(D.comandaEst) + ' + 12–14 săpt.</div></div>';
+  html += '</div>';
+
+  html += '<div class="proj-card" style="margin-bottom:12px"><div class="proj-card-header" style="background:#2C4A6E"><span style="font-size:13px;font-weight:600;color:#fff">Analiză comparativă: PT · F4 fișa tehnică 2 · ofertă</span></div>';
+  html += '<div class="proj-card-body" style="padding:0;overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:11px">';
+  html += '<tr style="background:#2E5090;color:#fff"><th style="' + th + '">Parametru</th><th style="' + th + '">PT (breviar / memoriu)</th><th style="' + th + '">F4 NCS2 — fișa 2</th><th style="' + th + '">Ofertă ' + o.furnizor + '</th><th style="' + th + '">Concluzie</th></tr>';
+  D.conf.forEach(function(r){
+    var col = r.st === 'ok' ? ['#EAFAF1', '#1E6E2D', 'Conform'] : (r.st === 'risk' ? ['#FDEDEC', '#C0392B', 'Abatere'] : ['#FEF5E7', '#B9770E', 'De clarificat']);
+    html += '<tr><td style="' + td + ';font-weight:700">' + r.p + '</td><td style="' + td + '">' + r.pt + '</td><td style="' + td + '">' + r.f4 + '</td><td style="' + td + '">' + r.of + '</td>' +
+      '<td style="' + td + ';background:' + col[0] + '"><b style="color:' + col[1] + '">' + col[2] + '</b><div style="font-size:10.5px;color:#444;margin-top:2px">' + r.nota + '</div></td></tr>';
+  });
+  html += '</table></div></div>';
+
+  html += '<div class="proj-card" style="margin-bottom:12px"><div class="proj-card-header" style="background:#1F3864"><span style="font-size:13px;font-weight:600;color:#fff">Valori (fără TVA)</span></div>';
+  html += '<div class="proj-card-body" style="padding:0;overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:11px">';
+  html += '<tr style="background:#EEF2FF"><th style="' + th + '">Element</th><th style="' + th + ';text-align:right">Valoare</th><th style="' + th + '">Observație</th></tr>';
+  var rows = [
+    ['NR (renunțare) = BUGET (fără închideri): ' + D.bugetContract.poz, '−' + _sprFmt(D.bugetContract.val, 2) + ' lei', D.bugetContract.nota],
+    ['NCS2: ' + D.ncs2.poz, _sprFmt(D.ncs2.val, 2) + ' lei', D.ncs2.nota],
+    ['Diferență NCS2 − NR (valoarea renunțată)', '+' + _sprFmt(c.deltaBuget, 2) + ' lei', 'Înlocuire neechivalentă: 155,25 → 430 mc/h, 25 → 200/250 kW.'],
+    ['Ofertă — 2 × TD20E FM 250 kW', _sprFmt(o.pompe) + ' EUR', 'Tablou H800 inclus.'],
+    ['Ofertă — pompă pilot MovitecV + tablou H350s', _sprFmt(o.pilot) + ' EUR', ''],
+    ['Ofertă — asistență tehnică montaj și PIF', _sprFmt(o.service) + ' EUR', 'Montajul propriu-zis nu e inclus.'],
+    ['Ofertă — total', _sprFmt(c.eur) + ' EUR ≈ ' + _sprFmt(c.lei) + ' lei', 'Curs BNR ' + _tFmt(o.cursData) + ' ' + String(o.curs).replace('.', ',') + ' lei/EUR, facturare la BNR+1,5%. Echipamente fără service: ≈ ' + _sprFmt(c.leiEchip) + ' lei.'],
+    ['Termeni ofertă', o.nr + ' din ' + _tFmt(o.data), 'Livrare ' + o.livrare + ' · garanție ' + o.garantie + ' · plata ' + o.plata + ' · valabilă până la ' + _tFmt(o.valabila) + '.']
+  ];
+  rows.forEach(function(r){ html += '<tr><td style="' + td + '">' + r[0] + '</td><td style="' + td + ';text-align:right;white-space:nowrap;font-weight:600">' + r[1] + '</td><td style="' + td + ';color:#555">' + r[2] + '</td></tr>'; });
+  html += '</table></div></div>';
+
+  html += '<div class="proj-card" style="margin-bottom:12px"><div class="proj-card-header" style="background:#7B1818"><span style="font-size:13px;font-weight:600;color:#fff">Elemente care nu apar în ofertă (de prețuit separat sau de confirmat ca incluse)</span></div>';
+  html += '<div class="proj-card-body" style="gap:4px">';
+  D.lipsa.forEach(function(t, i){ html += '<div style="font-size:12px;padding:5px 10px;background:#FDF2F2;border-radius:5px"><b>' + String.fromCharCode(97 + i) + ')</b> ' + t + '</div>'; });
+  html += '</div></div>';
+
+  function _termTab(list, titlu, bg) {
+    html += '<div class="proj-card" style="margin-bottom:12px"><div class="proj-card-header" style="background:' + bg + '"><span style="font-size:13px;font-weight:600;color:#fff">' + titlu + '</span></div>';
+    html += '<div class="proj-card-body" style="padding:0;overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:11px">';
+    html += '<tr style="background:#F2F3F4"><th style="' + th + '">Termen</th><th style="' + th + '">Ce</th><th style="' + th + '">Responsabil</th><th style="' + th + '">Stare</th></tr>';
+    if (!list.length) html += '<tr><td colspan="4" style="' + td + ';color:#888">Niciun termen deschis.</td></tr>';
+    list.forEach(function(r){
+      var sc = _sprStCol(r.status), d = r.scad ? _tDiff(r.scad) : null;
+      html += '<tr style="cursor:pointer" onclick="goModule(\'hangar\',\'termene\')"><td style="' + td + ';white-space:nowrap;font-weight:600">' + _tFmt(r.scad) + (d === null ? '' : '<div style="font-size:10px;font-weight:400;color:#777">' + (d < 0 ? '+' + (-d) + ' zile' : (d === 0 ? 'azi' : 'în ' + d + ' zile')) + '</div>') + '</td>' +
+        '<td style="' + td + '">' + r.etapa + '</td><td style="' + td + '">' + (r.resp || '—') + '</td>' +
+        '<td style="' + td + '"><span style="background:' + sc[0] + ';color:' + sc[1] + ';font-weight:700;font-size:10px;border-radius:99px;padding:2px 8px">' + r.status + '</span></td></tr>';
+    });
+    html += '</table></div></div>';
+  }
+  _termTab(_sprTermene(), 'Termene grup sprinklere (din Motorul de termene · SPR1–SPR5)', '#0E6E6E');
+  _termTab(_sprTermeneConexe(), 'Termene conexe — revendicarea listelor suplimentare (RL) și aprobarea listelor (F3)', '#6C3483');
+
+  html += '<div class="proj-card" style="margin-bottom:12px"><div class="proj-card-header" style="background:#2C4A6E"><span style="font-size:13px;font-weight:600;color:#fff">Acțiuni (responsabil · stare)</span></div>';
+  html += '<div class="proj-card-body" style="padding:0;overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:11px">';
+  D.actiuni.forEach(function(a){ html += '<tr><td style="' + td + '">' + a.a + '</td><td style="' + td + ';white-space:nowrap">' + a.resp + '</td><td style="' + td + ';white-space:nowrap;font-weight:600">' + a.stare + '</td></tr>'; });
+  html += '</table></div></div>';
+
+  html += '<div class="proj-card" style="margin-bottom:12px"><div class="proj-card-header" style="background:#7B1818"><span style="font-size:13px;font-weight:600;color:#fff">Riscuri</span></div><div class="proj-card-body" style="gap:6px">';
+  D.riscuri.forEach(function(r){
+    var sc = r.sev === 'MARE' ? ['#FDEDEC', '#C0392B'] : ['#FEF5E7', '#B9770E'];
+    html += '<div style="background:' + sc[0] + ';border-radius:6px;padding:8px 12px;font-size:12px;display:flex;gap:12px;align-items:flex-start"><span style="font-weight:700;color:' + sc[1] + ';flex:0 0 60px">' + r.sev + '</span><span style="flex:1">' + r.t + '</span></div>';
+  });
+  html += '</div></div>';
+
+  html += '<div style="background:#FFF8E1;border-left:3px solid #B7791F;border-radius:6px;padding:8px 12px;font-size:11px;color:#7A5B12;margin-bottom:12px"><b>Cum se actualizează:</b> valorile, constatările, acțiunile și riscurile în blocul <code>SPR_DATA</code>; termenele în <code>TERM_FIX</code> (SPR1–SPR5) — de acolo se propagă în Motorul de termene, Calendar, ecranul principal și rezumatul zilnic pe mail. Probele pentru revendicare: <code>PROBE_TEME</code> tema 1. Surse: PT breviar de calcul r01 (19.05.2026) și memoriu tehnic r01; ofertă Multigama EQF26-368-AO (17.10.2026).</div>';
+  html += '<div class="page-footer">PM Hub · EREN CONS SRL · 2026 · Grup sprinklere</div>';
+  document.getElementById('main').innerHTML = html;
+}
 
 
 // ═══ Butonul „înapoi” al telefonului/browserului (History API) ═══

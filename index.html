@@ -409,6 +409,9 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
         <div class="submenu-item" id="item-academia-contractsinteza" onclick="goModule('academia','contractsinteza')">
           <i class="ti ti-file-dollar"></i> Sinteză contract
         </div>
+        <div class="submenu-item" id="item-academia-plancontract" onclick="renderAcademiaPlanContract()">
+          <i class="ti ti-list-check" style="color:#1A5276"></i> Plan Contract
+        </div>
         <div class="submenu-item" id="item-academia-licitatie" onclick="toggleSubSub('academia-licitatie')">
           <i class="ti ti-gavel" style="color:#6C3483"></i> Documente licitație
           <i class="ti ti-chevron-down chevron" id="chev-academia-licitatie" style="font-size:11px"></i>
@@ -922,6 +925,257 @@ function renderSintezaAcademia() {
       '<h3>Niciun document adăugat</h3>' +
     '</div>' +
     '<div class="page-footer">PM Hub · EREN CONS SRL · 2026</div>';
+}
+
+
+// ── Academia Navală: Plan contract — acțiuni prima săptămână după semnare ──
+// Linkul către fișierul Excel (Plan contract) se completează aici, între ghilimele:
+var PLAN_CONTRACT_ACADEMIA_URL = 'https://docs.google.com/spreadsheets/d/1LAe8EsjeWVyMZiT5f60KiEFwjWaZ78zBqgyq37qi76o/edit?usp=sharing';
+
+var PLAN_CONTRACT_ACADEMIA = [
+ {
+  "nr": 1,
+  "task": "Semnarea contractului",
+  "resp": "EREN CONS (lider) + asociați",
+  "term": "26.10.2026",
+  "intern": "26.10.2026",
+  "livrabil": "Contract semnat",
+  "temei": "",
+  "obs": "",
+  "prio": "critic"
+ },
+ {
+  "nr": 2,
+  "task": "Constituirea și depunerea garanției de bună execuție, la data semnării contractului (10% din prețul contractului = 6.041.815,62 lei fără TVA, dacă Acordul Contractual nu prevede altfel); copie către Supervizor",
+  "resp": "EREN CONS",
+  "term": "26.10.2026",
+  "intern": "26.10.2026",
+  "livrabil": "Scrisoare de garanție / dovadă constituire",
+  "temei": "CG cl. 15.1",
+  "obs": "Se furnizează la semnare, deci scrisoarea trebuie emisă înainte de 26.10. Emitent: bancă sau asigurător autorizat în UE (sau rating min. BBB-/Baa3); irevocabilă, plătibilă la prima cerere; emisă în numele asocierii. Valoarea și forma se confirmă în Acordul Contractual.",
+  "prio": "critic"
+ },
+ {
+  "nr": 3,
+  "task": "Încheierea asigurărilor cerute prin contract și transmiterea către AC și Supervizor a copiilor certificatelor și polițelor, la Data de începere",
+  "resp": "EREN CONS",
+  "term": "02.11.2026",
+  "intern": "29.10.2026",
+  "livrabil": "Polițe + dovada plății",
+  "temei": "CG cl. 16.2; CS cap. 12",
+  "obs": "Asigurarea trebuie să existe de la Data de începere sau mai devreme. Data de începere se stabilește prin ordinul administrativ (CG cl. 33.1: până la 25.11.2026); 02.11 este ipoteză. Tipurile și sumele asigurate se preiau din contract.",
+  "prio": "normal"
+ },
+ {
+  "nr": 4,
+  "task": "Pregătirea cererii de avans și a garanției de returnare a avansului (mecanismul se clarifică: 15% pe an într-o tranșă sau 5% + 10% pe tranșe legate de autorizația de construire; de verificat dacă avansul se acordă și pe etapa de proiectare)",
+  "resp": "EREN CONS (financiar)",
+  "term": "după Data de începere",
+  "intern": "09.11.2026",
+  "livrabil": "Cerere de avans + garanție de avans",
+  "temei": "CG cl. 46; sinteza pct. 10.2",
+  "obs": "Avansul nu se plătește înainte de Data de începere. Dacă Acordul nu stabilește tranșele, avansul de 15% se cere în prima situație de lucrări după Data de începere. Garanția de returnare: bancă sau asigurător, la prima cerere, valoare avans plus dobândă BNR. Impact direct în cash flow. Vezi foaia Clarificări, nr. 1",
+  "prio": "normal"
+ },
+ {
+  "nr": 5,
+  "task": "Legalizarea acordului de asociere și prezentarea către AC, la semnare, a contractelor de subcontractare încheiate cu subcontractanții declarați în ofertă (devin anexe la contract); verificarea rolurilor asociaților (în propunerea tehnică BEMEL și ICCO INSTAL apar cu rolurile inversate)",
+  "resp": "EREN CONS + BEMEL + ICCO INSTAL",
+  "term": "26.10.2026",
+  "intern": "26.10.2026",
+  "livrabil": "Acord de asociere legalizat, contracte de subcontractare",
+  "temei": "CG cl. 7.1, 7.3; Propunere EREN pag. 369 până la 373",
+  "obs": "Subcontractele sunt valide doar în formă scrisă; prevederile lor în afara contractului nu sunt opozabile AC. Subcontractele declarate în ofertă se consideră aprobate de AC.",
+  "prio": "normal"
+ },
+ {
+  "nr": 6,
+  "task": "Solicitarea acordului AC pentru subcontractantul de supraveghere arheologică (instituție muzeală / de cercetare / de învățământ superior, cu ISO 9001 și 14001), cerut de Avizul Culturii nr. 1360/Z/05.12.2024: partea subcontractată, valoare, identitate, documente de excludere, declarație; după aprobare, subcontract semnat către AC în 5 zile",
+  "resp": "EREN CONS",
+  "term": "02.11.2026",
+  "intern": "30.10.2026",
+  "livrabil": "Contract de subcontractare, acord AC",
+  "temei": "CG cl. 7.4; Aviz Cultură 1360/Z/05.12.2024; CS cap. 9",
+  "obs": "AC răspunde în 30 de zile de la cerere (tacit aprobat la expirare); subcontractantul nu începe înainte de transmiterea subcontractului. Termen cerere: 02.11, nu data contractării. Amplasament în sit arheologic RAN 60428.40 și LMI CT-I-s-A-02555. Apărarea AC în dosarul 1503 presupune declararea după semnare. Condiționează săpăturile și demolarea (din 25.01.2027 în graficul ofertei). Dacă subcontractantul era declarat în ofertă, se aplică cl. 7.3 (la semnare).",
+  "prio": "critic"
+ },
+ {
+  "nr": 7,
+  "task": "Solicitarea acordului AC pentru înlocuirea managerului de contract (expert-cheie) și a șefului de șantier, cu documentele de calificare și experiență ale înlocuitorilor; după aprobare, propunerea Reprezentantului Antreprenorului pentru aprobarea Supervizorului și notificarea șefului de șantier, cu date de contact; stabilirea punctului unic de contact",
+  "resp": "EREN CONS",
+  "term": "10.11.2026",
+  "intern": "29.10.2026",
+  "livrabil": "Adresă către AC + dosar de calificare înlocuitori",
+  "temei": "CG cl. 13.2, 14.3, 14.4; CS cap. 5",
+  "obs": "Înlocuirea personalului-cheie se face doar cu acordul prealabil al AC; înlocuitorul trebuie să aibă calificare și experiență cel puțin echivalente și să obțină cel puțin același punctaj la factorii de atribuire (managerul a fost evaluat în ofertă). Documentele de verificare a criteriilor și a punctajului se transmit AC. Până la aprobare nu se notifică persoanele din ofertă. Propunerea Reprezentantului: 15 zile de la semnare (CG cl. 13.2), Supervizorul răspunde în 10 zile. Nume înlocuitori și motivul schimbării: de completat. Pentru șeful de șantier CG nu fixează termen; cerințele minime se verifică în CS.",
+  "prio": "critic"
+ },
+ {
+  "nr": 8,
+  "task": "Rezolvarea cumulului de personal: Ștefănescu Bogdan Mihai apare pe proiectare (Anexa 2.21) și pe execuție (poz. 12), iar caietul de sarcini interzice folosirea aceluiași personal în ambele etape; propunere de înlocuire sau alocare unică, cu acordul AC",
+  "resp": "EREN CONS + BEMEL",
+  "term": "02.11.2026",
+  "intern": "",
+  "livrabil": "Adresă către AC",
+  "temei": "CS personal minim; HG 395/2016 art. 162",
+  "obs": "Înlocuirea experților se face doar cu acordul AC",
+  "prio": "normal"
+ },
+ {
+  "nr": 9,
+  "task": "Primirea ordinului administrativ de începere a activității de proiectare (AC îl emite în cel mult 30 de zile de la semnare; urmărim emiterea)",
+  "resp": "AC către EREN CONS / BEMEL",
+  "term": "25.11.2026",
+  "intern": "02.11.2026",
+  "livrabil": "Ordin administrativ",
+  "temei": "CG cl. 33.1; CS cap. 3",
+  "obs": "Data ordinului este Data de începere și pornește toate termenele de proiectare. Termenul 02.11 este ipoteza noastră; solicităm emiterea cât mai rapidă.",
+  "prio": "normal"
+ },
+ {
+  "nr": 10,
+  "task": "Solicitarea de la AC a datelor de intrare: numele dirigintelui de șantier și al persoanei care realizează testările tehnice, procedura de acces în unitate, formatul raportului de progres, modelul devizului general și copia Avizului Culturii nr. 1360/Z/05.12.2024 (temei pentru supravegherea arheologică). SF, CU, expertiza și studiul geotehnic le avem deja din documentația de licitație",
+  "resp": "EREN CONS + BEMEL",
+  "term": "29.10.2026",
+  "intern": "",
+  "livrabil": "Adresă + proces verbal de predare documente",
+  "temei": "CS cap. 4.1, 6, 8.4",
+  "obs": "",
+  "prio": "normal"
+ },
+ {
+  "nr": 11,
+  "task": "Verificarea valabilității CU nr. A 1043/27.05.2024 și a avizelor obținute la faza SF; dacă sunt expirate, solicitarea prelungirii sau a unui CU nou",
+  "resp": "BEMEL",
+  "term": "02.11.2026",
+  "intern": "",
+  "livrabil": "CU valabil sau cerere depusă",
+  "temei": "Legea 50/1991 art. 7, CS cap. 6",
+  "obs": "Valabilitatea CU este limitată (se stabilește în certificat și se poate prelungi o singură dată, conform Legea 50/1991): se verifică data de expirare înscrisă pe CU. CU emis în mai 2024, deci probabil expirat; condiționează avizele și AC. De confirmat la juridic / AC dacă există CU nou.",
+  "prio": "critic"
+ },
+ {
+  "nr": 12,
+  "task": "Kick off intern al asocierii: responsabili pe fiecare parte, calendar, canale de comunicare, platformă de documente, registru de documente cu cod unic pe fiecare document",
+  "resp": "EREN CONS",
+  "term": "02.11.2026",
+  "intern": "",
+  "livrabil": "Minută kick off, registru documente",
+  "temei": "CS cap. 7.3",
+  "obs": "",
+  "prio": "normal"
+ },
+ {
+  "nr": 13,
+  "task": "Transmiterea listelor nominale de personal și vehicule pentru autorizarea accesului în unitatea militară (aviz de securitate pentru terți)",
+  "resp": "EREN CONS + BEMEL + subcontractanți",
+  "term": "09.11.2026",
+  "intern": "",
+  "livrabil": "Liste + copii documente",
+  "temei": "CS cap. 9, personal",
+  "obs": "Durata de obținere a avizelor de securitate se cere de la AC",
+  "prio": "normal"
+ },
+ {
+  "nr": 14,
+  "task": "Transmiterea listei verificatorilor de proiect atestați spre aprobarea AC",
+  "resp": "BEMEL",
+  "term": "09.11.2026",
+  "intern": "",
+  "livrabil": "Adresă + atestate",
+  "temei": "CS cap. 3.1",
+  "obs": "Daraban, Boldișor, Diaconescu, Ivan, Popovici",
+  "prio": "normal"
+ }
+];
+
+function _pcDate(s) {
+  var p = (s || '').split('.');
+  return p.length === 3 ? new Date(+p[2], +p[1] - 1, +p[0]) : null;
+}
+
+function renderAcademiaPlanContract() {
+  _activateAcademiaItem('item-academia-plancontract');
+  var today = new Date(); today.setHours(0,0,0,0);
+  var DAY = 86400000;
+  var MESE = ['ian','feb','mar','apr','mai','iun','iul','aug','sep','oct','nov','dec'];
+  var ZILE = ['Duminică','Luni','Marți','Miercuri','Joi','Vineri','Sâmbătă'];
+  var items = PLAN_CONTRACT_ACADEMIA.map(function(x) {
+    var t = _pcDate(x.term), i = _pcDate(x.intern);
+    var work = (t && i) ? (i < t ? i : t) : (i || t);
+    return Object.assign({ _t: t, _i: i, _work: work }, x);
+  });
+  items.sort(function(a, b) { return (a._work - b._work) || (a.nr - b.nr); });
+  var SIGN = new Date(2026, 9, 26);
+  var pre = items.filter(function(x){ return x._work < SIGN; }).length;
+  var sapt1 = items.filter(function(x){ return x._work >= SIGN && x._work <= new Date(2026, 10, 2); }).length;
+  var dupa = items.length - pre - sapt1;
+  var crit = items.filter(function(x){ return x.prio === 'critic'; }).length;
+
+  function badge(d) {
+    if (!d) return '';
+    var n = Math.round((d - today) / DAY);
+    var txt = n < 0 ? ('întârziat ' + (-n) + ' z') : n === 0 ? 'azi' : n === 1 ? 'mâine' : ('în ' + n + ' zile');
+    var bg = n < 0 ? '#FADBD8' : n <= 1 ? '#FDEBD0' : '#EAF2F8';
+    var col = n < 0 ? '#C0392B' : n <= 1 ? '#B9770E' : '#1A5276';
+    return '<span style="font-size:10px;font-weight:700;background:' + bg + ';color:' + col + ';padding:2px 8px;border-radius:99px;margin-left:8px">' + txt + '</span>';
+  }
+  function fmtDay(d) {
+    return ZILE[d.getDay()] + ' ' + d.getDate() + ' ' + MESE[d.getMonth()] + ' ' + d.getFullYear();
+  }
+
+  var html =
+    '<div class="proj-header"><div class="proj-title">Plan contract — prima săptămână</div>' +
+    '<div class="proj-meta">Academia Navală - Mircea cel Bătrân · semnare contract luni 26.10.2026</div></div>' +
+    '<div class="module-badge" style="background:#D6EAF8;color:#1A5276"><i class="ti ti-list-check" style="font-size:13px"></i> Acțiuni semnare și mobilizare</div>';
+
+  html += '<div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px">' +
+    (PLAN_CONTRACT_ACADEMIA_URL
+      ? '<a href="' + PLAN_CONTRACT_ACADEMIA_URL + '" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:9px 16px;background:#1A5276;color:#fff;border-radius:6px;font-size:12px;font-weight:600;text-decoration:none"><i class="ti ti-table"></i> Deschide fișierul Plan contract (Excel)</a>'
+      : '<span style="display:inline-flex;align-items:center;gap:6px;padding:9px 16px;background:var(--grey-100,#f1f3f5);color:var(--text-tertiary);border-radius:6px;font-size:12px;font-weight:600"><i class="ti ti-link-off"></i> Link fișier Plan contract în așteptare</span>') +
+    '<span style="font-size:11px;color:var(--text-tertiary)">Foile din fișier: Plan, Registru livrabile, Jaloane, Grafic ofertă, Clarificări, Riscuri</span>' +
+  '</div>';
+
+  html += '<div class="kpi-grid">' +
+    '<div class="kpi"><div class="kpi-label">Acțiuni în săptămâna 1</div><div class="kpi-val">' + items.length + '</div><div class="kpi-sub">de la semnare până la 09.11.2026</div></div>' +
+    '<div class="kpi"><div class="kpi-label">26.10 – 02.11.2026</div><div class="kpi-val">' + sapt1 + '</div><div class="kpi-sub">de la semnare până la efectivitate</div></div>' +
+    '<div class="kpi"><div class="kpi-label">Termen 05 – 09.11.2026</div><div class="kpi-val">' + dupa + '</div><div class="kpi-sub">se declanșează în săptămâna 1</div></div>' +
+    '<div class="kpi"><div class="kpi-label">Critice</div><div class="kpi-val" style="color:#C0392B">' + crit + '</div><div class="kpi-sub">blochează semnarea sau proiectarea</div></div>' +
+  '</div>';
+
+  var last = '';
+  items.forEach(function(x) {
+    var key = x._work ? x._work.getTime() : 0;
+    if (key !== last) {
+      last = key;
+      html += '<div style="font-size:12px;font-weight:700;color:#1A5276;margin:18px 0 8px;display:flex;align-items:center">' +
+        '<i class="ti ti-calendar-event" style="margin-right:6px"></i>' + (x._work ? fmtDay(x._work) : 'Fără dată') + badge(x._work) + '</div>';
+    }
+    var isCrit = x.prio === 'critic';
+    var color = isCrit ? '#C0392B' : '#1A5276';
+    var termTxt = x._t ? x.term : (x.term || '—');
+    var meta =
+      '<span><i class="ti ti-hash"></i> Plan Excel, nr. <b>' + x.nr + '</b></span>' +
+      '<span><i class="ti ti-user"></i> ' + x.resp + '</span>' +
+      '<span><i class="ti ti-flag"></i> Termen contractual: <b>' + termTxt + '</b></span>' +
+      (x._i ? '<span><i class="ti ti-target"></i> Țintă internă: <b>' + x.intern + '</b></span>' : '') +
+      (x.livrabil ? '<span><i class="ti ti-file-check"></i> ' + x.livrabil + '</span>' : '');
+    html +=
+      '<div class="nivel-card" style="margin-bottom:8px;border-left:4px solid ' + color + ';padding:12px 16px">' +
+        '<div style="display:flex;gap:10px;align-items:flex-start;flex-wrap:wrap">' +
+          '<div style="min-width:26px;height:26px;border-radius:99px;background:' + color + ';color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">' + x.nr + '</div>' +
+          '<div style="flex:1;min-width:240px">' +
+            (isCrit ? '<span style="font-size:9.5px;font-weight:700;letter-spacing:.04em;background:#FADBD8;color:#C0392B;padding:2px 8px;border-radius:99px;margin-bottom:5px;display:inline-block">CRITIC</span>' : '') +
+            '<div style="font-size:12.5px;font-weight:600;color:var(--text);line-height:1.45;margin-bottom:6px">' + x.task + '</div>' +
+            '<div style="display:flex;gap:14px;flex-wrap:wrap;font-size:11px;color:var(--text-secondary)">' + meta + '</div>' +
+            (x.obs ? '<div style="font-size:11px;color:var(--text-tertiary);margin-top:6px;line-height:1.45"><i class="ti ti-info-circle"></i> ' + x.obs + '</div>' : '') +
+          '</div>' +
+        '</div>' +
+      '</div>';
+  });
+
+  html += '<div class="page-footer">PM Hub · EREN CONS SRL · 2026</div>';
+  document.getElementById('main').innerHTML = html;
 }
 
 var DOCS_SEAP_ACADEMIA = [];
@@ -1638,6 +1892,12 @@ var DOCS_BENEF = [
     desc:'Transmisă de EREN CONS către UM 02311: calculul de actualizare a prețurilor aferent SL2 (execuție iulie 2026), devenit definitiv după publicarea indicelui final INS (iunie 2026 = 165,30, Buletin statistic nr. 07/2026). Ajustare: 95.930,30 lei fără TVA (TVA 20.145,36; total 116.075,66 lei). Se solicită act adițional la contractul 997/01.08.2025 pentru decontarea sumei. Anexe: calcul actualizare SL2 + extras buletin INS (3 pagini).',
     color:'#1A5276', bg:'#EAF2F8', icon:'ti-file-export',
     url:'https://drive.google.com/file/d/1YEn0IGlMAarQTS_2YdA0794jGsXU-G-m/view?usp=sharing' },
+  { k:202610221, d:'22.10.2026', cat:'ADRESĂ EREN', nr:'13861', serie:'EREN',
+    titlu:'Adresă — solicitare de răspuns la Notele de Renunțare, NCS tip 1 și NCS tip 2 (transmise prin adresa 13821/09.10.2026)',
+    desc:'Transmisă de EREN CONS către UM 02311 (în atenția reprezentantului Supervizorului). Reamintește valorile din adresa 13821: Note de Renunțare −2.058.160,36 lei, NCS tip 1 1.510.654,54 lei, NCS tip 2 6.215.990,73 lei (fără TVA). Precizează că listele au fost predate odată cu PTh+DDE (email Triptic 02.06.2026, A5-946/08.06.2026) și că procesul-verbal de predare din 08.06.2026 a fost semnat doar de proiectant. Cere poziția Beneficiarului și a Supervizorului asupra: (a) încadrării articolelor pe NR/NCS1/NCS2 (Anexa 5); (b) cantităților și valorilor din Anexele 1–4; (c) procedurii de aprobare — Ordin Administrativ de Modificare sau act adițional (clauza 37). Atrage atenția că oferte furnizori au termene limitate de valabilitate; propune ședință de clarificare. Transmisă sub rezerva drepturilor, cu menținerea dreptului de a notifica Revendicare (clauza 69a).',
+    color:'#1A5276', bg:'#EAF2F8', icon:'ti-file-export',
+    url:'https://drive.google.com/file/d/1q7o80Y2Ff6RlHhGqx5dABS1g7EcyZuoC/view?usp=sharing' },
+
   { k:202610091, d:'09.10.2026', cat:'ADRESĂ EREN', nr:'13821', serie:'EREN',
     titlu:'Adresă de înaintare — Note de Renunțare, NCS tip 1 și NCS tip 2 (liste de lucrări suplimentare)',
     desc:'Transmisă de EREN CONS către UM 02311 (cu proiectantul Triptic): Anexa 1 Centralizator modificări solicitate (net +5.668.484,91 lei fără TVA); Anexa 2 Note de Renunțare −2.058.160,36 lei; Anexa 3 NCS tip 1 1.510.654,54 lei; Anexa 4 NCS tip 2 6.215.990,73 lei (cu liste F3 și F4); Anexa 5 încadrare articole (trasabilitate, fără însumare). Temei: clauzele de revizuire din documentele achiziției și clarificările A5-158, A5-159, A5-189, A5-203. Transmitere sub rezerva tuturor drepturilor; se păstrează dreptul la revendicare.',

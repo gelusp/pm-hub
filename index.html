@@ -850,15 +850,106 @@ function _activateAcademiaItem(id) {
 
 function renderContractSintezaAcademia() {
   _activateAcademiaItem('item-academia-contractsinteza');
-  document.getElementById('main').innerHTML =
-    '<div class="proj-header"><div class="proj-title">Sinteză execuție contract</div>' +
-    '<div class="proj-meta">Academia Navală - Mircea cel Bătrân · Proiect în analiză</div></div>' +
-    '<div class="module-badge" style="background:#D6EAF8;color:#1A5276"><i class="ti ti-file-dollar" style="font-size:13px"></i> Sinteză contract</div>' +
-    '<div class="coming-soon">' +
-      '<i class="ti ti-file-dollar" style="font-size:36px;color:#1A5276;margin-bottom:12px"></i>' +
-      '<h3>Niciun document adăugat</h3>' +
-    '</div>' +
-    '<div class="page-footer">PM Hub · EREN CONS SRL · 2026</div>';
+  document.getElementById('main').style.maxWidth = '1500px';
+
+  // ── Date cunoscute (lei fără TVA). Sursă: Sinteza cerințe (valoare estimată), Formular ofertă nr. 4 din 31.07.2025 și Centralizator F9. ──
+  var ESTIMAT = 80621629.55;   // valoarea estimată a procedurii
+  var OFERTA  = 60418156.20;   // prețul total ofertat (asocierea EREN CONS – BEMEL AG – ICCO INSTAL)
+  var TVA     = 11479449.68;
+  var PROIECTARE = 1510000.00, EXECUTIE = 58908156.20;
+  var CAPITOLE = [
+    {l:'Cap.1 — Obținerea și amenajarea terenului (demolare, amenajări exterioare, mediu, utilități)', v:4266873.04, c:'#6B7280'},
+    {l:'Cap.2 — Asigurarea utilităților (gaze, apă-canal, energie electrică)', v:2781852.15, c:'#8E6BBF'},
+    {l:'Cap.3 — Proiectare și asistență tehnică', v:1510000.00, c:'#2E86C1'},
+    {l:'Cap.4 — Investiția de bază (pavilion, instalații, dotări)', v:44152921.32, c:'#185FA5'},
+    {l:'Cap.5 — Alte cheltuieli', v:7516480.88, c:'#854F0B'},
+    {l:'Cap.6 — Probe tehnologice și teste', v:190028.81, c:'#3B6D11'}
+  ];
+  function fmt(v){ return Math.round(v).toLocaleString('ro-RO'); }
+  function fmt2(v){ return v.toLocaleString('ro-RO', {minimumFractionDigits:2, maximumFractionDigits:2}); }
+  function pc(v, base){ return (v / base * 100).toFixed(1).replace('.', ','); }
+  var totCap = CAPITOLE.reduce(function(s, c){ return s + c.v; }, 0);
+  var dif = ESTIMAT - OFERTA, gbe = OFERTA * 0.10;
+
+  var html = '';
+  html += '<div class="proj-header"><div class="proj-title">Sinteză execuție contract — Valoare / Buget / Saving</div>' +
+    '<div class="proj-meta">Academia Navală „Mircea cel Bătrân” · pavilion bloc alimentar, cazarma 1369 Constanța (UM 02192) · în pregătire, semnare contract 26.10.2026</div></div>';
+  html += '<div class="module-badge" style="background:#D6EAF8;color:#1A5276"><i class="ti ti-file-dollar" style="font-size:13px"></i> Sinteză contract · valoare estimată · ofertă · defalcare</div>';
+
+  html += '<div style="background:#FFF8E1;border-left:3px solid #B7791F;border-radius:6px;padding:8px 12px;font-size:11.5px;color:#7A5B12;margin-bottom:14px"><b>În completare.</b> Momentan sunt cunoscute valoarea estimată a licitației și prețul ofertat. Bugetul intern, contractele de subantrepriză, marja și ajustarea de preț se adaugă pe măsură ce sunt disponibile (vezi secțiunea „De completat”).</div>';
+
+  // KPI
+  html += '<div class="kpi-grid" style="margin-bottom:14px">';
+  html += '<div class="kpi"><div class="kpi-label">Valoare estimată (licitație)</div><div class="kpi-val" style="color:#6B7280">' + (ESTIMAT/1e6).toFixed(2).replace('.', ',') + ' mil</div><div class="kpi-sub">lei fără TVA · valoarea estimată a procedurii CN1080766</div></div>';
+  html += '<div class="kpi"><div class="kpi-label">Valoare contract (oferta asocierii)</div><div class="kpi-val" style="color:#185FA5">' + (OFERTA/1e6).toFixed(2).replace('.', ',') + ' mil</div><div class="kpi-sub">lei fără TVA · ' + pc(OFERTA, ESTIMAT) + '% din estimare · ' + fmt(OFERTA + TVA) + ' lei cu TVA</div></div>';
+  html += '<div class="kpi"><div class="kpi-label">Sub estimare</div><div class="kpi-val" style="color:#854F0B">−' + (dif/1e6).toFixed(2).replace('.', ',') + ' mil</div><div class="kpi-sub">−' + pc(dif, ESTIMAT) + '% față de valoarea estimată</div></div>';
+  html += '<div class="kpi"><div class="kpi-label">Garanție de bună execuție (10%)</div><div class="kpi-val" style="color:#3B6D11">' + (gbe/1e6).toFixed(2).replace('.', ',') + ' mil</div><div class="kpi-sub">' + fmt2(gbe) + ' lei · adresa AC AP 8034 indică 6.041.894 lei (+78,38 lei)</div></div>';
+  html += '</div>';
+
+  // Cascada
+  html += '<div class="proj-card" style="margin-bottom:14px">';
+  html += '<div class="proj-card-header" style="background:#1F3864"><span style="font-size:13px;font-weight:600;color:#fff"><i class="ti ti-stairs-down"></i> Cascada valorii — de la estimarea autorității la prețul contractului</span></div>';
+  html += '<div class="proj-card-body" style="gap:12px">';
+  [
+    {l:'Valoare estimată a licitației', v:ESTIMAT, c:'#6B7280', note:'Plafon al procedurii (lei fără TVA)'},
+    {l:'Valoare ofertată (contract)', v:OFERTA, c:'#185FA5', note:fmt(dif) + ' lei sub estimare · proiectare ' + fmt(PROIECTARE) + ' + execuție ' + fmt(EXECUTIE) + ' lei'}
+  ].forEach(function(s){
+    var p = s.v / ESTIMAT * 100;
+    html += '<div><div style="display:flex;justify-content:space-between;align-items:baseline;font-size:12px;margin-bottom:3px"><span style="color:#213;font-weight:600">' + s.l + '</span><span style="color:' + s.c + ';font-weight:700">' + fmt(s.v) + ' lei · ' + p.toFixed(1).replace('.', ',') + '%</span></div>' +
+      '<div style="height:16px;background:#EEF0F3;border-radius:5px;overflow:hidden"><div style="height:100%;width:' + p + '%;background:' + s.c + '"></div></div>' +
+      '<div style="font-size:10px;color:#7A828E;margin-top:3px">' + s.note + '</div></div>';
+  });
+  html += '<div style="border:1px dashed #C9CFD8;border-radius:6px;padding:9px 12px;font-size:11.5px;color:#7A828E"><i class="ti ti-hourglass-empty"></i> Următoarele trepte — buget intern (deviz general) și bani reali pentru lucrări — se adaugă după întocmirea bugetului intern.</div>';
+  html += '</div></div>';
+
+  // Defalcare pe capitole
+  html += '<div class="proj-card" style="margin-bottom:14px">';
+  html += '<div class="proj-card-header" style="background:#2C4A6E"><span style="font-size:13px;font-weight:600;color:#fff"><i class="ti ti-chart-bar"></i> Defalcarea ofertei pe capitole (Formular nr. 9)</span></div>';
+  html += '<div class="proj-card-body" style="gap:10px">';
+  CAPITOLE.forEach(function(c){
+    var p = c.v / OFERTA * 100;
+    html += '<div><div style="display:flex;justify-content:space-between;align-items:baseline;font-size:12px;margin-bottom:3px;gap:10px"><span style="color:#213;font-weight:600">' + c.l + '</span><span style="color:' + c.c + ';font-weight:700;white-space:nowrap">' + fmt(c.v) + ' lei · ' + p.toFixed(1).replace('.', ',') + '%</span></div>' +
+      '<div style="height:12px;background:#EEF0F3;border-radius:5px;overflow:hidden"><div style="height:100%;width:' + p + '%;background:' + c.c + '"></div></div></div>';
+  });
+  html += '<div style="display:flex;justify-content:space-between;font-size:12px;border-top:1px solid #E5E7EB;padding-top:8px;font-weight:700"><span>Total ofertă (fără TVA)</span><span>' + fmt2(totCap) + ' lei' + (Math.abs(totCap - OFERTA) < 0.01 ? ' ✓ coincide cu formularul de ofertă' : ' — DIFERĂ de ofertă') + '</span></div>';
+  html += '<div style="display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:#444"><span><b>Servicii de proiectare:</b> ' + fmt(PROIECTARE) + ' lei (' + pc(PROIECTARE, OFERTA) + '%)</span><span><b>Lucrări de execuție:</b> ' + fmt(EXECUTIE) + ' lei (' + pc(EXECUTIE, OFERTA) + '%)</span></div>';
+  html += '</div></div>';
+
+  // Date cheie contract
+  html += '<div class="proj-card" style="margin-bottom:14px">';
+  html += '<div class="proj-card-header" style="background:#3B6D11"><span style="font-size:13px;font-weight:600;color:#fff"><i class="ti ti-list-details"></i> Date cheie contract (din documentele licitației)</span></div>';
+  html += '<div class="proj-card-body"><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:6px 24px;font-size:12px;line-height:1.5">';
+  [
+    ['Asociere', 'EREN CONS (lider) + BEMEL AG (proiectare) + ICCO INSTAL'],
+    ['Durată', '37 luni: 4 proiectare + 32 execuție + 1 recepție (însumarea dă 37 — de clarificat)'],
+    ['Garanție lucrări', 'minim 36 luni de la recepția la terminarea lucrărilor'],
+    ['Garanție de bună execuție', '10% din prețul contractului fără TVA; termen 5 zile lucrătoare de la semnare (adresa AC)'],
+    ['Avans', 'neclar: 15% pe an într-o tranșă sau 5% + 10% pe tranșe — se clarifică la semnare'],
+    ['Penalități întârziere', 'preț contract ÷ durata de execuție = penalitate/zi; plafon 15% din preț'],
+    ['Sume reținute', '10% din fiecare certificat de plată, plafon cumulat 5% din preț'],
+    ['Ajustare de preț', 'se aplică (durată > 365 zile), formulă pe indici INS']
+  ].forEach(function(r){
+    html += '<div><span style="color:#7A828E;font-size:10.5px;text-transform:uppercase;letter-spacing:.3px">' + r[0] + '</span><div>' + r[1] + '</div></div>';
+  });
+  html += '</div></div></div>';
+
+  // De completat
+  html += '<div class="proj-card" style="margin-bottom:14px">';
+  html += '<div class="proj-card-header" style="background:#6B7280"><span style="font-size:13px;font-weight:600;color:#fff"><i class="ti ti-hourglass-empty"></i> De completat</span></div>';
+  html += '<div class="proj-card-body" style="gap:6px;font-size:12px">';
+  [
+    'Buget intern (deviz general) și bani reali pentru lucrări — după întocmirea bugetului',
+    'Contracte de subantrepriză semnate (scope, furnizor, valoare, saving față de buget)',
+    'Venit din contractul cu Autoritatea (pe obiecte) și marja față de venit',
+    'Ajustarea de preț (indici INS) — după Data de Referință și prima situație de lucrări',
+    'Valoarea contractului după eventuale acte adiționale'
+  ].forEach(function(t){
+    html += '<div style="border:1px dashed #C9CFD8;border-radius:6px;padding:7px 12px;color:#5A6472"><i class="ti ti-circle-dashed" style="color:#9AA3B0"></i> ' + t + '</div>';
+  });
+  html += '</div></div>';
+
+  html += '<div class="page-footer">PM Hub · EREN CONS SRL · 2026 · Surse: Sinteza cerințe (valoare estimată), Formular de ofertă nr. 4 din 31.07.2025, Centralizator prețuri F9, Dosar de analiză 22.10.2026</div>';
+  document.getElementById('main').innerHTML = html;
 }
 
 var DOCS_BENEF_ACADEMIA = [
@@ -1011,14 +1102,14 @@ var PLAN_CONTRACT_ACADEMIA = [
  },
  {
   "nr": 7,
-  "task": "Solicitarea acordului AC pentru înlocuirea managerului de contract (expert-cheie) și a șefului de șantier, cu documentele de calificare și experiență ale înlocuitorilor; după aprobare, propunerea Reprezentantului Antreprenorului pentru aprobarea Supervizorului și notificarea șefului de șantier, cu date de contact; stabilirea punctului unic de contact",
+  "task": "Propunerea către Supervizor, spre aprobare, a Reprezentantului Antreprenorului (Gelu Spătaru, manager de proiect EREN CONS), cu împuternicirea și documentele care îi atestă calitatea; Manda Victor Adrian rămâne Manager de contract (expert-cheie, fără modificări); notificarea șefului de șantier, cu date de contact; stabilirea punctului unic de contact",
   "resp": "EREN CONS",
   "term": "10.11.2026",
   "intern": "29.10.2026",
-  "livrabil": "Adresă către AC + dosar de calificare înlocuitori",
-  "temei": "CG cl. 13.2, 14.3, 14.4; CS cap. 5",
-  "obs": "Înlocuirea personalului-cheie se face doar cu acordul prealabil al AC; înlocuitorul trebuie să aibă calificare și experiență cel puțin echivalente și să obțină cel puțin același punctaj la factorii de atribuire (managerul a fost evaluat în ofertă). Documentele de verificare a criteriilor și a punctajului se transmit AC. Până la aprobare nu se notifică persoanele din ofertă. Propunerea Reprezentantului: 15 zile de la semnare (CG cl. 13.2), Supervizorul răspunde în 10 zile. Nume înlocuitori și motivul schimbării: de completat. Pentru șeful de șantier CG nu fixează termen; cerințele minime se verifică în CS.",
-  "prio": "critic"
+  "livrabil": "Adresă către AC cu propunerea Reprezentantului + împuternicire",
+  "temei": "CG cl. 13.2 – 13.5, 14.3; CS cap. 5",
+  "obs": "Reprezentantul Antreprenorului decide, primește și implementează Ordinele Administrative, semnează documentele transmise AC (cl. 13.4, 13.5); timpul lui este alocat în totalitate coordonării contractului. Propunerea se face în 15 zile de la semnare (10.11.2026), iar Supervizorul aprobă sau respinge motivat în 10 zile; aprobarea poate fi retrasă (cl. 13.3). Reprezentantul se menține pe toată durata (cl. 14.3). Managerul de contract (Manda) este expert-cheie evaluat în ofertă și rămâne neschimbat. Pentru șeful de șantier CG nu fixează termen; cerințele minime se verifică în CS și în Acordul Contractual. Înlocuirea șefului de șantier (Luca Daniliu Vasile), dacă se menține decizia, nu cere punctaj, doar calificare adecvată.",
+  "prio": "normal"
  },
  {
   "nr": 8,

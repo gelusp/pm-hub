@@ -406,8 +406,14 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
         <i class="ti ti-chevron-down chevron" id="chev-academia"></i>
       </div>
       <div class="submenu" id="sub-academia">
-        <div class="submenu-item" id="item-academia-contractsinteza" onclick="goModule('academia','contractsinteza')">
+        <div class="submenu-item" id="item-academia-contractsinteza" onclick="academiaSintezaClick()">
           <i class="ti ti-file-dollar"></i> Sinteză contract
+          <i class="ti ti-chevron-down chevron" id="chev-academia-sinteza" style="font-size:11px" onclick="event.stopPropagation();toggleSubSub('academia-sinteza')"></i>
+        </div>
+        <div class="submenu" id="sub-academia-sinteza" style="margin-left:14px;border-left:2px solid var(--grey-200)">
+          <div class="submenu-item" id="item-academia-analizaoferta" onclick="renderAcademiaAnalizaOferta()">
+            <i class="ti ti-report-analytics" style="color:#1A5276"></i> Analiza Oferta / Resurse
+          </div>
         </div>
         <div class="submenu-item" id="item-academia-plancontract" onclick="renderAcademiaPlanContract()">
           <i class="ti ti-list-check" style="color:#1A5276"></i> Plan Contract
@@ -949,6 +955,146 @@ function renderContractSintezaAcademia() {
   html += '</div></div>';
 
   html += '<div class="page-footer">PM Hub · EREN CONS SRL · 2026 · Surse: Sinteza cerințe (valoare estimată), Formular de ofertă nr. 4 din 31.07.2025, Centralizator prețuri F9, Dosar de analiză 22.10.2026</div>';
+  document.getElementById('main').innerHTML = html;
+}
+
+// ── Academia Navală — Analiza Oferta / Resurse (fundamentarea ofertei pe oferte de furnizori) ──
+function academiaSintezaClick() {
+  goModule('academia', 'contractsinteza');
+  var s = document.getElementById('sub-academia-sinteza');
+  if (s && !s.classList.contains('open')) toggleSubSub('academia-sinteza');
+}
+
+var ANALIZA_OFERTA_ACADEMIA = {
+  curs: 5.06, // lei/EUR, orientativ — de verificat
+  oferta: 60418156.20,
+  // Poziții din Formular nr. 9 (lei fără TVA) grupate după gradul de fundamentare pe oferte de furnizori
+  pozitii: [
+    { p:'1.2.1 Demolare Pavilion B1 (obiect 1)', v:3527377.95, st:'F', surse:'Apolodor: 3.293.463 lei', obs:'Marjă ≈ 7%. Taxa de groapă (2.795.580 lei) = 85% din ofertă. Oferta Apolodor exclude debranșările, paza, utilitățile, gunoiul menajer și mobilierul din clădire.' },
+    { p:'2.1 Branșament gaze naturale', v:565712.38, st:'F', surse:'Ofertă gaze: 502.450 lei', obs:'Marjă ≈ 11%.' },
+    { p:'4.5.2 Dotări — amenajări exterioare (obiect 3)', v:824135.20, st:'F', surse:'Arta Grădinilor: 155.617,50 EUR (≈ 787.000 lei)', obs:'Acoperire ≈ 95%.' },
+    { p:'4.3.1 + 4.4.1 Utilaje și echipamente — pavilion (obiect 2)', v:10718835.79, st:'P', surse:'SDS Group ≈ 1.534.178–1.534.814 EUR după discount (≈ 7,8 mil. lei) + Dactrust 917.866 lei', obs:'SDS are 3 versiuni — de confirmat varianta finală. Suprapunerea SDS / Dactrust nu e verificată. Reconciliat cu Formularul 9b (obiect 2).' },
+    { p:'4.5.1 Dotări — pavilion (obiect 2)', v:2283371.24, st:'P', surse:'Art Decor 498.735 lei · Waterboyz 369.968 lei · Dotări sportive 264.978 EUR · Wallbert 19.850 EUR · Geocom 27.839 EUR', obs:'Totalurile Alex Mobilier și PM Furniture nu sunt extrase încă.' },
+    { p:'4.1.1 Construcții și instalații — pavilion (obiect 2)', v:28364542.46, st:'P', surse:'Beton, armătură, finisaje, tâmplărie, instalații (HAM, Nibaco, Vivoclima, ECKON, Elco etc.)', obs:'Formularul 9 are o singură linie pentru tot pavilionul — nu se poate compara pe specialități. Fără ofertă: zidărie (≈ 1.964 mc), învelitoare, plafoane, dale flotante, tencuieli/glet, electrice.' },
+    { p:'5.1 Organizare de șantier (5.1.1: 6.439.599,53 + 5.1.2: 1.076.881,35)', v:7516480.88, st:'N', surse:'Nicio ofertă în folder', obs:'Structura prețului autorității (deviz general SF) nu e în documentele consultate — de cerut echipei de ofertare.' },
+    { p:'2.3 Racord energie electrică (branșament + traseu)', v:1824234.52, st:'N', surse:'Nicio ofertă în folder', obs:'De cerut fundamentarea de la ofertare.' },
+    { p:'3 Proiectare și asistență tehnică', v:1510000.00, st:'I', surse:'Preț de contractare cu asociatul BEMEL AG', obs:'Nu constituie risc — prețul contractat intern în asociere.' },
+    { p:'Alte poziții (1.2.2, 1.2.3, 1.3, 1.4, 2.2, 4.1.3, 4.1.4, 4.2.x, 4.3.2, 4.3.4, cap. 6)', v:3283465.78, st:'X', surse:'—', obs:'Neanalizate încă. Include 4.3.2 (878.772,73 lei), unde Formularul 9b are doar 86.490,49 lei pentru obiectul 3 — 792.282,24 lei neexplicați.' }
+  ],
+  statusuri: {
+    F: { t:'Fundamentat', c:'#3B6D11', bg:'#EAF3DE' },
+    P: { t:'Parțial', c:'#B9770E', bg:'#FEF5E7' },
+    N: { t:'Nefundamentat în folder', c:'#C0392B', bg:'#FDEDEC' },
+    I: { t:'Preț intern (asociere)', c:'#2E86C1', bg:'#EBF5FB' },
+    X: { t:'Neanalizat', c:'#6B7280', bg:'#F3F4F6' }
+  },
+  // Registru oferte furnizori (iulie 2025, dacă nu e altfel precizat). cur: 'lei' | 'EUR' | '?' (monedă neprecizată)
+  oferte: [
+    { f:'Apolodor', cat:'Demolare', tot:3293463, cur:'lei', n:'Taxă groapă 2.795.580 lei; exclude debranșări, pază, utilități.' },
+    { f:'HAM Tehnic', cat:'Instalații', tot:5743397.38, cur:'lei', n:'„Centralizator HAM” din fișierul cu devize F1–F4; de reconciliat cu totalul F1 (6.088.575,97 lei).' },
+    { f:'SDS Group', cat:'Utilaje bucătărie', tot:1534178.83, cur:'EUR', n:'După discount (listă 2.275.686 EUR) + timbru verde 16.779 lei. 3 versiuni (07.07: 1.507.527; rev. 10.07: 1.534.179; rev. 2: 1.534.814).' },
+    { f:'Dactrust', cat:'Utilaje bucătărie', tot:917865.68, cur:'lei', n:'Ofertă din 04.03.2025; de verificat suprapunerea cu SDS.' },
+    { f:'Art Decor', cat:'Dotări / mobilier', tot:498735, cur:'lei', n:'' },
+    { f:'Waterboyz', cat:'Dotări / mobilier', tot:369968.30, cur:'lei', n:'' },
+    { f:'Dotări sportive', cat:'Dotări arhitectură', tot:264978, cur:'EUR', n:'Foaia „Dotari arhitect”.' },
+    { f:'Geocom (Estfeller)', cat:'Perete amovibil', tot:27838.94, cur:'EUR', n:'+ montaj 5.604,20 EUR.' },
+    { f:'Wallbert Walls', cat:'Perete amovibil', tot:19850, cur:'EUR', n:'Espero Sonico, Rw = 50 dB.' },
+    { f:'Arta Grădinilor', cat:'Peisagistică', tot:155617.50, cur:'EUR', n:'' },
+    { f:'Symmetrica', cat:'Pavaje', tot:73060, cur:'lei', n:'' },
+    { f:'Klinker România', cat:'Cărămidă aparentă', tot:228999, cur:'lei', n:'După discount (252.495 lei înainte).' },
+    { f:'Solexpert', cat:'Finisaje (PVC, gresie, faianță)', tot:151202.27, cur:'EUR', n:'Suma celor 3 foi de calcul (materiale + manoperă).' },
+    { f:'Perpetuum', cat:'Placaje', tot:263182.02, cur:'EUR', n:'Suma totalurilor din foaia de calcul atașată.' },
+    { f:'La Mural', cat:'Picturi murale', tot:8828.10, cur:'lei', n:'După reducere 10%, fără montaj.' },
+    { f:'Vivoclima', cat:'HVAC / VRF', tot:409513.60, cur:'lei', n:'După reducere (511.892 lei înainte).' },
+    { f:'Ofertă gaze', cat:'Branșament gaze', tot:502450, cur:'lei', n:'' },
+    { f:'ECKON', cat:'Incendiu', tot:375000, cur:'lei', n:'' },
+    { f:'Nibaco', cat:'Instalații (folder CS)', tot:234220.95, cur:'EUR', n:'Total cu TVA, 17.07.2025.' },
+    { f:'Atrea', cat:'Recuperatoare', tot:54340, cur:'?', n:'Moneda nu reiese din ofertă.' },
+    { f:'Elco', cat:'Cazane (cascadă 2 × Trigon XL 250)', tot:26301, cur:'EUR', n:'' },
+    { f:'Technosting', cat:'Stingătoare', tot:14368, cur:'lei', n:'' },
+    { f:'Dipet', cat:'Ventilatoare', tot:9260.25, cur:'?', n:'Moneda nu reiese din ofertă.' },
+    { f:'Ruck', cat:'Ventilatoare sală de mese', tot:7702.53, cur:'EUR', n:'' },
+    { f:'Miras / Rikosteel', cat:'Armătură BST500', tot:null, cur:'', n:'3,75 lei/kg (Miras) · 3,60 lei/kg + TVA (Rikosteel). Necesar ≈ 792 t → ≈ 2,85–2,97 mil. lei.' },
+    { f:'Wopfinger / Romcim / Comprest / Heidelberg', cat:'Beton C35/45', tot:null, cur:'', n:'421,10 · 469 · 515 · 499–529 lei/mc. Necesar ≈ 4.400 mc → ≈ 1,9–2,3 mil. lei, fără pompă și transport. Holcim: prețuri neextrase.' },
+    { f:'Klaro', cat:'Tâmplărie aluminiu', tot:null, cur:'', n:'Orientativ, nu ofertă fermă: 350 EUR/mp ferestre, 190 EUR/mp pereți sticlă.' },
+    { f:'Schindler', cat:'Lifturi', tot:null, cur:'', n:'33.700 EUR/lift (grup A evacuare); total neextras.' },
+    { f:'Profimat · Alex Mobilier · PM Furniture · Muro Design · Florea Grup', cat:'Diverse', tot:null, cur:'', n:'Total neextras încă.' }
+  ],
+  clarificari: [
+    'Devizul general din SF (HG 907, F2 pe obiecte) și structura prețului autorității — pentru a compara organizarea de șantier (7.516.480,88 lei) cu bugetul ei.',
+    'Fundamentarea organizării de șantier: devize / liste de cantități și ce include (construcții aferente 6,44 mil. lei, cheltuieli conexe 1,08 mil. lei).',
+    'Fundamentarea racordului electric (cap. 2.3, 1.824.234,52 lei): ofertă RED sau proiect.',
+    'Defalcarea pavilionului (28,36 mil. lei) pe specialități — legătura cu fișierul HAM (F1–F4) și cu ofertele.',
+    'Oferte lipsă: zidărie (≈ 1.964 mc, 30 cm), învelitoare, plafoane, dale flotante, electrice curenți tari, tencuieli și glet.',
+    'Diferența de 792.282,24 lei la poziția 4.3.2 față de Formularul 9b (obiect 3).',
+    'SDS: care este versiunea finală (3 versiuni) și dacă oferta Dactrust se suprapune cu ea.',
+    'Apolodor: unde sunt acoperite debranșările, paza, utilitățile, gunoiul menajer și mobilierul din clădire.',
+    'Valabilitate: toate ofertele sunt din iulie 2025; reconfirmarea prețurilor la semnarea din 26.10.2026 (ajustarea de preț, cl. 48.3, acoperă doar parțial).',
+    'Totaluri neextrase: Profimat, Alex Mobilier, PM Furniture, Muro Design, Florea Grup, Holcim; moneda ofertelor Atrea și Dipet.'
+  ]
+};
+
+function renderAcademiaAnalizaOferta() {
+  _activateAcademiaItem('item-academia-analizaoferta');
+  document.getElementById('main').style.maxWidth = '1500px';
+  var D = ANALIZA_OFERTA_ACADEMIA, OF = D.oferta;
+  function fmt(v){ return Math.round(v).toLocaleString('ro-RO'); }
+  function fmt2(v){ return v.toLocaleString('ro-RO', {minimumFractionDigits:2, maximumFractionDigits:2}); }
+  function pc(v){ return (v / OF * 100).toFixed(1).replace('.', ','); }
+  var tot = {F:0,P:0,N:0,I:0,X:0}, sum = 0;
+  D.pozitii.forEach(function(x){ tot[x.st] += x.v; sum += x.v; });
+
+  var html = '<div class="proj-header"><div class="proj-title">Analiza Oferta / Resurse</div>' +
+    '<div class="proj-meta">Academia Navală „Mircea cel Bătrân” · fundamentarea ofertei pe oferte de furnizori · analiză preliminară 24.10.2026</div></div>' +
+    '<div class="module-badge" style="background:#D6EAF8;color:#1A5276"><i class="ti ti-report-analytics" style="font-size:13px"></i> Analiza Oferta / Resurse</div>' +
+    '<div style="background:#FFF8E1;border-left:3px solid #B7791F;border-radius:6px;padding:8px 12px;font-size:11.5px;color:#7A5B12;margin-bottom:14px"><b>Analiză preliminară, în completare.</b> Surse: folderele „4. Oferta client” și „6. Resurse-Oferte în licitație”. Structura bugetului autorității (deviz general SF) nu e încă disponibilă; se solicită echipei de ofertare. Echivalențe EUR → lei la cursul orientativ de ' + D.curs.toString().replace('.', ',') + ' lei/EUR.</div>';
+
+  // KPI
+  html += '<div class="kpi-grid" style="margin-bottom:14px">' +
+    '<div class="kpi"><div class="kpi-label">Valoare ofertă (fără TVA)</div><div class="kpi-val" style="color:#185FA5">' + (OF/1e6).toFixed(2).replace('.', ',') + ' mil</div><div class="kpi-sub">estimat autoritate 80,62 mil · −25,1%</div></div>' +
+    '<div class="kpi"><div class="kpi-label">Fundamentat direct pe oferte</div><div class="kpi-val" style="color:#3B6D11">' + (tot.F/1e6).toFixed(2).replace('.', ',') + ' mil</div><div class="kpi-sub">' + pc(tot.F) + '% din ofertă</div></div>' +
+    '<div class="kpi"><div class="kpi-label">Fundamentat parțial</div><div class="kpi-val" style="color:#B9770E">' + (tot.P/1e6).toFixed(2).replace('.', ',') + ' mil</div><div class="kpi-sub">' + pc(tot.P) + '% din ofertă</div></div>' +
+    '<div class="kpi"><div class="kpi-label">Nefundamentat în folder</div><div class="kpi-val" style="color:#C0392B">' + (tot.N/1e6).toFixed(2).replace('.', ',') + ' mil</div><div class="kpi-sub">' + pc(tot.N) + '% · organizare șantier + racord electric</div></div>' +
+    '<div class="kpi"><div class="kpi-label">Puncte de clarificat</div><div class="kpi-val" style="color:#854F0B">' + D.clarificari.length + '</div><div class="kpi-sub">de cerut echipei de ofertare</div></div>' +
+    '</div>';
+
+  // Bară distribuție
+  html += '<div class="proj-card" style="margin-bottom:14px"><div class="proj-card-header" style="background:#1F3864"><span style="font-size:13px;font-weight:600;color:#fff"><i class="ti ti-chart-bar"></i> Gradul de fundamentare — structura ofertei</span></div><div class="proj-card-body" style="gap:10px">';
+  html += '<div style="display:flex;height:22px;border-radius:6px;overflow:hidden;background:#EEF0F3">';
+  ['F','P','N','I','X'].forEach(function(k){ var w = tot[k] / OF * 100; html += '<div title="' + D.statusuri[k].t + '" style="width:' + w + '%;background:' + D.statusuri[k].c + '"></div>'; });
+  html += '</div><div style="display:flex;gap:14px;flex-wrap:wrap;font-size:11.5px">';
+  ['F','P','N','I','X'].forEach(function(k){ html += '<span><span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:' + D.statusuri[k].c + ';margin-right:5px"></span>' + D.statusuri[k].t + ' · <b>' + fmt(tot[k]) + ' lei</b> (' + pc(tot[k]) + '%)</span>'; });
+  html += '</div><div style="font-size:11px;color:#5A6472">Total verificat: ' + fmt2(sum) + ' lei' + (Math.abs(sum - OF) < 0.01 ? ' ✓ egal cu prețul ofertat' : ' ⚠ diferă de prețul ofertat') + '. „Parțial” = există oferte, dar acoperirea nu poate fi stabilită sau nu e completă.</div>';
+  html += '</div></div>';
+
+  // Tabel pe poziții
+  html += '<div class="proj-card" style="margin-bottom:14px"><div class="proj-card-header" style="background:#2C4A6E"><span style="font-size:13px;font-weight:600;color:#fff"><i class="ti ti-table"></i> Fundamentare pe poziții din Formularul nr. 9</span></div><div class="proj-card-body" style="padding:0;overflow-x:auto">';
+  html += '<table style="width:100%;border-collapse:collapse;font-size:11.5px"><thead><tr style="background:#F4F6F7;text-align:left"><th style="padding:8px 10px">Poziție</th><th style="padding:8px 10px;text-align:right">Valoare ofertă (lei)</th><th style="padding:8px 10px;text-align:right">% ofertă</th><th style="padding:8px 10px">Fundamentare</th><th style="padding:8px 10px">Surse / oferte</th><th style="padding:8px 10px">Observații</th></tr></thead><tbody>';
+  D.pozitii.forEach(function(x){
+    var s = D.statusuri[x.st];
+    html += '<tr style="border-top:1px solid #E5E7EB;vertical-align:top"><td style="padding:8px 10px;font-weight:600">' + x.p + '</td><td style="padding:8px 10px;text-align:right;white-space:nowrap">' + fmt2(x.v) + '</td><td style="padding:8px 10px;text-align:right">' + pc(x.v) + '%</td>' +
+      '<td style="padding:8px 10px"><span style="font-size:10px;font-weight:700;background:' + s.bg + ';color:' + s.c + ';padding:2px 9px;border-radius:99px;white-space:nowrap">' + s.t + '</span></td><td style="padding:8px 10px">' + x.surse + '</td><td style="padding:8px 10px;color:#5A6472">' + x.obs + '</td></tr>';
+  });
+  html += '</tbody></table></div></div>';
+
+  // Registru oferte
+  html += '<div class="proj-card" style="margin-bottom:14px"><div class="proj-card-header" style="background:#3B6D11"><span style="font-size:13px;font-weight:600;color:#fff"><i class="ti ti-files"></i> Registru oferte furnizori / subcontractori (' + D.oferte.length + ' poziții)</span></div><div class="proj-card-body" style="padding:0;overflow-x:auto">';
+  html += '<table style="width:100%;border-collapse:collapse;font-size:11.5px"><thead><tr style="background:#F4F6F7;text-align:left"><th style="padding:8px 10px">Furnizor</th><th style="padding:8px 10px">Categorie</th><th style="padding:8px 10px;text-align:right">Total fără TVA</th><th style="padding:8px 10px;text-align:right">Echiv. lei</th><th style="padding:8px 10px">Note</th></tr></thead><tbody>';
+  D.oferte.forEach(function(x){
+    var tv = x.tot === null ? '<span style="color:#9AA3B0">de extras</span>' : fmt2(x.tot) + ' ' + (x.cur === '?' ? '<span style="color:#B9770E">(monedă?)</span>' : x.cur);
+    var ech = (x.tot !== null && x.cur === 'EUR') ? fmt(x.tot * D.curs) : (x.tot !== null && x.cur === 'lei' ? fmt(x.tot) : '—');
+    html += '<tr style="border-top:1px solid #E5E7EB;vertical-align:top"><td style="padding:7px 10px;font-weight:600">' + x.f + '</td><td style="padding:7px 10px">' + x.cat + '</td><td style="padding:7px 10px;text-align:right;white-space:nowrap">' + tv + '</td><td style="padding:7px 10px;text-align:right;white-space:nowrap">' + ech + '</td><td style="padding:7px 10px;color:#5A6472">' + x.n + '</td></tr>';
+  });
+  html += '</tbody></table></div></div>';
+
+  // Clarificări
+  html += '<div class="proj-card" style="margin-bottom:14px"><div class="proj-card-header" style="background:#854F0B"><span style="font-size:13px;font-weight:600;color:#fff"><i class="ti ti-help-circle"></i> De clarificat cu echipa de ofertare</span></div><div class="proj-card-body" style="gap:6px;font-size:12px">';
+  D.clarificari.forEach(function(t, i){
+    html += '<div style="border:1px solid #E5E7EB;border-radius:6px;padding:8px 12px;display:flex;gap:10px"><span style="font-weight:700;color:#854F0B;min-width:18px">' + (i + 1) + '.</span><span>' + t + '</span></div>';
+  });
+  html += '<div style="font-size:11px;color:#7A828E;margin-top:4px">Responsabil: echipa de ofertare · termen: de stabilit.</div></div></div>';
+
+  html += '<div class="page-footer">PM Hub · EREN CONS SRL · 2026 · Surse: Formular nr. 9 și Anexa 1 la Formularul 4 (31.07.2025), oferte furnizori iulie 2025, Fișa de date</div>';
   document.getElementById('main').innerHTML = html;
 }
 

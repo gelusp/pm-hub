@@ -76,6 +76,8 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 .submenu-item:hover{background:var(--grey-200);color:var(--text)}
 .submenu-item.active{color:var(--blue);font-weight:500;border-left-color:var(--blue);background:var(--blue-light)}
 .submenu-item i{font-size:13px}
+.submenu-item.mobile-only{display:none}
+@media(max-width:768px){.submenu-item.mobile-only{display:flex}}
 .chevron{margin-left:auto;font-size:12px;color:var(--text-tertiary);transition:transform 0.2s}
 .chevron.open{transform:rotate(180deg)}
 .sidebar-add{margin:12px 16px;padding:8px 12px;border:1px dashed var(--border);border-radius:var(--radius);font-size:12px;color:var(--text-tertiary);cursor:pointer;display:flex;align-items:center;gap:6px;background:transparent;font-family:'Inter',sans-serif}
@@ -411,6 +413,9 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
           <i class="ti ti-chevron-down chevron" id="chev-academia-sinteza" style="font-size:11px" onclick="event.stopPropagation();toggleSubSub('academia-sinteza')"></i>
         </div>
         <div class="submenu" id="sub-academia-sinteza" style="margin-left:14px;border-left:2px solid var(--grey-200)">
+          <div class="submenu-item mobile-only" id="item-academia-sintezacontractm" onclick="goModule('academia','contractsinteza')">
+            <i class="ti ti-file-dollar" style="color:#1A5276"></i> Sinteză execuție contract
+          </div>
           <div class="submenu-item" id="item-academia-analizaoferta" onclick="renderAcademiaAnalizaOferta()">
             <i class="ti ti-report-analytics" style="color:#1A5276"></i> Analiza Oferta / Resurse
           </div>
@@ -960,6 +965,8 @@ function renderContractSintezaAcademia() {
 
 // ── Academia Navală — Analiza Oferta / Resurse (fundamentarea ofertei pe oferte de furnizori) ──
 function academiaSintezaClick() {
+  // Pe telefon: doar desface/strânge submeniul (meniul rămâne deschis); pagina se deschide din „Sinteză execuție contract”
+  if (window.matchMedia('(max-width:768px)').matches) { toggleSubSub('academia-sinteza'); return; }
   goModule('academia', 'contractsinteza');
   var s = document.getElementById('sub-academia-sinteza');
   if (s && !s.classList.contains('open')) toggleSubSub('academia-sinteza');

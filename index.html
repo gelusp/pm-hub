@@ -280,16 +280,17 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
         <div class="submenu-item" id="item-hangar-sinteza" onclick="goModule('hangar','sinteza')">
           <i class="ti ti-clipboard-list"></i> Acțiuni / Riscuri / Rec.
         </div>
-        <div class="submenu-item" id="item-hangar-calendar" onclick="goModule('hangar','calendar')">
+        <!-- Ascunse temporar (25.10.2026): calendar, termene, evenimente, previziune. Pentru reactivare șterge style="display:none" de pe cele 4 elemente. Modulele rămân funcționale. -->
+        <div class="submenu-item" id="item-hangar-calendar" onclick="goModule('hangar','calendar')" style="display:none">
           <i class="ti ti-calendar-event" style="color:#1A5276"></i> Calendar de termene
         </div>
-        <div class="submenu-item" id="item-hangar-termene" onclick="goModule('hangar','termene')">
+        <div class="submenu-item" id="item-hangar-termene" onclick="goModule('hangar','termene')" style="display:none">
           <i class="ti ti-hourglass" style="color:#C0392B"></i> Termene contractuale
         </div>
-        <div class="submenu-item" id="item-hangar-evenimente" onclick="goModule('hangar','evenimente')">
+        <div class="submenu-item" id="item-hangar-evenimente" onclick="goModule('hangar','evenimente')" style="display:none">
           <i class="ti ti-timeline-event" style="color:#C0392B"></i> Evenimente și notificări
         </div>
-        <div class="submenu-item" id="item-hangar-previziune" onclick="goModule('hangar','previziune')">
+        <div class="submenu-item" id="item-hangar-previziune" onclick="goModule('hangar','previziune')" style="display:none">
           <i class="ti ti-chart-line" style="color:#3B6D11"></i> Previziune marjă și numerar
         </div>
         <div class="submenu-item" id="item-hangar-regpd" onclick="goModule('hangar','regpd')">

@@ -293,6 +293,9 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
         <div class="submenu-item" id="item-hangar-previziune" onclick="goModule('hangar','previziune')" style="display:none">
           <i class="ti ti-chart-line" style="color:#3B6D11"></i> Previziune marjă și numerar
         </div>
+        <div class="submenu-item" id="item-hangar-marjareala" onclick="goModule('hangar','marjareala')">
+          <i class="ti ti-report-money" style="color:#3B6D11"></i> Marjă curentă
+        </div>
         <div class="submenu-item" id="item-hangar-regpd" onclick="goModule('hangar','regpd')">
           <i class="ti ti-alert-triangle" style="color:#C0392B"></i> Probleme Identificate în Execuție
         </div>
@@ -669,7 +672,7 @@ function toggleSubSub(id) {
 }
 
 function goModule(proj, module) {
-  var _mm = document.getElementById('main'); if (_mm) _mm.style.maxWidth = (module === 'termene' || module === 'regpd' || module === 'evenimente' || module === 'probe' || module === 'negociere' || module === 'previziune' || module === 'calendar') ? '1500px' : '';
+  var _mm = document.getElementById('main'); if (_mm) _mm.style.maxWidth = (module === 'termene' || module === 'regpd' || module === 'evenimente' || module === 'probe' || module === 'negociere' || module === 'previziune' || module === 'calendar' || module === 'marjareala') ? '1500px' : '';
   document.querySelectorAll('.submenu-item').forEach(function(i){ i.classList.remove('active'); });
   var item = document.getElementById('item-' + proj + '-' + module);
   if (item) item.classList.add('active');
@@ -689,6 +692,7 @@ function goModule(proj, module) {
   else if (module === 'probe') renderProbe(proj);
   else if (module === 'negociere') renderNegociere(proj);
   else if (module === 'previziune') renderPrevizi(proj);
+  else if (module === 'marjareala') renderMarjaReala(proj);
   else if (module === 'calendar') renderCalendar(proj);
   else if (module === 'powerbi') renderPowerBI(proj);
   else if (module === 'erp') renderERP(proj);
@@ -2999,56 +3003,21 @@ function renderHome() {
       '<div class="home-pmhub-label"><i class="ti ti-layout-dashboard" style="font-size:13px;color:#CC1515"></i> PM Hub <span style="font-weight:400;color:var(--text-tertiary)">· EREN CONS SRL · Gelu Spătaru</span></div>' +
     '</div>' +
 
-        (new Date() <= new Date('2026-07-23T23:59:59') ?
-    '<div style="margin-bottom:12px;display:flex;gap:10px">' +
-      '<button onclick="startTour()" style="flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:11px 16px;background:#FEF7F7;color:#CC1515;border:1px solid #F2C9C9;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit"><i class="ti ti-player-play" style="font-size:15px"></i> DEMO — tur ghidat' +
-      '<span style="font-size:10px;font-weight:400;background:rgba(204,21,21,0.08);color:#A03535;border-radius:99px;padding:2px 8px;margin-left:4px">încă ' + Math.max(1, Math.ceil((new Date('2026-07-23T23:59:59') - new Date())/86400000)) + ' zile</span></button>' +
-      '<a href="https://docs.google.com/presentation/d/1XHg8asJYrpsWof9ETIG5Qjl1CF3Xj7dv/edit?slide=id.p1#slide=id.p1" target="_blank" style="flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:11px 16px;background:#F7F9FE;color:#1F3864;border:1px solid #C9D6F2;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;text-decoration:none;font-family:inherit"><i class="ti ti-presentation" style="font-size:15px"></i> Prezentare PM Hub (PPTX)' +
-      '<span style="font-size:10px;font-weight:400;background:rgba(31,56,100,0.08);color:#2E5090;border-radius:99px;padding:2px 8px;margin-left:4px">încă ' + Math.max(1, Math.ceil((new Date('2026-07-23T23:59:59') - new Date())/86400000)) + ' zile</span></a>' +
-    '</div>' : '') +
-
-    (new Date() <= new Date('2026-07-31T23:59:59') ?
-    '<div style="background:#CC1515;border-radius:8px;padding:14px 18px;margin-bottom:14px;display:flex;align-items:center;gap:12px;box-shadow:0 2px 8px rgba(204,21,21,0.35);animation:blinkNou 3s step-start infinite">' +
-      '<i class="ti ti-alert-triangle" style="font-size:22px;color:#fff;flex-shrink:0"></i>' +
-      '<div>' +
-        '<div style="font-size:13px;font-weight:800;color:#fff;letter-spacing:0.5px">ANUNȚ FINALIZARE LUCRĂRI — UPB</div>' +
-        '<div style="font-size:11px;color:rgba(255,255,255,0.85);margin-top:2px">De transmis pe <b style="color:#fff">31.07.2026</b></div>' +
-      '</div>' +
-    '</div>' : '') +
-
     '<div class="proj-card" style="cursor:pointer" onclick="openSub(\'hangar\')">' +
       '<div class="proj-card-header" style="background:#C0392B;border-left:3px solid #E74C3C">' +
         '<div class="proj-icon" style="background:rgba(204,21,21,0.25)"><i class="ti ti-building" style="color:#CC1515"></i></div>' +
         '<div style="flex:1"><div style="font-size:13px;font-weight:600;color:#fff">Hangar Kogălniceanu</div>' +
         '<div style="font-size:10px;color:rgba(255,255,255,0.6)">În validare / execuție · Start: 19.06.2026</div></div>' +
+        '<button onclick="event.stopPropagation();goModule(\'hangar\',\'marjareala\')" style="display:flex;align-items:center;gap:6px;padding:6px 11px;background:#fff;color:#3B6D11;border:none;border-radius:7px;font-size:11.5px;font-weight:700;cursor:pointer;font-family:inherit;margin-right:6px"><i class="ti ti-report-money" style="font-size:14px"></i> Marjă curentă</button>' +
         '<i class="ti ti-chevron-right" style="color:rgba(255,255,255,0.7);font-size:18px"></i>' +
       '</div>' +
     '</div>' +
-      '<div style="display:flex;justify-content:center;margin:-2px 0 8px">' +
-        '<button onclick="goModule(\'hangar\',\'termene\')" style="display:flex;align-items:center;gap:8px;padding:9px 14px;background:#FDEDEC;color:#C0392B;border:1px solid #F2C9C9;border-radius:8px;font-size:12.5px;font-weight:700;cursor:pointer;font-family:inherit">' +
-          '<i class="ti ti-hourglass" style="font-size:15px"></i> Termene contractuale' +
-          '<span style="font-size:10.5px;font-weight:700;background:#C0392B;color:#fff;border-radius:99px;padding:2px 9px;margin-left:4px">' + (function(){ var r = termeneCalc(); return r.filter(function(x){return x.status==='Depășit';}).length + ' depășite · ' + r.filter(function(x){return x.status==='Urgent';}).length + ' urgente · ' + r.filter(function(x){return x.status==='De verificat'||x.status==='De completat';}).length + ' de verificat'; })() + '</span>' +
-        '</button>' +
-      '</div>' +
       '<div style="display:flex;justify-content:center;margin:-2px 0 14px">' +
         '<button onclick="goModule(\'hangar\',\'regpd\')" style="display:flex;align-items:center;gap:8px;padding:9px 14px;background:#EBF0F8;color:#1F3864;border:1px solid #C9D6F2;border-radius:8px;font-size:12.5px;font-weight:700;cursor:pointer;font-family:inherit">' +
           '<i class="ti ti-alert-triangle" style="font-size:15px"></i> Registrul problemelor în execuție' +
           '<span style="font-size:10.5px;font-weight:700;background:#1F3864;color:#fff;border-radius:99px;padding:2px 9px;margin-left:4px">' + (typeof REGPD !== 'undefined' ? REGPD.length + ' probleme · ' + REGPD.filter(function(x){ return x.status !== 'Închis'; }).length + ' deschise' : '0 probleme') + '</span>' +
         '</button>' +
       '</div>' +
-    '<div style="margin:0 0 14px;display:flex;justify-content:center"><button onclick="goModule(\'hangar\',\'probe\')" style="display:flex;align-items:center;gap:8px;padding:9px 14px;background:#FEF7F7;color:#C0392B;border:1px solid #F2C9C9;border-radius:8px;font-size:12.5px;font-weight:700;cursor:pointer;font-family:inherit"><i class="ti ti-table" style="font-size:15px"></i> Matrice NCS · dosar probe (Kogălniceanu)</button></div>' +
-
-    (new Date() <= new Date('2026-09-06') ? '<div style="background:#FEF9E7;border:1px solid #F9E79F;border-left:4px solid #D4AC0D;border-radius:6px;padding:10px 14px;margin-bottom:12px">' +
-      '<div style="font-size:11px;font-weight:700;color:#7D6608;margin-bottom:5px"><span class="blink-nou6" style="background:#D4AC0D;color:#fff;border-radius:4px;padding:1px 6px;font-size:9px;font-weight:800;margin-right:6px;letter-spacing:0.5px">NOU</span><i class="ti ti-tools" style="margin-right:4px"></i>Kogălniceanu — Au fost inițiate toate analizele comparative pe instalații' + _badgeTimp('2026-09-06','#D4AC0D') + '</div>' +
-      '<div style="font-size:10px;color:#555;margin-bottom:4px"><b>Cale:</b> <span style="font-family:monospace;background:rgba(0,0,0,0.06);padding:1px 6px;border-radius:4px">Hangar Kogălniceanu → Analize Comparative → [capitol instalație]</span></div>' +
-      '<div style="font-size:11px;color:#7D6608">Cap.8 Sanitare · Cap.9 HVAC · Cap.10 Curenți tari · Cap.11 Curenți slabi</div>' +
-    '</div>' : '') +
-
-    (new Date() <= new Date('2026-10-14T23:59:59') ? '<div style="background:#EAF7EF;border:1px solid #A9D6B5;border-left:4px solid #1A7F45;border-radius:6px;padding:10px 14px;margin-bottom:12px;cursor:pointer" onclick="goModule(\'hangar\',\'edevizeregistru\')">' +
-      '<div style="font-size:11px;font-weight:700;color:#145A32;margin-bottom:5px"><span class="blink-nou6" style="background:#1A7F45;color:#fff;border-radius:4px;padding:1px 6px;font-size:9px;font-weight:800;margin-right:6px;letter-spacing:0.5px">NOU</span><i class="ti ti-refresh" style="margin-right:4px"></i>Kogălniceanu — Listele eDevize au fost revizuite' + _badgeTimp('2026-10-14','#1A7F45') + '</div>' +
-      '<div style="font-size:10px;color:#555;margin-bottom:4px"><b>Cale:</b> <span style="font-family:monospace;background:rgba(0,0,0,0.06);padding:1px 6px;border-radius:4px">Hangar Kogălniceanu → Liste revizuite — eDevize</span></div>' +
-      '<div style="font-size:11px;color:#1A5C34">Revizuire 03.10.2026 — dispare distincția DN/LS, doar NCS1/NCS2/NR (acord cu beneficiarul)</div>' +
-    '</div>' : '') +
 
     '<div class="proj-card" style="cursor:pointer" onclick="openSub(\'academia\')">' +
       '<div class="proj-card-header" style="background:#154360;border-left:3px solid #1A5276">' +
@@ -3067,99 +3036,6 @@ function renderHome() {
         '<i class="ti ti-chevron-right" style="color:rgba(255,255,255,0.7);font-size:18px"></i>' +
       '</div>' +
     '</div>' +
-
-    (new Date() <= new Date('2026-08-12T23:59:59') ? '<div style="background:#EEF2FF;border:1px solid #B9C4E8;border-left:4px solid #2C4A6E;border-radius:6px;padding:10px 14px;margin-bottom:12px;display:flex;align-items:flex-start;gap:10px">' +
-      '<i class="ti ti-info-circle" style="color:#2C4A6E;font-size:16px;flex-shrink:0;margin-top:1px"></i>' +
-      '<div style="flex:1">' +
-        '<div style="font-size:12px;font-weight:700;color:#1F3864;margin-bottom:3px"><span class="blink-nou" style="background:#CC1515;color:#fff;border-radius:4px;padding:1px 7px;font-size:10px;margin-right:6px;letter-spacing:0.5px">NOU</span>Kogălniceanu — Analiză Platformă (Cap.2.1) refăcută — scenariu optim de sourcing' + _badgeTimp('2026-08-12','#2C4A6E') + '</div>' +
-        '<div style="font-size:11px;color:#2C3E50;line-height:1.5">Scenariu pe pachete cu furnizorul cel mai bun documentat: Ideal Max (contractat), Mithras REV, Holcim REV2. Total optim <b>1.730.910 lei</b> (+36,5% vs buget / +19,8% vs buget indexat). Riscuri, ce e rezolvat și acțiuni cu responsabil/termen — actualizate.<br>' +
-        '<b>Cale:</b> <span style="font-family:monospace;background:rgba(0,0,0,0.06);padding:1px 6px;border-radius:4px">Hangar Kogălniceanu → Analize Comparative → 2.1 Platformă</span></div>' +
-      '</div>' +
-    '</div>' : '') +
-
-    (new Date() <= new Date('2026-08-09') ? '<div style="background:#EBF5FB;border:1px solid #AED6F1;border-left:4px solid #1A5276;border-radius:6px;padding:10px 14px;margin-bottom:12px">' +
-      '<div style="font-size:11px;font-weight:700;color:#1A5276;margin-bottom:4px"><i class="ti ti-file-analytics" style="margin-right:4px"></i>Campus DUAL — SL13 Finalizare contract disponibil' + _badgeTimp('2026-08-09','#1A5276') + '</div>' +
-      '<div style="font-size:10px;color:#555;margin-bottom:5px"><b>Cale:</b> <span style="font-family:monospace;background:rgba(0,0,0,0.06);padding:1px 6px;border-radius:4px">Campus DUAL → Raportări Producție → Raport producție SL13</span></div>' +
-      '<div style="font-size:12px;font-weight:700;color:#2C3E50">SL13 fără TVA: <span style="color:#1A5276">5.146.194 lei</span> · Cu TVA: <span style="color:#1A5276">6.226.895 lei</span></div>' +
-      '<div style="font-size:10px;color:#888;margin-top:3px">Total cumulat realizat: 26.978.703 lei · Ajustări: 544.477 lei · Data: Iulie 2026</div>' +
-    '</div>' : '') +
-
-    (new Date() <= new Date('2026-08-18') ? '<div style="background:#FEF9E7;border:1px solid #F9E79F;border-left:4px solid #D4AC0D;border-radius:6px;padding:10px 14px;margin-bottom:12px">' +
-      '<div style="font-size:11px;font-weight:700;color:#7D6608;margin-bottom:5px"><i class="ti ti-droplet" style="margin-right:4px"></i>Clarificări GRUP POMPARE' + _badgeTimp('2026-08-18','#D4AC0D') + '</div>' +
-      '<div style="font-size:11px;color:#555;margin-bottom:8px">Documente și clarificări tehnice grup pompare — link-uri disponibile mai jos.</div>' +
-      '<div style="display:flex;gap:8px;flex-wrap:wrap">' +
-        '<a href="https://drive.google.com/file/d/1WTbEqbLgWtShcepvEIQH5b5DPEadHO50/view?usp=sharing" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:6px 14px;background:#D4AC0D;color:#fff;border-radius:6px;font-size:12px;font-weight:600;text-decoration:none;font-family:inherit"><i class="ti ti-file-description"></i> Notă informare management</a>' +
-        '<a href="https://drive.google.com/file/d/1huZH29FXeCeV0q_6VnciOUVH06_YD5Vh/view?usp=sharing" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:6px 14px;background:#7D6608;color:#fff;border-radius:6px;font-size:12px;font-weight:600;text-decoration:none;font-family:inherit"><i class="ti ti-tools"></i> Notă tehnică grup pompare</a>' +
-        '<a href="javascript:void(0)" onclick="openCronologieSchema()" style="display:inline-flex;align-items:center;gap:6px;padding:6px 14px;background:#1F3864;color:#fff;border-radius:6px;font-size:12px;font-weight:600;text-decoration:none;font-family:inherit"><i class="ti ti-timeline"></i> Cronologie și Date Tehnice</a>' +
-      '</div>' +
-    '</div>' : '') +
-
-        (new Date() <= new Date('2026-11-16T23:59:59') ? '<div onclick="goModule(\'hangar\',\'instspr\')" style="cursor:pointer;background:#E8F6F3;border:1px solid #A3D9CE;border-left:4px solid #0E6E6E;border-radius:6px;padding:10px 14px;margin-bottom:12px">' +
-      '<div style="font-size:11px;font-weight:700;color:#0E6E6E;margin-bottom:4px"><i class="ti ti-droplet" style="margin-right:4px"></i>Grup sprinklere — achiziție în analiză ' + _sprNextBadge() + '</div>' +
-      '<div style="font-size:11px;color:#555">Ofertă Multigama vs PT vs F4 (NCS2): acordul Triptic și costul complet sunt în așteptare. Click pentru dashboard.</div>' +
-    '</div>' : '') +
-
-        (new Date() <= new Date('2026-08-31T23:59:59') ? '<div style="background:#EEF2FF;border:1px solid #B9C4E8;border-left:4px solid #2C4A6E;border-radius:6px;padding:10px 14px;margin-bottom:12px;display:flex;align-items:flex-start;gap:10px">' +
-      '<i class="ti ti-building-factory-2" style="color:#2C4A6E;font-size:16px;flex-shrink:0;margin-top:1px"></i>' +
-      '<div style="flex:1">' +
-        '<div style="font-size:12px;font-weight:700;color:#1F3864;margin-bottom:3px"><span class="blink-nou" style="background:#CC1515;color:#fff;border-radius:4px;padding:1px 7px;font-size:10px;margin-right:6px;letter-spacing:0.5px">NOU</span>Kogălniceanu — Confecții Metalice: recomandare PM transmisă managementului' + _badgeTimp('2026-08-31','#2C4A6E') + '</div>' +
-        '<div style="font-size:11px;color:#2C3E50;line-height:1.5"><b>Decizia PM (26.08):</b> recomand semnarea cu <b>A&amp;C Metal</b> — sub valoarea de contract (~1%), justificat de indicele INS 14,96%; negociere 7–8% pentru bugetul intern. De clarificat cu A&amp;C: poziția „8100", eliminarea căii de rulare, utilajul de montaj. Pe preț pur ROTINVEST rămâne cel mai mic (13,00 lei/kg).<br>' +
-        '<b>Cale:</b> <span style="font-family:monospace;background:rgba(0,0,0,0.06);padding:1px 6px;border-radius:4px">Hangar Kogălniceanu → Analize Comparative → Confecții Metalice</span></div>' +
-      '</div>' +
-    '</div>' : '') +
-
-    (new Date() <= new Date('2026-08-06T23:59:59') ? '<div style="background:#FDEDEC;border:1px solid #E6B0AA;border-left:4px solid #CC1515;border-radius:6px;padding:10px 14px;margin-bottom:12px;display:flex;align-items:flex-start;gap:10px">' +
-      '<i class="ti ti-file-percent" style="color:#CC1515;font-size:16px;flex-shrink:0;margin-top:1px"></i>' +
-      '<div style="flex:1">' +
-        '<div style="font-size:12px;font-weight:700;color:#922B21;margin-bottom:3px"><span class="blink-nou" style="background:#CC1515;color:#fff;border-radius:4px;padding:1px 7px;font-size:10px;margin-right:6px;letter-spacing:0.5px">NOU</span>Kogălniceanu — Actualizare de prețuri (indexare) SL2 disponibilă' + _badgeTimp('2026-08-06','#CC1515') + '</div>' +
-        '<div style="font-size:11px;color:#2C3E50;line-height:1.5">Ajustare preț SL2 (execuție) conform sub-clauzei 48.5: <b>91.489,09 lei fără TVA</b> (110.701,80 cu TVA). An=1,143354 · Io ian.2025=143,7 · In mai.2026=164,3. Proiectarea SL1 nu se ajustează.<br>' +
-        '<b>Cale:</b> <span style="font-family:monospace;background:rgba(0,0,0,0.06);padding:1px 6px;border-radius:4px">Hangar Kogălniceanu &rarr; SL2 — Execuție &rarr; Ajustare de preț (buton 8)</span><br>' +
-        '<b>Fișier:</b> <span style="font-family:monospace;background:rgba(0,0,0,0.06);padding:1px 6px;border-radius:4px">...\\SL 2\\ver 01.08.2026\\Indexare SL1 &amp; SL2\\</span></div>' +
-      '</div>' +
-    '</div>' : '') +
-
-    (new Date() <= new Date('2026-07-30') ? '<div style="background:#FDEDEC;border:1px solid #E6B0AA;border-left:4px solid #CC1515;border-radius:6px;padding:10px 14px;margin-bottom:12px;display:flex;align-items:flex-start;gap:10px">' +
-      '<i class="ti ti-shovel" style="color:#CC1515;font-size:16px;flex-shrink:0;margin-top:1px"></i>' +
-      '<div style="flex:1">' +
-        '<div style="font-size:12px;font-weight:700;color:#922B21;margin-bottom:3px"><span class="blink-nou" style="background:#CC1515;color:#fff;border-radius:4px;padding:1px 7px;font-size:10px;margin-right:6px;letter-spacing:0.5px">NOU</span>Kogălniceanu — Analiză comparativă săpături (3 oferte)' + _badgeTimp('2026-07-30','#CC1515') + '</div>' +
-        '<div style="font-size:11px;color:#2C3E50;line-height:1.5">Deviz F3 vs Salt vs Ideal Max, la cantitățile din deviz. <b>Ideal Max recomandat — 945.907 lei</b> (+8,3% vs deviz), cu ~328.858 lei sub Salt (−25,8%). Salt +45,9%.<br>' +
-        '<b>Cale:</b> <span style="font-family:monospace;background:rgba(0,0,0,0.06);padding:1px 6px;border-radius:4px">Hangar Kogălniceanu → Analize Comparative → Analiză săpături</span></div>' +
-      '</div>' +
-    '</div>' : '') +
-
-    (new Date() <= new Date('2026-07-25') ? '<div style="background:#FFF8E1;border:1px solid #F9A825;border-left:4px solid #F9A825;border-radius:6px;padding:10px 14px;margin-bottom:12px;display:flex;align-items:flex-start;gap:10px">' +
-      '<i class="ti ti-sparkles" style="color:#F9A825;font-size:16px;flex-shrink:0;margin-top:1px"></i>' +
-      '<div>' +
-        '<div style="font-size:12px;font-weight:700;color:#7B5200;margin-bottom:3px"><span style="background:#F9A825;color:#fff;border-radius:4px;padding:1px 7px;font-size:10px;margin-right:6px;letter-spacing:0.5px">HIGH PRIORITY</span>Dotări Campus DUAL — analiză financiară disponibilă' + _badgeTimp('2026-07-25','#F9A825') + '</div>' +
-        '<div style="font-size:11px;color:#5D4037;line-height:1.5">A fost adăugat un dashboard important privind finanțarea dotărilor.<br>' +
-        '<b>Cale:</b> <span style="font-family:monospace;background:rgba(0,0,0,0.06);padding:1px 6px;border-radius:4px">Campus DUAL → Posibile surse de finanțare - Dotări</span></div>' +
-      '</div>' +
-    '</div>' : '') +
-
-    (new Date() <= new Date('2026-07-28') ? '<div style="background:#E8F0FE;border:1px solid #1A5276;border-left:4px solid #1A5276;border-radius:6px;padding:10px 14px;margin-bottom:12px;display:flex;align-items:flex-start;gap:10px">' +
-      '<i class="ti ti-building-factory-2" style="color:#1A5276;font-size:16px;flex-shrink:0;margin-top:1px"></i>' +
-      '<div style="flex:1">' +
-        '<div style="font-size:12px;font-weight:700;color:#154360;margin-bottom:3px"><span class="blink-nou" style="background:#CC1515;color:#fff;border-radius:4px;padding:1px 7px;font-size:10px;margin-right:6px;letter-spacing:0.5px">NOU</span>Kogălniceanu — Analiză comparativă Prefabricate actualizată (Bauelemente rev 23.07)' + _badgeTimp('2026-07-28','#1A5276') + '</div>' +
-        '<div style="font-size:11px;color:#2C3E50;line-height:1.5">4 ofertanți: SOMACO, ASA CONS, Bauelemente/Ferrobeton (+ADN ref.). <b>Nou (23.07):</b> Bauelemente pachet complet (cu montaj pahare + monolit) — <b>502.415 lei</b>, cu ~95.400 lei sub SOMACO; devine prima opțiune.<br>' +
-        '<b>Cale:</b> <span style="font-family:monospace;background:rgba(0,0,0,0.06);padding:1px 6px;border-radius:4px">Hangar Kogălniceanu → Analize Comparative → Prefabricate</span></div>' +
-      '</div>' +
-    '</div>' : '') +
-
-    (new Date() <= new Date('2026-08-07') ? '<div style="background:#F5EEF8;border:1px solid #D2B4DE;border-left:4px solid #6C3483;border-radius:6px;padding:10px 14px;margin-bottom:12px">' +
-      '<div style="font-size:11px;font-weight:700;color:#6C3483;margin-bottom:4px"><i class="ti ti-file-invoice" style="margin-right:4px"></i>Kogălniceanu — SL2 Execuție disponibil' + _badgeTimp('2026-08-05','#6C3483') + '</div>' +
-      '<div style="font-size:12px;font-weight:700;color:#2C3E50">Total fără TVA: <span style="color:#6C3483">638.203 lei</span> · Total cu TVA: <span style="color:#6C3483">772.226 lei</span></div>' +
-      '<div style="font-size:10px;color:#888;margin-top:3px">Demolări: 482.712 lei · Org. șantier: 155.491 lei · Data: 31.07.2026</div>' +
-    '</div>' : '') +
-
-    (new Date() <= new Date('2026-07-24') ? '<div style="background:#EAFAF1;border:1px solid #A9DFBF;border-left:4px solid #27AE60;border-radius:6px;padding:10px 14px;margin-bottom:12px">' +
-      '<div style="font-size:11px;font-weight:700;color:#1E8449;margin-bottom:6px"><i class="ti ti-file-percent" style="margin-right:4px"></i>Ajustări prețuri Campus DUAL — calculate' + _badgeTimp('2026-07-24','#27AE60') + '</div>' +
-      '<div style="display:flex;gap:16px;flex-wrap:wrap">' +
-        '<div style="font-size:11px;color:#2C3E50"><span style="font-weight:600;color:#1E8449">Ajustare SL12</span> = <span style="font-weight:700">273.324 lei</span> <span style="color:#888">(coef. 1,0939)</span></div>' +
-        '<div style="font-size:11px;color:#2C3E50"><span style="font-weight:600;color:#8E44AD">Simulare ajustare SL13</span> = <span style="font-weight:700">419.784 lei</span> <span style="color:#888">(coef. 1,0883)</span></div>' +
-        '<div style="font-size:11px;color:#555">Total cumulate SL1–SL13: <span style="font-weight:700;color:#1E8449">1.237.670 lei</span></div>' +
-      '</div>' +
-      '<div style="font-size:10px;color:#888;margin-top:4px">Cale: Campus DUAL → Raport producție SL12 → butoane ajustare</div>' +
-    '</div>' : '') +
 
     '<div style="margin-bottom:12px">' +
       '<div style="display:flex;align-items:center;gap:6px;margin-bottom:4px">' +
@@ -4167,6 +4043,71 @@ function prevCalc() {
   var cost = PREV.buget + pe + costListe;
   return {st:st, marja:marja, netTot:netTot, acc:acc, idx:idx, pe:pe, costListe:costListe, venit:venit, cost:cost, marjaF:venit - cost, marjaOf:PREV.contractBase - PREV.buget};
 }
+/* === MR_DATA: marja curenta (generat din CI - Kogalniceanu.xlsx; CD/venit provizorii din CH41 04.10.2026) === */
+var MR_DATA = {"ci_div": {"Ofertare": 76344.97, "Operational": 67730.61, "SSM, Calitate, Mediu": 152.15, "Tehnic": 41382.87}, "ci_nat": {"Alte cheltuieli": 2974.51, "Auto și taxe drum": 3876.15, "Cazare, chirii, deplasări": 13274.42, "Obiecte de inventar": 25252.82, "Penalități": 20000.0, "Salarii și contribuții": 107184.61, "Servicii externe": 13048.1}, "ci_luna": {"Ofertare": {"2026-01": 17973.48, "2026-02": 13974.65, "2026-03": 649.3, "2026-04": 278.25, "2026-05": 6697.95, "2026-06": 24930.66, "2026-07": 5978.83, "2026-08": 5209.24, "2026-09": 652.62}, "Operational": {"2026-01": 517.18, "2026-02": 2465.15, "2026-03": 15.59, "2026-04": 15.59, "2026-05": 267.32, "2026-06": 771.72, "2026-07": 34081.69, "2026-08": 4559.71, "2026-09": 24781.65, "2026-10": 255.0}, "SSM, Calitate, Mediu": {"2026-07": 38.18, "2026-08": 41.89, "2026-09": 72.09}, "Tehnic": {"2026-01": 21187.5, "2026-02": 6078.86, "2026-03": 200.82, "2026-05": 804.44, "2026-07": 1401.49, "2026-08": 4570.65, "2026-09": 7139.12}}, "pen_ci": 20000.0, "nat_ofertare": {"Alte cheltuieli": 0.0, "Salarii și contribuții": 63296.87, "Servicii externe": 13048.1}};
+var MR_CD_PROV = 3924768, MR_VENIT = 4819023, MR_CD_SURSA = 'CH41 04.10.2026 — PROVIZORIU (posibile dublări); se înlocuiește cu exportul real de CD';
+/* === /MR_DATA === */
+
+var MR_BUG_EXEC = 16335452, MR_VAL_EXEC = 18521332;
+var _mrSt = {ofertare:true, cd:null};
+function renderMarjaReala(proj) {
+  document.querySelectorAll('.submenu-item').forEach(function(i){ i.classList.remove('active'); });
+  var it = document.getElementById('item-hangar-marjareala'); if (it) it.classList.add('active');
+  function fm(n){ return Math.round(n).toLocaleString('ro-RO'); }
+  function pc(a,b){ return (b ? a/b*100 : 0).toFixed(1).replace('.',',') + '%'; }
+  var D = MR_DATA, S = _mrSt;
+  var cd = (S.cd == null ? MR_CD_PROV : S.cd);
+  var ciTot = 0; Object.keys(D.ci_div).forEach(function(k){ ciTot += D.ci_div[k]; });
+  var ciOfert = D.ci_div['Ofertare'] || 0, pen = D.pen_ci || 0;
+  var ciAfis = S.ofertare ? ciTot : ciTot - ciOfert;
+  var brut = MR_VENIT - cd, net = brut - ciAfis;
+  var okc = net/MR_VENIT*100 >= NEG_MARJA;
+  var h = '<div class="proj-header"><div class="proj-title">Marjă curentă</div><div class="proj-meta">Hangar Kogălniceanu · Venit − Costuri directe − Costuri indirecte (penalitățile incluse) · marjă planificată ' + String(NEG_MARJA).replace('.',',') + '%</div></div>';
+  h += '<div class="module-badge" style="background:#FDF2E0;color:#B7791F"><i class="ti ti-alert-triangle" style="font-size:13px"></i> PROVIZORIU · CD din CH41 (04.10.2026), posibil dublat · CI real din export (246 linii)</div>';
+  h += '<div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center;padding:10px 14px;border:1px solid var(--border);border-radius:8px;background:#FAFBFC;margin:10px 0 14px;font-size:12px">' +
+    '<label style="cursor:pointer"><input type="checkbox" id="mrOf" ' + (S.ofertare ? 'checked' : '') + ' onchange="_mrSt.ofertare=this.checked;renderMarjaReala(\'hangar\')"> Include costurile de Ofertare (' + fm(ciOfert) + ' lei)</label>' +
+    '<span>CD (lei): <input id="mrCd" type="text" value="' + fm(cd) + '" style="width:110px;padding:3px 6px;border:1px solid var(--border);border-radius:5px" onchange="var v=parseFloat(this.value.replace(/[^0-9,\\-]/g,\'\').replace(\',\',\'.\'));_mrSt.cd=isNaN(v)?null:v;renderMarjaReala(\'hangar\')"> <span style="color:#7F8C8D">editabil — mâine se înlocuiește cu CD real</span></span></div>';
+  function card(t,v,sub,col,hl){ return '<div style="flex:' + (hl?'1.4':'1') + ';min-width:170px;border:' + (hl?'2px solid '+col+';box-shadow:0 2px 10px rgba(0,0,0,0.12)':'1px solid var(--border)') + ';border-radius:8px;padding:10px 12px;background:' + (hl?(okc?'#F1F8EA':'#FDEDEC'):'#fff') + '"><div style="font-size:11px;color:#7F8C8D">' + t + '</div><div style="font-size:' + (hl?'28':'20') + 'px;font-weight:700;color:' + (col||'#1F3864') + '">' + v + '</div><div style="font-size:11px;color:#7F8C8D">' + sub + '</div></div>'; }
+  h += '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px">' +
+    card('Venit recunoscut', fm(MR_VENIT), 'lei · ERP') +
+    card('Marjă brută (după CD)', fm(brut), pc(brut,MR_VENIT) + ' din venit') +
+    card('Costuri indirecte', fm(ciAfis), pc(ciAfis,MR_VENIT) + ' din venit · din care penalități ' + fm(pen), '#C0392B') +
+    card('MARJĂ CURENTĂ (netă)', fm(net), '<span style="font-size:22px;font-weight:800;color:' + (okc ? '#3B6D11' : '#C0392B') + '">' + pc(net,MR_VENIT) + '</span> din venit<br>vs ' + String(NEG_MARJA).replace('.',',') + '% planificat · ' + (okc ? 'peste plan' : 'sub plan'), okc ? '#3B6D11' : '#C0392B', true) + '</div>';
+  // cascada
+  var steps = [['Venit',MR_VENIT,'#1F3864'],['− Costuri directe',-cd,'#C0392B'],['= Marjă brută',brut,'#3B6D11'],['− Costuri indirecte',-ciAfis,'#C0392B'],['= Marjă netă',net,okc?'#3B6D11':'#C0392B']];
+  h += '<div style="font-weight:600;margin:6px 0">Cascadă</div><div style="border:1px solid var(--border);border-radius:8px;padding:10px 14px;background:#fff;margin-bottom:14px">';
+  steps.forEach(function(s){ var w = Math.max(1, Math.abs(s[1])/MR_VENIT*100);
+    var last = s[0]==='= Marjă netă'; h += '<div style="display:flex;align-items:center;gap:8px;margin:' + (last?'8px 0 2px':'4px 0') + ';font-size:' + (last?'14':'12') + 'px;' + (last?'font-weight:700;border-top:1px solid #DDE1E6;padding-top:6px':'') + '"><div style="width:140px">' + s[0] + '</div><div style="flex:1;background:#F2F4F6;border-radius:4px"><div style="width:' + w.toFixed(1) + '%;background:' + s[2] + ';height:16px;border-radius:4px"></div></div><div style="width:110px;text-align:right;font-weight:600">' + fm(s[1]) + '</div><div style="width:' + (last?'70':'55') + 'px;text-align:right;' + (last?'font-size:17px;font-weight:800;color:'+s[2]:'color:#7F8C8D') + '">' + pc(s[1],MR_VENIT) + '</div></div>'; });
+  h += '</div>';
+  // Curent vs buget (buget = marja planificata pe executie: 18.521.332 venit contract Cap.4+5 vs 16.335.452 buget cost)
+  var rb = MR_BUG_EXEC / MR_VAL_EXEC, cdB = MR_VENIT * rb, brutB = MR_VENIT - cdB;
+  var netB = brutB - 0; // CI nu e bugetat separat in bugetul de executie
+  function rw(l,b,c,hl){ var d=c-b; return '<tr style="border-bottom:1px solid #EEF0F2"><td style="padding:5px 6px">' + l + '</td><td style="padding:5px 6px;text-align:right">' + fm(b) + '</td><td style="padding:5px 6px;text-align:right;font-weight:700;background:#F1F8EA">' + fm(c) + '</td><td style="padding:5px 6px;text-align:right;color:' + (hl(d)?'#3B6D11':'#C0392B') + ';font-weight:600">' + (d>0?'+':'') + fm(d) + '</td></tr>'; }
+  h += '<div style="font-weight:600;margin:6px 0">Curent vs buget <span style="font-weight:400;color:#7F8C8D;font-size:11px">· bugetul aplicat la venitul recunoscut (cost buget = ' + (rb*100).toFixed(1).replace('.',',') + '% din venit, marjă planificată ' + ((1-rb)*100).toFixed(1).replace('.',',') + '%)</span></div>' +
+    '<table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:14px"><thead><tr style="background:#F2F4F6"><th style="text-align:left;padding:5px 6px"></th><th style="text-align:right;padding:5px 6px">La buget</th><th style="text-align:right;padding:5px 6px;background:#E8F1DC;color:#3B6D11">CURENT</th><th style="text-align:right;padding:5px 6px">Abatere</th></tr></thead><tbody>' +
+    rw('Costuri directe', cdB, cd, function(d){return d<=0;}) +
+    rw('Marjă brută', brutB, brut, function(d){return d>=0;}) +
+    '<tr style="border-bottom:1px solid #EEF0F2"><td style="padding:5px 6px">Marjă brută %</td><td style="padding:5px 6px;text-align:right">' + pc(brutB,MR_VENIT) + '</td><td style="padding:5px 6px;text-align:right;font-weight:600;background:#F1F8EA">' + pc(brut,MR_VENIT) + '</td><td style="padding:5px 6px;text-align:right;font-weight:600">' + ((brut-brutB)/MR_VENIT*100).toFixed(1).replace('.',',') + ' pp</td></tr>' +
+    rw('Marjă netă (după CI)', brutB, net, function(d){return d>=0;}) +
+    '<tr style="border-bottom:1px solid #EEF0F2"><td style="padding:5px 6px;font-weight:700">Marjă netă %</td><td style="padding:5px 6px;text-align:right">' + pc(brutB,MR_VENIT) + '</td><td style="padding:5px 6px;text-align:right;font-weight:800;background:#F1F8EA;color:' + (okc?'#3B6D11':'#C0392B') + '">' + pc(net,MR_VENIT) + '</td><td style="padding:5px 6px;text-align:right;font-weight:600">' + ((net-brutB)/MR_VENIT*100).toFixed(1).replace('.',',') + ' pp</td></tr>' +
+    '</tbody></table><div style="font-size:11px;color:#7F8C8D;margin:-8px 0 14px">Bugetul de execuție nu include CI, deci marja netă se compară cu marja brută planificată. Ipoteză: costul bugetat se consumă proporțional cu venitul.</div>';
+  // CI pe divizie si natura
+  function tbl(title, obj, extra){
+    var keys = Object.keys(obj).sort(function(a,b){return obj[b]-obj[a];}), t = 0; keys.forEach(function(k){t+=obj[k];});
+    var r = '<div style="flex:1;min-width:300px"><div style="font-weight:600;margin:6px 0">' + title + '</div><table style="width:100%;border-collapse:collapse;font-size:12px"><tbody>';
+    keys.forEach(function(k){ r += '<tr style="border-bottom:1px solid #EEF0F2"><td style="padding:4px 6px">' + k + '</td><td style="padding:4px 6px;text-align:right">' + fm(obj[k]) + '</td><td style="padding:4px 6px;text-align:right;color:#7F8C8D">' + pc(obj[k],t) + '</td></tr>'; });
+    return r + '<tr style="font-weight:700"><td style="padding:4px 6px">Total</td><td style="padding:4px 6px;text-align:right">' + fm(t) + '</td><td></td></tr></tbody></table></div>'; }
+  h += '<div style="display:flex;gap:18px;flex-wrap:wrap">' + tbl('CI pe divizie', D.ci_div) + tbl('CI pe natură', D.ci_nat) + '</div>';
+  // pe luna
+  var luni = []; Object.keys(D.ci_luna).forEach(function(d){ Object.keys(D.ci_luna[d]).forEach(function(m){ if (luni.indexOf(m) < 0) luni.push(m); }); }); luni.sort();
+  var divs = Object.keys(D.ci_div);
+  h += '<div style="font-weight:600;margin:14px 0 6px">CI pe lună și divizie</div><table style="width:100%;border-collapse:collapse;font-size:12px;table-layout:fixed"><thead><tr style="background:#F2F4F6"><th style="text-align:left;padding:4px 6px">Luna</th>' + divs.map(function(d){return '<th style="text-align:right;padding:4px 6px">' + d + '</th>';}).join('') + '<th style="text-align:right;padding:4px 6px">Total</th></tr></thead><tbody>';
+  luni.forEach(function(m){ var t=0; h += '<tr style="border-bottom:1px solid #EEF0F2"><td style="padding:4px 6px">' + m + '</td>' + divs.map(function(d){ var v=(D.ci_luna[d]||{})[m]||0; if (d==='Ofertare' && !S.ofertare) v=0; t+=v; return '<td style="padding:4px 6px;text-align:right">' + fm(v) + '</td>'; }).join('') + '<td style="padding:4px 6px;text-align:right;font-weight:600">' + fm(t) + '</td></tr>'; });
+  h += '</tbody></table>';
+  h += '<div style="margin-top:14px;padding:10px 14px;border-left:4px solid #B7791F;background:#FDF2E0;font-size:12px;line-height:1.5"><b>Note de control</b><br>• CD provizoriu din CH41 conține documente care apar și în CI, la valoare dublă (50 de documente identice 2×) — se curăță pe număr de document când sosește exportul real.<br>• Penalități: în CI apare o factură de 20.000 lei (23110034); CH41 arată 40.000 lei. Se numără o singură dată, la valoarea confirmată.<br>• Costurile de Ofertare (' + fm(ciOfert) + ' lei) au fost făcute înainte de contract; comutatorul de sus le include sau exclude.<br>• Salariile din octombrie intră după închiderea lunii.</div>';
+  var m = document.getElementById('main'); if (m) m.innerHTML = h;
+}
+
 function renderPrevizi(proj) {
   document.querySelectorAll('.submenu-item').forEach(function(i){ i.classList.remove('active'); });
   var c = prevCalc(), st = c.st;

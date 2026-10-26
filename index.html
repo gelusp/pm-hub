@@ -1111,12 +1111,28 @@ function renderAcademiaAnalizaOferta() {
 }
 
 var DOCS_BENEF_ACADEMIA = [
+  { k:202610261, d:'26.10.2026', cat:'BENEFICIAR', nr:'ACz-N 834',
+    titlu:'Ordin de începere a serviciilor de consultanță și dirigenție de șantier — UM 02192 către consultantul S.C. GHALLARD SYS S.R.L.',
+    desc:'Ordinul nr. ACz-N 834/26.10.2026 al UM 02192 Constanța (semnat), privind serviciile de consultanță, dirigenție de șantier și supraveghere lucrări, contract AP 10695/18.12.2025, valoare 716.444,36 lei fără TVA. Data începerii serviciilor: 26.10.2026; data terminării: 26.12.2032 (4 luni proiectare, 32 luni execuție, 1 lună recepție, 1 lună perioada de recepție a serviciilor, 36 luni garanție). Nu este ordinul de începere al contractului nostru de proiectare și execuție, ci al Supervizorului. Consultant: S.C. GHALLARD SYS S.R.L. Diriginți de șantier: Florian Militaru (2.2 construcții civile), Karmen Țigănilă (6.1 rețele apă și canalizare), Felicia Martin (3.1, 3.2, 3.3 drumuri, poduri etc.), Grigore Ivanov (9.1 rețele electrice). Echipa consultantului: manager de contract Gabriela Alexandru; inginer asigurarea calității / materiale / laborator Maria Mocanu; SSM Dragoș Bucea; inginer cantități Viorica Gheorghe; cadastru, geodezie și geotehnic Mihai Petrescu. Din partea AC: manager de proiect Lt. cdor Constantin Schipor; responsabil de contract Pcc Georgiana Piciu. Decontarea se face prin UM 02192.',
+    color:'#1A5276', bg:'#EBF5FB', icon:'ti-file-certificate',
+    url:'https://drive.google.com/file/d/1ptXsWNSbxnBz3DsbH_KizSPSOR8Vmc5i/view?usp=sharing' },
   { k:202610191, d:'19.10.2026', cat:'BENEFICIAR', nr:'AP 8034',
     titlu:'Adresă de invitare la semnarea contractului — AC către Asocierea EREN CONS (Lider) – BEMEL AG – ICCO INSTAL',
     desc:'Adresa nr. AP 8034/19.10.2026 a UM 02192 Constanța. Invită asocierea la semnarea contractului în 26.10.2026, ora 10:00, la sediul unității, având în vedere Decizia CNSC nr. 3025/C3/1503 (contestația PORR CONSTRUCT SRL, publicată pe SEAP). Refuzul semnării este asimilabil art. 167 alin. (1) lit. g) din Legea 98/2016 (art. 144 HG 395/2016). Se solicită acordurile de subcontractare (cu activitățile și valorile subcontractate) și acordul de asociere, în original. Garanția de bună execuție: 6.041.894 lei, în maximum 5 zile lucrătoare de la semnare, cu prelungire la cerere justificată fără a depăși 15 zile de la semnare.',
     color:'#1A5276', bg:'#EBF5FB', icon:'ti-file-description',
     url:'https://drive.google.com/file/d/1GBpLPgiXpO5czpYDHEWYXto4Vn6ZGboW/view?usp=sharing' }
 ];
+
+function _toggleDocDet(i) {
+  var d = document.getElementById('docdet-' + i);
+  if (!d) return;
+  var open = d.style.display === 'none';
+  d.style.display = open ? 'block' : 'none';
+  var ic = document.getElementById('docdet-ico-' + i);
+  if (ic) ic.style.transform = open ? 'rotate(180deg)' : '';
+  var t = document.getElementById('docdet-txt-' + i);
+  if (t) t.textContent = open ? 'Ascunde detaliile' : 'Detalii';
+}
 
 function renderDocBenefAcademia() {
   _activateAcademiaItem('item-academia-docbenef');
@@ -1139,7 +1155,7 @@ function renderDocBenefAcademia() {
       '<span style="font-size:11px;background:#F4F6F7;color:var(--text-secondary);padding:4px 12px;border-radius:99px;font-weight:600">' +
         '<i class="ti ti-sort-descending"></i> Cronologic invers (cel mai recent primul)</span>' +
     '</div>';
-    docs.forEach(function(x) {
+    docs.forEach(function(x, di) {
       html +=
         '<div class="nivel-card" style="margin-bottom:10px;border-left:4px solid ' + x.color + ';' +
           'display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap;padding:14px 16px">' +
@@ -1157,7 +1173,12 @@ function renderDocBenefAcademia() {
                 'padding:2px 8px;border-radius:99px"><i class="ti ti-hash" style="font-size:10px"></i> ' + x.nr + '</span>' +
             '</div>' +
             '<div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:3px">' + x.titlu + '</div>' +
-            '<div style="font-size:11.5px;color:var(--text-secondary);line-height:1.45">' + x.desc + '</div>' +
+            (x.desc
+              ? '<div onclick="_toggleDocDet(' + di + ')" id="docdet-btn-' + di + '" style="display:inline-flex;align-items:center;gap:4px;cursor:pointer;' +
+                'font-size:11px;font-weight:600;color:' + x.color + ';margin-top:2px;user-select:none">' +
+                '<i class="ti ti-chevron-down" id="docdet-ico-' + di + '" style="font-size:13px;transition:transform .15s"></i> <span id="docdet-txt-' + di + '">Detalii</span></div>' +
+                '<div id="docdet-' + di + '" style="display:none;font-size:11.5px;color:var(--text-secondary);line-height:1.45;margin-top:6px">' + x.desc + '</div>'
+              : '') +
           '</div>' +
           (x.url
             ? '<a href="' + x.url + '" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;' +
@@ -1293,13 +1314,13 @@ var PLAN_CONTRACT_ACADEMIA = [
  },
  {
   "nr": 10,
-  "task": "Solicitarea de la AC a datelor de intrare: numele dirigintelui de șantier și al persoanei care realizează testările tehnice, procedura de acces în unitate, formatul raportului de progres, modelul devizului general și copia Avizului Culturii nr. 1360/Z/05.12.2024 (temei pentru supravegherea arheologică). SF, CU, expertiza și studiul geotehnic le avem deja din documentația de licitație",
+  "task": "Solicitarea de la AC a datelor de intrare: persoana care realizează testările tehnice, procedura de acces în unitate, formatul raportului de progres, modelul devizului general și copia Avizului Culturii nr. 1360/Z/05.12.2024 (temei pentru supravegherea arheologică). SF, CU, expertiza și studiul geotehnic le avem deja din documentația de licitație; dirigintii de șantier sunt numiți prin Ordinul ACz-N 834/26.10.2026",
   "resp": "EREN CONS + BEMEL",
   "term": "29.10.2026",
   "intern": "",
   "livrabil": "Adresă + proces verbal de predare documente",
   "temei": "CS cap. 4.1, 6, 8.4",
-  "obs": "",
+  "obs": "Supervizorul este S.C. GHALLARD SYS S.R.L. Diriginți numiți: Florian Militaru (2.2), Karmen Țigănilă (6.1), Felicia Martin (3.1–3.3), Grigore Ivanov (9.1). Persoana pentru testările tehnice nu reiese din ordin (consultantul are inginer calitate/laborator, Maria Mocanu). Contact AC: Lt. cdor Constantin Schipor (manager de proiect), Pcc Georgiana Piciu (responsabil de contract).",
   "prio": "normal"
  },
  {
@@ -2317,7 +2338,7 @@ function renderDocBenef(proj) {
   var docs = DOCS_BENEF.slice().sort(function(a, b) { return b.k - a.k; });
 
   var cards = '';
-  docs.forEach(function(x) {
+  docs.forEach(function(x, di) {
     // Acțiune: PDF pe Google Drive (x.url) sau pagină internă detaliată (x.mod)
     var action = x.mod
       ? '<a onclick="goModule(\'hangar\',\'' + x.mod + '\');return false;" '
@@ -2349,7 +2370,12 @@ function renderDocBenef(proj) {
               'padding:2px 8px;border-radius:99px"><i class="ti ti-hash" style="font-size:10px"></i> ' + x.nr + '</span>' +
           '</div>' +
           '<div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:3px">' + x.titlu + '</div>' +
-          '<div style="font-size:11.5px;color:var(--text-secondary);line-height:1.45">' + x.desc + '</div>' +
+          (x.desc
+            ? '<div onclick="_toggleDocDet(' + di + ')" id="docdet-btn-' + di + '" style="display:inline-flex;align-items:center;gap:4px;cursor:pointer;' +
+              'font-size:11px;font-weight:600;color:' + x.color + ';margin-top:2px;user-select:none">' +
+              '<i class="ti ti-chevron-down" id="docdet-ico-' + di + '" style="font-size:13px;transition:transform .15s"></i> <span id="docdet-txt-' + di + '">Detalii</span></div>' +
+              '<div id="docdet-' + di + '" style="display:none;font-size:11.5px;color:var(--text-secondary);line-height:1.45;margin-top:6px">' + x.desc + '</div>'
+            : '') +
         '</div>' +
 
         // Buton acces individual

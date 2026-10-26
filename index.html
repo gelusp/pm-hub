@@ -334,6 +334,9 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
           <div class="submenu-item" id="item-hangar-sl4" onclick="goModule('hangar','sl4')">
             <i class="ti ti-file-invoice" style="color:#0E6E6E"></i> SL4 — Execuție
           </div>
+          <div class="submenu-item" id="item-hangar-sl5" onclick="goModule('hangar','sl5')">
+            <i class="ti ti-file-invoice" style="color:#117A8B"></i> SL5 — Execuție
+          </div>
         </div>
         <div class="submenu-item" id="item-hangar-analize" onclick="toggleSubSub('hangar-analize')">
           <i class="ti ti-file-analytics" style="color:#2E7D32"></i> Analize Comparative
@@ -703,6 +706,7 @@ function goModule(proj, module) {
   else if (module === 'sl2') renderSL2(proj);
   else if (module === 'sl3') renderSL3(proj);
   else if (module === 'sl4') renderSL4(proj);
+  else if (module === 'sl5') renderSL5(proj);
   else if (module === 'an21') renderAn21(proj);
   else if (module === 'anpref') renderAnPref(proj);
   else if (module === 'anconfmetal') renderConfMetalice(proj);
@@ -4029,7 +4033,7 @@ var PREV = {
   facturat: 1346707,          // facturi client emise (QV): ERN0182 647.203 + ERN0219 699.504
   deIntocmit: 683611,         // facturi de întocmit (FDI) către client
   noteContabile: 2960332,     // note contabile diverse (venit recunoscut, lucrări în curs)
-  realizatSL: 3402088,        // valoare lucrări SL1–SL4 (raport producție septembrie 2026), fără TVA
+  realizatSL: 3666015,        // valoare lucrări SL1–SL5 (incl. SL5 octombrie 2026), fără TVA
   contractBase: 19305182.02,  // contract după AA2
   buget: 17075952,            // Deviz General intern (cost țintă)
   indexareReal: 95930.30,     // ajustare SL2 definitivă (48.5)
@@ -4071,7 +4075,7 @@ function prevCalc() {
 }
 /* === MR_DATA: marja curenta (generat din CI - Kogalniceanu.xlsx; CD/venit provizorii din CH41 04.10.2026) === */
 var MR_DATA = {"ci_div": {"Ofertare": 76344.97, "Operational": 67730.61, "SSM, Calitate, Mediu": 152.15, "Tehnic": 41382.87, "Nealocat (fără coloana Divizie)": 37.48}, "ci_luna": {"Ofertare": {"2026-01": 17973.48, "2026-02": 13974.65, "2026-03": 649.3, "2026-04": 278.25, "2026-05": 6697.95, "2026-06": 24930.66, "2026-07": 5978.83, "2026-08": 5209.24, "2026-09": 652.62}, "Operational": {"2026-01": 517.18, "2026-02": 2465.15, "2026-03": 15.59, "2026-04": 15.59, "2026-05": 267.32, "2026-06": 771.72, "2026-07": 34081.69, "2026-08": 4559.71, "2026-09": 24781.65, "2026-10": 255.0}, "SSM, Calitate, Mediu": {"2026-07": 38.18, "2026-08": 41.89, "2026-09": 72.09}, "Tehnic": {"2026-01": 21187.5, "2026-02": 6078.86, "2026-03": 200.82, "2026-05": 804.44, "2026-07": 1401.49, "2026-08": 4570.65, "2026-09": 7139.12}, "Nealocat (fără coloana Divizie)": {"2026-07": -0.01, "2026-09": 37.47}}, "ci_nat": {"Alte cheltuieli": 3003.62, "Auto și taxe drum": 3876.15, "Cazare, chirii, deplasări": 13274.42, "Obiecte de inventar": 25252.82, "Penalități": 20000.0, "Salarii și contribuții": 107192.97, "Servicii externe": 13048.1}, "pen_ci": 20000.0, "cd_cat": {"Alte costuri directe": 92562.75, "Alte servicii și furnizori": 241753.71, "Manoperă proprie": 232640.02, "Materiale (bonuri de consum)": 554408.78, "Proiectare (Triptic)": 627850.0, "Subantreprenori (Ideal Max, General Util)": 635066.49}, "cd_luna": {"2026-01": 25016.64, "2026-02": 27957.46, "2026-03": 23734.74, "2026-04": 19839.8, "2026-05": 9023.71, "2026-06": 3865.11, "2026-07": 731541.19, "2026-08": 695237.32, "2026-09": 785160.53, "2026-10": 62905.25}, "cd_top": {"TRIPTIC ARCHITECTURE & ENGINEERING S.R.L.": 627850.0, "IDEAL MAX CONSTRUCT SRL": 396918.09, "GENERAL UTIL CONS S.R.L.": 238148.4, "EREN CONS SRL": 234782.11, "LIGHT DESIGN ENGINEERING S.R.L.": 70147.78, "CASSINI SERVIMPEX SRL": 64807.68, "Cont bancar RAIFFEISEN BANK RON": 41634.56, "ROMCIM S.A.": 25365.01}, "cd_pen": 55761.08, "cd_tot": 2384281.74, "n_cd": 435, "n_ci": 196, "cd_fara_faza": 1609869.28};
-var MR_CD_PROV = 2384281.74, MR_VENIT = 3402087.73, MR_CD_SURSA = 'CD și CI: export Power BI 26.10.2026; venit: decontat cumulat SL1–SL4 fără TVA (Situații de lucrări)';
+var MR_CD_PROV = 2384281.74, MR_VENIT = 3666015.25, MR_CD_SURSA = 'CD și CI: export Power BI 26.10.2026; venit: decontat cumulat SL1–SL5 fără TVA (Situații de lucrări, incl. SL5 octombrie)';
 /* === /MR_DATA === */
 
 var MR_PROV = [
@@ -4081,11 +4085,12 @@ var MR_PROV = [
 ];
 var MR_IDX = [
   {k:'sl2', n:'SL2 — execuție (DEFINITIV)', baza:638203.00, an:1.150313152, v:95930.30, st:'definitiv', src:'Calcul actualizare SL4 sept. 2026 · Io 143,70 (ian.2025)'},
-  {k:'sl3', n:'SL3 — execuție (provizoriu)', baza:699504.28, an:1.149617258, v:104657.91, st:'provizoriu', src:'In iun.2026 = 165,20 provizoriu'},
-  {k:'sl4', n:'SL4 — execuție (provizoriu)', baza:1427530.55, an:1.160055672, v:228484.36, st:'provizoriu', src:'In iul.2026 = 166,70 provizoriu'}
+  {k:'sl3', n:'SL3 — execuție (DEFINITIV)', baza:699504.28, an:1.160751566, v:112446.41, st:'definitiv', src:'In iul.2026 = 166,80 final (rectificat), Buletin 08/2026'},
+  {k:'sl4', n:'SL4 — execuție (provizoriu)', baza:1427530.55, an:1.160055672, v:228484.36, st:'provizoriu', src:'In iul.2026 = 166,70 provizoriu'},
+  {k:'sl5', n:'SL5 — execuție (provizoriu, uz intern)', baza:251427.52, an:1.167711, v:42167.04, st:'provizoriu', src:'In aug.2026 = 167,80 (ultim publicat; luna aferentă sept. nepublicată)'}
 ];
 var MR_BUG_EXEC = 16335452, MR_VAL_EXEC = 18521332;
-var _mrSt = {ofertare:true, cd:null, prov:{im:true,bau:true,ale:true}, idx:{sl2:true,sl3:true,sl4:true}};
+var _mrSt = {ofertare:true, cd:null, prov:{im:true,bau:true,ale:true}, idx:{sl2:true,sl3:true,sl4:true,sl5:true}};
 function renderMarjaReala(proj) {
   function brutB0(){ return MR_VENIT - MR_VENIT * (MR_BUG_EXEC / MR_VAL_EXEC); }
   document.querySelectorAll('.submenu-item').forEach(function(i){ i.classList.remove('active'); });
@@ -4104,13 +4109,13 @@ function renderMarjaReala(proj) {
   var venitI = MR_VENIT + idxTot, netI = netC + idxTot, planPct = (1-MR_BUG_EXEC/MR_VAL_EXEC)*100, okI = netI/venitI*100 >= planPct;
   var okc = net/MR_VENIT*100 >= NEG_MARJA;
   var h = '<div class="proj-header"><div class="proj-title">Marjă curentă</div><div class="proj-meta">Hangar Kogălniceanu · Venit − Costuri directe − Costuri indirecte − Penalități · marjă planificată ' + String(NEG_MARJA).replace('.',',') + '%</div></div>';
-  h += '<div class="module-badge" style="background:#FDF2E0;color:#B7791F"><i class="ti ti-alert-triangle" style="font-size:13px"></i> CD și CI reale din Power BI (26.10.2026) · venit = decontat SL1–SL4 fără TVA (3.402.088) · costurile pot fi înregistrate cu întârziere față de venit — marja NU e validată</div>';
+  h += '<div class="module-badge" style="background:#FDF2E0;color:#B7791F"><i class="ti ti-alert-triangle" style="font-size:13px"></i> CD și CI reale din Power BI — actualizate la 26.10.2026 · venit = decontat SL1–SL5 fără TVA (3.666.015) · costurile pot fi înregistrate cu întârziere față de venit — marja NU e validată</div>';
   h += '<div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center;padding:10px 14px;border:1px solid var(--border);border-radius:8px;background:#FAFBFC;margin:10px 0 14px;font-size:12px">' +
     '<label style="cursor:pointer"><input type="checkbox" id="mrOf" ' + (S.ofertare ? 'checked' : '') + ' onchange="_mrSt.ofertare=this.checked;renderMarjaReala(\'hangar\')"> Include costurile de Ofertare (' + fm(ciOfert) + ' lei)</label>' +
     '<span>CD (lei): <input id="mrCd" type="text" value="' + fm(cd) + '" style="width:110px;padding:3px 6px;border:1px solid var(--border);border-radius:5px" onchange="var v=parseFloat(this.value.replace(/[^0-9,\\-]/g,\'\').replace(\',\',\'.\'));_mrSt.cd=isNaN(v)?null:v;renderMarjaReala(\'hangar\')"> <span style="color:#7F8C8D">fără penalități · editabil</span></span></div>';
   function card(t,v,sub,col,hl){ return '<div style="flex:' + (hl?'1.4':'1') + ';min-width:170px;border:' + (hl?'2px solid '+col+';box-shadow:0 2px 10px rgba(0,0,0,0.12)':'1px solid var(--border)') + ';border-radius:8px;padding:10px 12px;background:' + (hl?(okc?'#F1F8EA':'#FDEDEC'):'#fff') + '"><div style="font-size:11px;color:#7F8C8D">' + t + '</div><div style="font-size:' + (hl?'28':'20') + 'px;font-weight:700;color:' + (col||'#1F3864') + '">' + v + '</div><div style="font-size:11px;color:#7F8C8D">' + sub + '</div></div>'; }
   h += '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px">' +
-    card('Venit recunoscut', fm(MR_VENIT), 'lei · decontat SL1–SL4 fără TVA') +
+    card('Venit recunoscut', fm(MR_VENIT), 'lei · decontat SL1–SL5 fără TVA') +
     card('Marjă brută (după CD)', fm(brut), pc(brut,MR_VENIT) + ' din venit') +
     card('Costuri indirecte + penalități', fm(ciAfis + pen), pc(ciAfis+pen,MR_VENIT) + ' din venit · CI ' + fm(ciAfis) + ' · penalități ' + fm(pen), '#C0392B') +
     card('MARJĂ CURENTĂ (netă) · înregistrat', fm(net), '<span style="font-size:22px;font-weight:800;color:' + (okc ? '#3B6D11' : '#C0392B') + '">' + pc(net,MR_VENIT) + '</span> din venit · înregistrat<br>vs ' + String(NEG_MARJA).replace('.',',') + '% planificat · ' + (okc ? 'peste plan' : 'sub plan'), okc ? '#3B6D11' : '#C0392B', true) +
@@ -4134,7 +4139,7 @@ function renderMarjaReala(proj) {
     '<div style="font-size:11px;color:#7F8C8D;margin-bottom:14px">Corecția acoperă doar subcontractorii identificați în analizele din 20.10. Nu include: materiale cumpărate și nefacturate, producția executată dar nedecontată către beneficiar (SL5), venituri fără subcontractor (~28.700 lei), OS Ideal Max. Din acest motiv marja corectată e tot o limită superioară.</div>';
   var ix = '<div style="font-weight:600;margin:6px 0">Indexare cunoscută <span style="font-weight:400;color:#7F8C8D;font-size:11px">· ajustare de preț, sub-clauza 48.5 — venit suplimentar, fără cost (subcontracte la preț fix)</span></div><div style="border:1px solid #BFD8A7;background:#F6FBF1;border-radius:8px;padding:10px 14px;margin-bottom:14px">';
   MR_IDX.forEach(function(p){ ix += '<div style="display:flex;gap:10px;align-items:flex-start;padding:5px 0;border-bottom:1px solid #E1EED5;font-size:12px"><input type="checkbox" ' + (S.idx[p.k]?'checked':'') + ' onchange="_mrSt.idx[\'' + p.k + '\']=this.checked;renderMarjaReala(\'hangar\')" style="margin-top:2px"><div style="flex:1"><div style="font-weight:600">' + p.n + '</div><div style="font-size:11px;color:#7F8C8D">bază ' + fm(p.baza) + ' × (An ' + p.an.toFixed(6).replace('.',',') + ' − 1) · ' + p.src + '</div></div><div style="font-weight:700;white-space:nowrap">' + fm(p.v) + '</div></div>'; });
-  ix += '<div style="display:flex;justify-content:space-between;padding-top:6px;font-size:12px;font-weight:700"><span>Indexare inclusă</span><span>' + fm(idxTot) + ' lei</span></div><div style="font-size:11px;color:#7F8C8D;margin-top:6px">SL3 și SL4 sunt provizorii până la rectificarea indicilor INS. Indexarea nu e în decontatul de 3.402.088 (SL fără ajustare). Se bifează doar ce vrei să socotești.</div></div>';
+  ix += '<div style="display:flex;justify-content:space-between;padding-top:6px;font-size:12px;font-weight:700"><span>Indexare inclusă</span><span>' + fm(idxTot) + ' lei</span></div><div style="font-size:11px;color:#7F8C8D;margin-top:6px">SL2 și SL3 sunt DEFINITIVE (indici finali iunie 165,30 / iulie 166,80); SL4 provizoriu; SL5 provizoriu de uz intern (indice august 167,80, luna aferentă sept. nepublicată). Indexarea nu e în decontatul de 3.666.015 (SL fără ajustare). Se bifează doar ce vrei să socotești.</div></div>';
   h += cr + ix;
   // Proiectare vs Executie (SL1 = proiectare; SL2-SL4 = executie)
   var vP = 627850, cP = D.cd_cat['Proiectare (Triptic)'] || 0, vE = MR_VENIT - vP, cE = cd - cP;
@@ -4169,7 +4174,7 @@ function renderMarjaReala(proj) {
   h += '<div style="font-weight:600;margin:14px 0 6px">CI pe lună și divizie</div><table style="width:100%;border-collapse:collapse;font-size:12px;table-layout:fixed"><thead><tr style="background:#F2F4F6"><th style="text-align:left;padding:4px 6px">Luna</th>' + divs.map(function(d){return '<th style="text-align:right;padding:4px 6px">' + d + '</th>';}).join('') + '<th style="text-align:right;padding:4px 6px">Total</th></tr></thead><tbody>';
   luni.forEach(function(m){ var t=0; h += '<tr style="border-bottom:1px solid #EEF0F2"><td style="padding:4px 6px">' + m + '</td>' + divs.map(function(d){ var v=(D.ci_luna[d]||{})[m]||0; if (d==='Ofertare' && !S.ofertare) v=0; t+=v; return '<td style="padding:4px 6px;text-align:right">' + fm(v) + '</td>'; }).join('') + '<td style="padding:4px 6px;text-align:right;font-weight:600">' + fm(t) + '</td></tr>'; });
   h += '</tbody></table>';
-  h += '<div style="margin-top:14px;padding:10px 14px;border-left:4px solid #B7791F;background:#FDF2E0;font-size:12px;line-height:1.5"><b>Note de control</b><br>• CD real (Power BI 26.10): ' + fm(D.cd_tot + D.cd_pen) + ' lei din care penalități ' + fm(D.cd_pen) + ' (factura 23110030) · ' + D.n_cd + ' linii. CI: ' + fm(ciTot) + ' lei · ' + D.n_ci + ' linii. Documentele comune CD/CI sunt linii diferite ale aceluiași document (salarii, bonuri), fără dublare.<br>• Penalități: ' + fm(D.cd_pen) + ' în CD (23110030, 21.07) + ' + fm(penCI) + ' în CI (23110034, 25.09) = ' + fm(pen) + ' lei. De confirmat cu facturile primite de la Beneficiar (au fost menționate două facturi de 20.000 lei).<br>• Venitul (' + fm(MR_VENIT) + ') = decontat cumulat SL1–SL4 fără TVA (SL1 627.850 · SL2 647.203 · SL3 699.504 · SL4 1.427.531). Nu include producția executată și nefacturată. Marja de ' + pc(net,MR_VENIT) + ' e peste cea planificată (11,8%): posibile costuri neînregistrate încă (facturi sosite târziu, subantreprenori, materiale) — de validat cu Financiarul.<br>• Triptic: factura 53 = 584.500 lei + AA2 43.350 = 627.850. În CH41 apărea 1.169.000 (= 2 × 584.500), adică factura de sosit dublată — aceasta explică în mare parte diferența CH41 față de CD real.<br>• CD fără fază de proiect: ' + fm(D.cd_fara_faza) + ' lei (' + pc(D.cd_fara_faza, D.cd_tot) + ').<br>• Divizia CI (Ofertare etc.) vine din exportul anterior; noul export nu mai are coloana Divizie — costurile de Ofertare (' + fm(ciOfert) + ' lei) rămân orientative. Salariile din octombrie intră după închiderea lunii.</div';
+  h += '<div style="margin-top:14px;padding:10px 14px;border-left:4px solid #B7791F;background:#FDF2E0;font-size:12px;line-height:1.5"><b>Note de control</b><br>• CD real (Power BI 26.10): ' + fm(D.cd_tot + D.cd_pen) + ' lei din care penalități ' + fm(D.cd_pen) + ' (factura 23110030) · ' + D.n_cd + ' linii. CI: ' + fm(ciTot) + ' lei · ' + D.n_ci + ' linii. Documentele comune CD/CI sunt linii diferite ale aceluiași document (salarii, bonuri), fără dublare.<br>• Penalități: ' + fm(D.cd_pen) + ' în CD (23110030, 21.07) + ' + fm(penCI) + ' în CI (23110034, 25.09) = ' + fm(pen) + ' lei. De confirmat cu facturile primite de la Beneficiar (au fost menționate două facturi de 20.000 lei).<br>• Venitul (' + fm(MR_VENIT) + ') = decontat cumulat SL1–SL5 fără TVA (SL1 627.850 · SL2 647.203 · SL3 699.504 · SL4 1.427.531 · SL5 263.928, incl. asistență 12.500). Nu include producția executată și nefacturată. Marja de ' + pc(net,MR_VENIT) + ' e peste cea planificată (11,8%): posibile costuri neînregistrate încă (facturi sosite târziu, subantreprenori, materiale) — de validat cu Financiarul.<br>• Triptic: factura 53 = 584.500 lei + AA2 43.350 = 627.850. În CH41 apărea 1.169.000 (= 2 × 584.500), adică factura de sosit dublată — aceasta explică în mare parte diferența CH41 față de CD real.<br>• CD fără fază de proiect: ' + fm(D.cd_fara_faza) + ' lei (' + pc(D.cd_fara_faza, D.cd_tot) + ').<br>• Divizia CI (Ofertare etc.) vine din exportul anterior; noul export nu mai are coloana Divizie — costurile de Ofertare (' + fm(ciOfert) + ' lei) rămân orientative. Salariile din octombrie intră după închiderea lunii.</div';
   h = h.replace(/<table/g,'<div class="mrsc"><table').replace(/<\/table>/g,'</table></div>');
   h = '<style>.mrsc{overflow-x:auto;-webkit-overflow-scrolling:touch}.mrsc>table{min-width:460px}.mrcas{overflow-x:auto;-webkit-overflow-scrolling:touch}.mrcas>div{min-width:430px}@media(max-width:600px){#main .proj-title{font-size:20px}}</style>' + h;
   var m = document.getElementById('main'); if (m) m.innerHTML = h;
@@ -4220,7 +4225,7 @@ function renderPrevizi(proj) {
     row('= Venituri înregistrate', PREV.venitReal, '', true) +
     row('Costuri + manoperă înregistrate', PREV.costReal, 'facturi furnizori, bonuri de consum, pontaj, facturi de sosit') +
     row('= Venituri − costuri înregistrate', PREV.venitReal - PREV.costReal, 'nu se compară cu marja la final: venitul include recunoaștere pe lucrări în curs', true) +
-    row('Valoare lucrări SL1–SL4 (raport producție)', PREV.realizatSL, 'valoare decontată/de decontat la prețul din contract') +
+    row('Valoare lucrări SL1–SL5 (raport producție)', PREV.realizatSL, 'valoare decontată/de decontat la prețul din contract') +
     '</tbody></table></div></div>';
   // numerar lunar
   var remV = Math.max(0, c.venit - PREV.realizatSL), remC = Math.max(0, c.cost - PREV.costReal);
@@ -5686,7 +5691,7 @@ function renderProdSed2(proj) {
   html += '<div style="background:#FCE4E4;border-left:3px solid #C0392B;border-radius:6px;padding:8px 12px;font-size:11px;color:#8B1E14;margin-bottom:14px"><b>ESCALADARE:</b> CA lună −8,8% vs plan (prag 5%). Costurile și marja directă nu sunt validate: bugetul de cost nu poate fi exportat din ERP, iar costurile (ERP 04.10.2026) pot fi incomplete — se validează în ședința cu Financiarul.</div>';
   html += '<div style="background:#FFF8E1;border-left:3px solid #B7791F;border-radius:6px;padding:8px 12px;font-size:11px;color:#7A5B12;margin-bottom:14px"><b>De reținut:</b> progresul din tabel este <b>valoric/decontat</b> (ponderi F6). Progresul <b>fizic</b> din graficul MS Project (09.10) este procent pe durată: faza de execuție 19%, Obiect 2 16%, Obiect 4 12%; e orientativ, nu pe cantități.</div>';
   html += '<div class="kpi-grid" style="margin-bottom:14px">';
-  html += '<div class="kpi"><div class="kpi-label">Progres valoric realizat</div><div class="kpi-val" style="color:#C0392B">17,62%</div><div class="kpi-sub">3.402.088 lei · SL1–SL4 din 19.305.182</div></div>';
+  html += '<div class="kpi"><div class="kpi-label">Progres valoric realizat</div><div class="kpi-val" style="color:#C0392B">18,99%</div><div class="kpi-sub">3.666.015 lei · SL1–SL5 din 19.305.182</div></div>';
   html += '<div class="kpi"><div class="kpi-label">Progres valoric planificat</div><div class="kpi-val">22,30%</div><div class="kpi-sub">4.305.030 lei · execuție −887.070 lei vs grafic</div></div>';
   html += '<div class="kpi"><div class="kpi-label">CA lună SL4</div><div class="kpi-val">1.427.531</div><div class="kpi-sub">plan 1.565.408 · −8,8%</div></div>';
   html += '<div class="kpi"><div class="kpi-label">Progres fizic estimat (grafic 09.10)</div><div class="kpi-val" style="color:#1A5276">19%</div><div class="kpi-sub">execuție, % pe durată · decontat 14,9% → ≈0,75 mil. lei executat nedecontat</div></div>';
@@ -6271,9 +6276,9 @@ function renderContractSinteza(proj) {
      ctx:'Depășire +52,6% vs buget; negociat doar 5,0% discount din 13,3% cerut de EREN.',
      ctxDetail:'Buget alocat 694.896 lei vs valoare contractată 1.060.252 lei. Negociere finalizată la 5,0% discount față de oferta inițială — marja de negociere obținută parțial (EREN solicita 13,3%). Venit beneficiar 774.513 lei = suma exactă P8-P11 din devizul beneficiarului (strat separator 12.541 + carosabil BCR 642.555 + transport beton BCR 44.189 + gujoane 3.955 + emulsie 4.201 + colmatare 10/30 13.563 + colmatare 10/60 14.054 + colmatare 20mm 1.924 + colmatare 25mm 6.423 + marcaje galbenă 17.304 + marcaje neagră 13.803) — corespondență 1:1 confirmată (suma bugetelor acelorași poziții = exact 694.896 lei). Marjă vs venit: −285.739 lei (−36,9%) — pe lângă depășirea de buget, EREN pierde și pe marja reală vs venitul beneficiarului pentru acest scope.'},
     {scope:'Confecții metalice — Structură Hangar (Cap.3)', furnizor:'A&C Metal Industry SRL', nr:'ofertă 03.09.2026 · în semnare', buget:1434571, contract:1610276, venit:1586706, stare:'În semnare',
-     nota:'Uzinare și montaj structură metalică: acoperiș hală 85.000 kg + spații anexe 14.200 kg + structură secundară pereți 12.900 kg + organe asamblare + transport (112.100 kg uzinat total) — 306.509 EUR, la curs BNR 03.09.2026 (5,2536 lei/EUR). Exclude: carcase buloane/ancoraje, protecție antifoc (firmă specializată după montaj), utilaj montaj (macara — de clarificat). Depășire vs buget art.38: +175.705 lei (+12,2%). Marjă vs venit (bază, fără indexare): −23.570 lei (−1,5%) — negativă la cursul actual. <b>Marjă vs venit CU indexare SL3 (An=1,149617):</b> +213.828 lei (+11,7%) — indexarea (aplicată doar veniturilor, subcontractul A&amp;C Metal e preț fix) recuperează integral și depășește pierderea de curs valutar.',
+     nota:'Uzinare și montaj structură metalică: acoperiș hală 85.000 kg + spații anexe 14.200 kg + structură secundară pereți 12.900 kg + organe asamblare + transport (112.100 kg uzinat total) — 306.509 EUR, la curs BNR 03.09.2026 (5,2536 lei/EUR). Exclude: carcase buloane/ancoraje, protecție antifoc (firmă specializată după montaj), utilaj montaj (macara — de clarificat). Depășire vs buget art.38: +175.705 lei (+12,2%). Marjă vs venit (bază, fără indexare): −23.570 lei (−1,5%) — negativă la cursul actual. <b>Marjă vs venit CU indexare SL3 DEFINITIVĂ (An=1,160752, In iulie 166,80 final):</b> +231.495 lei (+12,7%) — indexarea (aplicată doar veniturilor, subcontractul A&amp;C Metal e preț fix) recuperează integral și depășește pierderea de curs valutar.',
      ctx:'Cel mai mare risc bugetar Cap.3 — rezolvat tehnic prin indexare SL3.',
-     ctxDetail:'37,9% din buget Cap.3. Marja de bază a devenit NEGATIVĂ odată actualizat cursul EUR la valoarea BNR de azi (de la +3,4% la −1,5%), dar indexarea de preț SL3 (subcl. 48.5, coef. 1,149617) o readuce pe plus la +11,7%, pentru că subcontractul e la preț fix iar indexarea se aplică integral veniturilor de la beneficiar. Atenție: utilaj montaj (macara) fără linie de buget identificată.'},
+     ctxDetail:'37,9% din buget Cap.3. Marja de bază a devenit NEGATIVĂ odată actualizat cursul EUR la valoarea BNR de azi (de la +3,4% la −1,5%), dar indexarea de preț SL3 DEFINITIVĂ (subcl. 48.5, coef. 1,160752 — In iulie 166,80 final) o readuce pe plus la +12,7%, pentru că subcontractul e la preț fix iar indexarea se aplică integral veniturilor de la beneficiar. Atenție: utilaj montaj (macara) fără linie de buget identificată.'},
     {scope:'OS — RTE domeniul 2.2 (responsabil tehnic cu execuția)', furnizor:'Consulting Expert Construct SRL', nr:'ctr 27 · 09.10.2026', buget:0, contract:6000, stare:'Semnat',
      nota:'Servicii de urmărire și verificare ca responsabil tehnic cu execuția, domeniul 2.2 (inclusiv fazele determinante). Preț 1.000 lei/vizită + TVA; estimate 6 vizite = 6.000 lei fără TVA. Plată în 10 zile de la factură (penalizare 0,5%/zi). Prima factură: CEC0275/15.10.2026, 1.000 lei + TVA (1.210 lei), scadentă la 30.11.2026 în factură.',
      ctx:'Nebugetat — nu există cost RTE 2.2 în buget (PE10); fără linie de venit separată.',
@@ -6310,7 +6315,7 @@ function renderContractSinteza(proj) {
   var margVenit = totVenit - totCostVenit;            // marjă absolută vs venit
   var margVenitPct = totVenit>0 ? (margVenit/totVenit*100) : 0;
   // Influența indexării (subcl. 48.5): venit execuție C+M × An; subcontracte preț fix → rămâne la EREN
-  var AN_INDEX = 1.150313152;                          // coeficient indexare SL2 DEFINITIV (In iun.2026=165,3 rectificat / Io ian.2025=143,70) — sursă "Calcul Actualizare SL4 - Septembrie 2026" ver.25.09.2026. SL3=1,149617258 și SL4=1,160055672 sunt PROVIZORII — se înlocuiește cu coef. SL3 final, pt. restul de executat, când va fi confirmat
+  var AN_INDEX = 1.150313152;                          // coeficient indexare SL2 DEFINITIV (In iun.2026=165,3 rectificat / Io ian.2025=143,70). SL3 DEFINITIV = 1,160752 (In iul.2026=166,80 rectificat/final, Buletin 08/2026). SL4=1,160056 PROVIZORIU (lună corectă = august 167,80, de refăcut). SL5 uz intern = 1,167711 (In aug.2026=167,80, lună aferentă sept. nepublicată)
   var venitIndexat = totVenit * AN_INDEX;
   var margVenitIdx = venitIndexat - totCostVenit;
   var margVenitIdxPct = venitIndexat>0 ? (margVenitIdx/venitIndexat*100) : 0;
@@ -7264,9 +7269,9 @@ function renderSL2(proj) {
           'style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:#7D3C98;color:#fff;border-radius:6px;font-size:12px;font-weight:600;text-decoration:none">' +
           '<i class="ti ti-git-compare"></i> 7. Notă mapare (SL1+SL2)' +
         '</a>' +
-        '<a href="https://drive.google.com/file/d/14l91lZSoDA9dU2IiFVPhzs4Le0FoZgwn/view?usp=sharing" target="_blank" ' +
-          'style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:#C0392B;color:#fff;border-radius:6px;font-size:12px;font-weight:600;text-decoration:none">' +
-          '<i class="ti ti-file-percent"></i> 8. Ajustare prețuri SL2' +
+        '<a href="https://drive.google.com/file/d/1_NgSxlSh0ipF0mAU9hWYKKqad-ubG6Bb/view?usp=sharing" target="_blank" ' +
+          'style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:#186A3B;color:#fff;border-radius:6px;font-size:12px;font-weight:600;text-decoration:none">' +
+          '<i class="ti ti-file-percent"></i> 8. Ajustare prețuri SL2 — DEFINITIV' +
         '</a>' +
       '</div>' +
 
@@ -7601,7 +7606,7 @@ function renderSL3(proj) {
         '<a href="https://drive.google.com/file/d/1XSHYU5rNPo0hCLsgp1PTv5PZW_b8AZRH/view?usp=sharing" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:#B9770E;color:#fff;border-radius:6px;font-size:12px;font-weight:600;text-decoration:none"><i class="ti ti-paperclip"></i> 4. Foi de atașament</a>' +
         '<a href="https://drive.google.com/file/d/1bJbgoMgnGR8w_Kv-AT6hgXUe3O_1PNBE/view?usp=sharing" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:#1F4E79;color:#fff;border-radius:6px;font-size:12px;font-weight:600;text-decoration:none"><i class="ti ti-chart-bar"></i> 5. Grafic fizic și valoric (F6)</a>' +
         '<a href="https://drive.google.com/file/d/1Vgsj1fz8mz1-jILck6Rg7b9BBwc6femD/view?usp=sharing" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:#8E44AD;color:#fff;border-radius:6px;font-size:12px;font-weight:600;text-decoration:none"><i class="ti ti-chart-line"></i> 6. Realizat vs planificat + Curba S</a>' +
-        '<a href="https://drive.google.com/file/d/1UFDH5cXy1SGgBRLwUNUJCAWj-FqHM8Yx/view?usp=sharing" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:#C0392B;color:#fff;border-radius:6px;font-size:12px;font-weight:600;text-decoration:none"><i class="ti ti-file-percent"></i> 8. Ajustare prețuri SL3</a>' +
+        '<a href="https://drive.google.com/file/d/1TXDp2-w81283OIOkuJWD91sYYPQklbOc/view?usp=sharing" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:#186A3B;color:#fff;border-radius:6px;font-size:12px;font-weight:600;text-decoration:none"><i class="ti ti-file-percent"></i> 8. Ajustare prețuri SL3 — DEFINITIV</a>' +
       '</div>' +
 
       '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:16px">' +
@@ -7779,32 +7784,32 @@ function renderSL3(proj) {
 
       '<div style="font-size:11px;font-weight:700;color:#2C3E50;margin:18px 0 8px;text-transform:uppercase;letter-spacing:0.05em">' +
         '<i class="ti ti-file-percent"></i> Ajustare de preț (indexare) — sub-clauza 48.5' +
-      '<span style="font-size:9px;background:#FDEBD0;color:#B9530E;padding:1px 8px;border-radius:99px;font-weight:700;margin-left:8px;letter-spacing:0.03em">INDICE PROVIZORIU</span>' +
+      '<span style="font-size:9px;background:#E7F6E8;color:#186A3B;padding:1px 8px;border-radius:99px;font-weight:700;margin-left:8px;letter-spacing:0.03em">INDICE FINAL · iulie 2026</span>' +
       '</div>' +
       '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:10px">' +
-        '<div style="background:#FDEDEC;border-radius:8px;padding:12px;text-align:center;border-top:3px solid #C0392B">' +
-          '<div style="font-size:10px;color:#C0392B;font-weight:700;margin-bottom:4px">COEF. AJUSTARE SL3 (An)</div>' +
-          '<div style="font-size:16px;font-weight:700;color:#C0392B">1,149617</div>' +
-          '<div style="font-size:10px;color:var(--text-secondary)">In/Io = 165,2 / 143,7</div>' +
+        '<div style="background:#E7F6E8;border-radius:8px;padding:12px;text-align:center;border-top:3px solid #186A3B">' +
+          '<div style="font-size:10px;color:#186A3B;font-weight:700;margin-bottom:4px">COEF. AJUSTARE SL3 (An)</div>' +
+          '<div style="font-size:16px;font-weight:700;color:#186A3B">1,160752</div>' +
+          '<div style="font-size:10px;color:var(--text-secondary)">In/Io = 166,8 / 143,7</div>' +
         '</div>' +
-        '<div style="background:#FDEDEC;border-radius:8px;padding:12px;text-align:center">' +
-          '<div style="font-size:10px;color:#C0392B;font-weight:700;margin-bottom:4px">AJUSTARE SL3</div>' +
-          '<div style="font-size:16px;font-weight:700;color:#C0392B">104.657,91</div>' +
-          '<div style="font-size:10px;color:var(--text-secondary)">lei fără TVA</div>' +
+        '<div style="background:#E7F6E8;border-radius:8px;padding:12px;text-align:center">' +
+          '<div style="font-size:10px;color:#186A3B;font-weight:700;margin-bottom:4px">AJUSTARE SL3 (DEFINITIV)</div>' +
+          '<div style="font-size:16px;font-weight:700;color:#186A3B">112.446,41</div>' +
+          '<div style="font-size:10px;color:var(--text-secondary)">lei fără TVA · la plată</div>' +
         '</div>' +
-        '<div style="background:#FDEDEC;border-radius:8px;padding:12px;text-align:center">' +
-          '<div style="font-size:10px;color:#C0392B;font-weight:700;margin-bottom:4px">AJUSTARE SL3 CU TVA</div>' +
-          '<div style="font-size:16px;font-weight:700;color:#C0392B">126.636,07</div>' +
+        '<div style="background:#E7F6E8;border-radius:8px;padding:12px;text-align:center">' +
+          '<div style="font-size:10px;color:#186A3B;font-weight:700;margin-bottom:4px">AJUSTARE SL3 CU TVA</div>' +
+          '<div style="font-size:16px;font-weight:700;color:#186A3B">136.060,15</div>' +
           '<div style="font-size:10px;color:var(--text-secondary)">lei (TVA 21%)</div>' +
         '</div>' +
         '<div style="background:#2C3E50;border-radius:8px;padding:12px;text-align:center">' +
           '<div style="font-size:10px;color:#fff;font-weight:700;margin-bottom:4px">CUMULAT AJUSTĂRI</div>' +
-          '<div style="font-size:16px;font-weight:700;color:#fff">200.588,21</div>' +
-          '<div style="font-size:10px;color:#BFC9D4">lei fără TVA</div>' +
+          '<div style="font-size:16px;font-weight:700;color:#fff">208.376,71</div>' +
+          '<div style="font-size:10px;color:#BFC9D4">lei fără TVA (SL2+SL3)</div>' +
         '</div>' +
       '</div>' +
       '<div style="font-size:10px;color:var(--text-secondary);margin-bottom:10px">' +
-        'av = 0% \xb7 Io (ian. 2025 — Data de Referință) = 143,70 \xb7 In (iun. 2026, tab.15) = 165,20 (provizoriu) \xb7 An = av+(1−av)·In/Io \xb7 Sursa: Buletin Statistic de Prețuri INS nr. 06/2026' +
+        'av = 0% \xb7 Io (ian. 2025 — Data de Referință) = 143,70 \xb7 In (iul. 2026, tab.15) = 166,80 (FINAL, rectificat) \xb7 An = av+(1−av)·In/Io \xb7 Sursa: Buletin Statistic de Prețuri INS nr. 08/2026. DEFINITIV — transmis pt. act adițional (adresa 26.10.2026).' +
       '</div>' +
       '<div style="overflow-x:auto;margin-bottom:6px">' +
         '<table style="width:100%;border-collapse:collapse;font-size:11px">' +
@@ -7836,27 +7841,27 @@ function renderSL3(proj) {
               '<td style="padding:7px 8px;text-align:right">20.145,36</td>' +
               '<td style="padding:7px 8px;text-align:right;font-weight:600">116.075,66</td>' +
             '</tr>' +
-            '<tr style="background:#FDF2F2;border-bottom:1px solid #EEE">' +
-              '<td style="padding:7px 8px;font-weight:700;color:#C0392B">SL3</td>' +
-              '<td style="padding:7px 8px">Execuție</td>' +
+            '<tr style="background:#E7F6E8;border-bottom:1px solid #EEE">' +
+              '<td style="padding:7px 8px;font-weight:700;color:#186A3B">SL3</td>' +
+              '<td style="padding:7px 8px;font-weight:600;color:#186A3B">Execuție · DEFINITIV</td>' +
               '<td style="padding:7px 8px;text-align:right">699.504,28</td>' +
-              '<td style="padding:7px 8px;text-align:right">1,149617</td>' +
-              '<td style="padding:7px 8px;text-align:right;font-weight:600">104.657,91</td>' +
-              '<td style="padding:7px 8px;text-align:right">21.978,16</td>' +
-              '<td style="padding:7px 8px;text-align:right;font-weight:600">126.636,07</td>' +
+              '<td style="padding:7px 8px;text-align:right">1,160752</td>' +
+              '<td style="padding:7px 8px;text-align:right;font-weight:600">112.446,41</td>' +
+              '<td style="padding:7px 8px;text-align:right">23.613,75</td>' +
+              '<td style="padding:7px 8px;text-align:right;font-weight:600">136.060,15</td>' +
             '</tr>' +
           '</tbody>' +
           '<tfoot>' +
             '<tr style="background:#2C3E50;color:#fff;font-weight:700">' +
               '<td colspan="4" style="padding:8px">TOTAL AJUSTĂRI CUMULATE</td>' +
-              '<td style="padding:8px;text-align:right;font-size:13px">200.588,21</td>' +
-              '<td style="padding:8px;text-align:right">42.123,52</td>' +
-              '<td style="padding:8px;text-align:right;font-size:13px">242.711,73</td>' +
+              '<td style="padding:8px;text-align:right;font-size:13px">208.376,71</td>' +
+              '<td style="padding:8px;text-align:right">43.759,11</td>' +
+              '<td style="padding:8px;text-align:right;font-size:13px">252.135,81</td>' +
             '</tr>' +
           '</tfoot>' +
         '</table>' +
       '</div>' +
-      '<div style="font-size:10px;color:var(--text-secondary);font-style:italic">SL1 (proiectare) nu se ajustează — formula vizează lucrările realizate (subcl. 48.5). SL2 (situație anterioară) a fost corectat cu indicele FINAL iunie 2026 (165,30, Buletin nr. 07/2026). Ajustarea SL3 (în lună) rămâne PROVIZORIE până la rectificarea indicelui aferent.</div>' +
+      '<div style="font-size:10px;color:var(--text-secondary);font-style:italic">SL1 (proiectare) nu se ajustează — formula vizează lucrările realizate (subcl. 48.5). SL2 este DEFINITIV cu indicele final iunie 2026 (165,30). SL3 a devenit DEFINITIV cu indicele iulie 2026 rectificat/final (166,80, Buletin nr. 08/2026) → ajustare 112.446,41 lei fără TVA, transmisă beneficiarului pentru act adițional.</div>' +
     '</div>' +
     '<div class="page-footer">PM Hub · EREN CONS SRL · 2026</div>';
 }
@@ -8066,12 +8071,12 @@ function renderSL4(proj) {
         '</div>' +
         '<div style="background:#2C3E50;border-radius:8px;padding:12px;text-align:center">' +
           '<div style="font-size:10px;color:#fff;font-weight:700;margin-bottom:4px">CUMULAT AJUSTĂRI</div>' +
-          '<div style="font-size:16px;font-weight:700;color:#fff">429.072,58</div>' +
+          '<div style="font-size:16px;font-weight:700;color:#fff">436.861,07</div>' +
           '<div style="font-size:10px;color:#BFC9D4">lei fără TVA</div>' +
         '</div>' +
       '</div>' +
       '<div style="font-size:10px;color:var(--text-secondary);margin-bottom:10px">' +
-        'SL2 DEFINITIV (indice final iunie 165,30, la plată). SL3 și SL4 provizorii (informare). In SL4 (iul. 2026) = 166,70 provizoriu \xb7 Sursa: Buletin INS nr. 07/2026' +
+        'SL2 DEFINITIV (indice final iunie 165,30). SL3 DEFINITIV (indice final iulie 166,80, Buletin 08/2026 — rectificat). SL4 rămâne provizoriu (informare) până la rectificarea indicelui aferent \xb7 Sursa: Buletin INS nr. 07–08/2026' +
       '</div>' +
       '<div style="overflow-x:auto;margin-bottom:6px">' +
         '<table style="width:100%;border-collapse:collapse;font-size:11px">' +
@@ -8087,15 +8092,251 @@ function renderSL4(proj) {
           '<tbody>' +
             '<tr style="border-bottom:1px solid #EEE"><td style="padding:7px 8px;font-weight:700;color:#6C3483">SL1</td><td style="padding:7px 8px;color:#888">nu se ajustează</td><td style="padding:7px 8px;text-align:right">627.850,00</td><td style="padding:7px 8px;text-align:right;color:var(--text-secondary)">—</td><td style="padding:7px 8px;text-align:right">0,00</td><td style="padding:7px 8px;text-align:right">0,00</td><td style="padding:7px 8px;text-align:right">0,00</td></tr>' +
             '<tr style="background:#E7F6E8;border-bottom:1px solid #EEE"><td style="padding:7px 8px;font-weight:700;color:#186A3B">SL2</td><td style="padding:7px 8px;font-weight:600;color:#186A3B">DEFINITIV (la plată)</td><td style="padding:7px 8px;text-align:right">638.203,00</td><td style="padding:7px 8px;text-align:right">1,150313</td><td style="padding:7px 8px;text-align:right;font-weight:600">95.930,30</td><td style="padding:7px 8px;text-align:right">20.145,36</td><td style="padding:7px 8px;text-align:right;font-weight:600">116.075,66</td></tr>' +
-            '<tr style="background:#FDF0E1;border-bottom:1px solid #EEE"><td style="padding:7px 8px;font-weight:700;color:#B9530E">SL3</td><td style="padding:7px 8px;color:#B9530E">provizoriu</td><td style="padding:7px 8px;text-align:right">699.504,28</td><td style="padding:7px 8px;text-align:right">1,149617</td><td style="padding:7px 8px;text-align:right;font-weight:600">104.657,91</td><td style="padding:7px 8px;text-align:right">21.978,16</td><td style="padding:7px 8px;text-align:right;font-weight:600">126.636,07</td></tr>' +
+            '<tr style="background:#E7F6E8;border-bottom:1px solid #EEE"><td style="padding:7px 8px;font-weight:700;color:#186A3B">SL3</td><td style="padding:7px 8px;font-weight:600;color:#186A3B">DEFINITIV (la plată)</td><td style="padding:7px 8px;text-align:right">699.504,28</td><td style="padding:7px 8px;text-align:right">1,160752</td><td style="padding:7px 8px;text-align:right;font-weight:600">112.446,41</td><td style="padding:7px 8px;text-align:right">23.613,75</td><td style="padding:7px 8px;text-align:right;font-weight:600">136.060,15</td></tr>' +
             '<tr style="background:#FDF0E1;border-bottom:1px solid #EEE"><td style="padding:7px 8px;font-weight:700;color:#B9530E">SL4</td><td style="padding:7px 8px;color:#B9530E">provizoriu</td><td style="padding:7px 8px;text-align:right">1.427.530,55</td><td style="padding:7px 8px;text-align:right">1,160056</td><td style="padding:7px 8px;text-align:right;font-weight:600">228.484,36</td><td style="padding:7px 8px;text-align:right">47.981,72</td><td style="padding:7px 8px;text-align:right;font-weight:600">276.466,08</td></tr>' +
           '</tbody>' +
           '<tfoot>' +
-            '<tr style="background:#2C3E50;color:#fff;font-weight:700"><td colspan="4" style="padding:8px">TOTAL AJUSTĂRI CUMULATE</td><td style="padding:8px;text-align:right;font-size:13px">429.072,58</td><td style="padding:8px;text-align:right">90.105,24</td><td style="padding:8px;text-align:right;font-size:13px">519.177,82</td></tr>' +
+            '<tr style="background:#2C3E50;color:#fff;font-weight:700"><td colspan="4" style="padding:8px">TOTAL AJUSTĂRI CUMULATE</td><td style="padding:8px;text-align:right;font-size:13px">436.861,07</td><td style="padding:8px;text-align:right">91.740,83</td><td style="padding:8px;text-align:right;font-size:13px">528.601,89</td></tr>' +
           '</tfoot>' +
         '</table>' +
       '</div>' +
       '<div style="font-size:10px;color:var(--text-secondary);font-style:italic">Ajustarea se transmite beneficiarului doar când indicele e final: SL2 (iunie 2026 rectificat) e definitivă și merge la plată; SL3 și SL4 rămân provizorii (informare) până la rectificarea indicilor aferenți.</div>' +
+    '</div>' +
+    '<div class="page-footer">PM Hub · EREN CONS SRL · 2026</div>';
+}
+
+function sl5Doc(ev){ if(ev){ev.preventDefault();} alert('Document generat local — folder „SL 5 / ver 26.10.2026”.\nLinkul Drive se completeaza dupa incarcare.'); return false; }
+
+function renderSL5(proj) {
+  document.querySelectorAll('.submenu-item').forEach(function(i){ i.classList.remove('active'); });
+  var item = document.getElementById('item-hangar-sl5');
+  if (item) item.classList.add('active');
+  closeMenu();
+  document.getElementById('menu-btn').style.display = 'none';
+  var btn = document.getElementById('back-btn');
+  btn.style.display = 'flex';
+  btn.onclick = function() { renderProjHome('hangar'); };
+
+  var dbtn = function(ic,lbl,bg,url){ var a = url ? ('href="'+url+'" target="_blank"') : ('href="#" onclick="return sl5Doc(event)"'); return '<a '+a+' style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:'+bg+';color:#fff;border-radius:6px;font-size:12px;font-weight:600;text-decoration:none"><i class="ti '+ic+'"></i> '+lbl+'</a>'; };
+
+  document.getElementById('main').innerHTML =
+    '<div class="proj-header">' +
+      '<div class="proj-title">Situație de Lucrări Nr. 5 — Execuție</div>' +
+      '<div class="proj-meta">Contract A-997 / 01.08.2025 \xb7 Hangar Kogălniceanu \xb7 UM 02311 \xb7 26.10.2026</div>' +
+    '</div>' +
+    '<div class="module-badge" style="background:#E0F4F6;color:#117A8B">' +
+      '<i class="ti ti-file-analytics" style="font-size:13px"></i> SL5 — Execuție' +
+    '</div>' +
+
+    '<div class="nivel-card" style="margin-bottom:16px;border-left:4px solid #117A8B">' +
+      '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px">' +
+        '<span style="font-size:10px;background:#E0F4F6;color:#117A8B;padding:2px 10px;border-radius:99px;font-weight:600">SL Nr. 5</span>' +
+        '<span style="font-size:10px;background:#D6EAF8;color:#1A5276;padding:2px 10px;border-radius:99px;font-weight:600">Execuție</span>' +
+        '<span style="font-size:10px;background:#EAF3DE;color:#1E6E2D;padding:2px 10px;border-radius:99px;font-weight:600">Contract A-997 / 01.08.2025</span>' +
+        '<span style="font-size:10px;background:#FCE4D6;color:#854F0B;padding:2px 10px;border-radius:99px;font-weight:600">Perioada 26.09-26.10.2026</span>' +
+        '<span style="font-size:10px;background:#E8DAEF;color:#6C3483;padding:2px 10px;border-radius:99px;font-weight:600">+ Asistență tehnică</span>' +
+      '</div>' +
+
+      '<div style="background:#FEF9E7;border:1px solid #F7DC6F;border-radius:6px;padding:8px 12px;margin-bottom:12px;font-size:11px;color:#7D6608">' +
+        '<i class="ti ti-folder"></i> Documente generate local (folder „SL 5 / ver 26.10.2026”, 78 pagini). Linkurile Drive și Nr. de înregistrare al adresei se completează după încărcare/înregistrare.' +
+      '</div>' +
+
+      '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px">' +
+        dbtn('ti-mail-forward','1. Adresă înaintare SL5','#6C3483','https://drive.google.com/file/d/1aRlK8gmE74HRbtsl-t7L-m3SvjB6tjtH/view?usp=sharing') +
+        dbtn('ti-table','2. Centralizator SL5','#117A8B','https://drive.google.com/file/d/1oqUnQ1QYthAZjFiV5uEKiFHVNMMl8lO8/view?usp=sharing') +
+        dbtn('ti-file-type-pdf','3. Situație de lucrări SL5','#1A5276','https://drive.google.com/file/d/1lQHm6SswFfuGOIVJzinz_xiW1bznzcje/view?usp=sharing') +
+        dbtn('ti-paperclip','4. Foi de atașament','#B9770E','https://drive.google.com/file/d/1rjSVZdq6dKLjPS-u5v5VQgC8Opgx01I_/view?usp=sharing') +
+        dbtn('ti-blueprint','4.1 Anexe FA (planșe)','#A04000','https://drive.google.com/file/d/1TeVGTX-XAlHtmLXPXgPacxPs0t_vWH74/view?usp=sharing') +
+        dbtn('ti-chart-bar','5. Grafic fizic și valoric (F6)','#1F4E79','https://drive.google.com/file/d/11mdhz9S9SBFc7M4ZE3dJ9At_2cqNbyfO/view?usp=sharing') +
+        dbtn('ti-chart-line','6. Realizat vs planificat + Curba S','#8E44AD','https://drive.google.com/file/d/1vSwlDuuC1hPNp3FJjxRi52bbnErXX82C/view?usp=sharing') +
+      '</div>' +
+
+      '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:16px">' +
+        '<div style="background:#E0F4F6;border-radius:8px;padding:12px;text-align:center">' +
+          '<div style="font-size:10px;color:#117A8B;font-weight:700;margin-bottom:4px">TOTAL FĂRĂ TVA</div>' +
+          '<div style="font-size:18px;font-weight:700;color:#117A8B">263.928</div>' +
+          '<div style="font-size:10px;color:var(--text-secondary)">lei (execuție + asist.)</div>' +
+        '</div>' +
+        '<div style="background:#EAF3DE;border-radius:8px;padding:12px;text-align:center">' +
+          '<div style="font-size:10px;color:#1E6E2D;font-weight:700;margin-bottom:4px">TVA 21%</div>' +
+          '<div style="font-size:18px;font-weight:700;color:#1E6E2D">55.425</div>' +
+          '<div style="font-size:10px;color:var(--text-secondary)">lei</div>' +
+        '</div>' +
+        '<div style="background:#D6EAF8;border-radius:8px;padding:12px;text-align:center">' +
+          '<div style="font-size:10px;color:#1A5276;font-weight:700;margin-bottom:4px">TOTAL CU TVA</div>' +
+          '<div style="font-size:18px;font-weight:700;color:#1A5276">319.352</div>' +
+          '<div style="font-size:10px;color:var(--text-secondary)">lei</div>' +
+        '</div>' +
+        '<div style="background:#FCE4D6;border-radius:8px;padding:12px;text-align:center">' +
+          '<div style="font-size:10px;color:#854F0B;font-weight:700;margin-bottom:4px">DATA SL</div>' +
+          '<div style="font-size:16px;font-weight:700;color:#854F0B">26.10.2026</div>' +
+          '<div style="font-size:10px;color:var(--text-secondary)">ver. 26.10.2026</div>' +
+        '</div>' +
+      '</div>' +
+    '</div>' +
+
+    '<div class="nivel-card" style="margin-bottom:16px;border-left:4px solid #1A5276">' +
+      '<div class="nivel-title" style="color:#1A5276"><i class="ti ti-list-details"></i> Centralizator decont SL5 (pe Devizul General)</div>' +
+      '<div style="overflow-x:auto;margin-top:10px">' +
+        '<table style="width:100%;border-collapse:collapse;font-size:12px">' +
+          '<thead><tr style="background:#1A5276;color:#fff">' +
+            '<th style="padding:8px;text-align:left">Capitol</th>' +
+            '<th style="padding:8px;text-align:right">Valoare fără TVA (lei)</th>' +
+            '<th style="padding:8px;text-align:right">Din care C+M (lei)</th>' +
+          '</tr></thead>' +
+          '<tbody>' +
+            '<tr style="background:#F9F9F9;border-bottom:1px solid #EEE">' +
+              '<td style="padding:8px">Cap. 4.1.3 — Structura Hangar (fundații continue anexe)</td>' +
+              '<td style="padding:8px;text-align:right;font-weight:600">212.433,61</td>' +
+              '<td style="padding:8px;text-align:right">212.433,61</td>' +
+            '</tr>' +
+            '<tr style="background:#fff;border-bottom:1px solid #EEE">' +
+              '<td style="padding:8px">Cap. 4.1.6 — Rețele electrice ext. (priză pământ + paratrăsnet)</td>' +
+              '<td style="padding:8px;text-align:right;font-weight:600">8.961,72</td>' +
+              '<td style="padding:8px;text-align:right">8.961,72</td>' +
+            '</tr>' +
+            '<tr style="background:#EAF4FB;border-bottom:1px solid #EEE">' +
+              '<td style="padding:8px">Cap. 5.1.1 — Organizare de șantier</td>' +
+              '<td style="padding:8px;text-align:right;font-weight:600">30.032,19</td>' +
+              '<td style="padding:8px;text-align:right">30.032,19</td>' +
+            '</tr>' +
+            '<tr style="background:#F5EEF8;border-bottom:1px solid #EEE">' +
+              '<td style="padding:8px">Cap. 3.8 — Asistență tehnică (dirigenție + proiectant)</td>' +
+              '<td style="padding:8px;text-align:right;font-weight:600">12.500,00</td>' +
+              '<td style="padding:8px;text-align:right;color:#999">—</td>' +
+            '</tr>' +
+          '</tbody>' +
+          '<tfoot>' +
+            '<tr style="background:#EBF5FB;border-top:2px solid #1A5276">' +
+              '<td style="padding:8px;font-weight:700">TOTAL fără TVA</td>' +
+              '<td style="padding:8px;text-align:right;font-weight:700;font-size:13px;color:#1A5276">263.927,52</td>' +
+              '<td style="padding:8px;text-align:right;font-weight:700">251.427,52</td>' +
+            '</tr>' +
+            '<tr style="background:#F9F9F9">' +
+              '<td style="padding:8px;color:#555">TVA 21%</td>' +
+              '<td style="padding:8px;text-align:right;color:#555">55.424,78</td>' +
+              '<td style="padding:8px;text-align:right;color:#555">52.799,78</td>' +
+            '</tr>' +
+            '<tr style="background:#1A5276;color:#fff;font-weight:700">' +
+              '<td style="padding:8px">TOTAL cu TVA</td>' +
+              '<td style="padding:8px;text-align:right;font-size:14px">319.352,30</td>' +
+              '<td style="padding:8px;text-align:right">304.227,30</td>' +
+            '</tr>' +
+          '</tfoot>' +
+        '</table>' +
+      '</div>' +
+      '<div style="font-size:10px;color:var(--text-secondary);margin-top:8px;font-style:italic">Începând cu SL5 se decontează și asistența tehnică (Cap. 3.8): 12.500 lei/lună (dirigenție de șantier + proiectant), în afara C+M.</div>' +
+    '</div>' +
+
+    '<div class="nivel-card" style="margin-bottom:16px;border-left:4px solid #2C3E50">' +
+      '<div class="nivel-title" style="color:#2C3E50"><i class="ti ti-chart-bar"></i> Stadiu decontare — SL1 + ... + SL5 (cumulat)</div>' +
+      '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:10px;margin:12px 0">' +
+        '<div style="background:#EAF3DE;border-radius:8px;padding:12px;text-align:center;border-top:3px solid #1E6E2D">' +
+          '<div style="font-size:10px;color:#1E6E2D;font-weight:700;margin-bottom:4px">VALOARE CONTRACT</div>' +
+          '<div style="font-size:15px;font-weight:700;color:#1E6E2D">19.305.182</div>' +
+          '<div style="font-size:10px;color:var(--text-secondary)">lei fără TVA</div>' +
+        '</div>' +
+        '<div style="background:#F5EEF8;border-radius:8px;padding:12px;text-align:center;border-top:3px solid #6C3483">' +
+          '<div style="font-size:10px;color:#6C3483;font-weight:700;margin-bottom:4px">DECONTAT SL1..SL4</div>' +
+          '<div style="font-size:15px;font-weight:700;color:#6C3483">3.402.088</div>' +
+          '<div style="font-size:10px;color:var(--text-secondary)">lei · anterior</div>' +
+        '</div>' +
+        '<div style="background:#E0F4F6;border-radius:8px;padding:12px;text-align:center;border-top:3px solid #117A8B">' +
+          '<div style="font-size:10px;color:#117A8B;font-weight:700;margin-bottom:4px">DECONTAT SL5</div>' +
+          '<div style="font-size:15px;font-weight:700;color:#117A8B">263.928</div>' +
+          '<div style="font-size:10px;color:var(--text-secondary)">lei · Execuție + AT</div>' +
+        '</div>' +
+        '<div style="background:#D6EAF8;border-radius:8px;padding:12px;text-align:center;border-top:3px solid #1A5276">' +
+          '<div style="font-size:10px;color:#1A5276;font-weight:700;margin-bottom:4px">CUMULAT SL1..SL5</div>' +
+          '<div style="font-size:16px;font-weight:700;color:#1A5276">3.666.015</div>' +
+          '<div style="font-size:10px;color:var(--text-secondary)">lei fără TVA</div>' +
+        '</div>' +
+        '<div style="background:#FDEDEC;border-radius:8px;padding:12px;text-align:center;border-top:3px solid #C0392B">' +
+          '<div style="font-size:10px;color:#C0392B;font-weight:700;margin-bottom:4px">REST DE DECONTAT</div>' +
+          '<div style="font-size:15px;font-weight:700;color:#C0392B">15.639.167</div>' +
+          '<div style="font-size:10px;color:var(--text-secondary)">lei fără TVA</div>' +
+        '</div>' +
+        '<div style="background:#2C3E50;border-radius:8px;padding:12px;text-align:center;border-top:3px solid #566573">' +
+          '<div style="font-size:10px;color:#AAB7B8;font-weight:700;margin-bottom:4px">PROGRES GLOBAL</div>' +
+          '<div style="font-size:22px;font-weight:700;color:#fff">18,99%</div>' +
+          '<div style="font-size:10px;color:#AAB7B8">din valoare totală</div>' +
+        '</div>' +
+      '</div>' +
+      '<div style="margin-bottom:12px">' +
+        '<div style="display:flex;justify-content:space-between;font-size:10px;color:var(--text-secondary);margin-bottom:4px">' +
+          '<span>Progres decontare cumulat</span><span>18,99%</span>' +
+        '</div>' +
+        '<div style="background:var(--grey-200);border-radius:4px;height:10px;position:relative">' +
+          '<div style="background:#6C3483;border-radius:4px 0 0 4px;height:10px;width:3.25%;display:inline-block;vertical-align:top"></div>' +
+          '<div style="background:#8E44AD;height:10px;width:3.35%;display:inline-block;vertical-align:top"></div>' +
+          '<div style="background:#B9770E;height:10px;width:3.62%;display:inline-block;vertical-align:top"></div>' +
+          '<div style="background:#0E6E6E;height:10px;width:7.40%;display:inline-block;vertical-align:top"></div>' +
+          '<div style="background:#117A8B;border-radius:0 4px 4px 0;height:10px;width:1.37%;display:inline-block;vertical-align:top"></div>' +
+        '</div>' +
+        '<div style="display:flex;gap:12px;margin-top:4px;flex-wrap:wrap">' +
+          '<span style="font-size:10px;color:#6C3483">&#9632; SL1: 3,25%</span>' +
+          '<span style="font-size:10px;color:#8E44AD">&#9632; SL2: +3,35%</span>' +
+          '<span style="font-size:10px;color:#B9770E">&#9632; SL3: +3,62%</span>' +
+          '<span style="font-size:10px;color:#0E6E6E">&#9632; SL4: +7,40%</span>' +
+          '<span style="font-size:10px;color:#117A8B">&#9632; SL5: +1,37%</span>' +
+        '</div>' +
+      '</div>' +
+      '<div style="overflow-x:auto">' +
+        '<table style="width:100%;border-collapse:collapse;font-size:11px">' +
+          '<thead><tr style="background:#2C3E50;color:#fff">' +
+            '<th style="padding:7px 8px;text-align:left">SL</th>' +
+            '<th style="padding:7px 8px;text-align:left">Tip</th>' +
+            '<th style="padding:7px 8px;text-align:left">Capitol</th>' +
+            '<th style="padding:7px 8px;text-align:right">Fără TVA (lei)</th>' +
+            '<th style="padding:7px 8px;text-align:right">TVA (lei)</th>' +
+            '<th style="padding:7px 8px;text-align:right">Cu TVA (lei)</th>' +
+          '</tr></thead>' +
+          '<tbody>' +
+            '<tr style="background:#F5EEF8;border-bottom:1px solid #EEE"><td style="padding:7px 8px;font-weight:700;color:#6C3483">SL1</td><td style="padding:7px 8px">Proiectare</td><td style="padding:7px 8px;color:#555">Cap.3 — Proiectare &amp; AT</td><td style="padding:7px 8px;text-align:right;font-weight:600">627.850,00</td><td style="padding:7px 8px;text-align:right">131.848,50</td><td style="padding:7px 8px;text-align:right;font-weight:600">759.698,50</td></tr>' +
+            '<tr style="background:#EDE7F6;border-bottom:1px solid #EEE"><td style="padding:7px 8px;font-weight:700;color:#6C3483">SL2</td><td style="padding:7px 8px">Execuție</td><td style="padding:7px 8px;color:#555">Cap.1 Demolări + Cap.5 OS</td><td style="padding:7px 8px;text-align:right;font-weight:600">647.202,90</td><td style="padding:7px 8px;text-align:right">135.912,61</td><td style="padding:7px 8px;text-align:right;font-weight:600">783.115,51</td></tr>' +
+            '<tr style="background:#FDF3E6;border-bottom:1px solid #EEE"><td style="padding:7px 8px;font-weight:700;color:#B9770E">SL3</td><td style="padding:7px 8px">Execuție</td><td style="padding:7px 8px;color:#555">Cap.4.1 + Cap.5 OS</td><td style="padding:7px 8px;text-align:right;font-weight:600">699.504,28</td><td style="padding:7px 8px;text-align:right">146.895,90</td><td style="padding:7px 8px;text-align:right;font-weight:600">846.400,18</td></tr>' +
+            '<tr style="background:#E0F2F1;border-bottom:1px solid #EEE"><td style="padding:7px 8px;font-weight:700;color:#0E6E6E">SL4</td><td style="padding:7px 8px">Execuție</td><td style="padding:7px 8px;color:#555">Cap.4.1 Amenajare + Structură + Cap.5 OS</td><td style="padding:7px 8px;text-align:right;font-weight:600">1.427.530,55</td><td style="padding:7px 8px;text-align:right">299.781,42</td><td style="padding:7px 8px;text-align:right;font-weight:600">1.727.311,97</td></tr>' +
+            '<tr style="background:#E0F4F6;border-bottom:1px solid #EEE"><td style="padding:7px 8px;font-weight:700;color:#117A8B">SL5</td><td style="padding:7px 8px">Execuție + AT</td><td style="padding:7px 8px;color:#555">Cap.4.1 Structură + Rețele el. + Cap.5 OS + Cap.3.8 AT</td><td style="padding:7px 8px;text-align:right;font-weight:600">263.927,52</td><td style="padding:7px 8px;text-align:right">55.424,78</td><td style="padding:7px 8px;text-align:right;font-weight:600">319.352,30</td></tr>' +
+          '</tbody>' +
+          '<tfoot>' +
+            '<tr style="background:#2C3E50;color:#fff;font-weight:700"><td colspan="3" style="padding:8px">TOTAL DECONTAT CUMULAT</td><td style="padding:8px;text-align:right;font-size:13px">3.666.015,25</td><td style="padding:8px;text-align:right">769.863,20</td><td style="padding:8px;text-align:right;font-size:13px">4.435.878,45</td></tr>' +
+            '<tr style="background:#FDEDEC"><td colspan="3" style="padding:7px 8px;font-weight:600;color:#C0392B">Rest de decontat</td><td style="padding:7px 8px;text-align:right;font-weight:700;color:#C0392B">15.639.166,77</td><td style="padding:7px 8px;text-align:right;color:#C0392B">3.284.225,02</td><td style="padding:7px 8px;text-align:right;font-weight:700;color:#C0392B">18.923.391,79</td></tr>' +
+          '</tfoot>' +
+        '</table>' +
+      '</div>' +
+
+      '<div style="font-size:11px;font-weight:700;color:#2C3E50;margin:18px 0 8px;text-transform:uppercase;letter-spacing:0.05em">' +
+        '<i class="ti ti-file-percent"></i> Ajustare de preț (indexare) — sub-clauza 48.5' +
+        '<span style="font-size:9px;background:#FEF9E7;color:#7D6608;padding:1px 8px;border-radius:99px;font-weight:700;margin-left:8px;letter-spacing:0.03em">SL5 PROVIZORIU · UZ INTERN</span>' +
+      '</div>' +
+      '<div style="font-size:10px;color:var(--text-secondary);margin-bottom:10px">' +
+        'SL2 și SL3 DEFINITIVE (indici finali iunie 165,30, resp. iulie 166,80 — Buletin 08/2026). SL4 provizoriu (informare). SL5: indicele aferent (septembrie 2026) nu e încă publicat; valoarea de mai jos e o estimare de UZ INTERN pe ultimul indice publicat — august 2026 (167,80, provizoriu) — NU se transmite beneficiarului.' +
+      '</div>' +
+      '<div style="overflow-x:auto;margin-bottom:6px">' +
+        '<table style="width:100%;border-collapse:collapse;font-size:11px">' +
+          '<thead><tr style="background:#C0392B;color:#fff">' +
+            '<th style="padding:7px 8px;text-align:left">SL</th>' +
+            '<th style="padding:7px 8px;text-align:left">Statut</th>' +
+            '<th style="padding:7px 8px;text-align:right">Valoare bază (lei)</th>' +
+            '<th style="padding:7px 8px;text-align:right">Coef. An</th>' +
+            '<th style="padding:7px 8px;text-align:right">Ajustare fără TVA</th>' +
+            '<th style="padding:7px 8px;text-align:right">TVA 21%</th>' +
+            '<th style="padding:7px 8px;text-align:right">Ajustare cu TVA</th>' +
+          '</tr></thead>' +
+          '<tbody>' +
+            '<tr style="border-bottom:1px solid #EEE"><td style="padding:7px 8px;font-weight:700;color:#6C3483">SL1</td><td style="padding:7px 8px;color:#888">nu se ajustează</td><td style="padding:7px 8px;text-align:right">627.850,00</td><td style="padding:7px 8px;text-align:right;color:var(--text-secondary)">—</td><td style="padding:7px 8px;text-align:right">0,00</td><td style="padding:7px 8px;text-align:right">0,00</td><td style="padding:7px 8px;text-align:right">0,00</td></tr>' +
+            '<tr style="background:#E7F6E8;border-bottom:1px solid #EEE"><td style="padding:7px 8px;font-weight:700;color:#186A3B">SL2</td><td style="padding:7px 8px;font-weight:600;color:#186A3B">DEFINITIV (la plată)</td><td style="padding:7px 8px;text-align:right">638.203,00</td><td style="padding:7px 8px;text-align:right">1,150313</td><td style="padding:7px 8px;text-align:right;font-weight:600">95.930,30</td><td style="padding:7px 8px;text-align:right">20.145,36</td><td style="padding:7px 8px;text-align:right;font-weight:600">116.075,66</td></tr>' +
+            '<tr style="background:#E7F6E8;border-bottom:1px solid #EEE"><td style="padding:7px 8px;font-weight:700;color:#186A3B">SL3</td><td style="padding:7px 8px;font-weight:600;color:#186A3B">DEFINITIV (la plată)</td><td style="padding:7px 8px;text-align:right">699.504,28</td><td style="padding:7px 8px;text-align:right">1,160752</td><td style="padding:7px 8px;text-align:right;font-weight:600">112.446,41</td><td style="padding:7px 8px;text-align:right">23.613,75</td><td style="padding:7px 8px;text-align:right;font-weight:600">136.060,15</td></tr>' +
+            '<tr style="background:#FDF0E1;border-bottom:1px solid #EEE"><td style="padding:7px 8px;font-weight:700;color:#B9530E">SL4</td><td style="padding:7px 8px;color:#B9530E">provizoriu</td><td style="padding:7px 8px;text-align:right">1.427.530,55</td><td style="padding:7px 8px;text-align:right">1,160056</td><td style="padding:7px 8px;text-align:right;font-weight:600">228.484,36</td><td style="padding:7px 8px;text-align:right">47.981,72</td><td style="padding:7px 8px;text-align:right;font-weight:600">276.466,08</td></tr>' +
+            '<tr style="background:#FEF9E7;border-bottom:1px solid #EEE"><td style="padding:7px 8px;font-weight:700;color:#7D6608">SL5</td><td style="padding:7px 8px;color:#7D6608">provizoriu · uz intern (In aug. 167,80)</td><td style="padding:7px 8px;text-align:right">251.427,52</td><td style="padding:7px 8px;text-align:right">1,167711</td><td style="padding:7px 8px;text-align:right;font-weight:600;color:#7D6608">42.167,04</td><td style="padding:7px 8px;text-align:right;color:#7D6608">8.855,08</td><td style="padding:7px 8px;text-align:right;font-weight:600;color:#7D6608">51.022,11</td></tr>' +
+          '</tbody>' +
+          '<tfoot>' +
+            '<tr style="background:#2C3E50;color:#fff;font-weight:700"><td colspan="4" style="padding:8px">TOTAL AJUSTĂRI CUMULATE (SL2–SL4, transmisibile)</td><td style="padding:8px;text-align:right;font-size:13px">436.861,07</td><td style="padding:8px;text-align:right">91.740,83</td><td style="padding:8px;text-align:right;font-size:13px">528.601,89</td></tr>' +
+            '<tr style="background:#5B4A1A;color:#fff;font-weight:600"><td colspan="4" style="padding:7px 8px;font-size:10px">Cumulat INTERN incl. SL5 provizoriu (august)</td><td style="padding:7px 8px;text-align:right;font-size:12px">479.028,11</td><td style="padding:7px 8px;text-align:right;font-size:10px">100.595,91</td><td style="padding:7px 8px;text-align:right;font-size:12px">579.624,02</td></tr>' +
+          '</tfoot>' +
+        '</table>' +
+      '</div>' +
+      '<div style="font-size:10px;color:var(--text-secondary);font-style:italic">Ajustarea se transmite beneficiarului doar când indicele e final: SL2 (iunie) și SL3 (iulie) sunt DEFINITIVE și merg la plată; SL4 rămâne provizoriu (informare). SL5: ajustarea de 42.167,04 lei este o estimare de UZ INTERN pe indicele august 2026 (167,80, ultimul publicat), NU se transmite — se recalculează și se oficializează la publicarea indicelui aferent (septembrie 2026). Baza SL5 = execuția C+M 251.427,52 lei (asistența tehnică nu se indexează).</div>' +
     '</div>' +
     '<div class="page-footer">PM Hub · EREN CONS SRL · 2026</div>';
 }

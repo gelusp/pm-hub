@@ -1214,7 +1214,7 @@ function renderSintezaAcademia() {
 
 // ── Academia Navală: Plan contract — acțiuni prima săptămână după semnare ──
 // Linkul către fișierul Excel (Plan contract) se completează aici, între ghilimele:
-var PLAN_CONTRACT_ACADEMIA_URL = 'https://docs.google.com/spreadsheets/d/15p9up3FWM2aRp2JKy-PiNMMWr0olNYIXM1E-PGvnMic/edit?usp=sharing';
+var PLAN_CONTRACT_ACADEMIA_URL = 'https://docs.google.com/spreadsheets/d/1Eo4XHjdvPrxPmT9fLkFmgajhn7KhdRxNIKnsJLK41JY/edit?usp=sharing';
 
 var PLAN_CONTRACT_ACADEMIA = [
  {
@@ -1225,8 +1225,10 @@ var PLAN_CONTRACT_ACADEMIA = [
   "intern": "26.10.2026",
   "livrabil": "Contract semnat",
   "temei": "",
-  "obs": "",
-  "prio": "critic"
+  "obs": "Contract semnat la 26.10.2026, ora 10:00, la sediul UM 02192 Constanța.",
+  "prio": "critic",
+  "stare": "realizat",
+  "realizat": "26.10.2026"
  },
  {
   "nr": 2,
@@ -1269,8 +1271,10 @@ var PLAN_CONTRACT_ACADEMIA = [
   "intern": "26.10.2026",
   "livrabil": "Acord de asociere legalizat, contracte de subcontractare",
   "temei": "Adresa AC AP 8034/19.10.2026; CG cl. 7.1, 7.3; Propunere EREN pag. 369 până la 373",
-  "obs": "AC cere subcontractele cu activitățile și valorile lor, plus acordul de asociere în original, la semnare (26.10.2026, ora 10:00, sediul UM 02192). Subcontractele sunt valide doar în formă scrisă; prevederile lor în afara contractului nu sunt opozabile AC. Subcontractele declarate în ofertă se consideră aprobate de AC.",
-  "prio": "normal"
+  "obs": "AC cere subcontractele cu activitățile și valorile lor, plus acordul de asociere în original, la semnare (26.10.2026, ora 10:00, sediul UM 02192). Subcontractele sunt valide doar în formă scrisă; prevederile lor în afara contractului nu sunt opozabile AC. Subcontractele declarate în ofertă se consideră aprobate de AC. Acordurile de subcontractare și acordul de asociere au fost prezentate la semnare (26.10.2026).",
+  "prio": "normal",
+  "stare": "realizat",
+  "realizat": "26.10.2026"
  },
  {
   "nr": 6,
@@ -1378,6 +1382,17 @@ function _pcDate(s) {
   return p.length === 3 ? new Date(+p[2], +p[1] - 1, +p[0]) : null;
 }
 
+function _togglePcDet(i) {
+  var d = document.getElementById('pcdet-' + i);
+  if (!d) return;
+  var open = d.style.display === 'none';
+  d.style.display = open ? 'block' : 'none';
+  var ic = document.getElementById('pcico-' + i);
+  if (ic) ic.style.transform = open ? 'rotate(180deg)' : '';
+  var t = document.getElementById('pctxt-' + i);
+  if (t) t.textContent = open ? 'Ascunde' : 'Deschide';
+}
+
 function renderAcademiaPlanContract() {
   _activateAcademiaItem('item-academia-plancontract');
   var today = new Date(); today.setHours(0,0,0,0);
@@ -1394,10 +1409,12 @@ function renderAcademiaPlanContract() {
   var pre = items.filter(function(x){ return x._work < SIGN; }).length;
   var sapt1 = items.filter(function(x){ return x._work >= SIGN && x._work <= new Date(2026, 10, 2); }).length;
   var dupa = items.length - pre - sapt1;
-  var crit = items.filter(function(x){ return x.prio === 'critic'; }).length;
+  var crit = items.filter(function(x){ return x.prio === 'critic' && x.stare !== 'realizat'; }).length;
+  var done = items.filter(function(x){ return x.stare === 'realizat'; }).length;
 
-  function badge(d) {
+  function badge(d, isDone) {
     if (!d) return '';
+    if (isDone) return '<span style="font-size:10px;font-weight:700;background:#D5F5E3;color:#1E8449;padding:2px 8px;border-radius:99px;margin-left:8px">✓ realizat</span>';
     var n = Math.round((d - today) / DAY);
     var txt = n < 0 ? ('întârziat ' + (-n) + ' z') : n === 0 ? 'azi' : n === 1 ? 'mâine' : ('în ' + n + ' zile');
     var bg = n < 0 ? '#FADBD8' : n <= 1 ? '#FDEBD0' : '#EAF2F8';
@@ -1424,36 +1441,44 @@ function renderAcademiaPlanContract() {
     '<div class="kpi"><div class="kpi-label">Acțiuni în săptămâna 1</div><div class="kpi-val">' + items.length + '</div><div class="kpi-sub">de la semnare până la 09.11.2026</div></div>' +
     '<div class="kpi"><div class="kpi-label">26.10 – 02.11.2026</div><div class="kpi-val">' + sapt1 + '</div><div class="kpi-sub">de la semnare până la efectivitate</div></div>' +
     '<div class="kpi"><div class="kpi-label">Termen 05 – 09.11.2026</div><div class="kpi-val">' + dupa + '</div><div class="kpi-sub">se declanșează în săptămâna 1</div></div>' +
+    '<div class="kpi"><div class="kpi-label">Realizate</div><div class="kpi-val" style="color:#1E8449">' + done + ' / ' + items.length + '</div><div class="kpi-sub">bifate în planul Excel</div></div>' +
     '<div class="kpi"><div class="kpi-label">Critice</div><div class="kpi-val" style="color:#C0392B">' + crit + '</div><div class="kpi-sub">blochează semnarea sau proiectarea</div></div>' +
   '</div>';
 
   var last = '';
-  items.forEach(function(x) {
+  items.forEach(function(x, pi) {
     var key = x._work ? x._work.getTime() : 0;
     if (key !== last) {
       last = key;
       html += '<div style="font-size:12px;font-weight:700;color:#1A5276;margin:18px 0 8px;display:flex;align-items:center">' +
-        '<i class="ti ti-calendar-event" style="margin-right:6px"></i>' + (x._work ? fmtDay(x._work) : 'Fără dată') + badge(x._work) + '</div>';
+        '<i class="ti ti-calendar-event" style="margin-right:6px"></i>' + (x._work ? fmtDay(x._work) : 'Fără dată') + badge(x._work, x.stare === 'realizat') + '</div>';
     }
-    var isCrit = x.prio === 'critic';
-    var color = isCrit ? '#C0392B' : '#1A5276';
+    var isDone = x.stare === 'realizat';
+    var isCrit = x.prio === 'critic' && !isDone;
+    var color = isDone ? '#1E8449' : (isCrit ? '#C0392B' : '#1A5276');
     var termTxt = x._t ? x.term : (x.term || '—');
     var meta =
       '<span><i class="ti ti-hash"></i> Plan Excel, nr. <b>' + x.nr + '</b></span>' +
       '<span><i class="ti ti-user"></i> ' + x.resp + '</span>' +
       '<span><i class="ti ti-flag"></i> Termen contractual: <b>' + termTxt + '</b></span>' +
       (x._i ? '<span><i class="ti ti-target"></i> Țintă internă: <b>' + x.intern + '</b></span>' : '') +
-      (x.livrabil ? '<span><i class="ti ti-file-check"></i> ' + x.livrabil + '</span>' : '');
+      (x.livrabil ? '<span><i class="ti ti-file-check"></i> ' + x.livrabil + '</span>' : '') +
+      (isDone ? '<span style="color:#1E8449;font-weight:700"><i class="ti ti-circle-check"></i> Realizat: ' + x.realizat + '</span>' : '');
     html +=
-      '<div class="nivel-card" style="margin-bottom:8px;border-left:4px solid ' + color + ';padding:12px 16px">' +
+      '<div class="nivel-card" style="margin-bottom:8px;border-left:4px solid ' + color + ';padding:12px 16px' + (isDone ? ';background:#EAF8EF' : '') + '">' +
         '<div style="display:flex;gap:10px;align-items:flex-start;flex-wrap:wrap">' +
-          '<div style="min-width:26px;height:26px;border-radius:99px;background:' + color + ';color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">' + x.nr + '</div>' +
+          '<div style="min-width:26px;height:26px;border-radius:99px;background:' + color + ';color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">' + (isDone ? '<i class="ti ti-check" style="font-size:15px"></i>' : x.nr) + '</div>' +
           '<div style="flex:1;min-width:240px">' +
-            (isCrit ? '<span style="font-size:9.5px;font-weight:700;letter-spacing:.04em;background:#FADBD8;color:#C0392B;padding:2px 8px;border-radius:99px;margin-bottom:5px;display:inline-block">CRITIC</span>' : '') +
+            (isDone ? '<span style="font-size:9.5px;font-weight:700;letter-spacing:.04em;background:#D5F5E3;color:#1E8449;padding:2px 8px;border-radius:99px;margin-bottom:5px;display:inline-block">✓ REALIZAT</span>' : (isCrit ? '<span style="font-size:9.5px;font-weight:700;letter-spacing:.04em;background:#FADBD8;color:#C0392B;padding:2px 8px;border-radius:99px;margin-bottom:5px;display:inline-block">CRITIC</span>' : '')) +
             '<div style="font-size:12.5px;font-weight:600;color:var(--text);line-height:1.45;margin-bottom:6px">' + x.task + '</div>' +
-            '<div style="display:flex;gap:14px;flex-wrap:wrap;font-size:11px;color:var(--text-secondary)">' + meta + '</div>' +
-            (x.obs ? '<div style="font-size:11px;color:var(--text-tertiary);margin-top:6px;line-height:1.45"><i class="ti ti-info-circle"></i> ' + x.obs + '</div>' : '') +
+            '<div id="pcdet-' + pi + '" style="display:none;margin-top:2px">' +
+              '<div style="display:flex;gap:14px;flex-wrap:wrap;font-size:11px;color:var(--text-secondary)">' + meta + '</div>' +
+              (x.obs ? '<div style="font-size:11px;color:var(--text-tertiary);margin-top:6px;line-height:1.45"><i class="ti ti-info-circle"></i> ' + x.obs + '</div>' : '') +
+            '</div>' +
           '</div>' +
+          '<button type="button" onclick="_togglePcDet(' + pi + ')" id="pcbtn-' + pi + '" style="display:inline-flex;align-items:center;gap:5px;padding:6px 12px;border:1px solid ' + color + ';' +
+            'background:#fff;color:' + color + ';border-radius:6px;font-size:11px;font-weight:600;font-family:inherit;cursor:pointer;flex-shrink:0;align-self:center">' +
+            '<i class="ti ti-chevron-down" id="pcico-' + pi + '" style="font-size:13px;transition:transform .15s"></i><span id="pctxt-' + pi + '">Deschide</span></button>' +
         '</div>' +
       '</div>';
   });
@@ -8154,6 +8179,7 @@ function renderSL5(proj) {
         dbtn('ti-blueprint','4.1 Anexe FA (planșe)','#A04000','https://drive.google.com/file/d/1TeVGTX-XAlHtmLXPXgPacxPs0t_vWH74/view?usp=sharing') +
         dbtn('ti-chart-bar','5. Grafic fizic și valoric (F6)','#1F4E79','https://drive.google.com/file/d/11mdhz9S9SBFc7M4ZE3dJ9At_2cqNbyfO/view?usp=sharing') +
         dbtn('ti-chart-line','6. Realizat vs planificat + Curba S','#8E44AD','https://drive.google.com/file/d/1vSwlDuuC1hPNp3FJjxRi52bbnErXX82C/view?usp=sharing') +
+        dbtn('ti-file-percent','7. Ajustare prețuri SL5 — PROVIZORIU (uz intern)','#B9770E','https://drive.google.com/file/d/188tyaQigDokgqSoEAsgulkXwcuo_meeS/view?usp=sharing') +
       '</div>' +
 
       '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:16px">' +

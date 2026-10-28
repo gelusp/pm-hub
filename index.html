@@ -1245,11 +1245,11 @@ var PLAN_CONTRACT_ACADEMIA = [
   "nr": 3,
   "task": "Încheierea asigurărilor cerute prin contract și transmiterea către AC și Supervizor a copiilor certificatelor și polițelor, la Data de începere",
   "resp": "EREN CONS",
-  "term": "02.11.2026",
-  "intern": "29.10.2026",
+  "term": "05.11.2026",
+  "intern": "03.11.2026",
   "livrabil": "Polițe + dovada plății",
   "temei": "CG cl. 16.2; CS cap. 12",
-  "obs": "Asigurarea trebuie să existe de la Data de începere sau mai devreme. Data de începere se stabilește prin ordinul administrativ (CG cl. 33.1: până la 25.11.2026); 02.11 este ipoteză. Tipurile și sumele asigurate se preiau din contract.",
+  "obs": "Asigurarea trebuie să existe de la Data de începere sau mai devreme. Data de începere se stabilește prin ordinul administrativ (CG cl. 33.1: până la 25.11.2026); Data de începere: 05.11.2026, conform programării Supervizorului. Tipurile și sumele asigurate se preiau din contract.",
   "prio": "normal"
  },
  {
@@ -1257,7 +1257,7 @@ var PLAN_CONTRACT_ACADEMIA = [
   "task": "Pregătirea cererii de avans și a garanției de returnare a avansului (mecanismul se clarifică: 15% pe an într-o tranșă sau 5% + 10% pe tranșe legate de autorizația de construire; de verificat dacă avansul se acordă și pe etapa de proiectare)",
   "resp": "EREN CONS (financiar)",
   "term": "după Data de începere",
-  "intern": "09.11.2026",
+  "intern": "12.11.2026",
   "livrabil": "Cerere de avans + garanție de avans",
   "temei": "CG cl. 46; sinteza pct. 10.2",
   "obs": "Avansul nu se plătește înainte de Data de începere. Dacă Acordul nu stabilește tranșele, avansul de 15% se cere în prima situație de lucrări după Data de începere. Garanția de returnare: bancă sau asigurător, la prima cerere, valoare avans plus dobândă BNR. Impact direct în cash flow. Vezi foaia Clarificări, nr. 1",
@@ -1311,13 +1311,13 @@ var PLAN_CONTRACT_ACADEMIA = [
  },
  {
   "nr": 9,
-  "task": "Primirea ordinului administrativ de începere a activității de proiectare (AC îl emite în cel mult 30 de zile de la semnare; urmărim emiterea)",
-  "resp": "AC către EREN CONS / BEMEL",
+  "task": "Primirea ordinului administrativ de începere a activității de proiectare, emis de Supervizor joi 05.11.2026, ora 10:00 (termen contractual: max. 30 de zile de la semnare)",
+  "resp": "Supervizor (S.C. GHALLARD SYS S.R.L.) către EREN CONS / BEMEL",
   "term": "25.11.2026",
-  "intern": "02.11.2026",
+  "intern": "05.11.2026",
   "livrabil": "Ordin administrativ",
   "temei": "CG cl. 33.1; CS cap. 3",
-  "obs": "Data ordinului este Data de începere și pornește toate termenele de proiectare. Termenul 02.11 este ipoteza noastră; solicităm emiterea cât mai rapidă.",
+  "obs": "Programat: joi 05.11.2026, ora 10:00. Data ordinului este Data de începere și pornește toate termenele de proiectare. Termenul contractual rămâne 25.11.2026 (CG cl. 33.1).",
   "prio": "normal"
  },
  {
@@ -1368,11 +1368,22 @@ var PLAN_CONTRACT_ACADEMIA = [
   "nr": 14,
   "task": "Transmiterea listei verificatorilor de proiect atestați spre aprobarea AC",
   "resp": "BEMEL",
-  "term": "09.11.2026",
+  "term": "12.11.2026",
   "intern": "",
   "livrabil": "Adresă + atestate",
   "temei": "CS cap. 3.1",
   "obs": "Daraban, Boldișor, Diaconescu, Ivan, Popovici",
+  "prio": "normal"
+ },
+ {
+  "nr": "14a",
+  "task": "Vizită pe amplasament cu S.C. General Util pentru vizionare și ofertare demolare (joi 05.11.2026, ora 9:00)",
+  "resp": "EREN CONS + S.C. General Util",
+  "term": "05.11.2026",
+  "intern": "05.11.2026",
+  "livrabil": "Ofertă de demolare + notă/proces verbal de vizită",
+  "temei": "Organizare internă (ședința din 28.10.2026)",
+  "obs": "Vizita are loc cu o oră înainte de emiterea ordinului de începere (10:00). Accesul în unitatea militară necesită listele nominale de personal și vehicule (acțiunea 13, termen 09.11): confirmăm din timp la AC accesul pentru vizită. Amplasament în sit arheologic RAN 60428.",
   "prio": "normal"
  }
 ];
@@ -1404,7 +1415,7 @@ function renderAcademiaPlanContract() {
     var work = (t && i) ? (i < t ? i : t) : (i || t);
     return Object.assign({ _t: t, _i: i, _work: work }, x);
   });
-  items.sort(function(a, b) { return (a._work - b._work) || (a.nr - b.nr); });
+  items.sort(function(a, b) { return (a._work - b._work) || (parseFloat(a.nr)+(/[a-z]$/i.test(String(a.nr))?0.5:0)) - (parseFloat(b.nr)+(/[a-z]$/i.test(String(b.nr))?0.5:0)); });
   var SIGN = new Date(2026, 9, 26);
   var pre = items.filter(function(x){ return x._work < SIGN; }).length;
   var sapt1 = items.filter(function(x){ return x._work >= SIGN && x._work <= new Date(2026, 10, 2); }).length;
@@ -4295,6 +4306,8 @@ function renderPrevizi(proj) {
 // ═══════════════════════════════════════════════════════════════
 var CAL_EXTRA = [
   // { d:'2026-10-28', t:'Ședință de producție octombrie', k:'ședință' },
+  { d:'2026-11-05', t:'Ordin de începere proiectare — emis de Supervizor SC GALLARD SYS SRL (ora 10:00)', k:'fază' },
+  { d:'2026-11-05', t:'Vizită șantier cu SC General Util Cons — vizionare și ofertare demolare (ora 9:00)', k:'altele' },
 ];
 var _calYM = null;   // {y, m} luna afișată (m = 0..11)
 var CAL_MONTHS = ['ianuarie','februarie','martie','aprilie','mai','iunie','iulie','august','septembrie','octombrie','noiembrie','decembrie'];

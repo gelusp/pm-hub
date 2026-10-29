@@ -2212,6 +2212,16 @@ var DOCS_BENEF = [
     desc:'Transmisă de EREN CONS către UM 02311: calculul de actualizare a prețurilor aferent SL2 (execuție iulie 2026), devenit definitiv după publicarea indicelui final INS (iunie 2026 = 165,30, Buletin statistic nr. 07/2026). Ajustare: 95.930,30 lei fără TVA (TVA 20.145,36; total 116.075,66 lei). Se solicită act adițional la contractul 997/01.08.2025 pentru decontarea sumei. Anexe: calcul actualizare SL2 + extras buletin INS (3 pagini).',
     color:'#1A5276', bg:'#EAF2F8', icon:'ti-file-export',
     url:'https://drive.google.com/file/d/1YEn0IGlMAarQTS_2YdA0794jGsXU-G-m/view?usp=sharing' },
+  { k:202610292, d:'29.10.2026', cat:'CONVOCARE', nr:'AE-1398', serie:'AE',
+    titlu:'Convocare ședință de negociere — cantități lucrări suplimentare și documentația economică (03.11.2026, ora 10:00, DDI București)',
+    desc:'E-mail UM 02311 către EREN CONS, ca urmare a adresei 13821/09.10.2026. Solicită prezența reprezentanților EREN la sediul Direcției de Domenii și Infrastructuri București în data de 03.11.2026, ora 10:00, pentru participarea la ședința de negociere a cantităților lucrărilor suplimentare și a documentației economice aferente. Semnat: Șeful UM 02311 Constanța.',
+    color:'#B7791F', bg:'#FDF2E0', icon:'ti-calendar-event',
+    url:'https://drive.google.com/file/d/1JgPwjPmO9syuhb6Y12P8p2FX9_AYkQYm/view?usp=sharing' },
+  { k:202610291, d:'29.10.2026', cat:'DECIZIE', nr:'AE-1397', serie:'AE',
+    titlu:'Decizie înlocuire Șef de șantier — acordul Autorității Contractante (Peltea Gabriel → Pepine Adrian)',
+    desc:'E-mail UM 02311 către EREN CONS, ca urmare a adresei 13868/26.10.2026 (înregistrată AE-1385/27.10.2026). Autoritatea a verificat respectarea subclauzelor 14.3 și 14.4 (Personal) și a constatat criteriile îndeplinite: diplomă studii superioare (inginer constructor), experiență similară (scrisoare de recomandare — Construire Hotel-Aparthotel și împrejmuire), contract de muncă/declarație de disponibilitate, decizia de numire. Comunică ACORDUL privind înlocuirea șefului de șantier, dl. Peltea Gabriel, cu dl. Pepine Adrian. Semnat: Șeful UM 02311 Constanța.',
+    color:'#3B6D11', bg:'#EAF4E2', icon:'ti-circle-check',
+    url:'https://drive.google.com/file/d/1TPv8ZyGvOqOPfn68SA7_hbMHV7_OBiy6/view?usp=sharing' },
   { k:202610261, d:'26.10.2026', cat:'ADRESĂ EREN', nr:'13868', serie:'EREN',
     titlu:'Notificare — modificare expert cheie: Șef de șantier (Peltea Gabriel → Pepine Adrian)',
     desc:'Transmisă de EREN CONS către UM 02311. Se solicită aprobarea înlocuirii expertului cheie Șef de șantier desemnat în ofertă, dl. Peltea Gabriel (indisponibil în perioada următoare), cu dl. Pepine Adrian, pentru aceeași funcție. Se invocă îndeplinirea cerințelor de calificare: studii superioare (inginer construcții, Univ. Transilvania Brașov), experiență similară (minim 1 proiect — decizie de numire, proces-verbal la terminarea lucrărilor, recomandare), disponibilitate (declarație). Aprobare solicitată până la 02.11.2026. Anexa 1: diplomă, CV (22 ani experiență), documente doveditoare. Semnat: Lința Lucian, administrator.',
@@ -2353,28 +2363,50 @@ var DOCS_BENEF = [
     color:'#1A5276', bg:'#D6EAF8', icon:'ti-file-certificate', mod:'doccontract' }
 ];
 
-var _docbCat = '';
-function docbNorm(t) { return (t || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ''); }
+var _docbCat = '', _docbDir = '', _docbTema = '', _docbLuna = '';
+var DOCB_TEME = [
+  {n:'Liste suplimentare / NCS', kw:['ncs','renuntare','liste','suplimentar','13821','13861']},
+  {n:'Negociere', kw:['negociere']},
+  {n:'Revendicări / notificări', kw:['revendic','notificare','69a','clauza 37']},
+  {n:'Penalități', kw:['penalit']},
+  {n:'Personal cheie', kw:['expert cheie','sef de santier','personal cheie','pepine']},
+  {n:'Ajustare / indexare preț', kw:['ajustare','indexare','48.5','actualizare pret']},
+  {n:'Situații de lucrări', kw:['situatii de lucrari','situatie de lucrari',' sl1',' sl2',' sl3',' sl4',' sl5']},
+  {n:'Constatări / dispoziții', kw:['act de constatare','constatare','dispozitie de santier']},
+  {n:'Proiectare / PT', kw:['proiectant','pth','dde','triptic','predare pt']},
+  {n:'Asigurare / contract', kw:['asigurare','polita','salubritate','act aditional']}
+];
+function docbNorm(t) { return (t || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, ''); }
+function docbTemaOf(txt) { var r = []; DOCB_TEME.forEach(function(t, i) { if (t.kw.some(function(k){ return txt.indexOf(k) > -1; })) r.push(i); }); return r.join(','); }
 function docbFilter() {
   var qEl = document.getElementById('docb-q');
   var words = docbNorm(qEl ? qEl.value.trim() : '').split(/\s+/).filter(Boolean);
   var shown = 0;
   document.querySelectorAll('.docb-card').forEach(function(c) {
     if (c._t === undefined) c._t = docbNorm(c.textContent + ' ' + c.getAttribute('data-d') + ' ' + c.getAttribute('data-cat'));
-    var ok = (!_docbCat || c.getAttribute('data-cat') === _docbCat) && words.every(function(w) { return c._t.indexOf(w) > -1; });
+    var tm = (c.getAttribute('data-tm') || '').split(',');
+    var ok = (!_docbCat || c.getAttribute('data-cat') === _docbCat) &&
+      (!_docbDir || c.getAttribute('data-dir') === _docbDir) &&
+      (!_docbLuna || c.getAttribute('data-luna') === _docbLuna) &&
+      (_docbTema === '' || tm.indexOf(String(_docbTema)) > -1) &&
+      words.every(function(w) { return c._t.indexOf(w) > -1; });
     c.style.display = ok ? '' : 'none';
     if (ok) shown++;
   });
   var cnt = document.getElementById('docb-count'); if (cnt) cnt.textContent = shown;
   var em = document.getElementById('docb-empty'); if (em) em.style.display = shown ? 'none' : 'block';
-  document.querySelectorAll('.docb-chip[data-c]').forEach(function(b) {
-    b.classList.toggle('on', b.getAttribute('data-c') === _docbCat);
-  });
+  document.querySelectorAll('.docb-chip[data-c]').forEach(function(b) { b.classList.toggle('on', b.getAttribute('data-c') === _docbCat); });
+  document.querySelectorAll('.docb-chip[data-dir]').forEach(function(b) { b.classList.toggle('on', b.getAttribute('data-dir') === _docbDir); });
+  document.querySelectorAll('.docb-chip[data-tm]').forEach(function(b) { b.classList.toggle('on', b.getAttribute('data-tm') === String(_docbTema)); });
+  document.querySelectorAll('.docb-chip[data-luna]').forEach(function(b) { b.classList.toggle('on', b.getAttribute('data-luna') === _docbLuna); });
 }
 function docbSetCat(c) { _docbCat = c; docbFilter(); }
+function docbSetDir(c) { _docbDir = (_docbDir === c ? '' : c); docbFilter(); }
+function docbSetTema(c) { _docbTema = (String(_docbTema) === String(c) ? '' : c); docbFilter(); }
+function docbSetLuna(c) { _docbLuna = (_docbLuna === c ? '' : c); docbFilter(); }
 function docbReset() {
   var qEl = document.getElementById('docb-q'); if (qEl) qEl.value = '';
-  _docbCat = ''; docbFilter();
+  _docbCat = ''; _docbDir = ''; _docbTema = ''; _docbLuna = ''; docbFilter();
 }
 
 function renderDocBenef(proj) {
@@ -2391,7 +2423,7 @@ function renderDocBenef(proj) {
     var actIcon = x.mod ? 'ti-arrow-right' : 'ti-file-type-pdf';
     var actLabel = x.mod ? 'Deschide' : 'Vizualizează';
     cards +=
-      '<div class="nivel-card docb-card" data-cat="' + x.cat + '" data-d="' + x.d + '" style="margin-bottom:10px;border-left:4px solid ' + x.color + ';' +
+      '<div class="nivel-card docb-card" data-cat="' + x.cat + '" data-d="' + x.d + '" data-dir="' + (x.serie === 'EREN' || /^Rev/.test(x.nr) ? 'trimis' : 'primit') + '" data-luna="' + x.d.slice(3) + '" data-tm="' + docbTemaOf(docbNorm(x.titlu + ' ' + (x.desc || '') + ' ' + x.nr)) + '" style="margin-bottom:10px;border-left:4px solid ' + x.color + ';' +
         'display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap;padding:14px 16px">' +
 
         // Data (bloc stânga)
@@ -2413,6 +2445,7 @@ function renderDocBenef(proj) {
               'padding:2px 8px;border-radius:99px">' + x.cat + '</span>' +
             '<span style="font-size:9.5px;font-weight:600;background:var(--grey-100,#f1f3f5);color:var(--text-secondary);' +
               'padding:2px 8px;border-radius:99px"><i class="ti ti-hash" style="font-size:10px"></i> ' + x.nr + '</span>' +
+            ((function(){ var p = x.d.split('.'); return (Date.now() - new Date(+p[2], +p[1]-1, +p[0]).getTime()) <= 7*86400000; })() ? '<span style="font-size:9px;font-weight:800;background:#CC1515;color:#fff;padding:2px 7px;border-radius:99px">NOU</span>' : '') +
           '</div>' +
           '<div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:3px">' + x.titlu + '</div>' +
           (x.desc
@@ -2440,17 +2473,31 @@ function renderDocBenef(proj) {
   catList.forEach(function(c){
     chips += '<button class="docb-chip" data-c="' + c + '" onclick="docbSetCat(\'' + c + '\')">' + c + ' (' + catCount[c] + ')</button>';
   });
+  var dirCnt = {primit:0, trimis:0}, temeCnt = {}, lunaCnt = {}, lunaOrd = [];
+  docs.forEach(function(x){
+    dirCnt[(x.serie === 'EREN' || /^Rev/.test(x.nr)) ? 'trimis' : 'primit']++;
+    docbTemaOf(docbNorm(x.titlu + ' ' + (x.desc || '') + ' ' + x.nr)).split(',').forEach(function(t){ if (t !== '') temeCnt[t] = (temeCnt[t] || 0) + 1; });
+    var l = x.d.slice(3); if (!lunaCnt[l]) { lunaCnt[l] = 0; lunaOrd.push(l); } lunaCnt[l]++;
+  });
+  var temeChips = '', lunaChips = '';
+  DOCB_TEME.forEach(function(t, i){ if (temeCnt[i]) temeChips += '<button class="docb-chip" data-tm="' + i + '" onclick="docbSetTema(' + i + ')">' + t.n + ' (' + temeCnt[i] + ')</button>'; });
+  lunaOrd.forEach(function(l){ lunaChips += '<button class="docb-chip" data-luna="' + l + '" onclick="docbSetLuna(\'' + l + '\')">' + l + ' (' + lunaCnt[l] + ')</button>'; });
   var filterBar =
     '<style>.docb-chip{font-size:10.5px;font-weight:600;padding:4px 11px;border-radius:99px;border:1px solid var(--border);background:#fff;color:var(--text-secondary);cursor:pointer;font-family:inherit}' +
     '.docb-chip.on{background:#1A5276;color:#fff;border-color:#1A5276}</style>' +
     '<div style="background:#FDFEFE;border:1px solid var(--border);border-radius:8px;padding:10px 12px;margin-bottom:14px">' +
       '<div style="display:flex;gap:8px;align-items:center;margin-bottom:8px">' +
         '<i class="ti ti-search" style="color:var(--text-tertiary)"></i>' +
-        '<input id="docb-q" type="search" placeholder="Caută: număr, dată (ex. 14.10), cuvânt din titlu sau descriere…" oninput="docbFilter()" ' +
+        '<input id="docb-q" type="search" placeholder="Caută: număr (ex. 13821), dată (ex. 14.10), cuvinte din titlu sau descriere — mai multe cuvinte: toate trebuie să apară" oninput="docbFilter()" ' +
           'style="flex:1;padding:7px 10px;border:1px solid var(--border);border-radius:6px;font-size:12px;font-family:inherit;outline:none">' +
         '<button class="docb-chip" onclick="docbReset()" title="Șterge filtrele"><i class="ti ti-x"></i> Resetează</button>' +
       '</div>' +
       '<div style="display:flex;gap:6px;flex-wrap:wrap">' + chips + '</div>' +
+      '<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;align-items:center"><span style="font-size:10px;font-weight:700;color:var(--text-tertiary);width:54px">DIRECȚIE</span>' +
+        '<button class="docb-chip" data-dir="primit" onclick="docbSetDir(\'primit\')">Primite de la Beneficiar / terți (' + dirCnt.primit + ')</button>' +
+        '<button class="docb-chip" data-dir="trimis" onclick="docbSetDir(\'trimis\')">Trimise de EREN (' + dirCnt.trimis + ')</button></div>' +
+      '<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px;align-items:center"><span style="font-size:10px;font-weight:700;color:var(--text-tertiary);width:54px">TEMĂ</span>' + temeChips + '</div>' +
+      '<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px;align-items:center"><span style="font-size:10px;font-weight:700;color:var(--text-tertiary);width:54px">LUNA</span>' + lunaChips + '</div>' +
     '</div>';
 
   document.getElementById('main').innerHTML =
@@ -3065,6 +3112,40 @@ function _badgeTimp(dateStr, bg){
   var txt = n > 1 ? ('încă ' + n + ' zile') : (n === 1 ? 'ultima zi' : (n === 0 ? 'expiră azi' : 'expirat'));
   return '<span style="background:' + (bg || '#1A5276') + ';color:#fff;border-radius:99px;padding:2px 8px;font-size:10px;font-weight:600;white-space:nowrap;margin-left:6px"><i class="ti ti-clock-hour-4" style="font-size:10px;margin-right:3px"></i>' + txt + '</span>';
 }
+var _cgIdx = null;
+function cautaIndex() {
+  if (_cgIdx) return _cgIdx;
+  var r = [];
+  function add(sec, modul, titlu, meta, txt, url) { r.push({sec:sec, modul:modul, titlu:titlu, meta:meta, txt:txt, n:docbNorm(txt), url:url}); }
+  try { DOCS_BENEF.forEach(function(x){ add('Documente contract','docbenef', x.titlu, x.d + ' · ' + x.cat + ' · ' + x.nr, [x.titlu,x.desc,x.nr,x.cat,x.d].join(' '), x.url); }); } catch(e){}
+  try { REGPD.forEach(function(x){ add('Probleme în execuție','regpd', x.cod + ' — ' + (x.detaliu || '') + ': ' + String(x.problema || '').slice(0,110), (x.status || '') + ' · ' + (x.categorie || ''), [x.cod,x.categorie,x.detaliu,x.problema,x.explicatii].join(' ')); }); } catch(e){}
+  try { TERM_DOSARE.forEach(function(x){ add('Termene / revendicări','termene', x.id + ' — ' + x.titlu, x.doc || '', [x.id,x.titlu,x.doc,x.detalii].join(' ')); }); } catch(e){}
+  try { TERM_FIX.forEach(function(x){ add('Termene / revendicări','termene', x.id + ' — ' + x.titlu, x.fix || x.start || '', [x.id,x.titlu,x.nota,x.consec].join(' ')); }); } catch(e){}
+  try { EVENIMENTE.forEach(function(x){ add('Evenimente','evenimente', x.id + ' — ' + x.titlu, x.data + ' · ' + (x.doc || ''), [x.id,x.titlu,x.doc,x.nota,x.data].join(' ')); }); } catch(e){}
+  _cgIdx = r; return r;
+}
+function cautaGlobal() {
+  var el = document.getElementById('cg-q'), out = document.getElementById('cg-res'); if (!el || !out) return;
+  var words = docbNorm(el.value.trim()).split(/\s+/).filter(Boolean);
+  if (!words.length || el.value.trim().length < 2) { out.innerHTML = ''; return; }
+  var idx = cautaIndex(), hit = idx.filter(function(x){ return words.every(function(w){ return x.n.indexOf(w) > -1; }); });
+  if (!hit.length) { out.innerHTML = '<div style="font-size:12px;color:var(--text-tertiary);padding:8px 2px">Niciun rezultat pentru „' + el.value.replace(/</g,'&lt;') + '".</div>'; return; }
+  var secs = {}, ord = []; hit.forEach(function(x){ if (!secs[x.sec]) { secs[x.sec] = []; ord.push(x.sec); } secs[x.sec].push(x); });
+  var h = '<div style="font-size:11px;color:var(--text-tertiary);margin:6px 2px">' + hit.length + ' rezultate</div>';
+  ord.forEach(function(sec){
+    var arr = secs[sec]; h += '<div style="font-size:10.5px;font-weight:800;letter-spacing:.04em;color:#1A5276;margin:8px 2px 3px">' + sec.toUpperCase() + ' (' + arr.length + ')</div>';
+    arr.slice(0,6).forEach(function(x){
+      h += '<div onclick="cautaDeschide(\'' + x.modul + '\')" data-q="' + el.value.replace(/"/g,'') + '" style="cursor:pointer;padding:7px 10px;border:1px solid var(--border);border-left:3px solid #1A5276;border-radius:6px;background:#fff;margin-bottom:4px"><div style="font-size:12px;font-weight:600;color:var(--text)">' + String(x.titlu).replace(/</g,'&lt;') + '</div><div style="font-size:10.5px;color:var(--text-tertiary)">' + String(x.meta).replace(/</g,'&lt;') + '</div></div>';
+    });
+    if (arr.length > 6) h += '<div onclick="cautaDeschide(\'' + arr[0].modul + '\')" style="font-size:11px;color:#1A5276;cursor:pointer;margin:0 2px 4px">+ încă ' + (arr.length - 6) + ' în ' + sec + ' →</div>';
+  });
+  out.innerHTML = h;
+}
+function cautaDeschide(modul) {
+  var q = (document.getElementById('cg-q') || {}).value || '';
+  goModule('hangar', modul);
+  if (modul === 'docbenef') setTimeout(function(){ var e = document.getElementById('docb-q'); if (e) { e.value = q; docbFilter(); } }, 30);
+}
 function renderHome() {
   document.getElementById('main').innerHTML =
     '<div class="home-hero">' +
@@ -3073,6 +3154,8 @@ function renderHome() {
       '<div class="home-sep"></div>' +
       '<div class="home-pmhub-label"><i class="ti ti-layout-dashboard" style="font-size:13px;color:#CC1515"></i> PM Hub <span style="font-weight:400;color:var(--text-tertiary)">· EREN CONS SRL · Gelu Spătaru</span></div>' +
     '</div>' +
+
+    '<div style="margin:0 0 14px"><div style="display:flex;gap:8px;align-items:center;background:#fff;border:1px solid var(--border);border-radius:10px;padding:8px 12px"><i class="ti ti-search" style="color:var(--text-tertiary)"></i><input id="cg-q" type="search" placeholder="Caută în tot Hub-ul: documente, probleme, termene, evenimente (ex. negociere, 13821, penalități)" oninput="cautaGlobal()" style="flex:1;border:none;outline:none;font-size:13px;font-family:inherit;background:transparent"></div><div id="cg-res"></div></div>' +
 
     '<div class="proj-card" style="cursor:pointer" onclick="openSub(\'hangar\')">' +
       '<div class="proj-card-header" style="background:#C0392B;border-left:3px solid #E74C3C">' +
@@ -4547,6 +4630,9 @@ var TERM_FIX = [
   { id:'F5', titlu:'Termen final execuție contract (nemodificat)',
     clauza:'35', resp:'EREN', fix:'2027-04-16',
     consec:'Penalități 36.4 dacă depășit fără prelungire. Revendicarea nr. 3 cere 13.05.2027.', nota:'Valabil până la acordarea prelungirii.' },
+  { id:'F6', titlu:'Ședință de negociere — cantități lucrări suplimentare și documentația economică (ora 10:00, DDI București)',
+    clauza:'—', resp:'EREN', fix:'2026-11-03',
+    consec:'Prezența reprezentanților EREN este solicitată de Beneficiar; pregătire: panou de negociere, probe pe teme, plafon 15%.', nota:'Convocare AE-1398/29.10.2026, ca urmare a adresei 13821/09.10.2026.' },
   // ── Grup sprinklere (dashboard: Analiză Instalații → Cap.6/8 — Grup Sprinklere). Termene interne/furnizor, nu contractuale. ──
   { id:'SPR1', titlu:'Grup sprinklere — răspuns Triptic: acord NFPA 20/FM, motor 250 kW, fișa 2 corectată, domeniu de livrare',
     clauza:'Sprinklere', resp:'Triptic', fix:'2026-10-22',

@@ -458,12 +458,27 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
           <i class="ti ti-hammer"></i> Raportări Producție
         </div>
         <div class="submenu-item" id="item-academia-minute" onclick="toggleSubSub('academia-minute')">
-          <i class="ti ti-checklist" style="color:#2E9E57"></i> Minute interne
+          <i class="ti ti-notebook" style="color:#2E9E57"></i> Minute
           <i class="ti ti-chevron-down chevron" id="chev-academia-minute" style="font-size:11px"></i>
         </div>
         <div class="submenu" id="sub-academia-minute" style="margin-left:14px;border-left:2px solid var(--grey-200)">
-          <div class="submenu-item" id="item-academia-minute-20261028" onclick="window.open('https://claude.ai/artifact/HrwEPevphLBMUbQ2bLp8JZ#2026-10-28','_blank')">
-            <i class="ti ti-calendar-event" style="color:#2E9E57"></i> 28.10.2026 — Acțiuni (live)
+          <div class="submenu-item" id="item-academia-minute-interne" onclick="toggleSubSub('academia-minute-interne')">
+            <i class="ti ti-users" style="color:#2E9E57"></i> Minute Interne
+            <i class="ti ti-chevron-down chevron" id="chev-academia-minute-interne" style="font-size:11px"></i>
+          </div>
+          <div class="submenu" id="sub-academia-minute-interne" style="margin-left:14px;border-left:2px solid var(--grey-200)">
+            <div class="submenu-item" id="item-academia-minute-interne-20261028" onclick="window.open('https://claude.ai/artifact/HrwEPevphLBMUbQ2bLp8JZ#2026-10-28','_blank')">
+              <i class="ti ti-calendar-event" style="color:#2E9E57"></i> 28.10.2026 — Acțiuni (live)
+            </div>
+          </div>
+          <div class="submenu-item" id="item-academia-minute-beneficiar" onclick="toggleSubSub('academia-minute-beneficiar')">
+            <i class="ti ti-building-community" style="color:#6C3483"></i> Minute Beneficiar
+            <i class="ti ti-chevron-down chevron" id="chev-academia-minute-beneficiar" style="font-size:11px"></i>
+          </div>
+          <div class="submenu" id="sub-academia-minute-beneficiar" style="margin-left:14px;border-left:2px solid var(--grey-200)">
+            <div class="submenu-item" id="item-academia-minute-beneficiar-empty" style="opacity:.6;cursor:default">
+              <i class="ti ti-calendar-off" style="color:#6C3483"></i> Nicio minută încă
+            </div>
           </div>
         </div>
       </div>

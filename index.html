@@ -463,13 +463,13 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
         <div class="proj-icon" style="background:rgba(183,121,31,0.15);color:#B7791F"><i class="ti ti-map-pin"></i></div>
         <div class="proj-info">
           <div class="proj-name">Deva</div>
-          <div class="proj-sublabel">Suport coleg · raport lunar COO</div>
+          <div class="proj-sublabel">Suport · raport lunar COO</div>
         </div>
         <i class="ti ti-chevron-down chevron" id="chev-deva"></i>
       </div>
       <div class="submenu" id="sub-deva">
         <div class="submenu-item" id="item-deva-raportcoo" onclick="goModule('deva','raportcoo')">
-          <i class="ti ti-checklist" style="color:#B7791F"></i> Raport lunar COO
+          <i class="ti ti-checklist" style="color:#B7791F"></i> Ședința Producție – Noiembrie 2026
         </div>
       </div>
 
@@ -850,7 +850,7 @@ var DATA = {
     ]
   },
   deva: {
-    title:"Deva", meta:"Suport pentru coleg · completare raport lunar COO (format v4)", demo:false,
+    title:"Deva", meta:"Suport · completare raport lunar COO (format v4)", demo:false,
     decizie:"conditionat", decizie_text:"ÎN CONFIGURARE — se strâng documentele pentru primul raport.", decizie_icon:"ti-alert-triangle",
     kpis:[], n1:[], bars:[], n2:[]
   },
@@ -4370,6 +4370,7 @@ var DEVA_LISTA = [
     ['Deciziile luate recent și acțiunile în curs','fiecare cu un singur responsabil, termen și indicator'],
     ['Minuta ultimei ședințe de producție, dacă există','']]}
 ];
+var DEVA_FISIER_URL = 'https://docs.google.com/spreadsheets/d/1cLrAGBTPJ8LsjEhxy0cIKl2zTKmLOTpji2ABM_t1FDw/edit?usp=sharing';   // link Drive către fișierul COO gol (Raport_Lunar_COO_Deva_Noiembrie_2026_GOL.xlsx) — de completat
 var DEVA_START = [[0,0],[0,1],[1,0],[1,1],[2,0],[3,0]];   // primele 6 documente (secțiune, index)
 var DEVA_MINIM = [[0,0],[1,0],[2,0],[3,0]];   // contract, grafic, situații de lucrări, export ERP (secțiune, index)
 var _devaSt = null;
@@ -4404,8 +4405,9 @@ function renderRaportCoo(proj) {
   DEVA_LISTA.forEach(function(s, si) { s.i.forEach(function(x, ii) { tot++; if (st.chk[si + '_' + ii]) got++; }); });
   var minOk = DEVA_MINIM.every(function(p){ return st.chk[p[0] + '_' + p[1]]; });
   var pct = tot ? Math.round(got / tot * 100) : 0;
-  var h = '<div class="proj-header"><div class="proj-title">Deva — Raport lunar COO</div><div class="proj-meta">Documente necesare pentru primul raport (format v4) · bifează ce s-a primit</div></div>';
-  h += '<div class="module-badge" style="background:#FDF2E0;color:#B7791F"><i class="ti ti-map-pin" style="font-size:13px"></i> Proiect Deva · suport coleg · primul raport, fără raport anterior</div>';
+  var h = '<div class="proj-header"><div class="proj-title">Deva — Ședința Producție · Noiembrie 2026</div><div class="proj-meta">Raport lunar COO (format v4) · documente necesare pentru primul raport · bifează ce s-a primit</div></div>';
+  h += (DEVA_FISIER_URL ? '<a href="' + DEVA_FISIER_URL + '" target="_blank" style="display:inline-flex;align-items:center;gap:8px;padding:9px 16px;background:#1F6B3A;color:#fff;border-radius:8px;font-size:12.5px;font-weight:700;text-decoration:none;margin:2px 0 8px"><i class="ti ti-file-spreadsheet"></i> Deschide fișierul COO — Deva, Noiembrie 2026</a>' : '<div style="display:inline-flex;align-items:center;gap:8px;padding:9px 16px;background:#F1F3F5;color:#7F8C8D;border:1px dashed #C5CBD3;border-radius:8px;font-size:12.5px;font-weight:600;margin:2px 0 8px"><i class="ti ti-file-spreadsheet"></i> Fișierul COO gol — link de adăugat</div>');
+  h += '<div class="module-badge" style="background:#FDF2E0;color:#B7791F"><i class="ti ti-map-pin" style="font-size:13px"></i> Proiect Deva · suport · primul raport, fără raport anterior</div>';
   h += '<div style="display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin:10px 0 14px"><div style="flex:1;min-width:220px"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px"><b>' + got + ' / ' + tot + ' documente primite</b><span>' + pct + '%</span></div><div style="background:#E8ECF1;border-radius:99px;height:10px"><div style="width:' + pct + '%;background:#3B6D11;height:10px;border-radius:99px"></div></div></div>' +
     '<div style="font-size:12px;padding:6px 12px;border-radius:8px;background:' + (minOk ? '#EAF4E2' : '#FDF2E0') + ';color:' + (minOk ? '#3B6D11' : '#B7791F') + ';font-weight:700">' + (minOk ? 'Minimul pentru start e complet' : 'Minim pentru start: contract, grafic, situații de lucrări, export ERP') + '</div>' +
     '<button onclick="devaCopiaza(\'lipsa\')" style="padding:7px 12px;border:1px solid #1A5276;background:#fff;color:#1A5276;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit"><i class="ti ti-brand-whatsapp"></i> Copiază ce lipsește</button>' +

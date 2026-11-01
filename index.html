@@ -4731,19 +4731,19 @@ var TERM_DOSARE = [
     eveniment:'2026-09-07', notificare:null, detalii:'2026-10-14', admitere:null, decizie:null, dezacord:null,
     doc:'Adresa 13835/14.10.2026',
     nota:'Data notificării 69a.1 NU e completată — de găsit (Act constatare A-1159/17.09.2026 și alte adrese). Eveniment continuu până la DS04/29.09.2026: detalii finale în 30 zile de la încheiere (până la 29.10.2026).',
-    detaliiFinaleLa:'2026-09-29' },
+    detaliiFinaleLa:'2026-09-29', detaliiFinaleDepuse:true },
   { id:'RB3', parte:'Beneficiar', titlu:'Revendicarea Beneficiarului nr. 3 — înlocuire personal-cheie (20.000 lei)',
-    eveniment:null, notificare:'2026-09-03', detalii:'2026-09-11', admitere:null, decizie:null, dezacord:null,
+    eveniment:null, notificare:'2026-09-03', detalii:'2026-09-11', admitere:null, decizie:null, dezacord:null, inchis:true,
     doc:'A5-1132/03.09.2026 · detaliere finală A5-1154/11.09.2026',
-    nota:'Nu avem în folder nicio notificare de admitere/respingere în principiu și nicio Decizie. De verificat dacă au fost primite; dacă nu, revendicarea se consideră respinsă în principiu (69c.1).' },
+    nota:'ÎNCHIS 01.11.2026 — penalizarea de 20.000 lei a fost achitată (confirmat de Manager de contract); nu mai e nimic de urmărit pe admitere/dezacord. Istoric: notificare A5-1132/03.09.2026, detaliere finală A5-1154/11.09.2026.'},
   { id:'RB2', parte:'Beneficiar', titlu:'Revendicarea Beneficiarului nr. 2 — penalități 20.000 lei',
     eveniment:null, notificare:'2026-08-22', detalii:'2026-08-22', admitere:'2026-09-11', decizie:'2026-09-11', dezacord:null, inchis:true,
     doc:'Decizia A5-1155/11.09.2026',
     nota:'Decizie emisă 11.09.2026. Termen de dezacord 10 zile (până la 21.09.2026) — dacă nu s-a emis, decizia e finală și obligatorie; de facturat/compensat 20.000 lei.' },
   { id:'RL', parte:'Antreprenor', titlu:'Revendicarea Antreprenorului — liste suplimentare NR/NCS1/NCS2 (net +5.668.485 lei, nr. 4 provizoriu)',
-    eveniment:'2026-06-25', notificare:'2026-10-09', detalii:null, admitere:null, decizie:null, dezacord:null,
+    eveniment:'2026-06-25', notificare:'2026-10-09', detalii:null, admitere:null, decizie:null, dezacord:null, tardivInchis:true,
     doc:'Adresa 13821/09.10.2026',
-    nota:'Notificarea 69a.1 = adresa 13821/09.10.2026 (clauza „constituie și notificare 69a.1” e în draft; de validat cu juridicul). Detalii în 30 zile → 08.11.2026 (practic vineri 06.11). Evenimentul luat la 25.06.2026 (predarea PT cu liste): față de el notificarea e tardivă — risc 69a.1, de analizat cu juridicul.' },
+    nota:'Notificarea 69a.1 = adresa 13821/09.10.2026 (clauza „constituie și notificare 69a.1” e în draft; de validat cu juridicul). Detalii în 30 zile → 08.11.2026 (practic vineri 06.11). Evenimentul luat la 25.06.2026 (predarea PT cu liste): față de el notificarea e tardivă — risc 69a.1, de analizat cu juridicul. ALERTA „Notificare revendicare 69a.1 — tardiv” ÎNCHISĂ 01.11.2026 (decizie Manager de contract): notificarea s-a transmis 09.10.2026, tardiv față de eveniment; nu mai e acțiune de făcut, riscul rămâne în dosar și se tratează în argumentația revendicării. Termenul de detalii (08.11.2026) rămâne activ.' },
   { id:'RA2', parte:'Antreprenor', titlu:'Revendicarea Antreprenorului nr. 02 — scenariu securitate incendiu (spumă 8→5 m)',
     eveniment:'2026-03-20', notificare:null, detalii:null, admitere:'2026-05-05', decizie:'2026-05-05', dezacord:null, inchis:true,
     doc:'Decizia A5-838/05.05.2026 · nota A5-848/07.05.2026 · AA2 A5-849/08.05.2026',
@@ -4753,19 +4753,19 @@ var TERM_DOSARE = [
 // Termene fixe / de la o dată de bază (nu fac parte dintr-o revendicare)
 var TERM_FIX = [
   { id:'F1', titlu:'Notificare eroare în Cerințele Beneficiarului (8.4) — GC 90 zile',
-    clauza:'8.4', resp:'EREN', start:'2025-11-05', zile:90, status:'De verificat',
+    clauza:'8.4', resp:'EREN', start:'2025-11-05', zile:90, status:'De verificat', inchis:true,
     consec:'După termen, se pierde temeiul 8.4 pentru erorile din SF (grup pompare/spumă, generator, bazin etc.).',
-    nota:'Baza: Ordinul de începere proiectare 05.11.2025 (AA2 art. 2). Verifică dacă există notificare transmisă în termen.' },
+    nota:'ÎNCHIS 01.11.2026 — decizie Manager de contract: termen depășit (03.02.2026), temeiul 8.4 nu a fost folosit (nicio notificare 8.4 transmisă în termen). Argumentația revendicărilor se sprijină pe Modificare (37.2 / 37.4 / 37.7, cerințe noi), 8.4 rămâne doar temei secundar, nefolosit. Baza: Ordinul de începere proiectare 05.11.2025 (AA2 art. 2).' },
   { id:'F2', titlu:'Aprobare documentație proiect (liste/PT) de către Supervizor — 60 zile de la primire (predare PT)',
-    clauza:'19.2', resp:'Supervizor / Beneficiar', start:'2026-06-25', zile:60,
+    clauza:'19.2', resp:'Supervizor / Beneficiar', start:'2026-06-25', zile:60, inchis:true,
     consec:'Întârzierea nejustificată dă dreptul la prelungire și costuri (69a) — DAR nu există aprobare tacită dacă aprobarea ar fi o Modificare (NR/NCS).',
-    nota:'Predare PT: A5-975/25.06.2026. Se aplică și la listele predate odată cu PT.' },
+    nota:'ÎNCHIS 01.11.2026 — decizie Manager de contract: obligația aparține Supervizorului; termenul a fost depășit (24.08.2026) și rămâne argument în revendicare (69a), dar nu mai e alertă. Termenul urmărit în continuare: F3 (60 zile de la adresa 13821, 08.12.2026).'},
   { id:'F3', titlu:'Aprobare liste suplimentare — 60 zile de la adresa de înaintare formală 13821',
     clauza:'19.2', resp:'Supervizor / Beneficiar', start:'2026-10-09', zile:60,
     consec:'Aceeași regulă ca F2; termenul curge și de la înaintarea formală.', nota:'Adresa 13821/09.10.2026 (net +5.668.484,91 lei).' },
   { id:'F4', titlu:'Act de constatare nr. 2 — termen de remediere',
-    clauza:'—', resp:'EREN', fix:'2026-10-28',
-    consec:'Neremedierea poate atrage penalități / revendicare Beneficiar.', nota:'A5-1240/14.10.2026. Data termenului: de confirmat din act.' },
+    clauza:'—', resp:'EREN', fix:'2026-10-28', done:true,
+    consec:'Neremedierea poate atrage penalități / revendicare Beneficiar.', nota:'REZOLVAT 01.11.2026 — confirmat de Manager de contract. A5-1240/14.10.2026 (balast→piatră spartă, rigolă FOXTROT): punct închis.'},
   { id:'F5', titlu:'Termen final execuție contract (nemodificat)',
     clauza:'35', resp:'EREN', fix:'2027-04-16',
     consec:'Penalități 36.4 dacă depășit fără prelungire. Revendicarea nr. 3 cere 13.05.2027.', nota:'Valabil până la acordarea prelungirii.' },
@@ -4774,20 +4774,20 @@ var TERM_FIX = [
     consec:'Prezența reprezentanților EREN este solicitată de Beneficiar; pregătire: panou de negociere, probe pe teme, plafon 15%.', nota:'Convocare AE-1398/29.10.2026, ca urmare a adresei 13821/09.10.2026.' },
   // ── Grup sprinklere (dashboard: Analiză Instalații → Cap.6/8 — Grup Sprinklere). Termene interne/furnizor, nu contractuale. ──
   { id:'SPR1', titlu:'Grup sprinklere — răspuns Triptic: acord NFPA 20/FM, motor 250 kW, fișa 2 corectată, domeniu de livrare',
-    clauza:'Sprinklere', resp:'Triptic', fix:'2026-10-22',
+    clauza:'Sprinklere', resp:'Triptic', fix:'2026-10-22', done:true,
     consec:'Fără acord scris nu se lansează comanda; livrarea durează 12–14 săptămâni, deci întârzierea se transmite integral în termen.',
-    nota:'Cerere transmisă 18.10.2026 (cu fișele tehnice Multigama, fără ofertă). A se rectifica punctul despre presiune: PT cere 10,60 bar.' },
+    nota:'REZOLVAT (confirmat 01.11.2026). Cerere transmisă 18.10.2026 (cu fișele tehnice Multigama, fără ofertă). A se rectifica punctul despre presiune: PT cere 10,60 bar.' },
   { id:'SPR2', titlu:'Grup sprinklere — cost complet stație (echipamente + elemente lipsă + montaj) vs NCS2, de la ofertare',
-    clauza:'Sprinklere', resp:'Ofertare', fix:'2026-10-22',
-    consec:'Necesar pentru Anexa 6 (oferte NCS2) și pentru decizia de comandă.', nota:'NCS2 poz. 2 = 683.970,96 lei fără TVA; oferta Multigama ≈ 509.000 lei (echipamente).' },
+    clauza:'Sprinklere', resp:'Ofertare', fix:'2026-10-22', done:true,
+    consec:'Necesar pentru Anexa 6 (oferte NCS2) și pentru decizia de comandă.', nota:'REZOLVAT (confirmat 01.11.2026). NCS2 poz. 2 = 683.970,96 lei fără TVA; oferta Multigama ≈ 509.000 lei (echipamente).' },
   { id:'SPR3', titlu:'Grup sprinklere — răspuns Multigama la clarificări (curbe, pornire, domeniu, livrare)',
-    clauza:'Sprinklere', resp:'Multigama / Ofertare', fix:'2026-10-23',
-    consec:'Fără răspuns nu se poate stabili costul complet.', nota:'Cererea se transmite de ofertare luni 19.10.2026.' },
+    clauza:'Sprinklere', resp:'Multigama / Ofertare', fix:'2026-10-23', done:true,
+    consec:'Fără răspuns nu se poate stabili costul complet.', nota:'REZOLVAT (confirmat 01.11.2026). Cererea se transmite de ofertare luni 19.10.2026.' },
   { id:'SPR4', titlu:'Grup sprinklere — expiră valabilitatea ofertei Multigama (EQF26-368-AO)',
     clauza:'Sprinklere', resp:'GSP', fix:'2026-11-16',
     consec:'După această dată prețul și termenul de livrare nu mai sunt garantate.', nota:'Condițiile comerciale (curs, plată, garanții) le negociază GSP.' },
   { id:'SPR5', titlu:'Memoriu justificativ consolidat Triptic (include grupul de pompare / spumă) — termen estimat',
-    clauza:'Sprinklere', resp:'Triptic', fix:'2026-10-23',
+    clauza:'Sprinklere', resp:'Triptic', fix:'2026-10-23', done:true,
     consec:'Condiționează depunerea revendicării și detalierea 69a.2 (08.11.2026).', nota:'Dată estimată din corespondența cu Triptic; de confirmat.' }
 ];
 
@@ -4813,7 +4813,7 @@ function termeneCalc() {
     // 1. Notificare
     if (x.parte === 'Antreprenor' && ev) {
       push({dosar:tag, etapa:'Notificare revendicare', clauza:'69a.1', resp:'EREN', baza:'eveniment ' + _tFmt(ev) + ' + 30 zile',
-        scad:_tAdd(ev,30), done:!!x.notificare, consec:'Peste termen: EREN suportă consecințele pe perioada de dinaintea notificării (cu 30 zile înainte).', nota:x.notificare ? 'Notificat ' + _tFmt(x.notificare) + (x.notificare > _tAdd(ev,30) ? ' — TARDIV (' + Math.round((new Date(x.notificare) - new Date(_tAdd(ev,30))) / 86400000) + ' zile după termen)' : '') : 'Data notificării necompletată', doc:x.doc, status: x.notificare && x.notificare > _tAdd(ev,30) && !x.inchis ? 'Tardiv' : undefined});
+        scad:_tAdd(ev,30), done:!!x.notificare, consec:'Peste termen: EREN suportă consecințele pe perioada de dinaintea notificării (cu 30 zile înainte).', nota:x.notificare ? 'Notificat ' + _tFmt(x.notificare) + (x.notificare > _tAdd(ev,30) ? ' — TARDIV (' + Math.round((new Date(x.notificare) - new Date(_tAdd(ev,30))) / 86400000) + ' zile după termen)' : '') : 'Data notificării necompletată', doc:x.doc, status: x.notificare && x.notificare > _tAdd(ev,30) && !x.inchis ? (x.tardivInchis ? 'Închis' : 'Tardiv') : undefined});
     }
     // 2. Detalii
     var respDet = x.parte === 'Antreprenor' ? 'EREN' : 'Beneficiar';
@@ -4827,7 +4827,7 @@ function termeneCalc() {
     // 2b. Detalii finale (eveniment continuu)
     if (x.detaliiFinaleLa) {
       push({dosar:tag, etapa:'Detalii finale (eveniment încheiat)', clauza:'69a.2(iv)', resp:'EREN', baza:'încheiere ' + _tFmt(x.detaliiFinaleLa) + ' + 30 zile',
-        scad:_tAdd(x.detaliiFinaleLa,30), done:false, consec:'Decădere din drept pentru actualizarea detaliilor finale.', nota:'Dacă detaliile depuse pe 14.10 sunt considerate finale, marchează în date.', doc:x.doc});
+        scad:_tAdd(x.detaliiFinaleLa,30), done:!!x.detaliiFinaleDepuse, consec:'Decădere din drept pentru actualizarea detaliilor finale.', nota:x.detaliiFinaleDepuse ? 'Revendicarea depusă 14.10.2026 (adresa 13835), în termen — confirmat 01.11.2026.' : 'Dacă detaliile depuse pe 14.10 sunt considerate finale, marchează în date.', doc:x.doc});
     }
     // 3. Admitere în principiu
     if (x.detalii) {
@@ -4861,7 +4861,7 @@ function termeneCalc() {
       if (!e.necesitaNotificare || e.notificat === 'Da' || e.notificat === 'N/A' || e.dosar) return;
       var scad = _tAdd(e.data, 30);
       push({dosar:e.id + ' — ' + e.titlu, etapa:'Notificare revendicare (eveniment din registru)', clauza:'69a.1', resp:'EREN', baza:'eveniment ' + _tFmt(e.data) + ' + 30 zile',
-        scad:scad, done:false, consec:'Peste termen: EREN suportă consecințele pentru perioada dinaintea notificării.', nota:'Generat automat din Registrul de evenimente.', doc:e.doc,
+        scad:scad, done:false, consec:'Peste termen: EREN suportă consecințele pentru perioada dinaintea notificării.', nota:'REZOLVAT (confirmat 01.11.2026). Generat automat din Registrul de evenimente.', doc:e.doc,
         status: e.notificat === 'De verificat' ? (_tDiff(scad) < 0 ? 'De verificat' : undefined) : undefined});
     });
   }
@@ -4869,11 +4869,12 @@ function termeneCalc() {
     var scad = f.fix || _tAdd(f.start, f.zile);
     var r = {dosar:f.id + ' — ' + f.titlu, etapa:f.titlu, clauza:f.clauza, resp:f.resp, baza:f.fix ? 'dată fixă' : (_tFmt(f.start) + ' + ' + f.zile + ' zile'),
       scad:scad, done:!!f.done, consec:f.consec, nota:f.nota, doc:''};
-    if (f.status === 'De verificat' && scad && _tDiff(scad) < 0 && !f.done) r.status = 'De verificat';
+    if (f.inchis) r.status = 'Închis';
+    else if (f.status === 'De verificat' && scad && _tDiff(scad) < 0 && !f.done) r.status = 'De verificat';
     push(r);
   });
   rows.sort(function(a,b){
-    var ra = a.status === 'Respectat' ? 1 : 0, rb = b.status === 'Respectat' ? 1 : 0;
+    var ra = (a.status === 'Respectat' || a.status === 'Închis') ? 1 : 0, rb = (b.status === 'Respectat' || b.status === 'Închis') ? 1 : 0;
     if (ra !== rb) return ra - rb;
     return (a.scad || '9999-12-31').localeCompare(b.scad || '9999-12-31');
   });
@@ -4891,7 +4892,7 @@ function renderTermene(proj) {
   document.querySelectorAll('.submenu-item').forEach(function(i){ i.classList.remove('active'); });
   var it = document.getElementById('item-hangar-termene'); if (it) it.classList.add('active');
   var rows = termeneCalc();
-  var COL = {'Depășit':['#FDEDEC','#C0392B'], 'Urgent':['#FEF5E7','#B9770E'], 'Activ':['#EAF2F8','#1A5276'], 'Respectat':['#EAFAF1','#1E6E2D'], 'De completat':['#F2F3F4','#6C757D'], 'De verificat':['#F4ECF7','#7D3C98'], 'Tardiv':['#FDEDEC','#A93226']};
+  var COL = {'Depășit':['#FDEDEC','#C0392B'], 'Urgent':['#FEF5E7','#B9770E'], 'Activ':['#EAF2F8','#1A5276'], 'Respectat':['#EAFAF1','#1E6E2D'], 'De completat':['#F2F3F4','#6C757D'], 'De verificat':['#F4ECF7','#7D3C98'], 'Tardiv':['#FDEDEC','#A93226'], 'Închis':['#F2F3F4','#6C757D']};
   function cnt(s){ return rows.filter(function(r){ return r.status === s; }).length; }
   var html = '';
   html += '<div class="proj-header"><div class="proj-title">Motor de termene contractuale</div><div class="proj-meta">Hangar Kogălniceanu · contract 997/01.08.2025 · termene calculate automat din datele evenimentelor (clauzele 8.4, 19.2, 69a, 69b, 69c) · azi ' + _tFmt(_tAzi()) + ' · <a onclick="goModule(\'hangar\',\'evenimente\');return false;" href="#" style="color:#1A5276;font-weight:700">Registrul de evenimente ›</a></div></div>';

@@ -462,7 +462,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
           <i class="ti ti-chevron-down chevron" id="chev-academia-minute" style="font-size:11px"></i>
         </div>
         <div class="submenu" id="sub-academia-minute" style="margin-left:14px;border-left:2px solid var(--grey-200)">
-          <a class="submenu-item" id="item-academia-minute-interne" href="https://claude.ai/artifact/HrwEPevphLBMUbQ2bLp8JZ" target="_blank" rel="noopener" style="text-decoration:none" onclick="closeMenu()">
+          <a class="submenu-item" id="item-academia-minute-interne" href="https://claude.ai/artifact/HrwEPevphLBMUbQ2bLp8JZ" style="text-decoration:none" onclick="return goMinuteInterne(this)">
             <i class="ti ti-users" style="color:#2E9E57"></i> Minute Interne
             <i class="ti ti-arrow-right" style="font-size:11px;margin-left:auto;opacity:.6"></i>
           </a>
@@ -561,6 +561,7 @@ function doLogin() {
   var err = document.getElementById('login-error');
   if (USERS[u] && USERS[u] === p) {
     window._pmhub_user = u;
+    try { sessionStorage.setItem('pmhub_user', u); } catch (e) {}
     err.style.display = 'none';
     showApp(u);
   } else {
@@ -570,6 +571,7 @@ function doLogin() {
 
 function doLogout() {
   window._pmhub_user = null;
+  try { sessionStorage.removeItem('pmhub_user'); } catch (e) {}
   document.getElementById('app-screen').style.display = 'none';
   document.getElementById('login-screen').style.display = 'flex';
   document.getElementById('inp-pass').value = '';
@@ -582,6 +584,21 @@ function showApp(user) {
   document.getElementById('app-username').textContent = 'Spătaru ' + user;
   goHome();
 }
+
+// Minute Interne (pagină separată): deschidere în aceeași filă, cu adresa de întoarcere la PM Hub
+function goMinuteInterne(a) {
+  var base = 'https://claude.ai/artifact/HrwEPevphLBMUbQ2bLp8JZ';
+  a.href = base + '#back=' + encodeURIComponent(location.href.split('#')[0]);
+  try { closeMenu(); } catch (e) {}
+  return true;
+}
+
+window.addEventListener('load', function () {
+  try {
+    var u = sessionStorage.getItem('pmhub_user');
+    if (u && USERS[u] && !window._pmhub_user) { window._pmhub_user = u; showApp(u); }
+  } catch (e) {}
+});
 
 function openMenu() {
   document.getElementById('sidebar').classList.add('open');
@@ -780,8 +797,8 @@ var DATA = {
     kpis:[
       {label:"Buget total contract",val:"19,3 mil lei",sub:"Fără TVA · Fără lucrări suplimentare"},
       {label:"Buget intern eDevize",val:"17,1 mil lei",sub:"−11,4% față de contract · Completat Cap.1-13"},
-      {label:"Grad fundamentare (OP+VP+DO)",val:"50,1%",sub:"Cap.1 97,4% · Cap.2 54,4% · Cap.3 48,3% · Cap.4 51,7% · Cap.6 41,2% · Cap.7 26% · Cap.8 0% · Cap.9 28,4% · Cap.10 58,7% ⚠ · Cap.11 89,8% (contract Nibaco) · Cap.12 0% · Cap.13 0% · Org.Șant. 100% (DO)"},
-      {label:"Valoare nedocumentată",val:"~8,5 mil lei",sub:"Cap.8: 898.778 lei (0%) · Cap.7 F3: 722.999 · Cap.9 F3+F4: 595.419 · Cap.10 F3: 788.116 · Cap.12+13: 10.486 · Cap.11: 32.057 (economie vs buget, contractat Nibaco)"}
+      {label:"Grad fundamentare (OP+VP+DO)",val:"50,1%",sub:"Cap.1 97,4% · Cap.2 54,4% · Cap.3 48,3% · Cap.4 51,7% · Cap.6 41,2% · Cap.7 ofertat · Cap.8 0% · Cap.9 28,4% · Cap.10 ofertat ✓ · Cap.11 89,8% (contract Nibaco) · Cap.12 0% · Cap.13 0% · Org.Șant. 100% (DO)"},
+      {label:"Valoare nedocumentată",val:"~8,5 mil lei",sub:"Cap.8: 898.778 lei (0%) · Cap.9 F3+F4: 595.419 · Cap.12+13: 10.486 · Cap.11: 32.057 (economie vs buget, contractat Nibaco) · Cap.7+Cap.10 F3 acum OFERTATE (EIS/IMSAT)"}
     ],
     n1:[
       {label:"Fundamentare OP+VP (față de eDevize 17,1 mil)",badge:"ok",text:"40,7%"},
@@ -807,10 +824,10 @@ var DATA = {
       {cap:"3. Structură Hangar",      buget:"3.787.359 lei", doc:"1.831.092 lei", nedoc:"1.956.267 lei", pct:48, bar:"#EF9F27", contractat:"—",            status:"warn", statusLabel:"48,3%"},
       {cap:"4. Arhitectură Hangar",    buget:"4.033.077 lei", doc:"2.204.711 lei", nedoc:"1.828.366 lei", pct:52, bar:"#EF9F27", contractat:"—",            status:"warn", statusLabel:"51,7%"},
       {cap:"6. Rețele ext. sanitare",  buget:"1.023.749 lei", doc:"422.257 lei",  nedoc:"601.492 lei",   pct:41, bar:"#EF9F27", contractat:"—",            status:"warn", statusLabel:"41,2%"},
-      {cap:"7. Rețele electrice ext.", buget:"1.007.582 lei (F3+F4)", doc:"257.500 lei (F4)", nedoc:"750.082 lei", pct:26, bar:"#EF9F27", contractat:"—", status:"warn", statusLabel:"26%"},
+      {cap:"7. Rețele electrice ext.", buget:"1.007.582 lei (F3+F4)", doc:"inclus în oferta EIS/IMSAT (analiză Cap.10)", nedoc:"—", pct:80, bar:"#639922", contractat:"—", status:"ok", statusLabel:"Ofertat ✓"},
       {cap:"8. Inst. sanitare int.",   buget:"616.244 lei",   doc:"0 lei",        nedoc:"616.244 lei",   pct:0,  bar:"#E24B4A", contractat:"—",            status:"risk", statusLabel:"0%"},
       {cap:"9. HVAC (F3+F4)",           buget:"506.915 lei",   doc:"144.283 lei (F4 parțial)", nedoc:"362.632 lei", pct:28, bar:"#EF9F27", contractat:"—", status:"warn", statusLabel:"28,4%"},
-      {cap:"10. Curenți tari (F3+F4)",  buget:"1.270.288 lei", doc:"746.000 lei (F4 Dynell)", nedoc:"788.116 lei (F3)", pct:59, bar:"#EF9F27", contractat:"—", status:"warn", statusLabel:"58,7% ⚠"},
+      {cap:"10. Curenți tari (F3+F4)",  buget:"1.270.288 lei", doc:"2 oferte (EIS 824.526€ · IMSAT 948.622€)", nedoc:"sursă statică 400Hz (~208.000€)", pct:85, bar:"#639922", contractat:"EIS cel mai mic", status:"ok", statusLabel:"Ofertat ✓"},
       {cap:"11. Curenți slabi",        buget:"313.164 lei",   doc:"281.107 lei (contract Nibaco)", nedoc:"32.057 lei (economie vs buget)",  pct:90, bar:"#639922", contractat:"Nibaco ctr 208 · 281.107 lei", status:"ok", statusLabel:"89,8% · contractat"},
       {cap:"12. Probe tehnologice",    buget:"10.189 lei",    doc:"0 lei",        nedoc:"10.189 lei",    pct:0,  bar:"#E24B4A", contractat:"—",            status:"risk", statusLabel:"Lipsă"},
       {cap:"13. Pregătire personal",   buget:"297 lei",       doc:"0 lei",        nedoc:"297 lei",       pct:0,  bar:"#E24B4A", contractat:"—",            status:"risk", statusLabel:"Lipsă"},
@@ -826,7 +843,7 @@ var DATA = {
     ],
     alerts:[
       {title:"Cap.2.1 — Ofertă Mithras REVIZUITĂ: −144.791 lei, dar rămâne +58,0% peste buget", meta:"Cap.2.1 · MTH-B 545: 381.947 € = 2.002.512 lei vs buget 1.267.781 lei (+734.731 lei) · manoperă BCR 43,85→35,35 €/mp · expiră 22.07", date:"18 iul", cls:"risk"},
-      {title:"Cap.10 — GPU 400Hz: ofertă +54,7% față de buget (supracost major)", meta:"Cap.10 · Dynell Tip A 746.000 lei vs buget F4 482.171 lei (+263.829 lei) · F3 788.116 lei fără ofertă", date:"15 iul", cls:"risk"},
+      {title:"Cap.10 — EIS cea mai mică ofertă; sursă statică 400Hz neofertată", meta:"Cap.10+7+F4 · EIS 824.526€ vs IMSAT 948.622€ (−13%) · sursă statică 400Hz ~208.000€ neofertată de ambii — de procurat separat (Dynell/Col-Air)", date:"1 nov", cls:"warn"},
       {title:"Cap.11 — CCTV și Control acces rămân în afara contractului Nibaco", meta:"Cap.11 · Contract 208 (Nibaco, 281.107 lei) acoperă IDSAI + rețea de date + ECS/rack; CCTV și control acces (~122.000 lei în ofertele 2024) nu sunt în deviz și nu sunt contractate — de clarificat dacă sunt scop contractual", date:"18 oct", cls:"warn"},
       {title:"Cap.9 HVAC — Rezervor ingropat 20.000L fără ofertă", meta:"Cap.9 · 101.351 lei (37% din F4) nevalidat · VRF +67% supracost față de buget", date:"15 iul", cls:"risk"},
       {title:"Structură metalică hală URGENT", meta:"Cap.3 · 1.586.706 lei fără ofertă · Cap.3 total 48,3% fund.", date:"10 iul", cls:"risk"},
@@ -3383,7 +3400,7 @@ function renderAnalize(proj) {
         label:"Finalizată (parțial)",
         date:"Iul 2026",
         buget:"1.007.582 lei (F3+F4)",
-        desc:"F3 lucrări: 0% (lipsă oferte — 722.999 lei neacoperite) · F4 echipamente: KOHLER D550 550kVA (257.500 lei, REC.) vs CAT DE500GC (323.000 lei, +65.500) · GPU 400Hz Dynell DSF030 186.500 lei (URGENT: livrare 20-24 săpt.) · Grad F4: 90,6% · 3 riscuri CRITICE"
+        desc:"Acoperit de oferta combinată EIS/IMSAT (vezi analiza Cap.10). Generator 1400kVA: EIS GEDEON 150.549€ vs IMSAT CUMMINS 303.394€. Cablurile grele spre postul trafo incluse. Sursă statică 400Hz de procurat separat (Dynell/Col-Air)."
       },
       {
         cap:"Cap.8 — Instalații Sanitare Interioare",
@@ -3405,12 +3422,12 @@ function renderAnalize(proj) {
       },
       {
         cap:"Cap.10 — Curenți Tari (Instalații Electrice)",
-        url:"https://docs.google.com/spreadsheets/d/1DJptWgBPYo0RX5rhCG2__8dbkkesqAuy04GJo17mDRE/edit?usp=sharing",
+        url:"https://docs.google.com/spreadsheets/d/1yT33wjfXu2HmbI3-6RLALmSbCXh8ArzWA9VCVnZ2mvk/edit?usp=sharing",
         status:"warn",
-        label:"Finalizată (parțial) — 58,7%",
+        label:"Actualizată — EIS vs IMSAT (nov.2026)",
         date:"Iul 2026",
         buget:"1.270.288 lei (F3+F4)",
-        desc:"F4 echipamente: Dynell DSF030 GPU 400Hz = 746.000 lei VP (4 buc × 186.500 lei) · +54,7% vs buget F4 (282.171 lei) — supracost 263.829 lei · F3 lucrări electrice: 788.116 lei fără ofertă · Grad F4: 100% VP · 5 riscuri (2 CRITICE)"
+        desc:"2 oferte complete pe scop combinat Cap.10+7+F4, buget fără închideri: EIS 824.526€ · IMSAT 948.622€ (−13% EIS). Cabluri → IMSAT, restul → EIS; atribuire mixtă 732.539€. Sursă statică 400Hz (~208.000€) neofertată — de procurat separat. 6 riscuri (1 critic)"
       },
       {
         cap:"Cap.11 — Curenți Slabi (Fire detection, CCTV, Control acces)",
@@ -3492,7 +3509,7 @@ function renderSinteza(proj) {
     {label:"Grad fund. global",val:"50,1%",sub:"8.549.323 lei OP / 17.075.952 lei buget intern · 12 cap. + Org. Șantier"},
     {label:"Riscuri deschise",val:"47",sub:"14 Critice · 16 Medii/Mari · 8 Mici · +6 Cap.9 · +5 Cap.10 · +4 Cap.11"},
     {label:"Economie identificată",val:"583.199 lei",sub:"Cap.1-4: 419.053 + Cap.6: 94.762 + Cap.7: 65.500 + Cap.9: 3.884 lei (CAIROX)"},
-    {label:"Nedocumentat",val:"~8,5 mil lei",sub:"Cap.8: 898.778 lei 0% · Cap.9 F3: 232.787 · Cap.10 F3: 788.116 · Cap.11: 32.057 (economie vs buget, contractat Nibaco) · Cap.12+13: 10.486 · 5.1 Org. Șant. 0 (100% DO)"}
+    {label:"Nedocumentat",val:"~8,5 mil lei",sub:"Cap.8: 898.778 lei 0% · Cap.9 F3: 232.787 · Cap.11: 32.057 (economie vs buget, contractat Nibaco) · Cap.12+13: 10.486 · Cap.7+Cap.10 F3 acum OFERTATE (EIS/IMSAT) · 5.1 Org. Șant. 0 (100% DO)"}
   ];
   html += '<div class="kpi-grid">';
   KPI_S.forEach(function(k){
@@ -3601,19 +3618,19 @@ function renderSinteza(proj) {
       riscuri:[
         {cod:'R-7.1',prio:'Critic',text:'F3 lucrari electrice 722.999 lei — ZERO oferte comerciale pentru toate subcapitolele',term:'11 iul'},
         {cod:'R-7.2',prio:'Critic',text:'Cabluri aviatice CABL3+ 633.053 lei — specificatii tehnice fara pret',term:'11 iul'},
-        {cod:'R-7.3',prio:'Critic',text:'GPU 400Hz Dynell DSF030 — livrare 20-24 saptamani EXW Austria. Comanda URGENTA',term:'URGENT'},
+        {cod:'R-7.3',prio:'Mare',text:'Sursă statică 400Hz — neofertată de EIS/IMSAT, de procurat separat (Dynell/Col-Air, livrare 20-24 săpt. EXW). Vezi Cap.10.',term:'—'},
         {cod:'R-7.4',prio:'Mare',text:'Grup electrogen — KOHLER vs CAT, decizie tehnica fara documentare completa'},
-        {cod:'R-7.5',prio:'Mare',text:'GPU 400Hz — un singur ofertant (Dynell/Business Plus), risc putere negociere'},
+        {cod:'R-7.5',prio:'Mare',text:'Sursă statică 400Hz — un singur ofertant (Dynell); de adus Col-Air pt comparație înainte de comandă'},
         {cod:'R-7.6',prio:'Mediu',text:'Cuple + prize aviatie — valoare incerta, preturi unitare disponibile dar cantitati la proiectare'},
         {cod:'R-7.7',prio:'Mediu',text:'F4 echipamente fara deviz detaliat — grad fundamentare incomplet'}
       ],
       rec:[
         {cod:'REC-7.1',text:'Grup electrogen: KOHLER D550 recomandat (257.500 lei vs 323.000 lei CAT) — economie 65.500 lei'},
-        {cod:'REC-7.2',text:'GPU 400Hz: Dynell DSF030 Var.A recomandat (186.500 lei, 30kVA, 400Hz+28VDC/400A)'},
+        {cod:'REC-7.2',text:'Generator 1400kVA: EIS GEDEON 150.549€ (cea mai mică), sub rezerva acceptării mărcii la beneficiar (altfel marcă agreată)'},
         {cod:'REC-7.3',text:'Includere montaj grup electrogen in contract KOHLER sau negociere separata'}
       ],
       act:[
-        {cod:'ACT-7.1',text:'Lansare URGENTA comanda GPU 400Hz Dynell DSF030 — livrare 20-24 saptamani EXW Austria',term:'URGENT',resp:'GSP / Achizitii'},
+        {cod:'ACT-7.1',text:'Procurare sursă statică 400Hz (Dynell/Col-Air, min. 2 oferte) — livrare 20-24 săpt. EXW, de prins bugetar',term:'—',resp:'GSP / Achiziții'},
         {cod:'ACT-7.2',text:'Decizie furnizor grup electrogen: KOHLER D550 recomandat (economie 65.500 lei)',term:'11 iul',resp:'GSP / Director'},
         {cod:'ACT-7.3',text:'Solicitare min. 3 oferte pentru F3 lucrari electrice (722.999 lei expusi)',term:'18 iul',resp:'Achizitii'},
         {cod:'ACT-7.4',text:'Clarificare cantitati cuple + prize aviatie cu proiectantul',term:'18 iul',resp:'GSP'},
@@ -3665,23 +3682,23 @@ function renderSinteza(proj) {
       ]
     },
     {
-      id:'cap10', label:'Cap.10 — Curenți Tari (Inst. Electrice)', buget:'1.270.288 lei (F3+F4)', op:'746.000 lei (F4 Dynell VP)', grad:'58,7%', gradCls:'warn',
+      id:'cap10', label:'Cap.10 — Curenți Tari (Inst. Electrice)', buget:'1.270.288 lei (F3+F4)', op:'EIS 824.526€ · IMSAT 948.622€ · mix 732.539€', grad:'2 oferte', gradCls:'ok',
       riscuri:[
-        {cod:'R-10.1',prio:'Critic',text:'Buget F4 GPU 400Hz subdimensionat: ofertă Dynell Tip A=746.000 lei vs buget 482.171 lei (+54,7% supracost, delta +263.829 lei)',term:'15 iul'},
-        {cod:'R-10.2',prio:'Critic',text:'F3 lucrări electrice 788.116 lei — ZERO oferte de piață (41 articole, 6 subcapitole fără confirmare)',term:'15 iul'},
-        {cod:'R-10.3',prio:'Mare',text:'Corpuri iluminat (10.2): 419.910 lei — 53% din F3, cel mai mare risc. Specificații LED neconfirmate piață.',term:'15 iul'},
-        {cod:'R-10.4',prio:'Mare',text:'Cabluri energie (10.4): 206.858 lei fără ofertă. Prețuri cupru fluctuante — risc deviere.',term:'15 iul'},
-        {cod:'R-10.5',prio:'Mediu',text:'1 singură ofertă GPU (Dynell). Necesită min. 2 oferte comparative pentru decizie de achiziție.',term:'15 iul'}
+        {cod:'R-10.1',prio:'Critic',text:'Sursă statică 400Hz (~1.057.000 lei fără închideri / ~208.000€, NCS2) neofertată de EIS și IMSAT; EIS nu o are nici în centralizator. De procurat separat (Dynell/Col-Air) și de prins bugetar.',term:'1 nov'},
+        {cod:'R-10.2',prio:'Mare',text:'Cabluri electrice armate supraevaluate: EIS +88% / IMSAT +42% vs buget-cost. IMSAT mai mic cu 82.930€ → reper de negociere pentru EIS.',term:'1 nov'},
+        {cod:'R-10.3',prio:'Mare',text:'Generator 1400kVA — EIS GEDEON/YUCHAI aproape de buget vs IMSAT CUMMINS +110%. Verifică acceptarea mărcii la beneficiarul militar.',term:'1 nov'},
+        {cod:'R-10.4',prio:'Mediu',text:'Corp balizaj IP68 (CORPIL11, ~222.000 lei în buget) — EIS=0 („sarcină AG”), IMSAT 5.091€. Clarifică cine furnizează.',term:'1 nov'},
+        {cod:'R-10.5',prio:'Mediu',text:'Ofertă IMSAT expirată (21.07.2026); UPS 60kVA + degivrare neofertate de IMSAT. Reofertare IMSAT la paritate.',term:'1 nov'}
       ],
       rec:[
-        {cod:'REC-10.1',text:'Solicita min. 2 oferte GPU alternative la Dynell (verifică și echipament 50Hz vs 400Hz conform specificație)'},
+        {cod:'REC-10.1',text:'Atribuie EIS (cea mai mică); negociază cablurile electrice folosind oferta IMSAT ca reper (potențial 82.930€)'},
         {cod:'REC-10.2',text:'Prioritizează oferte F3 pentru 10.2 Corpuri iluminat (419.910 lei) și 10.4 Cabluri (206.858 lei) — 79% din F3'},
-        {cod:'REC-10.3',text:'Dynell Tip A (37.300 EUR/buc) recomandat condiționat — sub rezerva confirmării specificațiilor și obținere ofertă alternativă'}
+        {cod:'REC-10.3',text:'Sursă statică 400Hz: procurare separată (Dynell ~37.300€/buc vs Col-Air), min. 2 oferte, cu prindere bugetară distinctă'}
       ],
       act:[
-        {cod:'ACT-10.1',text:'Solicita URGENT min. 2 oferte alternative GPU 400Hz (verifică Phoenix Contact, Hitzinger, Philips PE)',term:'18 iul',resp:'Achiziții'},
-        {cod:'ACT-10.2',text:'Lansare cerere ofertă F3 lucrări electrice — electrician autorizat ANRE (tablouri + iluminat + cabluri)',term:'18 iul',resp:'Achiziții'},
-        {cod:'ACT-10.3',text:'Clarificare proiectant: specificație GPU — putere, tip curent (400Hz?), nr. prize, autonomie',term:'11 iul',resp:'PM + Proiectant'}
+        {cod:'ACT-10.1',text:'Decizie atribuire Cap.10: EIS integral (824.526€) vs atribuire mixtă (cabluri la IMSAT) — mix 732.539€',term:'—',resp:'PM / G. Spătaru'},
+        {cod:'ACT-10.2',text:'Reofertare IMSAT la paritate (UPS 60kVA, degivrare, balizaj) + reconfirmare valabilitate',term:'—',resp:'Achiziții'},
+        {cod:'ACT-10.3',text:'Procurare separată sursă statică 400Hz (Dynell/Col-Air) + clarificare acceptare generator GEDEON la beneficiar',term:'—',resp:'Achiziții / Proiectant'}
       ]
     },
     {
@@ -5893,7 +5910,7 @@ function renderProdSed1(proj) {
   html += '<table style="width:100%;border-collapse:collapse;font-size:11px">';
   html += '<tr style="background:#2E5090;color:#fff"><th style="padding:7px 8px;text-align:left">Risc</th><th style="padding:7px 6px;text-align:center">Scor</th><th style="padding:7px 8px;text-align:left">Măsură</th></tr>';
   var rk = [
-    {d:"GPU 400Hz Dynell — livrare 20–24 săpt. EXW Austria",s:"16",m:"Lansare comandă urgentă (14.08)"},
+    {d:"Sursă statică 400Hz — neofertată de EIS/IMSAT, de procurat separat",s:"12",m:"Min. 2 oferte (Dynell/Col-Air) + prindere bugetară"},
     {d:"Buget execuție documentat ~40%, oferte parțial expirate",s:"16",m:"Reofertare Cap.7 electrice + Cap.8 sanitare"},
     {d:"Prefabricate + confecții metalice — preț/livrare nefinalizate",s:"15",m:"Contractare SOMACO + rundă finală confecții"},
     {d:"Item nebugetat: rezervor 370mc + sistem spumă (Cap.8)",s:"12",m:"Ofertare + tratare pe claim/AA"},
@@ -5911,7 +5928,7 @@ function renderProdSed1(proj) {
   var ac = [
     {a:"Finalizare demolare pavilion J hangar (Obiect 1)",o:"G. Peltea (SS)",t:"11.08"},
     {a:"Mobilizare echipe săpătură + otelieri (radier bazin + fundații)",o:"G. Peltea (SS)",t:"10.08"},
-    {a:"Lansare comandă GPU 400Hz Dynell DSF030",o:"A. Ichim (Achiziții)",t:"14.08"},
+    {a:"Procurare sursă statică 400Hz (Dynell/Col-Air, 2 oferte)",o:"A. Ichim (Achiziții)",t:"—"},
     {a:"Închidere mobilizări restante (poartă, camere, drum acces)",o:"G. Peltea (SS)",t:"18.08"},
     {a:"Rundă finală preț confecții metalice + aliniere scope",o:"PM / Achiziții",t:"21.08"},
     {a:"Reofertare Cap.7 electrice F3 + Cap.8 sanitare",o:"PM / Ofertare",t:"31.08"},
@@ -6655,7 +6672,7 @@ function renderContractSinteza(proj) {
   html += '<div class="proj-card-body">';
   html += '<div style="font-size:26px;font-weight:700;color:#3B6D11;line-height:1">40,7%</div><div style="font-size:12px;color:#5A6472;margin-bottom:8px">oferte de piață (OP) · 50,1% cu OP+VP+DO</div>';
   html += '<div style="height:14px;display:flex;border-radius:5px;overflow:hidden;margin-bottom:6px"><div style="width:40.7%;background:#639922" title="Oferte piață"></div><div style="width:9.4%;background:#EF9F27" title="Proiect anterior / estimare DO"></div><div style="width:49.9%;background:#E24B4A" title="Nedocumentat"></div></div>';
-  html += '<div style="font-size:11px;color:#444;line-height:1.5"><b>~8,6 mil lei nedocumentat</b> (fără ofertă de piață). Critic: Cap.8 sanitare 0%, structură metalică 109 t, Cap.7 F3, Cap.10 F3.</div>';
+  html += '<div style="font-size:11px;color:#444;line-height:1.5"><b>~8,6 mil lei nedocumentat</b> (fără ofertă de piață). Critic: Cap.8 sanitare 0%, structură metalică 109 t. (Cap.7 + Cap.10 F3 acum ofertate — EIS/IMSAT.)</div>';
   html += '</div></div>';
   html += '</div>';
 
@@ -8654,30 +8671,40 @@ var INST_DATA = {
   },
   cap10: {
     key:'cap10', mod:'inst10', nume:'Cap.10 — Curenți Tari', icon:'ti-plug-connected', color:'#B45309',
-    ofertanti:['IMSAT','Dynell'],
-    f3Label:'F3 — Lucrări de instalații (montaj + materiale)',
+    fisierLink:'https://docs.google.com/spreadsheets/d/1yT33wjfXu2HmbI3-6RLALmSbCXh8ArzWA9VCVnZ2mvk/edit?usp=sharing',
+    ofertanti:['EIS','IMSAT','Cea mai bună'],
+    f3Label:'F3 — Lucrări · buget FĂRĂ închideri de deviz · oferte EUR→lei la curs 5,08 · scop combinat Cap.10 + Cap.7',
     f3: [
-      {cod:'10.1', den:'Tablouri electrice (TAB1-4)', buget:74490.31, of:{IMSAT:702252.94}, obs:'+842,7% — anomalie majoră, necesită verificare tehnică (spec/putere/marcă aparataj). IMSAT a mai inclus tablouri suplimentare nebugetate (TADM1/2, TCT, TGE, baterie compensare) în valoare de 294.829 lei, fără corespondent în deviz.'},
-      {cod:'10.2', den:'Corpuri de iluminat (11 poz.)', buget:419909.77, of:{IMSAT:155014.10}, obs:'-63,1% — ATENȚIE: la balizaj IP68 (15 buc) bugetul e 14.781 lei/buc, IMSAT ~1.778 lei/buc (8x mai ieftin) — risc de echipament neconform spec. aeroportuară, de verificat cu proiectantul înainte de a considera economie.'},
-      {cod:'10.3', den:'Aparataj (6 poz.)', buget:18365.49, of:{IMSAT:90543.91}, obs:'+393% — cantități identice cu devizul'},
-      {cod:'10.4', den:'Cabluri de energie (14 poz.)', buget:206858.36, of:{IMSAT:493063.98}, obs:'+138,4% — aceeași cauză ca 7.3, inflație cablu cupru'},
-      {cod:'10.5', den:'Paturi cabluri / tuburi', buget:28261.22, of:{IMSAT:102572.27}, obs:'+263% pe pozițiile comparabile; IMSAT a mai adăugat 49.726 lei scop suplimentar (paturi curenți slabi + dimensiuni noi) fără corespondent în deviz'},
-      {cod:'10.6', den:'Montaj (puncte alimentare curent, 4 buc.)', buget:40231.33, of:{}, obs:'Neofertat de IMSAT — rămâne integral neacoperit'}
+      {cod:'10.1', den:'Priză de pământ și paratrăsnet', buget:70064, of:{EIS:83238, IMSAT:143708, 'Cea mai bună':83238}, obs:'EIS cel mai mic.'},
+      {cod:'10.2', den:'Tablouri electrice (TG, TGE, TADM1/2, TCT, TSPI, TTRAPE)', buget:591733, of:{EIS:568922, IMSAT:966932, 'Cea mai bună':568922}, obs:'EIS mult mai mic (568.922 vs 966.932 lei).'},
+      {cod:'10.3', den:'Corpuri de iluminat (11 poz.)', buget:419910, of:{EIS:132764, IMSAT:150327, 'Cea mai bună':132764}, obs:'Fără corp balizaj (vezi Riscuri): EIS=0/„sarcină AG”, IMSAT 5.091€.'},
+      {cod:'10.4', den:'Instalație degivrare ghidaj poartă', buget:9896, of:{IMSAT:8608, 'Cea mai bună':8608}, obs:'EIS a cotat-o la montaj/F4 (0 aici); IMSAT 1.694€.'},
+      {cod:'10.5', den:'Aparataj și prize', buget:35443, of:{EIS:49946, IMSAT:87806, 'Cea mai bună':49946}, obs:'EIS cel mai mic; include panou comandă iluminat (nebugetat la IMSAT).'},
+      {cod:'10.6', den:'Cabluri electrice (armate + Cap.7 spre trafo)', buget:910489, of:{EIS:1715811, IMSAT:1294528, 'Cea mai bună':1294528}, obs:'IMSAT mai ieftin cu 82.930€ pe cablurile grele — ȚINTĂ de negociere cu EIS.'},
+      {cod:'10.7', den:'Cabluri de energie', buget:385928, of:{EIS:532771, IMSAT:478155, 'Cea mai bună':478155}, obs:'IMSAT ușor mai mic.'},
+      {cod:'10.8', den:'Paturi de cabluri / tuburi', buget:62545, of:{EIS:90088, IMSAT:147696, 'Cea mai bună':90088}, obs:'EIS cel mai mic.'},
+      {cod:'10.9', den:'Montaj echipamente', buget:32452, of:{EIS:66843, 'Cea mai bună':66843}, obs:'IMSAT a inclus montajul în echipamente (0 aici).'}
     ],
-    f4Label:'F4 — Echipamente',
+    f4Label:'F4 — Utilaje și echipamente · buget fără închideri (F4 ÷1,1357)',
     f4: [
-      {cod:'F4.1', den:'GPU 400Hz — sursă statică alimentare curent continuu (4 buc.)', buget:482171.14, of:{Dynell:746000}, obs:'IMSAT NU a ofertat acest echipament. Dynell rămâne singurul ofertant (+54,7% peste buget).'}
+      {cod:'F4.1', den:'Grup generator 1400 kVA', buget:734942, of:{EIS:764792, IMSAT:1541239, 'Cea mai bună':764792}, obs:'EIS GEDEON/YUCHAI aproape de buget; IMSAT CUMMINS +110%. Verifică acceptarea mărcii la beneficiarul militar.'},
+      {cod:'F4.2', den:'UPS 60 kVA', buget:75353, of:{EIS:154830, 'Cea mai bună':154830}, obs:'IMSAT neofertat separat — de reofertat la paritate.'},
+      {cod:'F4.3', den:'Sistem degivrare ghidaj (procurare)', buget:22606, of:{EIS:28586, 'Cea mai bună':28586}, obs:'IMSAT neofertat separat.'}
     ],
     riscuri:[
-      {sev:'CRITIC', text:'10.1 Tablouri electrice +842,7% — cea mai mare anomalie din toată analiza. De verificat urgent cu proiectantul înainte de orice decizie de contractare.'},
-      {sev:'MARE', text:'10.2 Corpuri iluminat — posibil echipament de balizaj neconform spec. aeroportuară (IP68, certificare). Nu trata diferența de -63% ca economie fără verificare tehnică.'},
-      {sev:'MEDIU', text:'10.4 Cabluri energie +138,4% — aceeași inflație cupru ca la Cap.7.'},
-      {sev:'MIC', text:'10.6 (40.231 lei) neofertat de IMSAT — de cerut completare.'}
+      {sev:'CRITIC', text:'Sursă statică 400Hz / GPU aeronave (~1.057.000 lei fără închideri / ~208.000€, RE-adăugată în NCS2) — NEofertată de EIS și IMSAT; EIS nu o are nici în centralizator. De procurat separat (Dynell ~37.300€/buc, Col-Air) și de prins bugetar. Semnalată separat, neinclusă în totaluri.'},
+      {sev:'MARE', text:'Cabluri electrice armate — supraevaluate în ambele oferte: EIS +88% / IMSAT +42% vs buget-cost. IMSAT mai mic cu 82.930€ → reper de negociere pentru EIS.'},
+      {sev:'MARE', text:'Generator 1400kVA — EIS câștigă cu GEDEON/YUCHAI (aproape de buget) vs IMSAT CUMMINS (+110%). Verifică acceptarea mărcii la beneficiarul militar înainte de a conta economia.'},
+      {sev:'MEDIU', text:'Corp balizaj IP68 (CORPIL11, ~222.000 lei în buget) — EIS=0 („sarcină AG”), IMSAT 5.091€. Clarifică cine furnizează.'},
+      {sev:'MEDIU', text:'UPS 60kVA + sistem degivrare — la EIS da, la IMSAT neofertate separat. Reofertare IMSAT la paritate.'},
+      {sev:'MEDIU', text:'Ofertă IMSAT expirată (21.07.2026); EIS validă (29.10.2026). Reconfirmare preț + clauză valutară EUR la contract.'}
     ],
     actiuni:[
-      {a:'Verificare tehnică urgentă cu proiectantul: specificația reală a tabloului general (justificare preț 10.1)', r:'G. Spătaru / Proiectant', t:'—'},
-      {a:'Cere fișa tehnică a corpului de balizaj ofertat de IMSAT — confirmare conformitate aeroportuară IP68', r:'G. Spătaru / Proiectant', t:'—'},
-      {a:'Cere IMSAT completare poziție 10.6 (puncte alimentare curent, 4 buc.)', r:'Achiziții', t:'—'}
+      {a:'Decizie atribuire: EIS integral (824.526€) vs atribuire mixtă (cabluri la IMSAT) — total mix 732.539€', r:'PM / G. Spătaru', t:'—'},
+      {a:'Negociere EIS pe cabluri electrice folosind oferta IMSAT ca reper (potențial 82.930€)', r:'G. Spătaru / Achiziții', t:'—'},
+      {a:'Clarificare acceptare generator GEDEON/YUCHAI la beneficiar; dacă nu, recotare marcă agreată', r:'G. Spătaru / Proiectant', t:'—'},
+      {a:'Procurare separată sursă statică 400Hz (Dynell/Col-Air) + prindere bugetară', r:'Achiziții', t:'—'},
+      {a:'Reofertare IMSAT la paritate (UPS 60kVA, degivrare, balizaj) + reconfirmare valabilitate', r:'Achiziții', t:'—'}
     ]
   },
   cap11: {
@@ -8852,7 +8879,7 @@ function renderInstDashboard(proj) {
   var concluzii = {
     cap7: 'IMSAT singurul ofertant complet pe F3. Generator 1400kVA +90% peste eDevize — de clarificat.',
     cap9: 'Cel mai bine fundamentat — IMSAT ~aproape de buget (+17,6% combinat), umple gol F3.',
-    cap10: 'IMSAT singurul ofertant F3, dar cu anomalii mari (tablouri +843%). Verificare tehnică necesară.',
+    cap10: 'EIS cel mai mic (824.526€) vs IMSAT (948.622€). Scop combinat Cap.10+7+F4, buget fără închideri. Cabluri → IMSAT, restul → EIS.',
     cap11: 'CONTRACTAT: Nibaco ctr 208 (281.107 lei, −10,2% vs buget). Honeywell/IMSAT/Polon-Alfa rămân doar referință. 2 anomalii de preț (cablu NHXH, programare/PIF) de confirmat.'
   };
   caps.forEach(function(k){
@@ -8889,7 +8916,7 @@ function renderInstDashboard(proj) {
   html += '<div class="proj-card-header" style="background:#7B1818"><span style="font-size:13px;font-weight:600;color:#fff">Cele mai importante 3 riscuri (toate capitolele)</span></div>';
   html += '<div class="proj-card-body" style="display:flex;flex-direction:column;gap:6px">';
   var topRisks = [
-    {cap:'Cap.10', sev:'CRITIC', text:'Tablouri electrice (10.1) +842,7% peste buget — cea mai mare anomalie din toată analiza. Verificare tehnică urgentă înainte de orice decizie.'},
+    {cap:'Cap.10', sev:'CRITIC', text:'Sursă statică 400Hz (~1.057.000 lei, NCS2) neofertată de EIS și IMSAT — de procurat separat (Dynell/Col-Air) și de prins bugetar. EIS cel mai mic pe restul Cap.10.'},
     {cap:'Cap.7', sev:'CRITIC', text:'Generator 1400kVA — IMSAT cu 90,4% peste valoarea deja folosită în eDevize (834.674 lei). Impact direct pe plafonul DN Obiect 7.'},
     {cap:'Cap.11', sev:'MEDIU', text:'Contract Nibaco 208 (281.107 lei, −10,2% vs buget): prețul cablului NHXH E30/PH30 (2,48 lei/m vs 19,56) trebuie confirmat în scris; programare/PIF +12,5 mii lei peste buget; CCTV/control acces în afara contractului.'}
   ];

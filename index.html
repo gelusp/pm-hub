@@ -1180,9 +1180,14 @@ function renderAcademiaAnalizaOferta() {
 }
 
 var DOCS_BENEF_ACADEMIA = [
+  { k:202611071, d:'07.11.2026', cat:'BENEFICIAR', nr:'CU A 1043/27.05.2024 (prelungit)',
+    titlu:'Certificat de urbanism nr. A 1043/27.05.2024 — prelungirea valabilității (Direcția Domenii și Infrastructură, MApN)',
+    desc:'Certificatul de urbanism nr. A 1043 din 27.05.2024, emis de Direcția Domenii și Infrastructură (MApN) pentru elaborarea documentației pentru autorizarea construirii „Realizare pavilion nou bloc alimentar și sală de mese în cazarma 1369 Constanța”, cod lucrare 2024-I-1369 B.A, solicitant UM 02192 Constanța. Teren: str. Fulgerului nr. 1, cazarma 1369, 199.163 mp, CF 210739 Constanța, proprietatea Statului Român în administrarea MApN. Imobilul este în sit arheologic (RAN 60428.40) și în Lista monumentelor istorice (LMI CT-I-s-A-02555). Valabilitate inițială: 24 luni de la emitere (până la 27.05.2026). Pe ultima pagină, prin mențiune scrisă de mână și ștampilă, valabilitatea este prelungită de la 27.05.2026 până la 27.06.2027 (data de final se citește 27.06.2027; de verificat dacă este 27.05.2027, termen maxim de 12 luni). Textul precizează că după această dată nu mai este posibilă o nouă prelungire, urmând să se obțină un alt certificat de urbanism. Data emiterii prelungirii nu este vizibilă. Impact: DTAC se depune la ordin + 4 luni (aprox. martie 2027), deci se încadrează în valabilitate; autorizația de construire trebuie solicitată înainte de expirarea CU.',
+    color:'#1A5276', bg:'#EBF5FB', icon:'ti-map-pin',
+    url:'https://drive.google.com/file/d/1o-2kVsuGi3LGziuUAnu3EKX_VTcAv85d/view?usp=sharing' },
   { k:202611062, d:'06.11.2026', cat:'TREZORERIE', nr:'BVR_STZ-3768/06.11.2026',
     titlu:'Comunicare deschidere cont „Disponibil garanții” (simbol 530101) — Trezoreria Municipiului Brașov către EREN CONS',
-    desc:'Comunicarea nr. BVR_STZ-3768/06.11.2026 a Trezoreriei Municipiului Brașov (AJFP Brașov), generată la 06.11.2026, ora 10:56, ca urmare a cererii EREN CONS. Confirmă deschiderea pe numele EREN CONS SRL a contului de tip „Disponibil garanții”, simbol 530101, aferent contractului AP 7189/21.09.2026 cu Academia Navală „Mircea cel Bătrân” – UM 02192 Constanța (CF autoritate contractantă 4515484). Este contul în care se poate constitui garanția de bună execuție (6.041.894 lei, conform adresei AP 8034) prin rețineri sau depunere. Numărul IBAN al contului este în document; nu l-am preluat aici. Următorul pas: confirmarea la AC a constituirii garanției (acțiunea 2 din Plan Contract), după depunerea efectivă a sumei.',
+    desc:'Comunicarea nr. BVR_STZ-3768/06.11.2026 a Trezoreriei Municipiului Brașov (AJFP Brașov), generată la 06.11.2026, ora 10:56, ca urmare a cererii EREN CONS. Confirmă deschiderea pe numele EREN CONS SRL a contului de tip „Disponibil garanții”, simbol 530101, aferent contractului AP 7189/21.09.2026 cu Academia Navală „Mircea cel Bătrân” – UM 02192 Constanța (CF autoritate contractantă 4515484). Este contul în care se poate constitui garanția de bună execuție (6.041.894 lei, conform adresei AP 8034) prin rețineri sau depunere. Numărul IBAN al contului este în document; nu l-am preluat aici. Garanția se constituie prin depunerea a 0,5% din preț în acest cont; acțiunea 2 din Plan Contract este închisă la 07.11.2026.',
     color:'#1A5276', bg:'#EBF5FB', icon:'ti-building-bank',
     url:'https://drive.google.com/file/d/1-Pa94OCvxnXL7hMlmLcxTNdOT-D52f9P/view?usp=sharing' },
   { k:202611061, d:'06.11.2026', cat:'EREN CONS', nr:'Nr. 13920/06.11.2026',
@@ -1313,7 +1318,8 @@ var PLAN_CONTRACT_ACADEMIA = [
   "obs": "Contract semnat la 26.10.2026, ora 10:00, la sediul UM 02192 Constanța.",
   "prio": "critic",
   "stare": "realizat",
-  "realizat": "26.10.2026"
+  "realizat": "26.10.2026",
+  "faza": "A"
  },
  {
   "nr": 2,
@@ -1323,8 +1329,11 @@ var PLAN_CONTRACT_ACADEMIA = [
   "intern": "29.10.2026",
   "livrabil": "Scrisoare de garanție / dovadă constituire",
   "temei": "Adresa AC AP 8034/19.10.2026; CG cl. 15.1",
-  "obs": "Termenul poate fi prelungit la solicitarea justificată a contractantului, fără a depăși 15 zile de la semnare (10.11.2026). CG cl. 15.1 cere garanția la data semnării, dar adresa AC acordă 5 zile lucrătoare; se confirmă cu Juridicul și în Acordul Contractual. Suma din adresă (6.041.894 lei) diferă cu 78,38 lei de 10% din prețul ofertei (6.041.815,62 lei). Emitent: bancă sau asigurător autorizat în UE (sau rating min. BBB-/Baa3); irevocabilă, la prima cerere; emisă în numele asocierii.",
-  "prio": "critic"
+  "obs": "Garanția de bună execuție se constituie prin depunerea a 0,5% din prețul contractului (≈ 302.091 lei, de confirmat cu suma efectiv depusă) în contul „Disponibil garanții” 530101 deschis la Trezoreria Brașov (comunicare BVR_STZ-3768/06.11.2026); restul garanției (până la 6.041.894 lei) se completează conform contractului. Notă inițială: Termenul poate fi prelungit la solicitarea justificată a contractantului, fără a depăși 15 zile de la semnare (10.11.2026). CG cl. 15.1 cere garanția la data semnării, dar adresa AC acordă 5 zile lucrătoare; se confirmă cu Juridicul și în Acordul Contractual. Suma din adresă (6.041.894 lei) diferă cu 78,38 lei de 10% din prețul ofertei (6.041.815,62 lei). Emitent: bancă sau asigurător autorizat în UE (sau rating min. BBB-/Baa3); irevocabilă, la prima cerere; emisă în numele asocierii.",
+  "prio": "critic",
+  "stare": "realizat",
+  "realizat": "07.11.2026",
+  "faza": "A"
  },
  {
   "nr": 3,
@@ -1335,7 +1344,8 @@ var PLAN_CONTRACT_ACADEMIA = [
   "livrabil": "Polițe + dovada plății",
   "temei": "CG cl. 16.2; CS cap. 12",
   "obs": "Asigurarea trebuie să existe de la Data de începere sau mai devreme. Data de începere se stabilește prin ordinul administrativ (CG cl. 33.1: până la 25.11.2026); Data de începere: 05.11.2026, conform programării Supervizorului. Tipurile și sumele asigurate se preiau din contract.",
-  "prio": "normal"
+  "prio": "normal",
+  "faza": "A"
  },
  {
   "nr": 4,
@@ -1345,8 +1355,9 @@ var PLAN_CONTRACT_ACADEMIA = [
   "intern": "12.11.2026",
   "livrabil": "Cerere de avans + garanție de avans",
   "temei": "CG cl. 46; sinteza pct. 10.2",
-  "obs": "Avansul nu se plătește înainte de Data de începere. Dacă Acordul nu stabilește tranșele, avansul de 15% se cere în prima situație de lucrări după Data de începere. Garanția de returnare: bancă sau asigurător, la prima cerere, valoare avans plus dobândă BNR. Impact direct în cash flow. Vezi foaia Clarificări, nr. 1",
-  "prio": "normal"
+  "obs": "Avansul nu se plătește înainte de Data de începere. Dacă Acordul nu stabilește tranșele, avansul de 15% se cere în prima situație de lucrări după Data de începere. Garanția de returnare: bancă sau asigurător, la prima cerere, valoare avans plus dobândă BNR. Impact direct în cash flow. Vezi foaia Clarificări, nr. 1 Minută 28.10.2026: avansul reprezintă 15% din producția anului pentru care se solicită.",
+  "prio": "normal",
+  "faza": "A"
  },
  {
   "nr": 5,
@@ -1359,7 +1370,8 @@ var PLAN_CONTRACT_ACADEMIA = [
   "obs": "AC cere subcontractele cu activitățile și valorile lor, plus acordul de asociere în original, la semnare (26.10.2026, ora 10:00, sediul UM 02192). Subcontractele sunt valide doar în formă scrisă; prevederile lor în afara contractului nu sunt opozabile AC. Subcontractele declarate în ofertă se consideră aprobate de AC. Acordurile de subcontractare și acordul de asociere au fost prezentate la semnare (26.10.2026).",
   "prio": "normal",
   "stare": "realizat",
-  "realizat": "26.10.2026"
+  "realizat": "26.10.2026",
+  "faza": "A"
  },
  {
   "nr": 6,
@@ -1369,8 +1381,9 @@ var PLAN_CONTRACT_ACADEMIA = [
   "intern": "30.10.2026",
   "livrabil": "Contract de subcontractare, acord AC",
   "temei": "CG cl. 7.4; Aviz Cultură 1360/Z/05.12.2024; CS cap. 9",
-  "obs": "AC răspunde în 30 de zile de la cerere (tacit aprobat la expirare); subcontractantul nu începe înainte de transmiterea subcontractului. Termen cerere: 02.11, nu data contractării. Amplasament în sit arheologic RAN 60428.40 și LMI CT-I-s-A-02555. Apărarea AC în dosarul 1503 presupune declararea după semnare. Condiționează săpăturile și demolarea (din 25.01.2027 în graficul ofertei). Dacă subcontractantul era declarat în ofertă, se aplică cl. 7.3 (la semnare).",
-  "prio": "critic"
+  "obs": "AC răspunde în 30 de zile de la cerere (tacit aprobat la expirare); subcontractantul nu începe înainte de transmiterea subcontractului. Termen cerere: 02.11, nu data contractării. Amplasament în sit arheologic RAN 60428.40 și LMI CT-I-s-A-02555. Apărarea AC în dosarul 1503 presupune declararea după semnare. Condiționează săpăturile și demolarea (din 25.01.2027 în graficul ofertei). Dacă subcontractantul era declarat în ofertă, se aplică cl. 7.3 (la semnare). Minuta 28.10.2026 (acț. 2): demers în curs la Muzeul de Istorie Constanța pentru acordul de supraveghere arheologică. Minuta 05.11.2026 (acț. 5): încheierea contractului cu Cultura este URGENTĂ.",
+  "prio": "critic",
+  "faza": "A"
  },
  {
   "nr": 7,
@@ -1380,8 +1393,11 @@ var PLAN_CONTRACT_ACADEMIA = [
   "intern": "29.10.2026",
   "livrabil": "Adresă către AC cu propunerea Reprezentantului + împuternicire",
   "temei": "CG cl. 13.2 – 13.5, 14.3; CS cap. 5",
-  "obs": "Reprezentantul Antreprenorului decide, primește și implementează Ordinele Administrative, semnează documentele transmise AC (cl. 13.4, 13.5); timpul lui este alocat în totalitate coordonării contractului. Propunerea se face în 15 zile de la semnare (10.11.2026), iar Supervizorul aprobă sau respinge motivat în 10 zile; aprobarea poate fi retrasă (cl. 13.3). Reprezentantul se menține pe toată durata (cl. 14.3). Managerul de contract (Manda) este expert-cheie evaluat în ofertă și rămâne neschimbat. Pentru șeful de șantier CG nu fixează termen; cerințele minime se verifică în CS și în Acordul Contractual. Înlocuirea șefului de șantier (Luca Daniliu Vasile), dacă se menține decizia, nu cere punctaj, doar calificare adecvată.",
-  "prio": "normal"
+  "obs": "Gelu Spătaru numit Reprezentant al Antreprenorului; propunerea transmisă prin adresa EREN CONS nr. 13899/30.10.2026 către UM 02192 (copie Supervizor). Manda Victor Adrian rămâne Manager de contract. Notificarea noului șef de șantier se face după numirea acestuia (în prezent Luca Daniliu Vasile, în curs de înlocuire). Notă inițială: Reprezentantul Antreprenorului decide, primește și implementează Ordinele Administrative, semnează documentele transmise AC (cl. 13.4, 13.5); timpul lui este alocat în totalitate coordonării contractului. Propunerea se face în 15 zile de la semnare (10.11.2026), iar Supervizorul aprobă sau respinge motivat în 10 zile; aprobarea poate fi retrasă (cl. 13.3). Reprezentantul se menține pe toată durata (cl. 14.3). Managerul de contract (Manda) este expert-cheie evaluat în ofertă și rămâne neschimbat. Pentru șeful de șantier CG nu fixează termen; cerințele minime se verifică în CS și în Acordul Contractual. Înlocuirea șefului de șantier (Luca Daniliu Vasile), dacă se menține decizia, nu cere punctaj, doar calificare adecvată.",
+  "prio": "normal",
+  "stare": "realizat",
+  "realizat": "30.10.2026",
+  "faza": "A"
  },
  {
   "nr": 8,
@@ -1391,8 +1407,11 @@ var PLAN_CONTRACT_ACADEMIA = [
   "intern": "",
   "livrabil": "Adresă către AC",
   "temei": "CS personal minim; HG 395/2016 art. 162",
-  "obs": "Înlocuirea experților se face doar cu acordul AC",
-  "prio": "normal"
+  "obs": "Acțiune închisă la 07.11.2026. Notă inițială: Înlocuirea experților se face doar cu acordul AC",
+  "prio": "normal",
+  "stare": "realizat",
+  "realizat": "07.11.2026",
+  "faza": "A"
  },
  {
   "nr": 9,
@@ -1402,8 +1421,11 @@ var PLAN_CONTRACT_ACADEMIA = [
   "intern": "05.11.2026",
   "livrabil": "Ordin administrativ",
   "temei": "CG cl. 33.1; CS cap. 3",
-  "obs": "Programat: joi 05.11.2026, ora 10:00. Data ordinului este Data de începere și pornește toate termenele de proiectare. Termenul contractual rămâne 25.11.2026 (CG cl. 33.1).",
-  "prio": "normal"
+  "obs": "Realizat la 05.11.2026 (ordinul de începere proiectare emis de Supervizor, ora 10:00). Notă inițială: Programat: joi 05.11.2026, ora 10:00. Data ordinului este Data de începere și pornește toate termenele de proiectare. Termenul contractual rămâne 25.11.2026 (CG cl. 33.1).",
+  "prio": "normal",
+  "stare": "realizat",
+  "realizat": "05.11.2026",
+  "faza": "A"
  },
  {
   "nr": 10,
@@ -1413,8 +1435,11 @@ var PLAN_CONTRACT_ACADEMIA = [
   "intern": "",
   "livrabil": "Adresă + proces verbal de predare documente",
   "temei": "CS cap. 4.1, 6, 8.4",
-  "obs": "Supervizorul este S.C. GHALLARD SYS S.R.L. Diriginți numiți: Florian Militaru (2.2), Karmen Țigănilă (6.1), Felicia Martin (3.1–3.3), Grigore Ivanov (9.1). Persoana pentru testările tehnice nu reiese din ordin (consultantul are inginer calitate/laborator, Maria Mocanu). Contact AC: Lt. cdor Constantin Schipor (manager de proiect), Pcc Georgiana Piciu (responsabil de contract).",
-  "prio": "normal"
+  "obs": "Acțiune închisă la 07.11.2026. Notă inițială: Supervizorul este S.C. GHALLARD SYS S.R.L. Diriginți numiți: Florian Militaru (2.2), Karmen Țigănilă (6.1), Felicia Martin (3.1–3.3), Grigore Ivanov (9.1). Persoana pentru testările tehnice nu reiese din ordin (consultantul are inginer calitate/laborator, Maria Mocanu). Contact AC: Lt. cdor Constantin Schipor (manager de proiect), Pcc Georgiana Piciu (responsabil de contract).",
+  "prio": "normal",
+  "stare": "realizat",
+  "realizat": "07.11.2026",
+  "faza": "A"
  },
  {
   "nr": 11,
@@ -1424,8 +1449,11 @@ var PLAN_CONTRACT_ACADEMIA = [
   "intern": "",
   "livrabil": "CU valabil sau cerere depusă",
   "temei": "Legea 50/1991 art. 7, CS cap. 6",
-  "obs": "Valabilitatea CU este limitată (se stabilește în certificat și se poate prelungi o singură dată, conform Legea 50/1991): se verifică data de expirare înscrisă pe CU. CU emis în mai 2024, deci probabil expirat; condiționează avizele și AC. De confirmat la juridic / AC dacă există CU nou.",
-  "prio": "critic"
+  "obs": "CU nr. A 1043/27.05.2024 prelungit de Direcția Domenii și Infrastructură (primit 07.11.2026): valabilitate inițială 24 luni (până la 27.05.2026), prelungită de la 27.05.2026 până la 27.06.2027 (data scrisă de mână, de verificat dacă este 27.05.2027). Nu mai este posibilă o altă prelungire. Avizele din faza SF rămân de verificat separat.",
+  "prio": "critic",
+  "stare": "realizat",
+  "realizat": "07.11.2026",
+  "faza": "A"
  },
  {
   "nr": 12,
@@ -1435,8 +1463,11 @@ var PLAN_CONTRACT_ACADEMIA = [
   "intern": "",
   "livrabil": "Minută kick off, registru documente",
   "temei": "CS cap. 7.3",
-  "obs": "",
-  "prio": "normal"
+  "obs": "Acțiune închisă la 07.11.2026.",
+  "prio": "normal",
+  "stare": "realizat",
+  "realizat": "07.11.2026",
+  "faza": "A"
  },
  {
   "nr": 13,
@@ -1447,7 +1478,8 @@ var PLAN_CONTRACT_ACADEMIA = [
   "livrabil": "Liste + copii documente",
   "temei": "CS cap. 9, personal",
   "obs": "Durata de obținere a avizelor de securitate se cere de la AC",
-  "prio": "normal"
+  "prio": "normal",
+  "faza": "A"
  },
  {
   "nr": 14,
@@ -1458,7 +1490,8 @@ var PLAN_CONTRACT_ACADEMIA = [
   "livrabil": "Adresă + atestate",
   "temei": "CS cap. 3.1",
   "obs": "Daraban, Boldișor, Diaconescu, Ivan, Popovici",
-  "prio": "normal"
+  "prio": "normal",
+  "faza": "A"
  },
  {
   "nr": "14a",
@@ -1468,14 +1501,266 @@ var PLAN_CONTRACT_ACADEMIA = [
   "intern": "05.11.2026",
   "livrabil": "Ofertă de demolare + notă/proces verbal de vizită",
   "temei": "Organizare internă (ședința din 28.10.2026)",
-  "obs": "Vizita are loc cu o oră înainte de emiterea ordinului de începere (10:00). Accesul în unitatea militară necesită listele nominale de personal și vehicule (acțiunea 13, termen 09.11): confirmăm din timp la AC accesul pentru vizită. Amplasament în sit arheologic RAN 60428.",
-  "prio": "normal"
+  "obs": "Realizat la 05.11.2026 (vizita cu S.C. General Util pentru vizionare și ofertare demolare). Notă inițială: Vizita are loc cu o oră înainte de emiterea ordinului de începere (10:00). Accesul în unitatea militară necesită listele nominale de personal și vehicule (acțiunea 13, termen 09.11): confirmăm din timp la AC accesul pentru vizită. Amplasament în sit arheologic RAN 60428.",
+  "prio": "normal",
+  "stare": "realizat",
+  "realizat": "05.11.2026",
+  "faza": "A"
+ },
+ {
+  "nr": "14b",
+  "task": "Solicitarea către AC a plății directe către BEMEL AG pentru serviciile de proiectare și asistență tehnică (1.510.000 lei fără TVA, plus TVA) și a actului adițional aferent",
+  "resp": "EREN CONS (lider)",
+  "term": "06.11.2026",
+  "intern": "06.11.2026",
+  "livrabil": "Cerere nr. 13920/06.11.2026 (semnată electronic, copie Supervizor)",
+  "temei": "Acordul de asociere; minute interne 28.10.2026 (acț. 8) și 05.11.2026 (acț. 17)",
+  "obs": "Cererea nr. 13920/06.11.2026 a fost transmisă către UM 02192 (spre știință GHALLARD SYS). Următorul pas: răspunsul AC și actul adițional; contul de trezorerie al BEMEL se confirmă complet cu AC.",
+  "prio": "normal",
+  "stare": "realizat",
+  "realizat": "06.11.2026",
+  "faza": "A"
+ },
+ {
+  "nr": "15",
+  "task": "Vizita amplasamentului, culegerea datelor din teren, relevee ale Pavilionului B1, fotografii, identificarea rețelelor existente",
+  "resp": "BEMEL + EREN CONS",
+  "term": "12.11.2026",
+  "intern": "",
+  "livrabil": "Note de teren, relevee",
+  "temei": "CS cap. 6",
+  "obs": "",
+  "prio": "normal",
+  "faza": "B"
+ },
+ {
+  "nr": "16",
+  "task": "Transmiterea către AC a pachetului de clarificări (foaia Clarificări): exemplare livrabile, frecvența raportului proiectantului, priză de pământ, raport NZEB de referință, demarcația PV și post trafo, canalizare pluvială, termen demolare",
+  "resp": "EREN CONS + BEMEL",
+  "term": "19.11.2026",
+  "intern": "15.11.2026",
+  "livrabil": "Adresă înregistrată la AC",
+  "temei": "Dosar de analiză secț. 6 și 7; Sinteza pct. 10",
+  "obs": "Fără răspuns, proiectăm pe varianta mai strictă și o consemnăm în raportul inițial",
+  "prio": "normal",
+  "faza": "B"
+ },
+ {
+  "nr": "17",
+  "task": "Raportul inițial: concluzii din teren, analiza documentațiilor, neconcordanțe față de specificații, conceptul de proiectare, planul de lucru, calendarul de predare detaliat, conținutul sumar al documentațiilor, resursele alocate",
+  "resp": "BEMEL + EREN CONS",
+  "term": "19.11.2026",
+  "intern": "15.11.2026",
+  "livrabil": "Raport inițial, 1 exemplar, limba română",
+  "temei": "CS cap. 6 și 8.2",
+  "obs": "Analiza raportului se consemnează în minuta primei ședințe de progres",
+  "prio": "normal",
+  "faza": "B"
+ },
+ {
+  "nr": "18",
+  "task": "Planul detaliat de execuție a tuturor activităților din contract (Gantt pe luni, cu drum critic și puncte de referință la 4 luni; durata totală maxim 37 luni)",
+  "resp": "EREN CONS",
+  "term": "19.11.2026",
+  "intern": "15.11.2026",
+  "livrabil": "Gantt tipărit + editabil",
+  "temei": "CS cap. 8.1",
+  "obs": "AC aprobă sau returnează în 5 zile lucrătoare",
+  "prio": "normal",
+  "faza": "B"
+ },
+ {
+  "nr": "19",
+  "task": "Planul calității, specific contractului (SR EN ISO 9001:2015, SR ISO 10005:2007, HG 766/1997 anexa 2), cu structura organizațională, managementul documentelor, resurse, comunicare, neconformități",
+  "resp": "EREN CONS (CQ)",
+  "term": "19.11.2026",
+  "intern": "15.11.2026",
+  "livrabil": "Planul calității",
+  "temei": "CS cap. 7.1",
+  "obs": "AC aprobă sau returnează în 7 zile; se actualizează după PT",
+  "prio": "normal",
+  "faza": "B"
+ },
+ {
+  "nr": "20",
+  "task": "Planul general de control al calității lucrărilor",
+  "resp": "EREN CONS (CQ)",
+  "term": "19.11.2026",
+  "intern": "15.11.2026",
+  "livrabil": "PGCC",
+  "temei": "CS cap. 7.2",
+  "obs": "AC aprobă sau returnează în 5 zile",
+  "prio": "normal",
+  "faza": "B"
+ },
+ {
+  "nr": "21",
+  "task": "Planul de securitate și sănătate al contractantului și subcontractanților, care integrează planul de securitate și coordonare",
+  "resp": "EREN CONS (SSM)",
+  "term": "19.11.2026",
+  "intern": "15.11.2026",
+  "livrabil": "Plan SSM",
+  "temei": "CS cap. 8.2",
+  "obs": "Se aprobă de coordonatorul SSM înainte de începerea lucrărilor Minuta 05.11.2026 (acț. 18): se pregătesc toate documentele SSM.",
+  "prio": "normal",
+  "faza": "B"
+ },
+ {
+  "nr": "22",
+  "task": "Planul de management al deșeurilor (inclusiv valorificare și reciclare)",
+  "resp": "EREN CONS",
+  "term": "19.11.2026",
+  "intern": "",
+  "livrabil": "Plan deșeuri",
+  "temei": "CS cap. 11.2",
+  "obs": "",
+  "prio": "normal",
+  "faza": "B"
+ },
+ {
+  "nr": "23",
+  "task": "Planul de management al riscurilor (punct adăugat la Memoriul tehnic prin măsurile de remediere AP 5052): identificare, cuantificare, măsuri de atenuare, aplicare; pornește de la foaia Riscuri",
+  "resp": "EREN CONS",
+  "term": "19.11.2026",
+  "intern": "15.11.2026",
+  "livrabil": "Plan de management al riscurilor",
+  "temei": "Anexa CNSC, modificări AP 5052 pct. 3",
+  "obs": "",
+  "prio": "normal",
+  "faza": "B"
+ },
+ {
+  "nr": "24",
+  "task": "Ședința de demarare a activităților: predarea celor 4 documente, agrearea formatului raportului de progres și a datei ședinței lunare; minută semnată de ambele părți",
+  "resp": "EREN CONS + AC",
+  "term": "19.11.2026",
+  "intern": "",
+  "livrabil": "Minută semnată",
+  "temei": "CS cap. 8.2, 8.6",
+  "obs": "",
+  "prio": "normal",
+  "faza": "B"
+ },
+ {
+  "nr": "24a",
+  "task": "Întocmirea matricei de comunicare (cine comunică cu cine, către investitor și supervizor, în copie)",
+  "resp": "de stabilit",
+  "term": "12.11.2026",
+  "intern": "12.11.2026",
+  "livrabil": "—",
+  "temei": "Minută internă 05.11.2026, acț. 11; CG cl. 4",
+  "obs": "Corespondența se face către investitor ȘI supervizor (decizie 05.11.2026); adresele oficiale de email sunt în adresa ACz-N 856/30.10.2026. Termen: maximum 5 zile de la 07.11.2026 (12.11.2026); responsabilul se stabilește.",
+  "prio": "normal",
+  "faza": "B"
+ },
+ {
+  "nr": "24b",
+  "task": "Planul de management al traficului și planul de organizare a șantierului: verificarea tramei stradale și a tonajului admis, identificarea zonelor cu lucrări edilitare",
+  "resp": "de stabilit",
+  "term": "12.11.2026",
+  "intern": "12.11.2026",
+  "livrabil": "—",
+  "temei": "Minută internă 05.11.2026, acț. 13",
+  "obs": "Se corelează cu procedura de acces în unitatea militară și cu POE/DTOE. Termen: maximum 5 zile de la 07.11.2026 (12.11.2026); responsabilul se stabilește.",
+  "prio": "normal",
+  "faza": "B"
+ },
+ {
+  "nr": "24c",
+  "task": "Contract de protocol pentru execuție",
+  "resp": "de stabilit",
+  "term": "12.11.2026",
+  "intern": "12.11.2026",
+  "livrabil": "—",
+  "temei": "Minută internă 05.11.2026, acț. 14",
+  "obs": "Termen: maximum 5 zile de la 07.11.2026 (12.11.2026); responsabilul se stabilește.",
+  "prio": "normal",
+  "faza": "B"
+ },
+ {
+  "nr": "24d",
+  "task": "Obținerea planșelor SF „vizate spre neschimbare” (de la ISU) și a planșelor SF în format DWG",
+  "resp": "de stabilit",
+  "term": "12.11.2026",
+  "intern": "12.11.2026",
+  "livrabil": "—",
+  "temei": "Minută internă 05.11.2026, acț. 7 și 8",
+  "obs": "Decizie 05.11.2026: dacă proiectarea nu modifică fluxurile, se rămâne pe avizul ISU existent; decizia se ia după proiectare. Termen: maximum 5 zile de la 07.11.2026 (12.11.2026); responsabilul se stabilește.",
+  "prio": "normal",
+  "faza": "B"
+ },
+ {
+  "nr": "24e",
+  "task": "Suprafața totală a investiției, preluată de pe planul de amplasament",
+  "resp": "de stabilit",
+  "term": "12.11.2026",
+  "intern": "12.11.2026",
+  "livrabil": "—",
+  "temei": "Minută internă 05.11.2026, acț. 6",
+  "obs": "Termen: maximum 5 zile de la 07.11.2026 (12.11.2026); responsabilul se stabilește.",
+  "prio": "normal",
+  "faza": "B"
+ },
+ {
+  "nr": "24f",
+  "task": "Primirea programului de execuție și a programului de lucrări ale AG",
+  "resp": "de stabilit",
+  "term": "12.11.2026",
+  "intern": "12.11.2026",
+  "livrabil": "—",
+  "temei": "Minută internă 05.11.2026, acț. 12",
+  "obs": "Graficul de execuție se structurează pe sectoare și se transmite supervizorului lunar, pe data de 10 (decizie 05.11.2026). Termen: maximum 5 zile de la 07.11.2026 (12.11.2026); responsabilul se stabilește.",
+  "prio": "normal",
+  "faza": "B"
  }
 ];
 
 function _pcDate(s) {
   var p = (s || '').split('.');
   return p.length === 3 ? new Date(+p[2], +p[1] - 1, +p[0]) : null;
+}
+
+function _pcDownloadDone() {
+  var esc = function(t) { return String(t == null ? '' : t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); };
+  var dk = function(x) { var p = String(x.realizat || '').split('.'); return p.length === 3 ? p[2] + p[1] + p[0] : '0'; };
+  var nk = function(x) { return parseFloat(x.nr) + (/[a-z]$/i.test(String(x.nr)) ? 0.5 : 0); };
+  var done = PLAN_CONTRACT_ACADEMIA.filter(function(x) { return x.stare === 'realizat'; })
+    .sort(function(a, b) { return (dk(a) < dk(b) ? -1 : dk(a) > dk(b) ? 1 : 0) || (nk(a) - nk(b)); });
+  var now = new Date();
+  var azi = ('0' + now.getDate()).slice(-2) + '.' + ('0' + (now.getMonth() + 1)).slice(-2) + '.' + now.getFullYear();
+  var rows = done.map(function(x) {
+    return '<tr><td class="n">' + esc(x.nr) + '</td><td>' + esc(x.task) + '</td><td>' + esc(x.resp) + '</td><td>' + esc(x.term) + '</td><td class="d">' + esc(x.realizat) + '</td><td>' + esc(x.livrabil) + '</td><td class="o">' + esc(x.obs) + '</td></tr>';
+  }).join('');
+  var h = '<!DOCTYPE html><html lang="ro"><head><meta charset="utf-8"><title>Plan contract - Actiuni realizate</title><style>' +
+    '@page{size:A4 landscape;margin:12mm}body{font-family:Arial,Helvetica,sans-serif;color:#111;margin:0}' +
+    'h1{font-size:18px;color:#1A5276;margin:0 0 4px}.s{font-size:10.5px;color:#444;margin:0 0 3px}' +
+    'table{width:100%;border-collapse:collapse;margin-top:12px;table-layout:fixed}' +
+    'th{background:#1A5276;color:#fff;font-size:10px;text-align:left;padding:5px}' +
+    'td{border:1px solid #B9C6D2;font-size:9.5px;padding:5px;vertical-align:top;background:#EAF8EF;word-wrap:break-word}' +
+    'td.n{font-weight:700}td.d{font-weight:700;color:#1E8449}td.o{font-size:8.5px;color:#333}tr{page-break-inside:avoid}' +
+    'th,td{-webkit-print-color-adjust:exact;print-color-adjust:exact}' +
+    '.hint{font-size:11px;background:#FFF8E1;border:1px solid #F0D98C;padding:6px 10px;margin-bottom:10px}@media print{.hint{display:none}}' +
+    '</style></head><body><div class="hint">Alege „Salvează ca PDF” în fereastra de tipărire pentru a descărca documentul.</div>' +
+    '<h1>Plan contract — Acțiuni realizate (istoric)</h1>' +
+    '<p class="s">Realizare pavilion nou bloc alimentar și sală de mese, Cazarma 1369 Constanța · UM 02192 / Academia Navală „Mircea cel Bătrân” · Contract AP 7189/21.09.2026 · Asociere EREN CONS (lider) – BEMEL AG – ICCO INSTAL</p>' +
+    '<p class="s">Situație la ' + azi + ' · ' + done.length + ' acțiuni realizate din ' + PLAN_CONTRACT_ACADEMIA.length + ' · sursă: PM Hub, Plan contract</p>' +
+    '<table><colgroup><col style="width:4%"><col style="width:27%"><col style="width:11%"><col style="width:8%"><col style="width:8%"><col style="width:12%"><col style="width:30%"></colgroup>' +
+    '<thead><tr><th>Nr</th><th>Acțiune</th><th>Responsabil</th><th>Termen contractual</th><th>Data realizării</th><th>Livrabil / dovadă</th><th>Observații</th></tr></thead><tbody>' + rows + '</tbody></table>' +
+    '<script>window.onload=function(){setTimeout(function(){window.print();},300);};<\/script></body></html>';
+  var w = window.open('', '_blank');
+  if (!w) { alert('Fereastra a fost blocată de browser. Permite ferestrele pop-up pentru această pagină și încearcă din nou.'); return; }
+  w.document.open(); w.document.write(h); w.document.close();
+}
+
+function _togglePcDone() {
+  var w = document.getElementById('pcdone-wrap');
+  if (!w) return;
+  var open = w.style.display === 'none';
+  w.style.display = open ? 'block' : 'none';
+  var ic = document.getElementById('pcdone-ico');
+  if (ic) ic.style.transform = open ? 'rotate(180deg)' : '';
+  var t = document.getElementById('pcdone-txt');
+  if (t) t.textContent = open ? 'Ascunde' : 'Arată';
 }
 
 function _togglePcDet(i) {
@@ -1500,11 +1785,11 @@ function renderAcademiaPlanContract() {
     var work = (t && i) ? (i < t ? i : t) : (i || t);
     return Object.assign({ _t: t, _i: i, _work: work }, x);
   });
-  items.sort(function(a, b) { return (a._work - b._work) || (parseFloat(a.nr)+(/[a-z]$/i.test(String(a.nr))?0.5:0)) - (parseFloat(b.nr)+(/[a-z]$/i.test(String(b.nr))?0.5:0)); });
+  items.sort(function(a, b) { var wa = a._work ? a._work.getTime() : Infinity, wb = b._work ? b._work.getTime() : Infinity; return (wa === wb ? 0 : (wa < wb ? -1 : 1)) || (parseFloat(a.nr)+(/[a-z]$/i.test(String(a.nr))?0.5:0)) - (parseFloat(b.nr)+(/[a-z]$/i.test(String(b.nr))?0.5:0)); });
   var SIGN = new Date(2026, 9, 26);
   var pre = items.filter(function(x){ return x._work < SIGN; }).length;
-  var sapt1 = items.filter(function(x){ return x._work >= SIGN && x._work <= new Date(2026, 10, 2); }).length;
-  var dupa = items.length - pre - sapt1;
+  var openN = items.filter(function(x){ return x.stare !== 'realizat'; }).length;
+  var late = items.filter(function(x){ return x.stare !== 'realizat' && x._work && x._work < today; }).length;
   var crit = items.filter(function(x){ return x.prio === 'critic' && x.stare !== 'realizat'; }).length;
   var done = items.filter(function(x){ return x.stare === 'realizat'; }).length;
 
@@ -1522,9 +1807,9 @@ function renderAcademiaPlanContract() {
   }
 
   var html =
-    '<div class="proj-header"><div class="proj-title">Plan contract — prima săptămână</div>' +
+    '<div class="proj-header"><div class="proj-title">Plan contract — mobilizare și demarare</div>' +
     '<div class="proj-meta">Academia Navală - Mircea cel Bătrân · semnare contract luni 26.10.2026</div></div>' +
-    '<div class="module-badge" style="background:#D6EAF8;color:#1A5276"><i class="ti ti-list-check" style="font-size:13px"></i> Acțiuni semnare și mobilizare</div>';
+    '<div class="module-badge" style="background:#D6EAF8;color:#1A5276"><i class="ti ti-list-check" style="font-size:13px"></i> Faza A (semnare și mobilizare) · Faza B (demarare)</div>';
 
   html += '<div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px">' +
     (PLAN_CONTRACT_ACADEMIA_URL
@@ -1534,17 +1819,19 @@ function renderAcademiaPlanContract() {
   '</div>';
 
   html += '<div class="kpi-grid">' +
-    '<div class="kpi"><div class="kpi-label">Acțiuni în săptămâna 1</div><div class="kpi-val">' + items.length + '</div><div class="kpi-sub">de la semnare până la 09.11.2026</div></div>' +
-    '<div class="kpi"><div class="kpi-label">26.10 – 02.11.2026</div><div class="kpi-val">' + sapt1 + '</div><div class="kpi-sub">de la semnare până la efectivitate</div></div>' +
-    '<div class="kpi"><div class="kpi-label">Termen 05 – 09.11.2026</div><div class="kpi-val">' + dupa + '</div><div class="kpi-sub">se declanșează în săptămâna 1</div></div>' +
+    '<div class="kpi"><div class="kpi-label">Acțiuni în plan</div><div class="kpi-val">' + items.length + '</div><div class="kpi-sub">faza A (mobilizare) + faza B (demarare)</div></div>' +
+    '<div class="kpi"><div class="kpi-label">Deschise</div><div class="kpi-val">' + openN + '</div><div class="kpi-sub">de făcut</div></div>' +
+    '<div class="kpi"><div class="kpi-label">Întârziate</div><div class="kpi-val" style="color:' + (late ? '#C0392B' : '#1E8449') + '">' + late + '</div><div class="kpi-sub">termen sau țintă internă depășită</div></div>' +
     '<div class="kpi"><div class="kpi-label">Realizate</div><div class="kpi-val" style="color:#1E8449">' + done + ' / ' + items.length + '</div><div class="kpi-sub">bifate în planul Excel</div></div>' +
     '<div class="kpi"><div class="kpi-label">Critice</div><div class="kpi-val" style="color:#C0392B">' + crit + '</div><div class="kpi-sub">blochează semnarea sau proiectarea</div></div>' +
   '</div>';
 
+  html += '%%PCDONE%%';
+  var doneHtml = '';
   var last = '';
   items.forEach(function(x, pi) {
     var key = x._work ? x._work.getTime() : 0;
-    if (key !== last) {
+    if (x.stare !== 'realizat' && key !== last) {
       last = key;
       html += '<div style="font-size:12px;font-weight:700;color:#1A5276;margin:18px 0 8px;display:flex;align-items:center">' +
         '<i class="ti ti-calendar-event" style="margin-right:6px"></i>' + (x._work ? fmtDay(x._work) : 'Fără dată') + badge(x._work, x.stare === 'realizat') + '</div>';
@@ -1554,13 +1841,13 @@ function renderAcademiaPlanContract() {
     var color = isDone ? '#1E8449' : (isCrit ? '#C0392B' : '#1A5276');
     var termTxt = x._t ? x.term : (x.term || '—');
     var meta =
-      '<span><i class="ti ti-hash"></i> Plan Excel, nr. <b>' + x.nr + '</b></span>' +
+      '<span><i class="ti ti-hash"></i> Plan Excel, nr. <b>' + x.nr + '</b> · faza ' + (x.faza || 'A') + '</span>' +
       '<span><i class="ti ti-user"></i> ' + x.resp + '</span>' +
       '<span><i class="ti ti-flag"></i> Termen contractual: <b>' + termTxt + '</b></span>' +
       (x._i ? '<span><i class="ti ti-target"></i> Țintă internă: <b>' + x.intern + '</b></span>' : '') +
       (x.livrabil ? '<span><i class="ti ti-file-check"></i> ' + x.livrabil + '</span>' : '') +
       (isDone ? '<span style="color:#1E8449;font-weight:700"><i class="ti ti-circle-check"></i> Realizat: ' + x.realizat + '</span>' : '');
-    html +=
+    var card =
       '<div class="nivel-card" style="margin-bottom:8px;border-left:4px solid ' + color + ';padding:12px 16px' + (isDone ? ';background:#EAF8EF' : '') + '">' +
         '<div style="display:flex;gap:10px;align-items:flex-start;flex-wrap:wrap">' +
           '<div style="min-width:26px;height:26px;border-radius:99px;background:' + color + ';color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">' + (isDone ? '<i class="ti ti-check" style="font-size:15px"></i>' : x.nr) + '</div>' +
@@ -1577,7 +1864,15 @@ function renderAcademiaPlanContract() {
             '<i class="ti ti-chevron-down" id="pcico-' + pi + '" style="font-size:13px;transition:transform .15s"></i><span id="pctxt-' + pi + '">Deschide</span></button>' +
         '</div>' +
       '</div>';
+    if (isDone) doneHtml += card; else html += card;
   });
+  var doneBlock = done
+    ? '<div style="margin:14px 0 4px"><button type="button" onclick="_togglePcDone()" id="pcdone-btn" style="display:inline-flex;align-items:center;gap:7px;padding:8px 14px;border:1px solid #1E8449;background:#EAF8EF;color:#1E8449;border-radius:6px;font-size:12px;font-weight:700;font-family:inherit;cursor:pointer">' +
+        '<i class="ti ti-circle-check"></i> Realizate (' + done + ') <i class="ti ti-chevron-down" id="pcdone-ico" style="font-size:13px;transition:transform .15s"></i><span id="pcdone-txt" style="font-weight:600">Arată</span></button>' +
+        ' <button type="button" onclick="_pcDownloadDone()" style="display:inline-flex;align-items:center;gap:7px;padding:8px 14px;margin-left:8px;border:1px solid #1A5276;background:#fff;color:#1A5276;border-radius:6px;font-size:12px;font-weight:700;font-family:inherit;cursor:pointer"><i class="ti ti-file-download"></i> Descarcă PDF (istoric)</button>' +
+        '<div id="pcdone-wrap" style="display:none;margin-top:10px">' + doneHtml + '</div></div>'
+    : '';
+  html = html.replace('%%PCDONE%%', function() { return doneBlock; });
 
   html += '<div class="page-footer">PM Hub · EREN CONS SRL · 2026</div>';
   document.getElementById('main').innerHTML = html;

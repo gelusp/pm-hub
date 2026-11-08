@@ -1777,6 +1777,26 @@ function _togglePcDone() {
   if (t) t.textContent = open ? 'Ascunde' : 'Arată';
 }
 
+function _togglePcLate() {
+  var btn = document.getElementById('pclate-btn');
+  var on = !(btn && btn.getAttribute('data-on') === '1');
+  if (btn) {
+    btn.setAttribute('data-on', on ? '1' : '0');
+    btn.style.background = on ? '#C0392B' : '#fff';
+    btn.style.color = on ? '#fff' : '#C0392B';
+  }
+  var els = document.querySelectorAll('.pc-day, .pc-item');
+  var n = 0;
+  for (var i = 0; i < els.length; i++) {
+    var late = els[i].getAttribute('data-late') === '1';
+    els[i].style.display = (on && !late) ? 'none' : '';
+    if (on && late && els[i].className.indexOf('pc-item') > -1) n++;
+  }
+  var db = document.getElementById('pcdone-block');
+  if (db) db.style.display = on ? 'none' : '';
+  var t = document.getElementById('pclate-txt');
+  if (t) t.textContent = on ? 'Arată toate acțiunile' : 'Arată doar întârziate (' + (btn ? btn.getAttribute('data-n') : '') + ')';
+}
 function _togglePcAsoc() {
   var w = document.getElementById('pcasoc-wrap');
   if (!w) return;
@@ -1861,6 +1881,7 @@ function renderAcademiaPlanContract() {
     (PLAN_CONTRACT_ACADEMIA_URL
       ? '<a href="' + PLAN_CONTRACT_ACADEMIA_URL + '" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:9px 16px;background:#1A5276;color:#fff;border-radius:6px;font-size:12px;font-weight:600;text-decoration:none"><i class="ti ti-table"></i> Deschide fișierul Plan contract (Excel)</a>'
       : '<span style="display:inline-flex;align-items:center;gap:6px;padding:9px 16px;background:var(--grey-100,#f1f3f5);color:var(--text-tertiary);border-radius:6px;font-size:12px;font-weight:600"><i class="ti ti-link-off"></i> Link fișier Plan contract în așteptare</span>') +
+    '<button type="button" onclick="_togglePcLate()" id="pclate-btn" data-n="' + late + '" style="display:inline-flex;align-items:center;gap:6px;padding:9px 16px;border:1px solid #C0392B;background:#fff;color:#C0392B;border-radius:6px;font-size:12px;font-weight:700;font-family:inherit;cursor:pointer"><i class="ti ti-alarm"></i> <span id="pclate-txt">Arată doar întârziate (' + late + ')</span></button>' +
     '<button type="button" onclick="_togglePcAsoc()" style="display:inline-flex;align-items:center;gap:6px;padding:9px 16px;border:1px solid #1A5276;background:#fff;color:#1A5276;border-radius:6px;font-size:12px;font-weight:700;font-family:inherit;cursor:pointer"><i class="ti ti-users-group"></i> Asociați și subcontractori <i class="ti ti-chevron-down" id="pcasoc-ico" style="font-size:13px;transition:transform .15s"></i></button>' +
     '<span style="font-size:11px;color:var(--text-tertiary)">Foile din fișier: Plan, Registru livrabile, Jaloane, Grafic ofertă, Clarificări, Riscuri</span>' +
   '</div>' +
@@ -1881,7 +1902,7 @@ function renderAcademiaPlanContract() {
     var key = x._work ? x._work.getTime() : 0;
     if (x.stare !== 'realizat' && key !== last) {
       last = key;
-      html += '<div style="font-size:12px;font-weight:700;color:#1A5276;margin:18px 0 8px;display:flex;align-items:center">' +
+      html += '<div class="pc-day" data-late="' + ((x._work && x._work < today) ? 1 : 0) + '" style="font-size:12px;font-weight:700;color:#1A5276;margin:18px 0 8px;display:flex;align-items:center">' +
         '<i class="ti ti-calendar-event" style="margin-right:6px"></i>' + (x._work ? fmtDay(x._work) : 'Fără dată') + badge(x._work, x.stare === 'realizat') + '</div>';
     }
     var isDone = x.stare === 'realizat';
@@ -1896,7 +1917,7 @@ function renderAcademiaPlanContract() {
       (x.livrabil ? '<span><i class="ti ti-file-check"></i> ' + x.livrabil + '</span>' : '') +
       (isDone ? '<span style="color:#1E8449;font-weight:700"><i class="ti ti-circle-check"></i> Realizat: ' + x.realizat + '</span>' : '');
     var card =
-      '<div class="nivel-card" style="margin-bottom:8px;border-left:4px solid ' + color + ';padding:12px 16px' + (isDone ? ';background:#EAF8EF' : '') + '">' +
+      '<div class="nivel-card pc-item" data-late="' + ((!isDone && x._work && x._work < today) ? 1 : 0) + '" style="margin-bottom:8px;border-left:4px solid ' + color + ';padding:12px 16px' + (isDone ? ';background:#EAF8EF' : '') + '">' +
         '<div style="display:flex;gap:10px;align-items:flex-start;flex-wrap:wrap">' +
           '<div style="min-width:26px;height:26px;border-radius:99px;background:' + color + ';color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">' + (isDone ? '<i class="ti ti-check" style="font-size:15px"></i>' : x.nr) + '</div>' +
           '<div style="flex:1;min-width:240px">' +
@@ -1915,7 +1936,7 @@ function renderAcademiaPlanContract() {
     if (isDone) doneHtml += card; else html += card;
   });
   var doneBlock = done
-    ? '<div style="margin:14px 0 4px"><button type="button" onclick="_togglePcDone()" id="pcdone-btn" style="display:inline-flex;align-items:center;gap:7px;padding:8px 14px;border:1px solid #1E8449;background:#EAF8EF;color:#1E8449;border-radius:6px;font-size:12px;font-weight:700;font-family:inherit;cursor:pointer">' +
+    ? '<div id="pcdone-block" style="margin:14px 0 4px"><button type="button" onclick="_togglePcDone()" id="pcdone-btn" style="display:inline-flex;align-items:center;gap:7px;padding:8px 14px;border:1px solid #1E8449;background:#EAF8EF;color:#1E8449;border-radius:6px;font-size:12px;font-weight:700;font-family:inherit;cursor:pointer">' +
         '<i class="ti ti-circle-check"></i> Realizate (' + done + ') <i class="ti ti-chevron-down" id="pcdone-ico" style="font-size:13px;transition:transform .15s"></i><span id="pcdone-txt" style="font-weight:600">Arată</span></button>' +
         ' <button type="button" onclick="_pcDownloadDone()" style="display:inline-flex;align-items:center;gap:7px;padding:8px 14px;margin-left:8px;border:1px solid #1A5276;background:#fff;color:#1A5276;border-radius:6px;font-size:12px;font-weight:700;font-family:inherit;cursor:pointer"><i class="ti ti-file-download"></i> Descarcă PDF (istoric)</button>' +
         '<div id="pcdone-wrap" style="display:none;margin-top:10px">' + doneHtml + '</div></div>'

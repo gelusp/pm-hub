@@ -1529,8 +1529,10 @@ var PLAN_CONTRACT_ACADEMIA = [
   "intern": "",
   "livrabil": "Note de teren, relevee",
   "temei": "CS cap. 6",
-  "obs": "",
+  "obs": "Vizita pe amplasament efectuată (confirmat de Gelu, 08.11.2026).",
   "prio": "normal",
+  "stare": "realizat",
+  "realizat": "08.11.2026",
   "faza": "B"
  },
  {
@@ -1712,6 +1714,18 @@ var PLAN_CONTRACT_ACADEMIA = [
   "obs": "Graficul de execuție se structurează pe sectoare și se transmite supervizorului lunar, pe data de 10 (decizie 05.11.2026). Termen: maximum 5 zile de la 07.11.2026 (12.11.2026); responsabilul se stabilește.",
   "prio": "normal",
   "faza": "B"
+ },
+ {
+  "nr": "24g",
+  "task": "Demararea contractului de proiectare cu BEMEL AG: lansarea efectivă a proiectării (etapa 1 DTAD, apoi DTAC) cu termene, livrabile și responsabili clari, ca să se încadreze în termenele contractuale",
+  "resp": "EREN CONS (lider) + BEMEL",
+  "term": "09.11.2026",
+  "intern": "09.11.2026",
+  "livrabil": "Act de lansare a proiectării către BEMEL (formă de stabilit), cu calendar DTAD / DTAC",
+  "temei": "Ordin de începere 05.11.2026; Acord de asociere nr. 01/28.07.2025; minută Academia",
+  "obs": "Acțiune URGENTĂ adăugată la cererea lui Gelu (08.11.2026). Proiectarea a început la 05.11.2026: DTAD în 30 de zile (05.12.2026), DTAC până la 05.03.2027. Termen intern provizoriu 09.11.2026 — de confirmat. Status 08.11.2026: mail trimis către BEMEL (solicitat draft contract de proiectare, informare despre plata directă); se așteaptă draftul, termen solicitat 12.11.2026.",
+  "prio": "critic",
+  "faza": "B"
  }
 ];
 
@@ -1763,6 +1777,38 @@ function _togglePcDone() {
   if (t) t.textContent = open ? 'Ascunde' : 'Arată';
 }
 
+function _togglePcAsoc() {
+  var w = document.getElementById('pcasoc-wrap');
+  if (!w) return;
+  var open = w.style.display === 'none';
+  w.style.display = open ? 'block' : 'none';
+  var ic = document.getElementById('pcasoc-ico');
+  if (ic) ic.style.transform = open ? 'rotate(180deg)' : '';
+}
+function _pcAsocHtml() {
+  var th = 'text-align:left;padding:7px 10px;background:#EAF2F8;color:#1A5276;font-size:11px;font-weight:700;border-bottom:1px solid #D6EAF8';
+  var td = 'padding:7px 10px;font-size:11.5px;border-bottom:1px solid #EEF1F4;vertical-align:top';
+  var asoc = [
+    ['EREN CONS SRL','Lider','Lucrări de execuție','67,50%'],
+    ['ICCO INSTAL SRL','Asociat 1','Lucrări de execuție','30,00%'],
+    ['BEMEL AG SRL','Asociat 2','Lucrări de proiectare','2,50%']
+  ];
+  var sub = [
+    ['SCHINDLER ROMÂNIA SRL','EREN CONS','Furnizare și montaj instalații de ridicat (ascensoare)','0,933% din lucrările ofertate','nr. 4 / 23.03.2026'],
+    ['ECKON CEI SRL','EREN CONS','Instalații de limitare și stingere a incendiilor; instalații de ventilare pentru evacuarea fumului și gazelor fierbinți','0,702% din lucrările ofertate','nr. 2 / 16.07.2025'],
+    ['INSTAL TERM SRL','EREN CONS','Execuție lucrări instalații gaze naturale','0,836% din lucrările ofertate','nr. 3 / 16.07.2025'],
+    ['NIBACO SRL','EREN CONS','Instalații electrice curenți slabi: detecție și semnalizare incendiu, supraveghere video, control acces, voce-date','1,612% din lucrările ofertate','nr. 1 / 16.07.2025'],
+    ['VEST INSTAL SRL','BEMEL AG (asociat)','Proiectare și asistență tehnică din partea proiectantului: instalații electrice și instalații gaze naturale','3% din valoarea pentru proiectare','nr. 178 / 16.07.2025']
+  ];
+  var row = function(a){ return '<tr>' + a.map(function(c,i){ return '<td style="' + td + (i===0?';font-weight:600':'') + '">' + c + '</td>'; }).join('') + '</tr>'; };
+  var head = function(a){ return '<tr>' + a.map(function(c){ return '<th style="' + th + '">' + c + '</th>'; }).join('') + '</tr>'; };
+  return '<div style="font-size:12px;font-weight:700;color:#1A5276;margin:4px 0 6px"><i class="ti ti-users-group"></i> Asocierea câștigătoare — Acord de asociere nr. 01/28.07.2025</div>' +
+    '<table style="width:100%;border-collapse:collapse;margin-bottom:6px">' + head(['Asociat','Rol','Activități','Cotă']) + asoc.map(row).join('') + '</table>' +
+    '<div style="font-size:10.5px;color:var(--text-tertiary);margin-bottom:14px">Cota stabilește și repartizarea beneficiilor/pierderilor. Răspundere solidară față de beneficiar. EREN CONS și ICCO facturează prin lider; BEMEL își încasează separat partea de proiectare.</div>' +
+    '<div style="font-size:12px;font-weight:700;color:#1A5276;margin:4px 0 6px"><i class="ti ti-building-factory-2"></i> Subcontractori declarați</div>' +
+    '<table style="width:100%;border-collapse:collapse;margin-bottom:6px">' + head(['Subcontractor','Contractant','Tip lucrări','Pondere','Acord']) + sub.map(row).join('') + '</table>' +
+    '<div style="font-size:10.5px;color:var(--text-tertiary);margin-bottom:6px">Total subcontractat de EREN CONS: 4,083% din lucrările ofertate (ponderea Vest Instal e raportată la proiectare, deci nu se adună). Acordul nr. 4 (Schindler) e ulterior celorlalte. Niciun acord nu acoperă supravegherea arheologică. Sursă: „2026 10 26 Acorduri semnate.pdf”.</div>';
+}
 function _togglePcDet(i) {
   var d = document.getElementById('pcdet-' + i);
   if (!d) return;
@@ -1815,8 +1861,10 @@ function renderAcademiaPlanContract() {
     (PLAN_CONTRACT_ACADEMIA_URL
       ? '<a href="' + PLAN_CONTRACT_ACADEMIA_URL + '" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:9px 16px;background:#1A5276;color:#fff;border-radius:6px;font-size:12px;font-weight:600;text-decoration:none"><i class="ti ti-table"></i> Deschide fișierul Plan contract (Excel)</a>'
       : '<span style="display:inline-flex;align-items:center;gap:6px;padding:9px 16px;background:var(--grey-100,#f1f3f5);color:var(--text-tertiary);border-radius:6px;font-size:12px;font-weight:600"><i class="ti ti-link-off"></i> Link fișier Plan contract în așteptare</span>') +
+    '<button type="button" onclick="_togglePcAsoc()" style="display:inline-flex;align-items:center;gap:6px;padding:9px 16px;border:1px solid #1A5276;background:#fff;color:#1A5276;border-radius:6px;font-size:12px;font-weight:700;font-family:inherit;cursor:pointer"><i class="ti ti-users-group"></i> Asociați și subcontractori <i class="ti ti-chevron-down" id="pcasoc-ico" style="font-size:13px;transition:transform .15s"></i></button>' +
     '<span style="font-size:11px;color:var(--text-tertiary)">Foile din fișier: Plan, Registru livrabile, Jaloane, Grafic ofertă, Clarificări, Riscuri</span>' +
-  '</div>';
+  '</div>' +
+  '<div id="pcasoc-wrap" style="display:none;margin:0 0 16px;padding:14px 16px;border:1px solid #D6EAF8;border-radius:8px;background:#fff;overflow-x:auto">' + _pcAsocHtml() + '</div>';
 
   html += '<div class="kpi-grid">' +
     '<div class="kpi"><div class="kpi-label">Acțiuni în plan</div><div class="kpi-val">' + items.length + '</div><div class="kpi-sub">faza A (mobilizare) + faza B (demarare)</div></div>' +

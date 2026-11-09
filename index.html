@@ -1183,6 +1183,11 @@ function renderAcademiaAnalizaOferta() {
 }
 
 var DOCS_BENEF_ACADEMIA = [
+  { k:202611051, d:'05.11.2026', cat:'BENEFICIAR', nr:'ACZ-N 881/05.11.2026',
+    titlu:'Ordin de începere pentru serviciile de proiectare — UM 02192 către Asocierea EREN CONS (lider) – ICCO INSTAL – BEMEL AG',
+    desc:'Ordinul nr. ACZ-N 881/05.11.2026 al UM 02192 Constanța (semnat de Contraamiral de flotilă dr. ing. Alecu Toma, întocmit Pcc Georgiana Piciu; exemplar 4 pentru executant), privind începerea serviciilor de proiectare pentru „Realizare pavilion nou bloc alimentar și sală de mese din cazarma 1369 Constanța”, cod lucrare 2024-I-1369 B.A. Data începerii: 05.11.2026; data terminării serviciilor de proiectare: 05.03.2027 (4 luni); valoare totală: 1.510.000 lei fără TVA; decontarea se face prin UM 02192; autorizația de construire: nu este încă emisă. Proiectant general: asocierea EREN CONS (lider) – ICCO INSTAL – BEMEL AG; proiectant pe specialități: BEMEL AG, cu SC VEST INSTAL SRL (instalații electrice și gaze naturale) ca subantreprenor. Proiectanți: arhitectură Nicula Monica; construcții civile Nicula Cristian; instalații electrice Dima Valentin; căi ferate, drumuri și poduri Florin Rusu; HVAC Toma Ionuț; instalații sanitare Alexandru Ghiuș; geotehnician Hîrsulescu Mihai; gaze naturale Sofian Daniela; auditor energetic Onofrei Mihaela; devize Marinescu Gabriela. Verificatori atestați MDLPA: Daraban Daciana (B1, Cc, D, E, F), Boldișor Mircea (Al, A2, A3, A11), Gabriel Ivan (Ie), Popovici Sergiu (VGd). Expert tehnic: Diaconu C. Daniel (A1, A2, A3, A8, A10, A11). Consultant: S.C. GHALLARD SYS S.R.L. Responsabili tehnici cu execuția: Olariu Vlad Octavian (1.1), Holostenco Dumitru (2.1, 2.3, 9.1), Paruș Danuț (6.1, 6.2), Ghifu Gabriel (6.3); responsabil cu controlul tehnic al calității: Hrimiuc Mihai Adrian. Diriginți de șantier: Militaru Florin (2.2), Martin Felicia (3.1–3.3), Țigănilă Karmen (6.1), Ivanov Grigore (9.1), Petrescu Mihai (topograf și geotehnician). Din partea AC: manager de proiect Lt. cdor Constantin Schipor; responsabil de contract Pcc ing. Georgiana Piciu. De verificat: lista de verificatori din Plan contract (acțiunea 14) include și Diaconescu, care nu apare în ordin; Gabriel Ivan figurează în ordin la domeniul Ie.',
+    color:'#1A5276', bg:'#EBF5FB', icon:'ti-file-certificate',
+    url:'https://drive.google.com/file/d/1k_oRSZX0KwoWAT9tafIlj8oPpA5fKTFh/view?usp=sharing' },
   { k:202611071, d:'07.11.2026', cat:'BENEFICIAR', nr:'CU A 1043/27.05.2024 (prelungit)',
     titlu:'Certificat de urbanism nr. A 1043/27.05.2024 — prelungirea valabilității (Direcția Domenii și Infrastructură, MApN)',
     desc:'Certificatul de urbanism nr. A 1043 din 27.05.2024, emis de Direcția Domenii și Infrastructură (MApN) pentru elaborarea documentației pentru autorizarea construirii „Realizare pavilion nou bloc alimentar și sală de mese în cazarma 1369 Constanța”, cod lucrare 2024-I-1369 B.A, solicitant UM 02192 Constanța. Teren: str. Fulgerului nr. 1, cazarma 1369, 199.163 mp, CF 210739 Constanța, proprietatea Statului Român în administrarea MApN. Imobilul este în sit arheologic (RAN 60428.40) și în Lista monumentelor istorice (LMI CT-I-s-A-02555). Valabilitate inițială: 24 luni de la emitere (până la 27.05.2026). Pe ultima pagină, prin mențiune scrisă de mână și ștampilă, valabilitatea este prelungită de la 27.05.2026 până la 27.06.2027 (data de final se citește 27.06.2027; de verificat dacă este 27.05.2027, termen maxim de 12 luni). Textul precizează că după această dată nu mai este posibilă o nouă prelungire, urmând să se obțină un alt certificat de urbanism. Data emiterii prelungirii nu este vizibilă. Impact: DTAC se depune la ordin + 4 luni (aprox. martie 2027), deci se încadrează în valabilitate; autorizația de construire trebuie solicitată înainte de expirarea CU.',
@@ -1424,7 +1429,7 @@ var PLAN_CONTRACT_ACADEMIA = [
   "intern": "05.11.2026",
   "livrabil": "Ordin administrativ",
   "temei": "CG cl. 33.1; CS cap. 3",
-  "obs": "Realizat la 05.11.2026 (ordinul de începere proiectare emis de Supervizor, ora 10:00). Notă inițială: Programat: joi 05.11.2026, ora 10:00. Data ordinului este Data de începere și pornește toate termenele de proiectare. Termenul contractual rămâne 25.11.2026 (CG cl. 33.1).",
+  "obs": "Realizat la 05.11.2026 (ordinul de începere proiectare emis de Supervizor, ora 10:00). Notă inițială: Programat: joi 05.11.2026, ora 10:00. Data ordinului este Data de începere și pornește toate termenele de proiectare. Termenul contractual rămâne 25.11.2026 (CG cl. 33.1). Ordin de începere servicii de proiectare nr. ACZ-N 881/05.11.2026 (primit): start 05.11.2026, termen proiectare 05.03.2027 (4 luni), valoare 1.510.000 lei fără TVA.",
   "prio": "normal",
   "stare": "realizat",
   "realizat": "05.11.2026",
@@ -2811,6 +2816,21 @@ function renderDocContract(proj) {
 // automat cronologic invers (cel mai recent primul) după cheia "k" (AAAALLZZ + rang zi).
 var DOCBENEF_DIR = '13. Documente transmise de beneficiar/';
 var DOCS_BENEF = [
+  { k:202611093, d:'09.11.2026', cat:'CONSTATARE', nr:'A5-1322', serie:'A5',
+    titlu:'Act de constatare nr. 3 — înlocuire panouri de acoperiș hangar (vată → PIR), fără costuri suplimentare',
+    desc:'Încheiat la 06.11.2026 (înregistrat 09.11.2026) de U.M. 02311 (Lt. ing. Eduard Pîrvan), utilizator U.M. 01837 (Cpt. ing. Aurel Mihai Bocai) și EREN CONS (ing. Adrian Pepine). Pe baza Notei tehnice Triptic din 28.10.2026, se cere proiectantului să analizeze înlocuirea panourilor sandwich de acoperiș cu miez de vată cu panouri cu miez PIR; se va realiza FĂRĂ COSTURI SUPLIMENTARE. Motiv: retragerea de pe piață a produsului cu miez de vată. Măsură: proiectantul stabilește soluțiile tehnice și emite dispoziția de șantier în 14 zile de la data actului (06.11.2026 → 20.11.2026). Anexă: Nota tehnică Triptic 28.10.2026 (vezi PE07, închis 31.10.2026).',
+    color:'#B9770E', bg:'#FEF5E7', icon:'ti-alert-triangle',
+    url:'https://drive.google.com/file/d/1hoXL8Np6SLah1naCSCNldud21ofVDecW/view?usp=sharing' },
+  { k:202611092, d:'09.11.2026', cat:'CONSTATARE', nr:'AE-1488', serie:'AE',
+    titlu:'Transmitere Act de constatare nr. 3 (email UM 02311)',
+    desc:'Emailul UM 02311 Constanța prin care se transmite către EREN CONS Actul de constatare nr. 3, înregistrat la U.M. 02311 cu nr. A5-1322/09.11.2026 (1 exemplar electronic, NECLASIFICAT).',
+    color:'#B9770E', bg:'#FEF5E7', icon:'ti-mail-forward',
+    url:'https://drive.google.com/file/d/1ohBUyHr1AFN6xTeFkZLWu0BYMpR5PT1Z/view?usp=sharing' },
+  { k:202611091, d:'09.11.2026', cat:'FINANCIAR', nr:'AE-1487', serie:'AE',
+    titlu:'Emitere factură fiscală — Situația de lucrări nr. 4 (319.352,30 lei fără TVA)',
+    desc:'Emailul UM 02311 comunică aprobarea Situației de Lucrări nr. 4, înregistrată cu nr. A5-1325/09.11.2026, în valoare de 319.352,30 lei fără TVA, și solicită emiterea facturii fiscale. Suma reținută din SL4 pentru garanția de bună execuție (subcl. 15.1): 25.073,11 lei fără TVA.',
+    color:'#854F0B', bg:'#FAEEDA', icon:'ti-file-invoice',
+    url:'https://drive.google.com/file/d/1aq8Xikzx4UdEv7EYs0y9XznzUSrBtT4d/view?usp=sharing' },
   { k:202606252, d:'25.06.2026', cat:'PROIECTANT', nr:'SF→PT', serie:'',
     titlu:'Tabel justificare modificări SF → PT (Triptic) — suport pentru listele de lucrări suplimentare',
     desc:'Tabel comparativ SF/PT întocmit de proiectantul general Triptic, predat Beneficiarului odată cu adresa din 25.06.2026. Documentează, pe arhitectură / structură / instalații / sistematizare verticală, modificările SF→PT și motivele lor (norme, calcule, solicitări ale Beneficiarului). Exemple: grup pompare spumă 80→430 mc/h (cu efect pe rezerva de apă, cabluri, tablou general și grup electrogen); grup electrogen 500→1.400 kVA; surse statice aeronave 2→4; tablou general 300→700 kW; bazin retenție 80→130 mc; platformă exterioară 3.249→3.920 mp (la solicitarea Beneficiarului); construcție subterană desprinsă de fundațiile hangarului (agreată cu Beneficiarul); stâlpi prefabricați redimensionați, un rând eliminat.',

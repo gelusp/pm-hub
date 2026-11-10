@@ -1975,7 +1975,7 @@ function hoRender(groups, title, notes) {
   var fmt = function(n){ return n===null||n===undefined ? '—' : Math.round(n).toLocaleString('ro-RO'); };
   var qf = function(n){ return n===null||n===undefined ? '—' : n.toLocaleString('ro-RO',{maximumFractionDigits:2}); };
   var pct = function(d,b){ if(!b) return '—'; var p=d/b*100; return (p>0?'+':'')+p.toLocaleString('ro-RO',{minimumFractionDigits:1,maximumFractionDigits:1})+'%'; };
-  var col = function(d){ return d<0 ? '#1E8449' : (d>0 ? '#C0392B' : 'var(--text)'); };
+  var col = function(d){ return d<0 ? '#C0392B' : (d>0 ? '#1E8449' : 'var(--text)'); };
   var th='padding:6px 7px;text-align:right;font-size:10.5px;color:#fff;background:#1A5276;white-space:nowrap';
   var td='padding:5px 7px;text-align:right;font-size:11.5px;border-bottom:1px solid #EEE';
   var tSF=0,tOf=0,body='';
@@ -2002,7 +2002,7 @@ function hoRender(groups, title, notes) {
     '<div style="display:flex;gap:18px;flex-wrap:wrap;font-size:12px;margin-bottom:10px"><span>SF: <b>'+fmt(tSF)+'</b> lei</span><span>Ofertă: <b>'+fmt(tOf)+'</b> lei</span><span>Diferență: <b style="color:'+col(D)+'">'+fmt(D)+' lei ('+pct(D,tSF)+')</b></span></div>'+
     '<div style="font-size:12px;line-height:1.55;color:var(--text);margin-bottom:12px">'+notes+'</div>'+
     body+
-    '<div style="font-size:11px;color:var(--text-tertiary);margin-top:6px">Lei fără TVA. Preț SF la „Echipamente": EUR × 5. Verde = ofertă sub SF, roșu = peste SF; cantități diferite evidențiate. Potrivirea pozițiilor se face pe denumire, în cadrul secțiunii; subtotalurile pe secțiune sunt exacte.</div></div>';
+    '<div style="font-size:11px;color:var(--text-tertiary);margin-top:6px">Lei fără TVA. Preț SF la „Echipamente": EUR × 5. Roșu = ofertă sub SF, verde = peste SF; cantități diferite evidențiate. Potrivirea pozițiilor se face pe denumire, în cadrul secțiunii; subtotalurile pe secțiune sunt exacte.</div></div>';
 }
 
 function renderAcademiaOfertaSF() {
@@ -2012,7 +2012,7 @@ function renderAcademiaOfertaSF() {
   var fmt = function(n){ return Math.round(n).toLocaleString('ro-RO'); };
   var mil = function(n){ return (n/1e6).toLocaleString('ro-RO',{minimumFractionDigits:2,maximumFractionDigits:2}) + ' mil. lei'; };
   var pct = function(d,b){ if(!b) return '—'; var p=d/b*100; return (p>0?'+':'')+p.toLocaleString('ro-RO',{minimumFractionDigits:1,maximumFractionDigits:1})+'%'; };
-  var col = function(d){ return d<0 ? '#1E8449' : (d>0 ? '#C0392B' : 'var(--text)'); };
+  var col = function(d){ return d<0 ? '#C0392B' : (d>0 ? '#1E8449' : 'var(--text)'); };
   var sumSF=0,sumOf=0,groups={},order=[];
   R.forEach(function(r){ sumSF+=r[3]; sumOf+=r[4]; if(!groups[r[0]]){groups[r[0]]={sf:0,of:0};order.push(r[0]);} groups[r[0]].sf+=r[3]; groups[r[0]].of+=r[4]; });
   var onlySF=0, cap7=0; ONLY.forEach(function(x){ onlySF+=x[2]; if(x[0].charAt(0)==='7') cap7+=x[2]; });
@@ -2026,7 +2026,7 @@ function renderAcademiaOfertaSF() {
   html += '<div class="kpi-grid">'+
     '<div class="kpi" style="border-left:4px solid #1A5276"><div class="kpi-label">Ofertă Eren (Formular 9)</div><div class="kpi-val">'+mil(sumOf)+'</div><div class="kpi-sub">proiectare 1,51 mil. + execuție 58,91 mil.</div></div>'+
     '<div class="kpi"><div class="kpi-label">SF Sol.1 – capitole comparabile</div><div class="kpi-val">'+mil(sumSF)+'</div><div class="kpi-sub">≈ valoarea estimată AC ('+mil(estAC)+')</div></div>'+
-    '<div class="kpi" style="border-left:4px solid #1E8449"><div class="kpi-label">Diferență ofertă vs SF</div><div class="kpi-val" style="color:#1E8449">'+mil(sumOf-sumSF)+'</div><div class="kpi-sub">'+pct(sumOf-sumSF,sumSF)+' pe capitolele comparabile</div></div>'+
+    '<div class="kpi" style="border-left:4px solid #C0392B"><div class="kpi-label">Diferență ofertă vs SF</div><div class="kpi-val" style="color:#C0392B">'+mil(sumOf-sumSF)+'</div><div class="kpi-sub">'+pct(sumOf-sumSF,sumSF)+' pe capitolele comparabile</div></div>'+
       '</div>';
   html += '<div class="nivel-card" style="padding:14px 18px;margin:14px 0;border-left:4px solid #B9770E;background:#FDF6E8">'+
     '<div style="font-size:12.5px;font-weight:700;color:#B9770E;margin-bottom:6px"><i class="ti ti-bulb"></i> Concluzie</div>'+
@@ -2069,60 +2069,66 @@ var DEMOLARI_COMPARATIV_URL = ''; // link Google Sheets/Drive al tabelului compa
 function renderAcademiaDemolari() {
   _activateAcademiaItem('item-academia-demolari');
   var fmt = function(n){ return Math.round(n).toLocaleString('ro-RO') + ' lei'; };
-  var D = {
-    buget:    { lucrari:152654, transport:81136,  taxa:1955558 },
-    apolodor: { lucrari:214163, transport:283720, taxa:2795580 }
-  };
-  var tot = function(o){ return o.lucrari + o.transport + o.taxa; };
-  var tB=tot(D.buget), tA=tot(D.apolodor);
-  var max = Math.max(tB,tA);
-  var dep = tA - tB;
-  function bar(name, o, total, hl){
-    var seg = function(v,c){ return v>0 ? '<div style="width:'+(v/max*100)+'%;background:'+c+'" title="'+fmt(v)+'"></div>' : ''; };
-    return '<div style="margin-bottom:12px">'+
+  var P = { buget:{lucrari:152654,transport:81136,taxa:1955558}, apolodor:{lucrari:214163,transport:283720,taxa:2795580} };
+  var tot=function(o){return o.lucrari+o.transport+o.taxa;};
+  var pB=tot(P.buget), pA=tot(P.apolodor);
+  var bazB=108200;
+  var totB=pB+bazB;
+  var dep=pA-pB;
+  var max=Math.max(pB,pA);
+  function bar(name,o,total,hl){
+    var seg=function(v,c){return v>0?'<div style="width:'+(v/max*100)+'%;background:'+c+'" title="'+fmt(v)+'"></div>':'';};
+    return '<div style="margin-bottom:10px">'+
       '<div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px">'+
         '<span style="font-weight:'+(hl?700:600)+';color:'+(hl?'#C0392B':'var(--text)')+'">'+name+'</span>'+
-        '<span style="font-weight:700;color:'+(hl?'#C0392B':'var(--text)')+'">'+fmt(total)+'</span>'+
-      '</div>'+
-      '<div style="display:flex;height:22px;border-radius:4px;overflow:hidden;background:#F0F0F0">'+
-        seg(o.lucrari,'#1A5276')+seg(o.transport,'#5499C7')+seg(o.taxa,'#C0392B')+
-      '</div></div>';
+        '<span style="font-weight:700;color:'+(hl?'#C0392B':'var(--text)')+'">'+fmt(total)+'</span></div>'+
+      '<div style="display:flex;height:20px;border-radius:4px;overflow:hidden;background:#F0F0F0">'+seg(o.lucrari,'#1A5276')+seg(o.transport,'#5499C7')+seg(o.taxa,'#C0392B')+'</div></div>';
   }
-  var sw = function(c){ return '<span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:'+c+';vertical-align:middle;margin-right:4px"></span>'; };
+  var sw=function(c){return '<span style="display:inline-block;width:10px;height:10px;border-radius:2px;background:'+c+';vertical-align:middle;margin-right:4px"></span>';};
+  var row=function(lab,b,a,strong){
+    return '<tr>'+
+      '<td style="padding:7px 10px;border-bottom:1px solid var(--border);font-size:12px;'+(strong?'font-weight:700':'')+'">'+lab+'</td>'+
+      '<td style="padding:7px 10px;border-bottom:1px solid var(--border);text-align:right;font-size:12px;'+(strong?'font-weight:700':'')+'">'+b+'</td>'+
+      '<td style="padding:7px 10px;border-bottom:1px solid var(--border);text-align:right;font-size:12px;'+(strong?'font-weight:700':'')+'">'+a+'</td></tr>';
+  };
   var linkBtn = DEMOLARI_COMPARATIV_URL
     ? '<a href="'+DEMOLARI_COMPARATIV_URL+'" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:9px 16px;background:#1A5276;color:#fff;border-radius:6px;font-size:12px;font-weight:600;text-decoration:none"><i class="ti ti-table"></i> Deschide tabelul comparativ (Excel)</a>'
     : '<span style="display:inline-flex;align-items:center;gap:6px;padding:9px 16px;background:var(--grey-100,#f1f3f5);color:var(--text-tertiary);border-radius:6px;font-size:12px;font-weight:600"><i class="ti ti-link-off"></i> Link tabel comparativ în așteptare — urcă fișierul în Drive și adaugă linkul</span>';
   var html =
-    '<div class="proj-header"><div class="proj-title">Demolări — analiză comparativă oferte</div>'+
-    '<div class="proj-meta">Academia Navală · Pavilion B1 (Obiect 1) · valori fără TVA · 07.11.2026</div></div>'+
-    '<div class="module-badge" style="background:#D6EAF8;color:#1A5276"><i class="ti ti-wall" style="font-size:13px"></i> Buget intern vs. ofertă Apolodor</div>';
-  html += '<div style="margin:6px 0 16px">'+linkBtn+'</div>';
-  html += '<div class="kpi-grid">'+
-    '<div class="kpi" style="border-left:4px solid #1A5276"><div class="kpi-label">Buget intern demolare</div><div class="kpi-val">'+fmt(tB)+'</div><div class="kpi-sub">Pavilion B1, fără TVA</div></div>'+
-    '<div class="kpi"><div class="kpi-label">Ofertă Apolodor</div><div class="kpi-val">'+fmt(tA)+'</div><div class="kpi-sub">07.2025</div></div>'+
-    '<div class="kpi" style="border-left:4px solid #C0392B"><div class="kpi-label">Depășire vs buget</div><div class="kpi-val" style="color:#C0392B">+'+fmt(dep)+'</div><div class="kpi-sub">+50% peste buget</div></div>'+
-    '<div class="kpi" style="border-left:4px solid #B9770E"><div class="kpi-label">Taxă groapă</div><div class="kpi-val" style="color:#B9770E">85–89%</div><div class="kpi-sub">din cost — pârghia principală</div></div>'+
+    '<div class="proj-header"><div class="proj-title">Demolări — buget total</div>'+
+    '<div class="proj-meta">Academia Navală · demolare Pavilion B1 + bazin apă · fără TVA · 07.11.2026</div></div>';
+  html += '<div class="nivel-card" style="padding:18px 20px">';
+  html += '<div style="margin-bottom:14px">'+linkBtn+'</div>';
+  html += '<div style="display:flex;flex-wrap:wrap;gap:24px;align-items:baseline;margin-bottom:16px">'+
+    '<div><div style="font-size:11px;color:var(--text-tertiary)">BUGET TOTAL DEMOLĂRI (intern)</div>'+
+    '<div style="font-size:24px;font-weight:800;color:#1A5276">'+fmt(totB)+'</div></div>'+
+    '<div><div style="font-size:11px;color:var(--text-tertiary)">Ofertă Apolodor (doar Pavilion B1)</div>'+
+    '<div style="font-size:18px;font-weight:700">'+fmt(pA)+'</div></div>'+
+    '<div><div style="font-size:11px;color:var(--text-tertiary)">Depășire Apolodor vs buget (Pav. B1)</div>'+
+    '<div style="font-size:18px;font-weight:700;color:#C0392B">+'+fmt(dep)+' (+50%)</div></div>'+
   '</div>';
-  html += '<div class="nivel-card" style="padding:16px 18px;margin:14px 0">'+
-    '<div style="font-size:13px;font-weight:700;color:#1A5276;margin-bottom:12px">Cost demolare Pavilion B1 (lei, fără TVA)</div>'+
-    bar('Apolodor (07.2025)', D.apolodor, tA, true)+
-    bar('Buget intern', D.buget, tB, false)+
-    '<div style="display:flex;gap:16px;flex-wrap:wrap;font-size:11px;color:var(--text-secondary);margin-top:10px">'+
-      '<span>'+sw('#1A5276')+'Lucrări demolare</span>'+
-      '<span>'+sw('#5499C7')+'Transport + utilaje</span>'+
-      '<span>'+sw('#C0392B')+'Taxă groapă</span>'+
-    '</div></div>';
-  html += '<div class="nivel-card" style="padding:14px 18px;margin-bottom:12px;border-left:4px solid #B9770E;background:#FDF6E8">'+
-    '<div style="font-size:12.5px;font-weight:700;color:#B9770E;margin-bottom:6px"><i class="ti ti-bulb"></i> Concluzie</div>'+
-    '<div style="font-size:12px;line-height:1.5;color:var(--text)">Oferta Apolodor depășește bugetul intern cu ≈1,1 mil. lei (+50%). Taxa de groapă reprezintă 85–89% din cost — acolo e pârghia, nu la tarifele de spargere. Recomandare: runde suplimentare de ofertare și reducerea volumului dus la groapă (sortare + reciclare/concasare a betonului inert), plus corectarea transportului la distanța reală.</div></div>';
-  html += '<div class="nivel-card" style="padding:14px 18px;border-left:4px solid #B9770E">'+
-    '<div style="font-size:12.5px;font-weight:700;color:#B9770E;margin-bottom:6px"><i class="ti ti-alert-triangle"></i> De clarificat înainte de contractare</div>'+
-    '<ul style="margin:0;padding-left:18px;font-size:12px;line-height:1.6;color:var(--text)">'+
-      '<li>Taxa de groapă: tarif și clasificare deșeu (inert vs. ne-inert) — reprezintă 85–89% din cost.</li>'+
-      '<li>Reducerea volumului la groapă prin sortare și reciclare/concasare a betonului inert (poate elimina majoritatea taxei).</li>'+
-      '<li>Reconciliere UM cantitate 4.650 (mc vs tonă) — numărul care guvernează majoritatea costului.</li>'+
-      '<li>Transport cotat la 10 km; caietul impune Costinești ~40 km — de verificat distanța reală și de corectat.</li>'+
+  html += '<table style="width:100%;border-collapse:collapse;margin-bottom:18px">'+
+    '<tr style="background:#2E6DA4;color:#fff"><th style="padding:8px 10px;text-align:left;font-size:11px">Componentă</th>'+
+    '<th style="padding:8px 10px;text-align:right;font-size:11px">Buget intern</th>'+
+    '<th style="padding:8px 10px;text-align:right;font-size:11px">Apolodor</th></tr>'+
+    row('Pavilion B1', fmt(pB), fmt(pA), false)+
+    row('Bazin apă (foaia 2)', fmt(bazB), '<span style="color:#B9770E">necotat</span>', false)+
+    row('TOTAL demolări', fmt(totB), fmt(pA)+' <span style="font-weight:400;color:var(--text-tertiary)">(doar Pav. B1)</span>', true)+
+    '</table>';
+  html += '<div style="font-size:12px;font-weight:700;color:#1A5276;margin-bottom:8px">Structura costului — Pavilion B1</div>'+
+    bar('Apolodor (07.2025)', P.apolodor, pA, true)+
+    bar('Buget intern', P.buget, pB, false)+
+    '<div style="display:flex;gap:16px;flex-wrap:wrap;font-size:11px;color:var(--text-secondary);margin:8px 0 16px">'+
+      '<span>'+sw('#1A5276')+'Lucrări</span><span>'+sw('#5499C7')+'Transport + utilaje</span><span>'+sw('#C0392B')+'Taxă groapă</span></div>';
+  html += '<div style="font-size:12px;line-height:1.6;color:var(--text);border-top:1px solid var(--border);padding-top:12px">'+
+    '<b>De reținut:</b>'+
+    '<ul style="margin:6px 0 0;padding-left:18px">'+
+    '<li>Apolodor depășește bugetul pe Pavilion B1 cu ≈1,1 mil. lei (+50%); taxa de groapă = 85–89% din cost — pârghia principală.</li>'+
+    '<li>Bazinul de apă (buget intern ≈108.200 lei) nu e cotat de Apolodor — de obținut ofertă separată și de adăugat la scope.</li>'+
+    '<li>Transport cotat la 10 km; caietul impune Costinești ~40 km — de verificat și corectat.</li>'+
+    '<li>Reconciliere UM cantitate 4.650 (mc vs tonă) — numărul care guvernează ~85% din cost.</li>'+
     '</ul></div>';
+  html += '</div>';
   html += '<div class="page-footer">PM Hub · EREN CONS SRL · 2026</div>';
   document.getElementById('main').innerHTML = html;
 }

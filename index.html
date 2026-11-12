@@ -316,6 +316,9 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
               <i class="ti ti-chart-bar" style="color:#1A5276"></i> Analiză pe cauze
             </div>
           </div>
+          <div class="submenu-item" id="item-hangar-prodsed3" onclick="goModule('hangar','prodsed3')">
+            <i class="ti ti-calendar-event" style="color:#1A5276"></i> 3. Ședință producție 17.11.2026
+          </div>
         </div>
         <div class="submenu-item" id="item-hangar-sl" onclick="toggleSubSub('hangar-sl')">
           <i class="ti ti-file-analytics" style="color:#6C3483"></i> Situații de Lucrări
@@ -786,6 +789,7 @@ function goModule(proj, module) {
   else if (module === 'stab02' || module === 'hozone' || module === 'koizone' || module === 'notapm') renderHandoverSoon(proj, module);
   else if (module === 'prodsed1') renderProdSed1(proj);
   else if (module === 'prodsed2') renderProdSed2(proj);
+  else if (module === 'prodsed3') renderProdSed3(proj);
   else if (module === 'prodcauze') renderProdCauze(proj);
   else renderProductie(proj);
 }
@@ -1183,6 +1187,11 @@ function renderAcademiaAnalizaOferta() {
 }
 
 var DOCS_BENEF_ACADEMIA = [
+  { k:202611101, d:'10.11.2026', cat:'TREZORERIE', nr:'Extras de cont 10.11.2026',
+    titlu:'Extras de cont „Disponibil garanții” (530101) — constituirea garanției de bună execuție prin depunere 0,5%',
+    desc:'Extrasul de cont al Trezoreriei Municipiului Brașov pentru contul de garanții al EREN CONS SRL (simbol 530101, deschis la 06.11.2026), editat la 10.11.2026, ora 16:52. Arată un singur credit, de 302.094,72 lei, cu documentul din 09.11.2026 și plata din 10.11.2026, cu explicația „constituire garanție 0,5% din valoarea contractului AP 7189 din 21.09.2026”. Sold precedent 0; sold final 302.094,72 lei. Confirmă depunerea prin care se constituie garanția de bună execuție (acțiunea 2 din Plan Contract). Restul garanției, până la 6.041.894 lei, se completează conform contractului. Suma depusă diferă cu 3,94 lei de 0,5% din prețul ofertei (302.090,78 lei). Numerele de cont și IBAN sunt în document; nu le-am preluat aici.',
+    color:'#1A5276', bg:'#EBF5FB', icon:'ti-building-bank',
+    url:'' },
   { k:202611051, d:'05.11.2026', cat:'BENEFICIAR', nr:'ACZ-N 881/05.11.2026',
     titlu:'Ordin de începere pentru serviciile de proiectare — UM 02192 către Asocierea EREN CONS (lider) – ICCO INSTAL – BEMEL AG',
     desc:'Ordinul nr. ACZ-N 881/05.11.2026 al UM 02192 Constanța (semnat de Contraamiral de flotilă dr. ing. Alecu Toma, întocmit Pcc Georgiana Piciu; exemplar 4 pentru executant), privind începerea serviciilor de proiectare pentru „Realizare pavilion nou bloc alimentar și sală de mese din cazarma 1369 Constanța”, cod lucrare 2024-I-1369 B.A. Data începerii: 05.11.2026; data terminării serviciilor de proiectare: 05.03.2027 (4 luni); valoare totală: 1.510.000 lei fără TVA; decontarea se face prin UM 02192; autorizația de construire: nu este încă emisă. Proiectant general: asocierea EREN CONS (lider) – ICCO INSTAL – BEMEL AG; proiectant pe specialități: BEMEL AG, cu SC VEST INSTAL SRL (instalații electrice și gaze naturale) ca subantreprenor. Proiectanți: arhitectură Nicula Monica; construcții civile Nicula Cristian; instalații electrice Dima Valentin; căi ferate, drumuri și poduri Florin Rusu; HVAC Toma Ionuț; instalații sanitare Alexandru Ghiuș; geotehnician Hîrsulescu Mihai; gaze naturale Sofian Daniela; auditor energetic Onofrei Mihaela; devize Marinescu Gabriela. Verificatori atestați MDLPA: Daraban Daciana (B1, Cc, D, E, F), Boldișor Mircea (Al, A2, A3, A11), Gabriel Ivan (Ie), Popovici Sergiu (VGd). Expert tehnic: Diaconu C. Daniel (A1, A2, A3, A8, A10, A11). Consultant: S.C. GHALLARD SYS S.R.L. Responsabili tehnici cu execuția: Olariu Vlad Octavian (1.1), Holostenco Dumitru (2.1, 2.3, 9.1), Paruș Danuț (6.1, 6.2), Ghifu Gabriel (6.3); responsabil cu controlul tehnic al calității: Hrimiuc Mihai Adrian. Diriginți de șantier: Militaru Florin (2.2), Martin Felicia (3.1–3.3), Țigănilă Karmen (6.1), Ivanov Grigore (9.1), Petrescu Mihai (topograf și geotehnician). Din partea AC: manager de proiect Lt. cdor Constantin Schipor; responsabil de contract Pcc ing. Georgiana Piciu. De verificat: lista de verificatori din Plan contract (acțiunea 14) include și Diaconescu, care nu apare în ordin; Gabriel Ivan figurează în ordin la domeniul Ie.',
@@ -1337,7 +1346,7 @@ var PLAN_CONTRACT_ACADEMIA = [
   "intern": "29.10.2026",
   "livrabil": "Scrisoare de garanție / dovadă constituire",
   "temei": "Adresa AC AP 8034/19.10.2026; CG cl. 15.1",
-  "obs": "Garanția de bună execuție se constituie prin depunerea a 0,5% din prețul contractului (≈ 302.091 lei, de confirmat cu suma efectiv depusă) în contul „Disponibil garanții” 530101 deschis la Trezoreria Brașov (comunicare BVR_STZ-3768/06.11.2026); restul garanției (până la 6.041.894 lei) se completează conform contractului. Notă inițială: Termenul poate fi prelungit la solicitarea justificată a contractantului, fără a depăși 15 zile de la semnare (10.11.2026). CG cl. 15.1 cere garanția la data semnării, dar adresa AC acordă 5 zile lucrătoare; se confirmă cu Juridicul și în Acordul Contractual. Suma din adresă (6.041.894 lei) diferă cu 78,38 lei de 10% din prețul ofertei (6.041.815,62 lei). Emitent: bancă sau asigurător autorizat în UE (sau rating min. BBB-/Baa3); irevocabilă, la prima cerere; emisă în numele asocierii.",
+  "obs": "Garanția de bună execuție se constituie prin depunerea a 0,5% din prețul contractului (302.094,72 lei, depuși la 10.11.2026 conform extrasului de cont al Trezoreriei Brașov) în contul „Disponibil garanții” 530101 deschis la Trezoreria Brașov (comunicare BVR_STZ-3768/06.11.2026); restul garanției (până la 6.041.894 lei) se completează conform contractului. Notă inițială: Termenul poate fi prelungit la solicitarea justificată a contractantului, fără a depăși 15 zile de la semnare (10.11.2026). CG cl. 15.1 cere garanția la data semnării, dar adresa AC acordă 5 zile lucrătoare; se confirmă cu Juridicul și în Acordul Contractual. Suma din adresă (6.041.894 lei) diferă cu 78,38 lei de 10% din prețul ofertei (6.041.815,62 lei). Emitent: bancă sau asigurător autorizat în UE (sau rating min. BBB-/Baa3); irevocabilă, la prima cerere; emisă în numele asocierii.",
   "prio": "critic",
   "stare": "realizat",
   "realizat": "07.11.2026",
@@ -2805,13 +2814,23 @@ function renderDocContract(proj) {
       '</div>' +
     '</div>' +
 
-    // Placeholder alte documente
-    '<div class="nivel-card" style="margin-bottom:16px;border-left:4px solid var(--border);opacity:0.7">' +
-      '<div class="nivel-title" style="color:var(--text-secondary)"><i class="ti ti-file-plus"></i> Alte documente contract</div>' +
-      '<div class="coming-soon" style="padding:16px">' +
-        '<i class="ti ti-file-plus" style="font-size:24px;margin-bottom:8px;color:var(--text-tertiary)"></i>' +
-        '<p style="font-size:12px;color:var(--text-secondary)">Adaugă: ordine administrative suplimentare \xb7 acte adiționale \xb7 decizii supervizor \xb7 note de şanțer</p>' +
-      '</div>' +
+    // Alte documente contract (actualizat 12.11.2026)
+    '<div class="nivel-card" style="margin-bottom:16px;border-left:4px solid #1A5276">' +
+      '<div class="nivel-title" style="color:#1A5276"><i class="ti ti-file-plus"></i> Alte documente contract · ordine, acte adiționale, decizii, revendicări</div>' +
+      '<div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:11px;color:#2C3E50">' +
+      '<tr style="background:#D6EAF8;text-align:left"><th style="padding:6px">Data</th><th style="padding:6px">Document</th><th style="padding:6px">Tip</th><th style="padding:6px">Stadiu</th><th style="padding:6px">Observații</th></tr>' +
+'<tr><td>01.08.2025</td><td>Contract nr. 997 (A997) — Hangar J, UM 02311</td><td>Contract</td><td>Semnat</td><td>Baza contractuală; subcl. 15.1 retenție, 48.5 ajustare preț, 50 situații de lucrări, 69a revendicări</td></tr>' +
+'<tr><td>—</td><td>Ordin administrativ de începere a serviciilor de proiectare</td><td>OA</td><td>Emis</td><td>Conform contract A-997 din 01.08.2025</td></tr>' +
+'<tr><td>—</td><td>Ordin administrativ nr. 1</td><td>OA</td><td>Emis</td><td>Conform contract A-997 din 01.08.2025</td></tr>' +
+'<tr><td>05.05.2026</td><td>Decizia privind Revendicarea Antreprenorului nr. 2 (A5-838)</td><td>Decizie</td><td>Primită</td><td>Dosar revendicări Antreprenor</td></tr>' +
+'<tr><td>08.05.2026</td><td>Ordin început proiectare AA2 (A5-850) + Act adițional nr. 2 semnat EREN</td><td>AA</td><td>Semnat EREN</td><td>Grafic rescheduled AA2 din 09.10.2026</td></tr>' +
+'<tr><td>25.06.2026</td><td>Ordin administrativ nr. 2 (A5-976) — modalități întocmire SL</td><td>OA</td><td>Emis</td><td>Detaliat mai sus (cerințe + checklist)</td></tr>' +
+'<tr><td>14.10.2026</td><td>Revendicarea Antreprenorului nr. 3 — extindere durată (DS04), +27 zile, fără costuri (adr. 13835)</td><td>Revendicare</td><td>Depusă</td><td>Fără răspuns Beneficiar la 12.11.2026; finish 13.05.2027</td></tr>' +
+'<tr><td>29.10.2026</td><td>Revendicarea Antreprenorului nr. 4 — liste suplimentare NCS1+NCS2−NR, net +5.668.485 lei, +126 zile (înreg. 13898/30.10)</td><td>Revendicare</td><td>Depusă</td><td>Negociere 03.11 (rezultat de consemnat); termen aprobare 60 zile = 08.12.2026</td></tr>' +
+'<tr><td>19.10.2026</td><td>Dispoziție de șantier nr. 1 — balast → piatră spartă / rigolă</td><td>DS</td><td>Emisă</td><td>Rev. nr. 5 în pregătire: notificare 69a.1 până la 18.11.2026</td></tr>' +
+'<tr><td>09.11.2026</td><td>Act de constatare nr. 3 (A5-1322) — panouri acoperiș PIR</td><td>Constatare</td><td>Primit</td><td>DS proiectant în 14 zile (≈23.11.2026); detalii în Documente Beneficiar</td></tr>' +
+      '</table></div>' +
+      '<div style="margin-top:8px;font-size:10px;color:var(--text-secondary)">Sursa: folderul 14. Contract client și registrul Documente Beneficiar. Datele lipsă (—) se completează din e-mailurile .msg.</div>' +
     '</div>' +
 
     '<div class="page-footer">PM Hub \xb7 EREN CONS SRL \xb7 2026</div>';
@@ -4847,15 +4866,15 @@ function prevCalc() {
   var cost = PREV.buget + pe + costListe;
   return {st:st, marja:marja, netTot:netTot, acc:acc, idx:idx, pe:pe, costListe:costListe, venit:venit, cost:cost, marjaF:venit - cost, marjaOf:PREV.contractBase - PREV.buget};
 }
-/* === MR_DATA: marja curenta (generat din CI - Kogalniceanu.xlsx; CD/venit provizorii din CH41 04.10.2026) === */
-var MR_DATA = {"ci_div": {"Ofertare": 76344.97, "Operational": 67730.61, "SSM, Calitate, Mediu": 152.15, "Tehnic": 41382.87, "Nealocat (fără coloana Divizie)": 37.48}, "ci_luna": {"Ofertare": {"2026-01": 17973.48, "2026-02": 13974.65, "2026-03": 649.3, "2026-04": 278.25, "2026-05": 6697.95, "2026-06": 24930.66, "2026-07": 5978.83, "2026-08": 5209.24, "2026-09": 652.62}, "Operational": {"2026-01": 517.18, "2026-02": 2465.15, "2026-03": 15.59, "2026-04": 15.59, "2026-05": 267.32, "2026-06": 771.72, "2026-07": 34081.69, "2026-08": 4559.71, "2026-09": 24781.65, "2026-10": 255.0}, "SSM, Calitate, Mediu": {"2026-07": 38.18, "2026-08": 41.89, "2026-09": 72.09}, "Tehnic": {"2026-01": 21187.5, "2026-02": 6078.86, "2026-03": 200.82, "2026-05": 804.44, "2026-07": 1401.49, "2026-08": 4570.65, "2026-09": 7139.12}, "Nealocat (fără coloana Divizie)": {"2026-07": -0.01, "2026-09": 37.47}}, "ci_nat": {"Alte cheltuieli": 3003.62, "Auto și taxe drum": 3876.15, "Cazare, chirii, deplasări": 13274.42, "Obiecte de inventar": 25252.82, "Penalități": 20000.0, "Salarii și contribuții": 107192.97, "Servicii externe": 13048.1}, "pen_ci": 20000.0, "cd_cat": {"Alte costuri directe": 92562.75, "Alte servicii și furnizori": 241753.71, "Manoperă proprie": 232640.02, "Materiale (bonuri de consum)": 554408.78, "Proiectare (Triptic)": 627850.0, "Subantreprenori (Ideal Max, General Util)": 635066.49}, "cd_luna": {"2026-01": 25016.64, "2026-02": 27957.46, "2026-03": 23734.74, "2026-04": 19839.8, "2026-05": 9023.71, "2026-06": 3865.11, "2026-07": 731541.19, "2026-08": 695237.32, "2026-09": 785160.53, "2026-10": 62905.25}, "cd_top": {"TRIPTIC ARCHITECTURE & ENGINEERING S.R.L.": 627850.0, "IDEAL MAX CONSTRUCT SRL": 396918.09, "GENERAL UTIL CONS S.R.L.": 238148.4, "EREN CONS SRL": 234782.11, "LIGHT DESIGN ENGINEERING S.R.L.": 70147.78, "CASSINI SERVIMPEX SRL": 64807.68, "Cont bancar RAIFFEISEN BANK RON": 41634.56, "ROMCIM S.A.": 25365.01}, "cd_pen": 55761.08, "cd_tot": 2384281.74, "n_cd": 435, "n_ci": 196, "cd_fara_faza": 1609869.28};
-var MR_CD_PROV = 2384281.74, MR_VENIT = 3666015.25, MR_CD_SURSA = 'CD și CI: export Power BI 26.10.2026; venit: decontat cumulat SL1–SL5 fără TVA (Situații de lucrări, incl. SL5 octombrie)';
+/* === MR_DATA: marja curenta (export Power BI 12.11.2026: colapsat + detaliat până la 10.11; CI/CD) === */
+var MR_DATA = {"ci_div": {"Ofertare": 77583.0, "Operational": 61089.0, "SSM, Calitate, Mediu": 6592.0, "Tehnic": 46199.0}, "ci_luna": {}, "ci_nat": {"Salarii și contribuții TESA": 107850.0, "Beneficii personal TESA": 17671.0, "Obiecte de inventar și scule": 25408.0, "Cazare, chirii, deplasări": 13274.0, "Auto și combustibil": 2330.0, "Alte cheltuieli": 4930.0, "Penalități": 20000.0}, "pen_ci": 20000.0, "cd_cat": {"Proiectare (Triptic)": 640350.0, "Subantreprenori (fără proiectare)": 1937057.0, "Materiale": 668061.0, "Manoperă proprie și beneficii": 299696.0, "Utilaje (închirieri, leasing)": 140040.0, "Alte costuri directe, OS, transport": 105491.0}, "cd_luna": {"2026-01": 64695, "2026-02": 50476, "2026-03": 24597, "2026-04": 20134, "2026-05": 16793, "2026-06": 29567, "2026-07": 828802, "2026-08": 709619, "2026-09": 817843, "2026-10": 1467634, "2026-11": 27758}, "cd_top": {"A & C METAL INDUSTRY SRL": 789221, "TRIPTIC ARCHITECTURE & ENGINEERING S.R.L.": 640350, "IDEAL MAX CONSTRUCT SRL": 626614, "EREN CONS SRL (bonuri, salarii)": 410450, "GENERAL UTIL CONS S.R.L.": 238148, "BAUELEMENTE SRL": 154579, "CASSINI SERVIMPEX SRL": 100084, "U.M. 02311 CONSTANTA (penalități)": 95761, "LIGHT DESIGN ENGINEERING S.R.L.": 70148, "ROMCIM S.A.": 28455}, "cd_pen": 75761.0, "cd_tot": 3790695.0, "n_cd": 890, "n_ci": 0, "cd_fara_faza": 3150345.0, "bug": {"cd_la_productie": 3090930, "profit_net_pbi": -399110, "venit_ca_pbi": 3657387}};
+var MR_CD_PROV = 3790695, MR_VENIT = 3666015.25, MR_CD_SURSA = 'CD și CI: export Power BI 12.11.2026 (înregistrări până la 10.11); venit: decontat cumulat SL1–SL5 fără TVA (Situații de lucrări, incl. SL5 octombrie)';
 /* === /MR_DATA === */
 
 var MR_PROV = [
-  {k:'im', n:'Ideal Max — SL3+SL4 recunoscut ca venit, nefacturat de subcontractor', v:307856, src:'Analiza_Venit_Cost_Ideal_Max_SL4 (20.10.2026): cost aferent 682.056 − certificat 374.200', risc:''},
-  {k:'bau', n:'Bauelemente — stâlpi prefabricați (SL4), nimic în CD', v:315349, src:'Centralizator_Venit_Cost_Septembrie (20.10.2026): 21 buc × 15.017', risc:'SL1 Bauelemente 154.579 (24.09) încă neînregistrat în ERP — de verificat suprapunerea'},
-  {k:'ale', n:'Alesol Remix — stabilizare pământ 3.283 mp (SL4), nimic în CD', v:74750, src:'Centralizator_Venit_Cost_Septembrie (20.10.2026)', risc:'Graficul pune execuția pe 23.10, după SL4: dacă nu e executat, nu se provizionează'}
+  {k:'bau', n:'Bauelemente — stâlpi prefabricați SL2 (21 buc × 15.017), neînregistrat în CD', v:315349, src:'Centralizator_Venit_Cost (20.10.2026); în Power BI 12.11 apare doar SL1 154.579', risc:'De verificat cu Financiarul dacă factura SL2 a sosit'},
+  {k:'ale', n:'Alesol Remix — stabilizare pământ 3.283 mp, neînregistrat în CD', v:74750, src:'Centralizator_Venit_Cost (20.10.2026)', risc:'Graficul pune execuția pe 23.10; de confirmat factura'},
+  {k:'ac', n:'A&C Metal — diferență livrări SL1–SL5 (≈943.393) față de înregistrat (789.221)', v:154172, src:'Livrări facturate vs Power BI 12.11', risc:'De confirmat: ≈154k depinde de ce facturi sunt deja în ERP'}
 ];
 var MR_IDX = [
   {k:'sl2', n:'SL2 — execuție (DEFINITIV)', baza:638203.00, an:1.150313152, v:95930.30, st:'definitiv', src:'Calcul actualizare SL4 sept. 2026 · Io 143,70 (ian.2025)'},
@@ -4863,8 +4882,8 @@ var MR_IDX = [
   {k:'sl4', n:'SL4 — execuție (provizoriu)', baza:1427530.55, an:1.160055672, v:228484.36, st:'provizoriu', src:'In iul.2026 = 166,70 provizoriu'},
   {k:'sl5', n:'SL5 — execuție (provizoriu, uz intern)', baza:251427.52, an:1.167711, v:42167.04, st:'provizoriu', src:'In aug.2026 = 167,80 (ultim publicat; luna aferentă sept. nepublicată)'}
 ];
-var MR_BUG_EXEC = 16335452, MR_VAL_EXEC = 18521332;
-var _mrSt = {ofertare:true, cd:null, prov:{im:true,bau:true,ale:true}, idx:{sl2:true,sl3:true,sl4:true,sl5:true}};
+var MR_BUG_EXEC = 3090930, MR_VAL_EXEC = 3657387; /* Power BI 12.11: buget cost la producția realizată / venit CA */
+var _mrSt = {ofertare:true, cd:null, prov:{bau:true,ale:true,ac:true}, idx:{sl2:true,sl3:true,sl4:true,sl5:true}};
 function renderMarjaReala(proj) {
   function brutB0(){ return MR_VENIT - MR_VENIT * (MR_BUG_EXEC / MR_VAL_EXEC); }
   document.querySelectorAll('.submenu-item').forEach(function(i){ i.classList.remove('active'); });
@@ -4883,7 +4902,7 @@ function renderMarjaReala(proj) {
   var venitI = MR_VENIT + idxTot, netI = netC + idxTot, planPct = (1-MR_BUG_EXEC/MR_VAL_EXEC)*100, okI = netI/venitI*100 >= planPct;
   var okc = net/MR_VENIT*100 >= NEG_MARJA;
   var h = '<div class="proj-header"><div class="proj-title">Marjă curentă</div><div class="proj-meta">Hangar Kogălniceanu · Venit − Costuri directe − Costuri indirecte − Penalități · marjă planificată ' + String(NEG_MARJA).replace('.',',') + '%</div></div>';
-  h += '<div class="module-badge" style="background:#FDF2E0;color:#B7791F"><i class="ti ti-alert-triangle" style="font-size:13px"></i> CD și CI reale din Power BI — actualizate la 26.10.2026 · venit = decontat SL1–SL5 fără TVA (3.666.015) · costurile pot fi înregistrate cu întârziere față de venit — marja NU e validată</div>';
+  h += '<div class="module-badge" style="background:#FDF2E0;color:#B7791F"><i class="ti ti-alert-triangle" style="font-size:13px"></i> CD și CI reale din Power BI — actualizate la 12.11.2026 (până la 10.11) · venit = decontat SL1–SL5 fără TVA (3.666.015) · costuri încă neînregistrate (Bauelemente SL2, Alesol, diferență A&C) — marja NU e validată</div>';
   h += '<div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center;padding:10px 14px;border:1px solid var(--border);border-radius:8px;background:#FAFBFC;margin:10px 0 14px;font-size:12px">' +
     '<label style="cursor:pointer"><input type="checkbox" id="mrOf" ' + (S.ofertare ? 'checked' : '') + ' onchange="_mrSt.ofertare=this.checked;renderMarjaReala(\'hangar\')"> Include costurile de Ofertare (' + fm(ciOfert) + ' lei)</label>' +
     '<span>CD (lei): <input id="mrCd" type="text" value="' + fm(cd) + '" style="width:110px;padding:3px 6px;border:1px solid var(--border);border-radius:5px" onchange="var v=parseFloat(this.value.replace(/[^0-9,\\-]/g,\'\').replace(\',\',\'.\'));_mrSt.cd=isNaN(v)?null:v;renderMarjaReala(\'hangar\')"> <span style="color:#7F8C8D">fără penalități · editabil</span></span></div>';
@@ -4916,11 +4935,11 @@ function renderMarjaReala(proj) {
   ix += '<div style="display:flex;justify-content:space-between;padding-top:6px;font-size:12px;font-weight:700"><span>Indexare inclusă</span><span>' + fm(idxTot) + ' lei</span></div><div style="font-size:11px;color:#7F8C8D;margin-top:6px">SL2 și SL3 sunt DEFINITIVE (indici finali iunie 165,30 / iulie 166,80); SL4 provizoriu; SL5 provizoriu de uz intern (indice august 167,80, luna aferentă sept. nepublicată). Indexarea nu e în decontatul de 3.666.015 (SL fără ajustare). Se bifează doar ce vrei să socotești.</div></div>';
   h += cr + ix;
   // Proiectare vs Executie (SL1 = proiectare; SL2-SL4 = executie)
-  var vP = 627850, cP = D.cd_cat['Proiectare (Triptic)'] || 0, vE = MR_VENIT - vP, cE = cd - cP;
+  var vP = 640350, cP = D.cd_cat['Proiectare (Triptic)'] || 0, vE = MR_VENIT - vP, cE = cd - cP;
   function rp(l,v,c){ var m=v-c; return '<tr style="border-bottom:1px solid #EEF0F2"><td style="padding:5px 6px;font-weight:600">' + l + '</td><td style="padding:5px 6px;text-align:right">' + fm(v) + '</td><td style="padding:5px 6px;text-align:right">' + fm(c) + '</td><td style="padding:5px 6px;text-align:right;font-weight:700;color:' + (m>0?'#3B6D11':'#7F8C8D') + '">' + fm(m) + '</td><td style="padding:5px 6px;text-align:right;font-weight:700">' + pc(m,v) + '</td></tr>'; }
   h += '<div style="font-weight:600;margin:6px 0">Proiectare vs execuție <span style="font-weight:400;color:#7F8C8D;font-size:11px">· marja brută (după CD)</span></div><table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:6px"><thead><tr style="background:#F2F4F6"><th style="text-align:left;padding:5px 6px"></th><th style="text-align:right;padding:5px 6px">Venit decontat</th><th style="text-align:right;padding:5px 6px">CD</th><th style="text-align:right;padding:5px 6px">Marjă brută</th><th style="text-align:right;padding:5px 6px">%</th></tr></thead><tbody>' +
     rp('Proiectare (SL1 · Triptic)', vP, cP) + rp('Execuție (SL2–SL4)', vE, cE) + rp('Total', MR_VENIT, cd) + '</tbody></table>' +
-    '<div style="font-size:11px;color:#B7791F;margin:0 0 14px">Proiectarea e decontată la același preț cu costul Triptic (627.850 lei) → marjă zero; toată marja vine din execuție. Costul include AA2 proiectare 43.350. Dacă Triptic mai facturează, costul crește fără venit suplimentar decât prin SL noi de proiectare.</div>';
+    '<div style="font-size:11px;color:#B7791F;margin:0 0 14px">Proiectarea (627.850 + asistență tehnică SL5 12.500) e decontată la același preț cu costul Triptic (640.350 lei) → marjă zero; toată marja vine din execuție. Costul include AA2 proiectare 43.350. Dacă Triptic mai facturează, costul crește fără venit suplimentar decât prin SL noi de proiectare.</div>';
   // Curent vs buget (buget = marja planificata pe executie: 18.521.332 venit contract Cap.4+5 vs 16.335.452 buget cost)
   var rb = MR_BUG_EXEC / MR_VAL_EXEC, cdB = MR_VENIT * rb, brutB = MR_VENIT - cdB;
   var netB = brutB - 0; // CI nu e bugetat separat in bugetul de executie
@@ -4939,16 +4958,17 @@ function renderMarjaReala(proj) {
     var r = '<div style="flex:1;min-width:300px"><div style="font-weight:600;margin:6px 0">' + title + '</div><table style="width:100%;border-collapse:collapse;font-size:12px"><tbody>';
     keys.forEach(function(k){ r += '<tr style="border-bottom:1px solid #EEF0F2"><td style="padding:4px 6px">' + k + '</td><td style="padding:4px 6px;text-align:right">' + fm(obj[k]) + '</td><td style="padding:4px 6px;text-align:right;color:#7F8C8D">' + pc(obj[k],t) + '</td></tr>'; });
     return r + '<tr style="font-weight:700"><td style="padding:4px 6px">Total</td><td style="padding:4px 6px;text-align:right">' + fm(t) + '</td><td></td></tr></tbody></table></div>'; }
-  h += '<div style="display:flex;gap:18px;flex-wrap:wrap">' + tbl('CD pe categorii (fără penalități)', D.cd_cat) + tbl('CD — primii furnizori', D.cd_top) + '</div>';
-  h += '<div style="display:flex;gap:18px;flex-wrap:wrap">' + tbl('CD pe lună', D.cd_luna) + tbl('CI pe natură', D.ci_nat) + '</div>';
+  h += '<div style="display:flex;gap:18px;flex-wrap:wrap">' + tbl('CD pe categorii (fără penalități)', D.cd_cat) + tbl('Primii furnizori (CD+CI)', D.cd_top) + '</div>';
+  h += '<div style="display:flex;gap:18px;flex-wrap:wrap">' + tbl('CD+CI pe lună (postări)', D.cd_luna) + tbl('CI pe natură', D.ci_nat) + '</div>';
   h += '<div style="display:flex;gap:18px;flex-wrap:wrap">' + tbl('CI pe divizie', D.ci_div) + '<div style="flex:1;min-width:300px"></div></div>';
   // pe luna
   var luni = []; Object.keys(D.ci_luna).forEach(function(d){ Object.keys(D.ci_luna[d]).forEach(function(m){ if (luni.indexOf(m) < 0) luni.push(m); }); }); luni.sort();
   var divs = Object.keys(D.ci_div);
   h += '<div style="font-weight:600;margin:14px 0 6px">CI pe lună și divizie</div><table style="width:100%;border-collapse:collapse;font-size:12px;table-layout:fixed"><thead><tr style="background:#F2F4F6"><th style="text-align:left;padding:4px 6px">Luna</th>' + divs.map(function(d){return '<th style="text-align:right;padding:4px 6px">' + d + '</th>';}).join('') + '<th style="text-align:right;padding:4px 6px">Total</th></tr></thead><tbody>';
   luni.forEach(function(m){ var t=0; h += '<tr style="border-bottom:1px solid #EEF0F2"><td style="padding:4px 6px">' + m + '</td>' + divs.map(function(d){ var v=(D.ci_luna[d]||{})[m]||0; if (d==='Ofertare' && !S.ofertare) v=0; t+=v; return '<td style="padding:4px 6px;text-align:right">' + fm(v) + '</td>'; }).join('') + '<td style="padding:4px 6px;text-align:right;font-weight:600">' + fm(t) + '</td></tr>'; });
+  if (!luni.length) h += '<tr><td colspan="9" style="padding:6px;color:#7F8C8D">Split lunar CI indisponibil în exportul colapsat din 12.11.</td></tr>';
   h += '</tbody></table>';
-  h += '<div style="margin-top:14px;padding:10px 14px;border-left:4px solid #B7791F;background:#FDF2E0;font-size:12px;line-height:1.5"><b>Note de control</b><br>• CD real (Power BI 26.10): ' + fm(D.cd_tot + D.cd_pen) + ' lei din care penalități ' + fm(D.cd_pen) + ' (factura 23110030) · ' + D.n_cd + ' linii. CI: ' + fm(ciTot) + ' lei · ' + D.n_ci + ' linii. Documentele comune CD/CI sunt linii diferite ale aceluiași document (salarii, bonuri), fără dublare.<br>• Penalități: ' + fm(D.cd_pen) + ' în CD (23110030, 21.07) + ' + fm(penCI) + ' în CI (23110034, 25.09) = ' + fm(pen) + ' lei. De confirmat cu facturile primite de la Beneficiar (au fost menționate două facturi de 20.000 lei).<br>• Venitul (' + fm(MR_VENIT) + ') = decontat cumulat SL1–SL5 fără TVA (SL1 627.850 · SL2 647.203 · SL3 699.504 · SL4 1.427.531 · SL5 263.928, incl. asistență 12.500). Nu include producția executată și nefacturată. Marja de ' + pc(net,MR_VENIT) + ' e peste cea planificată (11,8%): posibile costuri neînregistrate încă (facturi sosite târziu, subantreprenori, materiale) — de validat cu Financiarul.<br>• Triptic: factura 53 = 584.500 lei + AA2 43.350 = 627.850. În CH41 apărea 1.169.000 (= 2 × 584.500), adică factura de sosit dublată — aceasta explică în mare parte diferența CH41 față de CD real.<br>• CD fără fază de proiect: ' + fm(D.cd_fara_faza) + ' lei (' + pc(D.cd_fara_faza, D.cd_tot) + ').<br>• Divizia CI (Ofertare etc.) vine din exportul anterior; noul export nu mai are coloana Divizie — costurile de Ofertare (' + fm(ciOfert) + ' lei) rămân orientative. Salariile din octombrie intră după închiderea lunii.</div';
+  h += '<div style="margin-top:14px;padding:10px 14px;border-left:4px solid #B7791F;background:#FDF2E0;font-size:12px;line-height:1.5"><b>Note de control</b><br>• CD real (Power BI 12.11): ' + fm(D.cd_tot + D.cd_pen) + ' lei din care penalități ' + fm(D.cd_pen) + ' · ' + D.n_cd + ' linii CD+CI (export detaliat 10.11). CI: ' + fm(ciTot) + ' lei. Documentele comune CD/CI sunt linii diferite ale aceluiași document (salarii, bonuri), fără dublare.<br>• Penalități: ' + fm(D.cd_pen) + ' în CD (55.761 din 21.07 + 20.000 octombrie) + ' + fm(penCI) + ' în CI (25.09) = ' + fm(pen) + ' lei. Power BI mai arată «Alte venituri» 55.761 și «venit servicii în curs» −64.390 (CA Power BI 3.657.387), de clarificat cu Financiarul.<br>• Venitul (' + fm(MR_VENIT) + ') = decontat cumulat SL1–SL5 fără TVA (SL1 627.850 · SL2 647.203 · SL3 699.504 · SL4 1.427.531 · SL5 263.928, incl. asistență 12.500). Nu include producția executată și nefacturată. Marja netă de ' + pc(net,MR_VENIT) + ' (Power BI: −399.110 lei pe venit CA 3.657.387) e sub cea planificată (15,5%, buget cost Power BI la producția realizată 3.090.930); SUBA e peste buget (livrat/facturat înaintea producției) și mai sunt costuri neînregistrate – de validat cu Financiarul.<br>• Triptic: factura 53 = 584.500 lei + AA2 43.350 = 627.850. În CH41 apărea 1.169.000 (= 2 × 584.500), adică factura de sosit dublată — aceasta explică în mare parte diferența CH41 față de CD real.<br>• CD fără fază de proiect: ' + fm(D.cd_fara_faza) + ' lei (' + pc(D.cd_fara_faza, D.cd_tot) + ').<br>• Divizia CI (Ofertare etc.) e estimată din exportul detaliat (CI total din colapsat); splitul lunar CI nu mai e disponibil. Costurile de Ofertare (' + fm(ciOfert) + ' lei) sunt orientative.</div';
   h = h.replace(/<table/g,'<div class="mrsc"><table').replace(/<\/table>/g,'</table></div>');
   h = '<style>.mrsc{overflow-x:auto;-webkit-overflow-scrolling:touch}.mrsc>table{min-width:460px}.mrcas{overflow-x:auto;-webkit-overflow-scrolling:touch}.mrcas>div{min-width:430px}@media(max-width:600px){#main .proj-title{font-size:20px}}</style>' + h;
   var m = document.getElementById('main'); if (m) m.innerHTML = h;
@@ -6654,6 +6674,118 @@ function renderProdSed2(proj) {
   document.getElementById('main').innerHTML = html;
 }
 
+
+
+// Ședință producție 17.11.2026 — luna de raportare Octombrie 2026 (SL5). Sursă: Raport_Lunar_..._completat_Octombrie_2026.xlsx. Gol => link în pregătire.
+var PRODSED3_URL = '';
+
+function renderProdSed3(proj) {
+  document.querySelectorAll('.submenu-item').forEach(function(i){ i.classList.remove('active'); });
+  var it = document.getElementById('item-hangar-prodsed3'); if (it) it.classList.add('active');
+  var sp = document.getElementById('sub-hangar-productie'); if (sp) sp.classList.add('open');
+  var cp = document.getElementById('chev-hangar-productie'); if (cp) cp.classList.add('open');
+  var TH = 'padding:7px 8px;text-align:left';
+  var TD = 'padding:6px 8px;border-bottom:1px solid #eee';
+  var html = '';
+  html += '<div class="proj-header"><div class="proj-title">Ședință de producție — 17.11.2026</div><div class="proj-meta">Hangar Kogălniceanu · Luna de raportare: Octombrie 2026 · SL5 (26.09–25.10.2026) · status la 12.11.2026 · valori fără TVA · date preliminare, de validat înainte de ședință</div></div>';
+  html += '<div class="module-badge productie"><i class="ti ti-calendar-stats" style="font-size:13px"></i> Raportare lunară producție — SL5</div>';
+  if (PRODSED3_URL) {
+    html += '<div style="margin-bottom:12px"><a href="'+PRODSED3_URL+'" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 18px;background:#1A5276;color:#fff;border-radius:var(--radius);font-size:12px;font-weight:600;text-decoration:none"><i class="ti ti-table"></i> Deschide raportul complet</a></div>';
+  } else {
+    html += '<div style="margin-bottom:12px"><span style="display:inline-flex;align-items:center;gap:6px;padding:8px 18px;background:#E5E7EB;color:#6B7280;border-radius:var(--radius);font-size:12px;font-weight:600"><i class="ti ti-file-spreadsheet"></i> Fișier: 8. Sedinte productie / Sedinta Octombrie 2026 / Raport_Lunar_Prezentare_Proiect_v4_completat_Octombrie_2026.xlsx</span></div>';
+  }
+  html += '<div style="background:#FCE4E4;border-left:3px solid #C0392B;border-radius:6px;padding:8px 12px;font-size:11px;color:#8B1E14;margin-bottom:14px"><b>ESCALADARE:</b> CA lună −78,8% vs plan (prag 5%); YTD −1,89 mil. lei față de plan (producție). MD% YTD 2,2% față de 15,5% buget; profit net Power BI −399.110 lei; costuri încă neînregistrate ≈0,54 mil. (Bauelemente SL2, Alesol, diferență A&amp;C) → MD ≈ −12%; CD și CI din Power BI 12.11 (înregistrări până la 10.11).</div>';
+  html += '<div style="background:#FFF8E1;border-left:3px solid #B7791F;border-radius:6px;padding:8px 12px;font-size:11px;color:#7A5B12;margin-bottom:14px"><b>De reținut:</b> progresul din tabel este valoric/decontat (ponderi F6, SL5). SL5 aprobat de Beneficiar la 09.11 (A5-1325); emailul AE-1487 indică greșit „SL nr.4” și 319.352,30 lei „fără TVA” (este SL5 cu TVA; fără TVA 263.927,52) — se cere corectură scrisă înainte de facturare. SL4 (1.427.531) nu este afectat.</div>';
+  html += '<div class="kpi-grid" style="margin-bottom:14px">';
+  html += '<div class="kpi"><div class="kpi-label">Progres valoric realizat</div><div class="kpi-val" style="color:#C0392B">18,99%</div><div class="kpi-sub">3.666.015 lei · SL1–SL5 din 19.305.182</div></div>';
+  html += '<div class="kpi"><div class="kpi-label">Progres valoric planificat</div><div class="kpi-val">28,76%</div><div class="kpi-sub">5.552.195 lei · execuție −1.874.389 lei vs grafic F6</div></div>';
+  html += '<div class="kpi"><div class="kpi-label">CA lună SL5</div><div class="kpi-val" style="color:#C0392B">263.928</div><div class="kpi-sub">plan 1.247.165 · −78,8%</div></div>';
+  html += '<div class="kpi"><div class="kpi-label">Întârziere vs contract</div><div class="kpi-val" style="color:#C0392B">27 zile</div><div class="kpi-sub">Rev. nr.3: finish 16.04 → 13.05.2027 · Rev. nr.4 (+126 zile) → 20.08.2027</div></div>';
+  html += '</div>';
+  function card(title, inner){ return '<div class="proj-card" style="margin-bottom:12px"><div class="proj-card-header" style="background:#2C4A6E"><span style="font-size:13px;font-weight:600;color:#fff">'+title+'</span></div>'+inner+'</div>'; }
+  // categorii
+  var frows = [
+    ["Proiectare + asistență tehnică (cap.3)","4,1%","84,4%","82,8%","În curs","#fff"],
+    ["Organizare de șantier (5.1)","2,5%","51,8%","50,0%","În curs","#fff"],
+    ["Demolări — Obiect 1 + Obiect 3","2,5%","70,1%","100%","Finalizat","#E2EFDA"],
+    ["Amenajare platformă exterioară","8,3%","0%","16,5%","În curs (în avans)","#E2EFDA"],
+    ["Structură Hangar (prefabricate + confecții)","24,4%","79,5%","42,9%","Întârziat (−1,73 mil.)","#FCE4E4"],
+    ["Arhitectură Hangar — C+M","25,9%","7,3%","0%","Neîncepută","#FFF2CC"],
+    ["Rețele electrice ext. (priză pământ)","4,7%","3,1%","1,0%","În curs","#fff"],
+    ["Rețele ext. sanitare, instalații, HVAC, curenți tari/slabi","14,0%","—","0%","Neîncepute (plan Nov–Mar)","#fff"],
+    ["Utilaje, probe, dotări","12,6%","2,5%","0%","Nedemarat","#fff"],
+    ["TOTAL PROIECT (ponderat valoric)","100%","28,8%","19,0%","−9,8 pp","#D9E1F2"]
+  ];
+  var t = '<div class="proj-card-body" style="padding:0;overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:11px"><tr style="background:#2E5090;color:#fff"><th style="'+TH+'">Categorie</th><th style="padding:7px 6px;text-align:right">Pondere</th><th style="padding:7px 6px;text-align:right">Planificat</th><th style="padding:7px 6px;text-align:right">Realizat</th><th style="'+TH+'">Status</th></tr>';
+  frows.forEach(function(x, i){
+    var b = i===frows.length-1 ? 'font-weight:700;' : '';
+    t += '<tr style="background:'+x[5]+';'+b+'"><td style="'+TD+'">'+x[0]+'</td><td style="'+TD+';text-align:right">'+x[1]+'</td><td style="'+TD+';text-align:right">'+x[2]+'</td><td style="'+TD+';text-align:right">'+x[3]+'</td><td style="'+TD+'">'+x[4]+'</td></tr>';
+  });
+  t += '</table></div>';
+  html += card('Stadiu pe categorii (pondere valorică din F6, la SL5)', t);
+  // financiar
+  var fin = [
+    ["CA lună (SL5)","1.247.165","263.928","−983.238 (−78,8%)"],
+    ["CA YTD (SL1–SL5 + ajustări de preț recunoscute 208.377)","5.552.195","3.874.392","−1.677.803"],
+    ["WIP – executat nedecontat","—","n/d","de completat cu Financiarul"],
+    ["Costuri directe YTD (Power BI 12.11, fără penalități 75.761)","3.090.930 (la producția realizată)","3.790.695","+699.765 (+22,6%)"],
+    ["Marjă directă YTD (MD%)","15,5% (buget Power BI)","2,2% (83.697)","≈ −12% după costuri neînregistrate (≈0,54 mil.)"],
+    ["Costuri indirecte CI (Power BI 12.11)","—","191.463","în afara CD; profit net Power BI −399.110"]
+  ];
+  t = '<div class="proj-card-body" style="padding:0;overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:11px"><tr style="background:#2E5090;color:#fff"><th style="'+TH+'">Indicator</th><th style="padding:7px 6px;text-align:right">Buget / plan</th><th style="padding:7px 6px;text-align:right">Realizat</th><th style="padding:7px 6px;text-align:right">Abatere / observație</th></tr>';
+  fin.forEach(function(x){ t += '<tr><td style="'+TD+'">'+x[0]+'</td><td style="'+TD+';text-align:right">'+x[1]+'</td><td style="'+TD+';text-align:right">'+x[2]+'</td><td style="'+TD+';text-align:right;font-weight:600">'+x[3]+'</td></tr>'; });
+  t += '</table></div>';
+  html += card('Financiar — venit, costuri, marjă (lei fără TVA)', t);
+  html += '<div style="font-size:10.5px;color:#666;margin:-6px 0 14px">Ajustări de preț: SL2 95.930 și SL3 112.446 definitive; SL4 228.484 și SL5 42.167 provizorii (nerecunoscute în CA). Buget cost din Power BI la producția realizată (3.090.930 = 84,5% din venit), aplicat la planul F6. CH41 (04.10) abandonat: dublări (Triptic 2×584.500 etc.).</div>';
+  // abateri
+  var ab = [
+    ["Execuție","#FCE4E4","#C0392B","Structură 42,9% vs 79,5% plan (−1,73 mil. lei): teren de fundare neconform (DS04), oțel A&amp;C contractat abia la 02.11 și nemontat, platformă începută 19.10, arhitectură neînceput, panouri acoperiș necomandate (soluție PIR)."],
+    ["Cost / marjă","#FCE4E4","#C0392B","CD Power BI 12.11 = 3,79 mil. (fără penalități) față de buget 3,09 mil. la producția realizată: SUBA 2,58 mil. față de 1,44 mil. (A&amp;C 789.221, Triptic 640.350, Ideal Max 626.614 facturate înaintea producției), materiale sub buget. Încă neînregistrate: Bauelemente SL2 315.349, Alesol 74.750, diferență A&amp;C ≈154.172. Cost nebugetat EREN: 104.759 (CQ 94.759, RTE ~6.000, geotehnician ~4.000)."],
+    ["Contracte","#FFF8E1","#856404","A&amp;C Metal nr.187 semnat 02.11: 243.528 EUR (ofertă 306.509 EUR; diferență de scope de explicat; PE03 deschis). DITO 1.060.252 lei (discount 5%) de confirmat; Radrom necontractat."],
+    ["Contractual","#E8F5E9","#1E6E2D","Rev. nr.3 (DS04, +27 zile, fără costuri) depusă 14.10; Rev. nr.4 (liste suplimentare, net +5.668.485 lei, +126 zile) transmisă 29.10 (13898/30.10), negociere 03.11 (rezultat de consemnat), termen aprobare 08.12.2026. Penalități 2×20.000 plătite; personal-cheie înlocuit (29.10)."],
+    ["Tehnic","#FFF8E1","#856404","Panouri PIR: Act de constatare nr.3 (09.11), DS proiectant în 14 zile (≈23.11). Piatră spartă / rigolă: DS nr.1/19.10, Rev. nr.5 (net −141.549 lei), notificare 69a.1 până la 18.11. Fundații: PE11 (lățime 45 vs 60 cm) deschis."],
+    ["Închise","#E8F5E9","#1E6E2D","PE04, PE05, PE06, PE07, PE10, PE12 închise (decizii 17.10 – 01.11); fără recuperare separată, decontare prin NAPS."]
+  ];
+  t = '<div class="proj-card-body" style="padding:10px 12px">';
+  ab.forEach(function(c){ t += '<div style="display:flex;gap:10px;align-items:flex-start;margin-bottom:8px"><span style="background:'+c[1]+';color:'+c[2]+';font-size:10.5px;font-weight:700;padding:3px 8px;border-radius:4px;white-space:nowrap">'+c[0]+'</span><span style="font-size:11.5px;color:#333">'+c[3]+'</span></div>'; });
+  t += '</div>';
+  html += card('Abateri &amp; puncte deschise', t);
+  html += card('Forecast producție M+1…M+3 (plan F6 — de revizuit realist)', '<div class="proj-card-body" style="padding:10px 12px;font-size:11.5px">Noiembrie <b>1.982.481</b> · Decembrie <b>2.053.648</b> · Ianuarie 2027 <b>2.286.598</b> lei (ianuarie din planul F6 nerevizuit). Depind de montajul oțelului, comanda panourilor PIR după DS și aprobarea Rev. nr.4.</div>');
+  // riscuri
+  var rk = [
+    ["Grup pompare spumă: 155,25 vs ~430 mc/h (breviar TRIPTIC), fără aviz ISU — Rev. nr.4","20","Rev. nr.4 (cl.69a); retragere aeronavă în scris"],
+    ["Decalaj structură (−1,73 mil.) și finish 13.05.2027 / 20.08.2027","20","Echipe suplimentare, montaj oțel, replanificare"],
+    ["NCS/NR neaprobate (+5,67 mil. net), termen 08.12 — risc cash utilaje","20","Escaladare aprobare; comenzi condiționate"],
+    ["Marjă: MD 2,2% vs 15,5% buget; profit net Power BI −399.110; ≈ −12% după costuri neînregistrate","20","Reconciliere Financiar; echilibrare livrări–decontare"],
+    ["Buget fundamentat 49,8% + rețete ≠ caiet de sarcini","16","Reofertare capitole critice; NAPS"],
+    ["Contracte: A&amp;C (curs EUR), DITO neconfirmat, livrări A&amp;C înaintea montajului","16","Confirmare scope; corelare livrări–montaj"],
+    ["Panouri PIR: DS ≈23.11, montaj în sezonul rece","16","DS cu verificator foc; comandă imediată"]
+  ];
+  t = '<div class="proj-card-body" style="padding:0;overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:11px"><tr style="background:#2E5090;color:#fff"><th style="padding:7px 10px;text-align:left">Risc</th><th style="padding:7px 8px;text-align:center">Scor</th><th style="'+TH+'">Măsură</th></tr>';
+  rk.forEach(function(x){ t += '<tr><td style="padding:6px 10px;border-bottom:1px solid #eee">'+x[0]+'</td><td style="padding:6px 8px;border-bottom:1px solid #eee;text-align:center;font-weight:700;color:#C0392B">'+x[1]+'</td><td style="'+TD+'">'+x[2]+'</td></tr>'; });
+  t += '</table></div>';
+  html += card('Riscuri principale (impact cash)', t);
+  // actiuni
+  var ac = [
+    ["Corectură AE-1487 (SL5, nu SL4; 319.352 este cu TVA) + factură SL5 la 263.927,52 + TVA","G. Spătaru","17.11"],
+    ["Completare WIP/încasări + validare indexare SL3/SL4/SL5 cu Financiarul","Financiar (de desemnat)","16.11"],
+    ["Notificare 69a.1 Rev. nr.5 piatră spartă (DS nr.1/19.10)","G. Spătaru","18.11"],
+    ["Înregistrare costuri lipsă (Bauelemente SL2, Alesol, diferență A&amp;C ≈0,54 mil.) + reconciliere cu Financiarul","Financiar (de desemnat)","20.11"],
+    ["A&amp;C Metal: explicare 306.509 → 243.528 EUR; închidere PE03","Achiziții (de desemnat)","20.11"],
+    ["Confirmare contract DITO și AA4 Ideal Max; contract Radrom","G. Spătaru","20.11"],
+    ["Răspuns ofertare PE08/PE09/PE11 + punct de vedere tehnic fundații","Dep. ofertare / Tehnic intern","20.11"],
+    ["DS proiectant panouri PIR + verificator foc; comandă panouri","G. Spătaru","23.11"],
+    ["Consemnare negociere 03.11; urmărire răspuns Rev. nr.3/4","G. Spătaru","08.12"],
+    ["Recuperare structură: montaj oțel, echipe suplimentare, replanificare Nov–Ian","A. Pepine","30.11"]
+  ];
+  t = '<div class="proj-card-body" style="padding:0;overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:11px"><tr style="background:#2E5090;color:#fff"><th style="padding:7px 10px;text-align:left">Acțiune</th><th style="'+TH+';white-space:nowrap">Owner</th><th style="padding:7px 8px;text-align:center">Termen</th></tr>';
+  ac.forEach(function(x){ t += '<tr><td style="padding:6px 10px;border-bottom:1px solid #eee">'+x[0]+'</td><td style="'+TD+';color:#444;white-space:nowrap">'+x[1]+'</td><td style="'+TD+';text-align:center;white-space:nowrap;font-weight:600">'+x[2]+'</td></tr>'; });
+  t += '</table></div>';
+  html += card('Acțiuni cheie (owner · termen) — propuneri, de confirmat', t);
+  html += '<button class="open-fisa-btn" onclick="renderProjHome(\'hangar\')"><i class="ti ti-arrow-left"></i> Înapoi la proiect</button>';
+  html += '<div class="page-footer">PM Hub · EREN CONS SRL · 2026 · Sursă: Raport_Lunar_Prezentare_Proiect_v4_completat_Octombrie_2026.xlsx + F6 SL5 + CD/CI Power BI 12.11.2026</div>';
+  document.getElementById('main').innerHTML = html;
+}
 
 function openProdSed2() {
   var sub = document.getElementById('sub-hangar-prodsed2');

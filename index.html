@@ -466,8 +466,14 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
         <div class="submenu-item" id="item-academia-validare" onclick="goModule('academia','validare')">
           <i class="ti ti-chart-bar"></i> Validare Bugete
         </div>
-        <div class="submenu-item" id="item-academia-productie" onclick="renderProductieAcademia()">
+        <div class="submenu-item" id="item-academia-productie" onclick="toggleSubSub('academia-productie')">
           <i class="ti ti-hammer"></i> Raportări Producție
+          <i class="ti ti-chevron-down chevron" id="chev-academia-productie" style="font-size:11px"></i>
+        </div>
+        <div class="submenu" id="sub-academia-productie" style="margin-left:14px;border-left:2px solid var(--grey-200)">
+          <div class="submenu-item" id="item-academia-prodsed1" onclick="renderProdSedAcademia1()">
+            <i class="ti ti-calendar-event" style="color:#1A5276"></i> 1. Ședința de producție 17.11.2026
+          </div>
         </div>
         <div class="submenu-item" id="item-academia-minute" onclick="toggleSubSub('academia-minute')">
           <i class="ti ti-notebook" style="color:#2E9E57"></i> Minute
@@ -2250,6 +2256,127 @@ function renderProductieAcademia() {
     '<div class="page-footer">PM Hub · EREN CONS SRL · 2026</div>';
 }
 
+// Ședință producție 17.11.2026 — Academia Navală, luna de raportare Octombrie 2026 (contract semnat 26.10.2026). Sursă: Raport_Lunar_Prezentare_Proiect_v4.xlsx (folder 13. Sedinte productie). Gol => fișier local.
+var PRODSED_ACADEMIA1_URL = 'https://docs.google.com/spreadsheets/d/1-SDDMW_mFJdP9MpM8QH5okUMEQ9XQ7T3wyOszc5JTRE/edit?usp=sharing';
+
+function renderProdSedAcademia1() {
+  _activateAcademiaItem('item-academia-prodsed1');
+  var sp = document.getElementById('sub-academia-productie'); if (sp) sp.classList.add('open');
+  var cp = document.getElementById('chev-academia-productie'); if (cp) cp.classList.add('open');
+  var TH = 'padding:7px 8px;text-align:left';
+  var TD = 'padding:6px 8px;border-bottom:1px solid #eee';
+  var html = '';
+  html += '<div class="proj-header"><div class="proj-title">Ședința de producție — 17.11.2026</div><div class="proj-meta">Academia Navală „Mircea cel Bătrân” · Luna de raportare: Octombrie 2026 · contract semnat 26.10.2026, proiectare din 05.11.2026 · status la 12.11.2026 · valori fără TVA · date preliminare, de validat înainte de ședință</div></div>';
+  html += '<div class="module-badge productie"><i class="ti ti-calendar-stats" style="font-size:13px"></i> Raportare lunară producție — format CEOO</div>';
+  if (PRODSED_ACADEMIA1_URL) {
+    html += '<div style="margin-bottom:12px"><a href="'+PRODSED_ACADEMIA1_URL+'" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 18px;background:#1A5276;color:#fff;border-radius:var(--radius);font-size:12px;font-weight:600;text-decoration:none"><i class="ti ti-table"></i> Deschide raportul complet</a></div>';
+  } else {
+    html += '<div style="margin-bottom:12px"><span style="display:inline-flex;align-items:center;gap:6px;padding:8px 18px;background:#E5E7EB;color:#6B7280;border-radius:var(--radius);font-size:12px;font-weight:600"><i class="ti ti-file-spreadsheet"></i> Fișier: 13. Sedinte productie / Raport_Lunar_Prezentare_Proiect_v4.xlsx</span></div>';
+  }
+  html += '<div style="background:#FFF8E1;border-left:3px solid #B7791F;border-radius:6px;padding:8px 12px;font-size:11px;color:#7A5B12;margin-bottom:14px"><b>Fără ESCALADARE pe praguri:</b> CA lună 0 față de 0 planificat (prag 5%); MD% bugetat indisponibil (fără buget de cost direct). <b>Excepție informativă propusă pentru decizie:</b> graficul din ofertă nu se încadrează în termenele maxime din CS — până la +55 zile peste limita de 37 luni (recepție 29.01.2030 vs 05.12.2029); nu este întârziere la data raportului.</div>';
+  html += '<div class="kpi-grid" style="margin-bottom:14px">';
+  html += '<div class="kpi"><div class="kpi-label">Progres valoric realizat / plan</div><div class="kpi-val">0% / 0%</div><div class="kpi-sub">la 31.10.2026 · proiectare început 05.11 · grafic ofertă luna 1 = 443.246 lei</div></div>';
+  html += '<div class="kpi"><div class="kpi-label">Valoare contract</div><div class="kpi-val">60,42 mil.</div><div class="kpi-sub">60.418.156 lei · 1,51 mil. proiectare + 58,91 mil. execuție</div></div>';
+  html += '<div class="kpi"><div class="kpi-label">Costuri indirecte YTD (ERP)</div><div class="kpi-val">42.358</div><div class="kpi-sub">salarii ofertare 21.708 + tehnic 20.650 · costuri directe 0 · MD 0</div></div>';
+  html += '<div class="kpi"><div class="kpi-label">Termen DTAD / DTAC</div><div class="kpi-val">05.12.2026 / 05.03.2027</div><div class="kpi-sub">DTAD contractual 05.01.2027 · raport inițial + demarare: 19.11.2026</div></div>';
+  html += '</div>';
+  function card(title, inner){ return '<div class="proj-card" style="margin-bottom:12px"><div class="proj-card-header" style="background:#2C4A6E"><span style="font-size:13px;font-weight:600;color:#fff">'+title+'</span></div>'+inner+'</div>'; }
+  // categorii
+  var frows = [
+    ["Proiectare — studii, DTAD/DTAC, PT, verificare","1,5%","0%","0%","În curs (DTAD țintă 05.12)","#fff"],
+    ["Asistență tehnică proiectant","1,0%","0%","0%","Neîncepută","#fff"],
+    ["Demolare B1 + arheologie + mediu + utilități (Ob.1)","6,9%","0%","0%","Neîncepută (grafic 28.01.2027)","#fff"],
+    ["Organizare de șantier","12,4%","0%","0%","Neîncepută","#fff"],
+    ["Obiect 2 — pavilion nou (construcții + instalații)","46,9%","0%","0%","Neîncepută (grafic 25.03.2027)","#fff"],
+    ["Obiecte 3–5 — construcții","1,5%","0%","0%","Neîncepută","#fff"],
+    ["Racorduri utilități","4,6%","0%","0%","Neîncepută","#fff"],
+    ["Utilaje și dotări (furnizare + montaj)","24,8%","0%","0%","Neîncepută","#fff"],
+    ["Probe + pregătire personal","0,3%","0%","0%","Neîncepută","#fff"],
+    ["TOTAL PROIECT (ponderat valoric, ofertă 31.07.2025)","100%","0%","0%","0 pp","#D9E1F2"]
+  ];
+  var t = '<div class="proj-card-body" style="padding:0;overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:11px"><tr style="background:#2E5090;color:#fff"><th style="'+TH+'">Categorie</th><th style="padding:7px 6px;text-align:right">Pondere</th><th style="padding:7px 6px;text-align:right">Planificat</th><th style="padding:7px 6px;text-align:right">Realizat</th><th style="'+TH+'">Status</th></tr>';
+  frows.forEach(function(x, i){
+    var b = i===frows.length-1 ? 'font-weight:700;' : '';
+    t += '<tr style="background:'+x[5]+';'+b+'"><td style="'+TD+'">'+x[0]+'</td><td style="'+TD+';text-align:right">'+x[1]+'</td><td style="'+TD+';text-align:right">'+x[2]+'</td><td style="'+TD+';text-align:right">'+x[3]+'</td><td style="'+TD+'">'+x[4]+'</td></tr>';
+  });
+  t += '</table></div>';
+  html += card('Stadiu pe categorii (pondere valorică din oferta Eren; progres decontat la 31.10.2026)', t);
+  html += '<div style="font-size:10.5px;color:#666;margin:-6px 0 14px">Proiectarea (1.510.000 lei) se facturează într-o singură tranșă, la recepția etapei 1.1 (≈15.03.2027) și după toate avizele din CU; progresul fizic al proiectării se confirmă cu BEMEL.</div>';
+  // jaloane
+  var jl = [
+    ["Raport inițial + ședința de demarare (Gantt, plan calității, PGCC, plan SSM)","19.11.2026","efectivitate + 14 zile","#FFF8E1"],
+    ["DTAD (țintă internă 30 zile) / termen contractual","05.12.2026 / 05.01.2027","minuta 05.11.2026","#fff"],
+    ["Autorizația de desființare (estimat)","14.02.2027","DTAD + 10 zile + 30 zile","#fff"],
+    ["DTAC cu avize + PT + DE (sfârșit proiectare)","05.03.2027","ordin + 4 luni","#fff"],
+    ["Autorizația de construire / ordin de începere lucrări (estimat)","14.04.2027 / 29.04.2027","DTAC + 10 + 30 + 15 zile","#fff"],
+    ["Finalizare lucrări / recepție la terminare (pe termene maxime CS)","29.12.2029 / 29.01.2030","limită totală 05.12.2029 (+55 zile)","#FCE4E4"]
+  ];
+  t = '<div class="proj-card-body" style="padding:0;overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:11px"><tr style="background:#2E5090;color:#fff"><th style="'+TH+'">Jalon</th><th style="'+TH+';white-space:nowrap">Dată</th><th style="'+TH+'">Bază</th></tr>';
+  jl.forEach(function(x){ t += '<tr style="background:'+x[3]+'"><td style="'+TD+'">'+x[0]+'</td><td style="'+TD+';white-space:nowrap;font-weight:600">'+x[1]+'</td><td style="'+TD+';color:#444">'+x[2]+'</td></tr>'; });
+  t += '</table></div>';
+  html += card('Jaloane contractuale (din Plan contract, ordin 05.11.2026)', t);
+  // financiar
+  var fin = [
+    ["CA lună (octombrie)","0","0","0"],
+    ["CA YTD","0","0","0"],
+    ["WIP – executat nefacturat","—","0","nicio producție nefacturată"],
+    ["Costuri directe YTD (ERP, 12.11.2026)","indisponibil","0","costurile din ERP (42.358) sunt indirecte: 114 Ofertare 21.708 + 121 Tehnic 20.650"],
+    ["Marjă directă YTD","indisponibil","0","fără venit și fără costuri directe"],
+    ["Garanție de bună execuție","—","constituită","depunere 0,5% în cont Trezorerie, 07.11.2026"]
+  ];
+  t = '<div class="proj-card-body" style="padding:0;overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:11px"><tr style="background:#2E5090;color:#fff"><th style="'+TH+'">Indicator</th><th style="padding:7px 6px;text-align:right">Buget / plan</th><th style="padding:7px 6px;text-align:right">Realizat</th><th style="padding:7px 6px;text-align:right">Observație</th></tr>';
+  fin.forEach(function(x){ t += '<tr><td style="'+TD+'">'+x[0]+'</td><td style="'+TD+';text-align:right">'+x[1]+'</td><td style="'+TD+';text-align:right">'+x[2]+'</td><td style="'+TD+';text-align:right;font-weight:600">'+x[3]+'</td></tr>'; });
+  t += '</table></div>';
+  html += card('Financiar — venit, costuri, marjă (lei fără TVA)', t);
+  // abateri
+  var ab = [
+    ["Termen","#FFF8E1","#856404","Graficul ofertei (148 săpt., ancora = ordin proiectare) vs CS: demolare +27 zile (28.01 → 24.02.2027), Obiect 2 +35 zile (25.03 → 29.04.2027), recepție +55 zile peste limita de 37 luni; finalizare lucrări +143 zile vs grafic. Potențial, la termene maxime; cu DTAD în 30 zile demolarea poate porni ≈24.01.2027."],
+    ["Contractare","#FCE4E4","#C0392B","Contract de proiectare cu BEMEL nesemnat la 08.11 (doar acordul de asociere); termenul intern 09.11 depășit; plată directă solicitată (13920/06.11)."],
+    ["Arheologie","#FFF8E1","#856404","Cerere acord AC (termen 02.11) și contract cu instituția muzeală nefinalizate; condiționează săpăturile și demolarea; legat de dosarul CNSC 1503."],
+    ["Organizare","#FFF8E1","#856404","Acțiuni cu termen 12.11 fără responsabil (matrice comunicare, plan trafic/OS, contract protocol, planșe SF, suprafață, program AG); asigurările contractuale în lucru (obligatorii de la 05.11)."],
+    ["Cash","#FFF8E1","#856404","Mecanism de avans neclar (15% / 5%+10%); proiectarea se plătește doar la recepția etapei 1.1 după toate avizele."],
+    ["Închise","#E8F5E9","#1E6E2D","Garanția de bună execuție (07.11); cumul personal Ștefănescu (07.11); CU prelungit (07.11); kick-off intern, date de intrare, vizită amplasament (07–08.11); ordin proiectare (05.11); Reprezentant Antreprenor (30.10)."]
+  ];
+  t = '<div class="proj-card-body" style="padding:10px 12px">';
+  ab.forEach(function(c){ t += '<div style="display:flex;gap:10px;align-items:flex-start;margin-bottom:8px"><span style="background:'+c[1]+';color:'+c[2]+';font-size:10.5px;font-weight:700;padding:3px 8px;border-radius:4px;white-space:nowrap">'+c[0]+'</span><span style="font-size:11.5px;color:#333">'+c[3]+'</span></div>'; });
+  t += '</div>';
+  html += card('Abateri &amp; puncte deschise (Registrul deviațiilor: 9 înregistrări)', t);
+  html += card('Forecast producție M+1…M+3 (grafic ofertă — de revizuit)', '<div class="proj-card-body" style="padding:10px 12px;font-size:11.5px">Noiembrie <b>443.246</b> · Decembrie <b>146.751</b> · Ianuarie 2027 <b>146.751</b> lei (total 736.749). Februarie 2027: 1.081.384 lei în grafic (demolare + OS de la S13) — nerealistă fără ordin parțial de începere. Depind de contractul BEMEL, datele de intrare de la AC și acordul pentru arheologie. Capacitate (personal mediu): de confirmat cu BEMEL / ICCO.</div>');
+  // riscuri
+  var rk = [
+    ["CU prelungit (07.11), dar avize SF expirate (Distrigaz) — refacere și întârziere la DTAC","15","Reînnoire Distrigaz; avize în ordinea duratei"],
+    ["Termenele maxime CS nu permit graficul ofertei (+27 / +35 / +55 zile)","16","Clarificări nr. 2/16/18; ordin parțial demolare; DTAD în 30 zile"],
+    ["Creșterea prețurilor față de iulie 2025 (ofertă cu ~25% sub valoarea estimată de AC)","16","Ajustare prețuri cl. 48.3; contracte cu prețuri ferme"],
+    ["Litigiu atribuire CNSC 1503 (PORR) — arheologie nedeclarată la ofertare","15","Verificare decizie finală; contractare arheolog; corespondență păstrată"],
+    ["Puncte de referință la 4 luni ratate (prima ≈29.08.2027): reținere 10%, apoi reziliere","15","Program realist aprobat înainte de începere"],
+    ["Cash-flow: plata proiectării condiționată de toate avizele; avans neclar","12","Avize timpurii; clarificare avans; plată directă BEMEL"]
+  ];
+  t = '<div class="proj-card-body" style="padding:0;overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:11px"><tr style="background:#2E5090;color:#fff"><th style="padding:7px 10px;text-align:left">Risc</th><th style="padding:7px 8px;text-align:center">Scor</th><th style="'+TH+'">Măsură</th></tr>';
+  rk.forEach(function(x){ t += '<tr><td style="padding:6px 10px;border-bottom:1px solid #eee">'+x[0]+'</td><td style="padding:6px 8px;border-bottom:1px solid #eee;text-align:center;font-weight:700;color:#C0392B">'+x[1]+'</td><td style="'+TD+'">'+x[2]+'</td></tr>'; });
+  t += '</table></div>';
+  html += card('Riscuri principale (impact cash)', t);
+  // actiuni
+  var ac = [
+    ["Semnare contract de proiectare BEMEL + act de lansare cu calendar DTAD/DTAC","G. Spătaru","16.11"],
+    ["Raport inițial + ședința de demarare (Gantt, plan calității, PGCC, plan SSM)","G. Spătaru","19.11"],
+    ["Finalizare asigurări contractuale (CG cl. 16.2) + transmitere polițe la AC și Supervizor (în lucru)","G. Spătaru","17.11"],
+    ["Pachet clarificări către AC (nr. 1–18): avans, ancora graficului, termen demolare, ordin parțial","G. Spătaru","20.11"],
+    ["Supraveghere arheologică: demers Muzeul de Istorie + cerere acord AC","G. Spătaru","16.11"],
+    ["DTAD în 30 zile + raport intermediar","G. Spătaru","05.12"],
+    ["Desemnare owner + termene pentru acțiunile minutei 05.11 marcate „de stabilit”","G. Spătaru","17.11"],
+    ["Buget de cost directe (Power BI); costurile indirecte rămân separat","G. Spătaru","20.11"],
+    ["Demolare B1: selectare subcontractant, negociere sub bugetul intern","G. Spătaru","30.11"],
+    ["Liste acces unitate militară + propunere șef de șantier către AC","G. Spătaru","19.11"]
+  ];
+  t = '<div class="proj-card-body" style="padding:0;overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:11px"><tr style="background:#2E5090;color:#fff"><th style="padding:7px 10px;text-align:left">Acțiune</th><th style="'+TH+';white-space:nowrap">Owner</th><th style="padding:7px 8px;text-align:center">Termen</th></tr>';
+  ac.forEach(function(x){ t += '<tr><td style="padding:6px 10px;border-bottom:1px solid #eee">'+x[0]+'</td><td style="'+TD+';color:#444;white-space:nowrap">'+x[1]+'</td><td style="'+TD+';text-align:center;white-space:nowrap;font-weight:600">'+x[2]+'</td></tr>'; });
+  t += '</table></div>';
+  html += card('Acțiuni cheie (owner · termen) — propuneri, de confirmat', t);
+  html += '<button class="open-fisa-btn" onclick="renderProjHome(\'academia\')"><i class="ti ti-arrow-left"></i> Înapoi la proiect</button>';
+  html += '<div class="page-footer">PM Hub · EREN CONS SRL · 2026 · Sursă: Raport_Lunar_Prezentare_Proiect_v4.xlsx + Plan contract + minute interne 28.10 / 05.11.2026 + ERP CD/CI 12.11.2026</div>';
+  document.getElementById('main').innerHTML = html;
+}
+
 function renderSL12() {
   document.querySelectorAll('.submenu-item').forEach(function(i){ i.classList.remove('active'); });
   var item = document.getElementById('item-campus-sl12');
@@ -2841,6 +2968,11 @@ function renderDocContract(proj) {
 // automat cronologic invers (cel mai recent primul) după cheia "k" (AAAALLZZ + rang zi).
 var DOCBENEF_DIR = '13. Documente transmise de beneficiar/';
 var DOCS_BENEF = [
+  { k:202611121, d:'12.11.2026', cat:'BENEFICIAR', nr:'AE-1536', serie:'AE',
+    titlu:'Respingere grafic de execuție actualizat la 10.11.2026 (Supervizor) — de corectat în 10 zile',
+    desc:'Emailul UM 02311 comunică respingerea de către Supervizor a Programului de execuție actualizat la 10.11.2026 (cl. 17, subcl. 17.11). Motive: (1) ID 73, Obiectul 3 — demolare platformă betonată din fața hangarului și rigolă: planificat start 31.12.2026 / finish 21.01.2027, contrar PV de demolare A-5612/14.08.2026, care a recepționat demolările Obiectelor 1 și 3; (2) ID 238, Obiectul 4 — platformă betonată și rigolă: planificat start 21.01.2027 / finish 25.02.2027, contrar situației din teren (fază determinantă pentru stratul de formă 13.10.2026; în SL4 sunt cuprinse săpătura platformei, stabilizarea pământului și evacuarea pământului); (3) ID 239–250: datele de start și finish se corelează cu situația din teren. Conform subcl. 17.5, Antreprenorul are 10 zile calendaristice să transmită Programul de execuție actualizat și corectat (→ 22.11.2026).',
+    color:'#B9770E', bg:'#FEF5E7', icon:'ti-calendar-off',
+    url:'https://drive.google.com/file/d/1MrfiR7XziuLN9QvZULdYgM5f8I0USnfy/view?usp=sharing' },
   { k:202611093, d:'09.11.2026', cat:'CONSTATARE', nr:'A5-1322', serie:'A5',
     titlu:'Act de constatare nr. 3 — înlocuire panouri de acoperiș hangar (vată → PIR), fără costuri suplimentare',
     desc:'Încheiat la 06.11.2026 (înregistrat 09.11.2026) de U.M. 02311 (Lt. ing. Eduard Pîrvan), utilizator U.M. 01837 (Cpt. ing. Aurel Mihai Bocai) și EREN CONS (ing. Adrian Pepine). Pe baza Notei tehnice Triptic din 28.10.2026, se cere proiectantului să analizeze înlocuirea panourilor sandwich de acoperiș cu miez de vată cu panouri cu miez PIR; se va realiza FĂRĂ COSTURI SUPLIMENTARE. Motiv: retragerea de pe piață a produsului cu miez de vată. Măsură: proiectantul stabilește soluțiile tehnice și emite dispoziția de șantier în 14 zile de la data actului (06.11.2026 → 20.11.2026). Anexă: Nota tehnică Triptic 28.10.2026 (vezi PE07, închis 31.10.2026).',
@@ -4483,7 +4615,14 @@ var REGPD = [
    cauza:'<b style="color:#000">Eroare de ofertare</b> — geotehnician pe fundații omis din buget.',
    impactTimp:'Fără impact direct pe termen; necesar la fiecare verificare a cotei de fundare (afectează reluarea sapăturilor)',
    actiune:'ÎNCHIS 01.11.2026 — decizie Manager de contract: punct încheiat în registru. Costul geotehnicianului (Ana Proiect Design, 500 lei/vizită, ~4.000 lei la 8 vizite estimate) rămâne la EREN, în afara bugetului inițial, și nu se solicită Beneficiarului. Valoarea reală depinde de numărul de vizite; se urmărește în costurile directe (Marjă curentă).',
-   sursa:'Contract de colaborare Ana Proiect Design (draft) — 9. Contracte / 8. Ana Proiect Design - geotehnist; preț indicat de Manager de contract: 8 vizite × 500 lei'}
+   sursa:'Contract de colaborare Ana Proiect Design (draft) — 9. Contracte / 8. Ana Proiect Design - geotehnist; preț indicat de Manager de contract: 8 vizite × 500 lei'},
+  {cod:'PE13', categorie:'Contractual', detaliu:'Grafic de execuție actualizat 10.11.2026 — respins de Supervizor', valoare:0, valoareText:'Necuantificat', termen:'22.11.2026', status:'Deschis', dataStatus:'12.11.2026',
+   problema:'Supervizorul a respins Programul de execuție actualizat la 10.11.2026 (cl. 17, subcl. 17.11): Obiectul 3 (demolare platformă și rigolă) planificat 31.12.2026–21.01.2027 deși demolările au fost recepționate prin PV A-5612/14.08.2026; Obiectul 4 (platformă și rigolă) planificat 21.01–25.02.2027 contrar situației din teren (fază determinantă stratul de formă 13.10.2026; SL4 include săpătura, stabilizarea și evacuarea pământului); ID 239–250 de corelat cu terenul.',
+   explicatii:'Conform subcl. 17.5, Antreprenorul are 10 zile calendaristice de la comunicare pentru a transmite Programul de execuție actualizat și corectat (12.11 → 22.11.2026, duminică; practic vineri 20.11). Fără impact valoric direct; risc procedural: un program neaprobat poate fi invocat de Beneficiar în discuțiile despre durată (Revendicarea nr. 3, DS04) și în actul adițional.',
+   cauza:'Neconcordanță între graficul transmis și situația reală din teren (planificare).',
+   impactTimp:'Termen de 10 zile pentru retransmitere (22.11.2026)',
+   actiune:'Corectare ID 73, 238, 239–250 în grafic (planificare) și retransmitere până la 20.11.2026; verificare coerență cu Revendicarea nr. 3 (durată).',
+   sursa:'Email UM 02311 AE-1536/12.11.2026 (Documente Contract)'}
 ];
 // ═══════════════════════════════════════════════════════════════
 // DOSAR PROBE — LISTE SUPLIMENTARE (NR/NCS1/NCS2), pe temele din Matricea NCS
@@ -4872,9 +5011,9 @@ var MR_CD_PROV = 3790695, MR_VENIT = 3666015.25, MR_CD_SURSA = 'CD și CI: expor
 /* === /MR_DATA === */
 
 var MR_PROV = [
-  {k:'bau', n:'Bauelemente — stâlpi prefabricați SL2 (21 buc × 15.017), neînregistrat în CD', v:315349, src:'Centralizator_Venit_Cost (20.10.2026); în Power BI 12.11 apare doar SL1 154.579', risc:'De verificat cu Financiarul dacă factura SL2 a sosit'},
+  {k:'bau', n:'Bauelemente — stâlpi prefabricați SL2 (21 buc × 15.017), neînregistrat în CD', v:315349, src:'Centralizator_Venit_Cost (20.10.2026); în Power BI 12.11 apare doar SL1 154.579', risc:'Lucrare deja decontată în SL4; de verificat cu Financiarul dacă factura SL2 a sosit'},
   {k:'ale', n:'Alesol Remix — stabilizare pământ 3.283 mp, neînregistrat în CD', v:74750, src:'Centralizator_Venit_Cost (20.10.2026)', risc:'Graficul pune execuția pe 23.10; de confirmat factura'},
-  {k:'ac', n:'A&C Metal — diferență livrări SL1–SL5 (≈943.393) față de înregistrat (789.221)', v:154172, src:'Livrări facturate vs Power BI 12.11', risc:'De confirmat: ≈154k depinde de ce facturi sunt deja în ERP'}
+  {k:'ac', n:'A&C Metal — cost înregistrat 789.221, NEFACTURAT la Beneficiar (oțel livrat, montaj nedecontat) → stoc/WIP, nu cost al producției', v:-789221, src:'Power BI 12.11 (A&C 789.221); venit zero până la montaj (SL6+)', risc:'Se închide la montaj și decontare; ajustare de timp'}
 ];
 var MR_IDX = [
   {k:'sl2', n:'SL2 — execuție (DEFINITIV)', baza:638203.00, an:1.150313152, v:95930.30, st:'definitiv', src:'Calcul actualizare SL4 sept. 2026 · Io 143,70 (ian.2025)'},
@@ -4912,7 +5051,7 @@ function renderMarjaReala(proj) {
     card('Marjă brută (după CD)', fm(brut), pc(brut,MR_VENIT) + ' din venit') +
     card('Costuri indirecte + penalități', fm(ciAfis + pen), pc(ciAfis+pen,MR_VENIT) + ' din venit · CI ' + fm(ciAfis) + ' · penalități ' + fm(pen), '#C0392B') +
     card('MARJĂ CURENTĂ (netă) · înregistrat', fm(net), '<span style="font-size:22px;font-weight:800;color:' + (okc ? '#3B6D11' : '#C0392B') + '">' + pc(net,MR_VENIT) + '</span> din venit · înregistrat<br>vs ' + String(NEG_MARJA).replace('.',',') + '% planificat · ' + (okc ? 'peste plan' : 'sub plan'), okc ? '#3B6D11' : '#C0392B', true) +
-    '<div style="flex:1.4;min-width:170px;border:3px solid ' + (netC/MR_VENIT*100 >= (1-MR_BUG_EXEC/MR_VAL_EXEC)*100 ? '#3B6D11' : '#C0392B') + ';border-radius:8px;padding:10px 12px;background:#FFF3D6;box-shadow:0 3px 12px rgba(183,121,31,0.35)"><div style="font-size:11px;font-weight:700;color:#B7791F">MARJĂ CORECTATĂ (netă) · cu cost de așteptat</div><div style="font-size:28px;font-weight:800;color:#1F3864">' + fm(netC) + '</div><div style="font-size:22px;font-weight:800;color:' + (netC/MR_VENIT*100 >= (1-MR_BUG_EXEC/MR_VAL_EXEC)*100 ? '#3B6D11' : '#C0392B') + '">' + pc(netC,MR_VENIT) + ' <span style="font-size:11px;font-weight:400;color:#7F8C8D">din venit</span></div><div style="font-size:11px;color:#7F8C8D">după +' + fm(provTot) + ' cost de așteptat · vs ' + ((1-MR_BUG_EXEC/MR_VAL_EXEC)*100).toFixed(1).replace('.',',') + '% planificat · ' + (netC/MR_VENIT*100 >= (1-MR_BUG_EXEC/MR_VAL_EXEC)*100 ? 'peste plan' : 'SUB plan') + '</div></div>' +
+    '<div style="flex:1.4;min-width:170px;border:3px solid ' + (netC/MR_VENIT*100 >= (1-MR_BUG_EXEC/MR_VAL_EXEC)*100 ? '#3B6D11' : '#C0392B') + ';border-radius:8px;padding:10px 12px;background:#FFF3D6;box-shadow:0 3px 12px rgba(183,121,31,0.35)"><div style="font-size:11px;font-weight:700;color:#B7791F">MARJĂ CORECTATĂ (netă) · ajustată A&C + costuri lipsă</div><div style="font-size:28px;font-weight:800;color:#1F3864">' + fm(netC) + '</div><div style="font-size:22px;font-weight:800;color:' + (netC/MR_VENIT*100 >= (1-MR_BUG_EXEC/MR_VAL_EXEC)*100 ? '#3B6D11' : '#C0392B') + '">' + pc(netC,MR_VENIT) + ' <span style="font-size:11px;font-weight:400;color:#7F8C8D">din venit</span></div><div style="font-size:11px;color:#7F8C8D">după ajustare cost ' + (provTot>=0?'+':'') + fm(provTot) + ' lei (A&C nefacturat −789.221; Bauelemente + Alesol +390.099) · vs ' + ((1-MR_BUG_EXEC/MR_VAL_EXEC)*100).toFixed(1).replace('.',',') + '% planificat · ' + (netC/MR_VENIT*100 >= (1-MR_BUG_EXEC/MR_VAL_EXEC)*100 ? 'peste plan' : 'SUB plan') + '</div></div>' +
     '<div style="flex:1.4;min-width:170px;border:3px solid ' + (okI ? '#3B6D11' : '#C0392B') + ';border-radius:8px;padding:10px 12px;background:#EAF4E2;box-shadow:0 3px 12px rgba(59,109,17,0.30)"><div style="font-size:11px;font-weight:700;color:#3B6D11">MARJĂ CORECTATĂ + INDEXARE</div><div style="font-size:28px;font-weight:800;color:#1F3864">' + fm(netI) + '</div><div style="font-size:22px;font-weight:800;color:' + (okI ? '#3B6D11' : '#C0392B') + '">' + pc(netI,venitI) + ' <span style="font-size:11px;font-weight:400;color:#7F8C8D">din venit + indexare</span></div><div style="font-size:11px;color:#7F8C8D">indexare cunoscută +' + fm(idxTot) + ' · vs ' + planPct.toFixed(1).replace('.',',') + '% planificat · ' + (okI ? 'peste plan' : 'SUB plan') + '</div></div></div>';
   // cascada
   var steps = [['Venit',MR_VENIT,'#1F3864'],['− Costuri directe',-cd,'#C0392B'],['= Marjă brută',brut,'#3B6D11'],['− Costuri indirecte',-ciAfis,'#C0392B'],['− Penalități',-pen,'#C0392B'],['= Marjă netă (înregistrat)',net,okc?'#3B6D11':'#C0392B'],['− Cost de așteptat',-provTot,'#B7791F'],['= MARJĂ CORECTATĂ',netC,netC>0?'#B7791F':'#C0392B'],['+ Indexare cunoscută',idxTot,'#3B6D11'],['= CORECTATĂ + INDEXARE',netI,okI?'#3B6D11':'#C0392B']];
@@ -5255,6 +5394,7 @@ var EVENIMENTE = [
   { id:'EV13', data:'2026-10-12', tip:'Beneficiar', titlu:'Înlocuire diriginte de șantier — domeniul 3.1', doc:'AE-1289/12.10.2026', clauza:'—', notificat:'N/A', nota:'Informativ.' },
   { id:'EV14', data:'2026-10-14', tip:'EREN', titlu:'Depunere Revendicarea Antreprenorului nr. 3 (DS04): +27 zile, fără costuri', doc:'Adresa 13835/14.10.2026', clauza:'69a.2 / 21.4 / 35.1', notificat:'N/A', dosar:'RA3', nota:'Detalii finale (eveniment încheiat 29.09) până la 29.10.2026.' },
   { id:'EV16', data:'2026-10-19', tip:'Beneficiar', titlu:'Dispoziție de șantier nr. 1 (PROEX CONSTRUCT): balast → piatră spartă la stratul de fundație + adaptare rigolă', doc:'DS nr. 1/19.10.2026', clauza:'37 / 69a.1', notificat:'De verificat', dosar:'F7', necesitaNotificare:true, nota:'Net NR/NCS1 negativ (−141.549,36 lei), fără costuri suplimentare pentru Beneficiar; Revendicarea nr. 5 în draft (folder 24. Revendicari/3. Revendicare piatra sparta).' },
+  { id:'EV17', data:'2026-11-12', tip:'Beneficiar', titlu:'Respingere grafic de execuție actualizat la 10.11.2026 (Supervizor) — de corectat în 10 zile', doc:'AE-1536/12.11.2026', clauza:'17.5 / 17.11', notificat:'N/A', dosar:'F8', nota:'Retransmitere program corectat până la 22.11.2026 (practic 20.11).' },
   { id:'EV15', data:'2026-10-14', tip:'Beneficiar', titlu:'Act de constatare nr. 2 (transmis prin email AE-1301)', doc:'A5-1240/14.10.2026', clauza:'—', notificat:'N/A', dosar:'F4', nota:'Termen de remediere 28.10.2026 (de confirmat din act).' }
 ];
 
@@ -5377,6 +5517,9 @@ var TERM_FIX = [
   { id:'F7', titlu:'Notificare 69a.1 — Revendicarea Antreprenorului nr. 5 (DS nr. 1/19.10.2026, balast → piatră spartă, NR/NCS1)',
     clauza:'69a.1', resp:'EREN', fix:'2026-11-18',
     consec:'Peste termen (30 zile de la eveniment, 19.10.2026): EREN suportă consecințele pe perioada de dinaintea notificării.', nota:'Draftul Revendicării nr. 5 are data notificării necompletată („___.2026”): de confirmat dacă s-a transmis. Detaliere (69a.2) în 30 zile de la notificare. NR −456.592,34 / NCS1 +315.042,98 / net −141.549,36 lei (liste complete).' },
+  { id:'F8', titlu:'Grafic de execuție actualizat și corectat — respins de Supervizor (AE-1536/12.11.2026), 10 zile',
+    clauza:'17.5 / 17.11', resp:'EREN', fix:'2026-11-22',
+    consec:'Programul de execuție actualizat nu este aprobat până la retransmitere; neîncadrarea în termen poate fi invocată de Beneficiar/Supervizor.', nota:'Corecturi cerute: ID 73 (Obiect 3, demolare — PV A-5612/14.08.2026), ID 238 (Obiect 4, platformă — fază determinantă 13.10, SL4), ID 239–250 (corelare cu terenul). 22.11.2026 cade duminică: practic vineri 20.11.' },
   { id:'F6', titlu:'Ședință de negociere — cantități lucrări suplimentare și documentația economică (ora 10:00, DDI București)',
     clauza:'—', resp:'EREN', fix:'2026-11-03',
     consec:'Prezența reprezentanților EREN este solicitată de Beneficiar; pregătire: panou de negociere, probe pe teme, plafon 15%.', nota:'Convocare AE-1398/29.10.2026, ca urmare a adresei 13821/09.10.2026.' },
@@ -6677,7 +6820,7 @@ function renderProdSed2(proj) {
 
 
 // Ședință producție 17.11.2026 — luna de raportare Octombrie 2026 (SL5). Sursă: Raport_Lunar_..._completat_Octombrie_2026.xlsx. Gol => link în pregătire.
-var PRODSED3_URL = '';
+var PRODSED3_URL = 'https://docs.google.com/spreadsheets/d/1ydQP5tNFvJYjCtFp39XdjTVyw7zM4mlGnjEHmC31r-8/edit?usp=sharing';
 
 function renderProdSed3(proj) {
   document.querySelectorAll('.submenu-item').forEach(function(i){ i.classList.remove('active'); });
@@ -6694,7 +6837,7 @@ function renderProdSed3(proj) {
   } else {
     html += '<div style="margin-bottom:12px"><span style="display:inline-flex;align-items:center;gap:6px;padding:8px 18px;background:#E5E7EB;color:#6B7280;border-radius:var(--radius);font-size:12px;font-weight:600"><i class="ti ti-file-spreadsheet"></i> Fișier: 8. Sedinte productie / Sedinta Octombrie 2026 / Raport_Lunar_Prezentare_Proiect_v4_completat_Octombrie_2026.xlsx</span></div>';
   }
-  html += '<div style="background:#FCE4E4;border-left:3px solid #C0392B;border-radius:6px;padding:8px 12px;font-size:11px;color:#8B1E14;margin-bottom:14px"><b>ESCALADARE:</b> CA lună −78,8% vs plan (prag 5%); YTD −1,89 mil. lei față de plan (producție). MD% YTD 2,2% față de 15,5% buget; profit net Power BI −399.110 lei; costuri încă neînregistrate ≈0,54 mil. (Bauelemente SL2, Alesol, diferență A&amp;C) → MD ≈ −12%; CD și CI din Power BI 12.11 (înregistrări până la 10.11).</div>';
+  html += '<div style="background:#FCE4E4;border-left:3px solid #C0392B;border-radius:6px;padding:8px 12px;font-size:11px;color:#8B1E14;margin-bottom:14px"><b>ESCALADARE:</b> CA lună −78,8% vs plan (prag 5%); YTD −1,89 mil. lei față de plan (producție). MD% YTD 2,2% față de 15,5% buget; profit net Power BI −399.110 lei; ajustată pentru A&amp;C Metal (789.221 cost înregistrat, nefacturat la Beneficiar) și costuri lipsă (Bauelemente SL2, Alesol): MD 12,5%; CD și CI din Power BI 12.11 (înregistrări până la 10.11).</div>';
   html += '<div style="background:#FFF8E1;border-left:3px solid #B7791F;border-radius:6px;padding:8px 12px;font-size:11px;color:#7A5B12;margin-bottom:14px"><b>De reținut:</b> progresul din tabel este valoric/decontat (ponderi F6, SL5). SL5 aprobat de Beneficiar la 09.11 (A5-1325); emailul AE-1487 indică greșit „SL nr.4” și 319.352,30 lei „fără TVA” (este SL5 cu TVA; fără TVA 263.927,52) — se cere corectură scrisă înainte de facturare. SL4 (1.427.531) nu este afectat.</div>';
   html += '<div class="kpi-grid" style="margin-bottom:14px">';
   html += '<div class="kpi"><div class="kpi-label">Progres valoric realizat</div><div class="kpi-val" style="color:#C0392B">18,99%</div><div class="kpi-sub">3.666.015 lei · SL1–SL5 din 19.305.182</div></div>';
@@ -6727,9 +6870,9 @@ function renderProdSed3(proj) {
   var fin = [
     ["CA lună (SL5)","1.247.165","263.928","−983.238 (−78,8%)"],
     ["CA YTD (SL1–SL5 + ajustări de preț recunoscute 208.377)","5.552.195","3.874.392","−1.677.803"],
-    ["WIP – executat nedecontat","—","n/d","de completat cu Financiarul"],
+    ["WIP – executat nedecontat (parțial)","—","1.065.039","oțel A&amp;C: 79.037 kg × 13,475 lei/kg; + rezervor 144.095 în Rev. nr.4; restul cu Financiarul"],
     ["Costuri directe YTD (Power BI 12.11, fără penalități 75.761)","3.090.930 (la producția realizată)","3.790.695","+699.765 (+22,6%)"],
-    ["Marjă directă YTD (MD%)","15,5% (buget Power BI)","2,2% (83.697)","≈ −12% după costuri neînregistrate (≈0,54 mil.)"],
+    ["Marjă directă YTD (MD%)","15,5% (buget Power BI)","2,2% (83.697) contabilă","12,5% (482.819) ajustată: fără A&amp;C nefacturat (789.221), cu costuri lipsă 390.099"],
     ["Costuri indirecte CI (Power BI 12.11)","—","191.463","în afara CD; profit net Power BI −399.110"]
   ];
   t = '<div class="proj-card-body" style="padding:0;overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:11px"><tr style="background:#2E5090;color:#fff"><th style="'+TH+'">Indicator</th><th style="padding:7px 6px;text-align:right">Buget / plan</th><th style="padding:7px 6px;text-align:right">Realizat</th><th style="padding:7px 6px;text-align:right">Abatere / observație</th></tr>';
@@ -6740,7 +6883,7 @@ function renderProdSed3(proj) {
   // abateri
   var ab = [
     ["Execuție","#FCE4E4","#C0392B","Structură 42,9% vs 79,5% plan (−1,73 mil. lei): teren de fundare neconform (DS04), oțel A&amp;C contractat abia la 02.11 și nemontat, platformă începută 19.10, arhitectură neînceput, panouri acoperiș necomandate (soluție PIR)."],
-    ["Cost / marjă","#FCE4E4","#C0392B","CD Power BI 12.11 = 3,79 mil. (fără penalități) față de buget 3,09 mil. la producția realizată: SUBA 2,58 mil. față de 1,44 mil. (A&amp;C 789.221, Triptic 640.350, Ideal Max 626.614 facturate înaintea producției), materiale sub buget. Încă neînregistrate: Bauelemente SL2 315.349, Alesol 74.750, diferență A&amp;C ≈154.172. Cost nebugetat EREN: 104.759 (CQ 94.759, RTE ~6.000, geotehnician ~4.000)."],
+    ["Cost / marjă","#FCE4E4","#C0392B","CD Power BI 12.11 = 3,79 mil. (fără penalități) față de buget 3,09 mil. la producția realizată: SUBA 2,58 mil. față de 1,44 mil. materiale sub buget. Cauza principală: A&amp;C Metal 789.221 cost înregistrat, dar nefacturat la Beneficiar (oțel livrat, montaj nedecontat); Triptic 640.350 și Ideal Max 626.614 corespund lucrărilor. Încă neînregistrate: Bauelemente SL2 315.349, Alesol 74.750 (lucrări deja decontate). Cost nebugetat EREN: 104.759 (CQ 94.759, RTE ~6.000, geotehnician ~4.000)."],
     ["Contracte","#FFF8E1","#856404","A&amp;C Metal nr.187 semnat 02.11: 243.528 EUR (ofertă 306.509 EUR; diferență de scope de explicat; PE03 deschis). DITO 1.060.252 lei (discount 5%) de confirmat; Radrom necontractat."],
     ["Contractual","#E8F5E9","#1E6E2D","Rev. nr.3 (DS04, +27 zile, fără costuri) depusă 14.10; Rev. nr.4 (liste suplimentare, net +5.668.485 lei, +126 zile) transmisă 29.10 (13898/30.10), negociere 03.11 (rezultat de consemnat), termen aprobare 08.12.2026. Penalități 2×20.000 plătite; personal-cheie înlocuit (29.10)."],
     ["Tehnic","#FFF8E1","#856404","Panouri PIR: Act de constatare nr.3 (09.11), DS proiectant în 14 zile (≈23.11). Piatră spartă / rigolă: DS nr.1/19.10, Rev. nr.5 (net −141.549 lei), notificare 69a.1 până la 18.11. Fundații: PE11 (lățime 45 vs 60 cm) deschis."],
@@ -6756,7 +6899,7 @@ function renderProdSed3(proj) {
     ["Grup pompare spumă: 155,25 vs ~430 mc/h (breviar TRIPTIC), fără aviz ISU — Rev. nr.4","20","Rev. nr.4 (cl.69a); retragere aeronavă în scris"],
     ["Decalaj structură (−1,73 mil.) și finish 13.05.2027 / 20.08.2027","20","Echipe suplimentare, montaj oțel, replanificare"],
     ["NCS/NR neaprobate (+5,67 mil. net), termen 08.12 — risc cash utilaje","20","Escaladare aprobare; comenzi condiționate"],
-    ["Marjă: MD 2,2% vs 15,5% buget; profit net Power BI −399.110; ≈ −12% după costuri neînregistrate","20","Reconciliere Financiar; echilibrare livrări–decontare"],
+    ["Marjă: MD contabilă 2,2% vs 15,5% buget; ajustată (fără A&amp;C nefacturat) 12,5%; profit net Power BI −399.110","20","Reconciliere Financiar; echilibrare livrări–decontare"],
     ["Buget fundamentat 49,8% + rețete ≠ caiet de sarcini","16","Reofertare capitole critice; NAPS"],
     ["Contracte: A&amp;C (curs EUR), DITO neconfirmat, livrări A&amp;C înaintea montajului","16","Confirmare scope; corelare livrări–montaj"],
     ["Panouri PIR: DS ≈23.11, montaj în sezonul rece","16","DS cu verificator foc; comandă imediată"]
@@ -6770,11 +6913,12 @@ function renderProdSed3(proj) {
     ["Corectură AE-1487 (SL5, nu SL4; 319.352 este cu TVA) + factură SL5 la 263.927,52 + TVA","G. Spătaru","17.11"],
     ["Completare WIP/încasări + validare indexare SL3/SL4/SL5 cu Financiarul","Financiar (de desemnat)","16.11"],
     ["Notificare 69a.1 Rev. nr.5 piatră spartă (DS nr.1/19.10)","G. Spătaru","18.11"],
-    ["Înregistrare costuri lipsă (Bauelemente SL2, Alesol, diferență A&amp;C ≈0,54 mil.) + reconciliere cu Financiarul","Financiar (de desemnat)","20.11"],
+    ["Înregistrare costuri lipsă (Bauelemente SL2, Alesol) + tratare A&amp;C (789.221 nefacturat) ca stoc/WIP; reconciliere cu Financiarul","Financiar (de desemnat)","20.11"],
     ["A&amp;C Metal: explicare 306.509 → 243.528 EUR; închidere PE03","Achiziții (de desemnat)","20.11"],
     ["Confirmare contract DITO și AA4 Ideal Max; contract Radrom","G. Spătaru","20.11"],
     ["Răspuns ofertare PE08/PE09/PE11 + punct de vedere tehnic fundații","Dep. ofertare / Tehnic intern","20.11"],
     ["DS proiectant panouri PIR + verificator foc; comandă panouri","G. Spătaru","23.11"],
+    ["Includere în SL6 a oțelului A&amp;C livrat (subcl. 50.2: 80% din cost ≈ 0,76 mil. lei) — verificare condiții","G. Spătaru","25.11"],
     ["Consemnare negociere 03.11; urmărire răspuns Rev. nr.3/4","G. Spătaru","08.12"],
     ["Recuperare structură: montaj oțel, echipe suplimentare, replanificare Nov–Ian","A. Pepine","30.11"]
   ];

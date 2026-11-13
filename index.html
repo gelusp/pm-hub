@@ -7361,6 +7361,18 @@ var briefCentBtn = `<span onclick="openBriefCentralizator()" style="display:inli
   document.getElementById('main').innerHTML=h;
 }
 
+var _csOff = {};
+function csToggle(i, on) {
+  var el = document.getElementById('cs-scroll'), st = el ? el.scrollTop : 0, wy = window.scrollY;
+  if (on) delete _csOff[i]; else _csOff[i] = true;
+  renderContractSinteza('hangar');
+  var e2 = document.getElementById('cs-scroll'); if (e2) e2.scrollTop = st; window.scrollTo(0, wy);
+}
+function csAll(on) {
+  _csOff = {};
+  if (!on) { for (var i = 0; i < 200; i++) _csOff[i] = true; }
+  renderContractSinteza('hangar');
+}
 function renderContractSinteza(proj) {
   if (proj === 'academia') { return renderContractSintezaAcademia(); }
   document.querySelectorAll('.submenu-item').forEach(function(i){ i.classList.remove('active'); });
@@ -7380,7 +7392,7 @@ function renderContractSinteza(proj) {
 
   // ── Contracte semnate în execuție ──
   // buget: număr = buget alocat; 0 = nebugetat (Δ = −contract); null = în curs (exclus din Δ)
-  var contracte = [
+  var contracteAll = [
     {scope:'Demolări hangar + platformă (Cap.1)', furnizor:'General Util Cons', nr:'ctr 153 · 09.07.2026', buget:403282, contract:240554, venit:507634, stare:'Semnat',
      nota:'Demolare hangar existent și platformă din BCR, dezechipare instalații și transport evacuare moloz. Acoperă integral scope-ul Cap.1. Preia în execuție și săpătura stratului de piatră spartă (975 mc, buget 21.187 lei), fără modificarea valorii contractului.'},
     {scope:'Structură prefabricate (Cap.3)', furnizor:'Bauelemente', nr:'ctr 171 · 06.08.2026', buget:564814, contract:502415, venit:584795, venitAprox:true, stare:'Semnat',
@@ -7446,6 +7458,8 @@ function renderContractSinteza(proj) {
      ctx:'Buget = art.5 din Analiza Cap.2 (M 10.210 + L 12.114 + U 46.684 = 69.008). Venit 76.592 lei (23,33 lei/mp × 3.283 mp). Fără mobilizare, execuția e cu 4,9% sub buget.',
      ctxDetail:'Depășirea vs buget (+5.742 lei, +8,3%) vine integral din mobilizarea de 9.090 lei, nebugetată (art.5 are transport = 0). Fără ea, 65.660 lei = −3.348 lei (−4,9%) față de buget și sub referința de piață Carmeuse+Alesol (67.844 lei). Marja vs venit rămâne 1.842 lei (2,4%) față de 9,9% bugetat; cu indexare SL2 marja urcă la ~15%. De verificat: bugetul și actul de constatare nr. 2 prevăd pământ stabilizat 20 cm, iar SL1 și contractul mențin 30 cm. Analiză: folderul 9. Contracte \\ 13. Alesol Remix.'}
   ];
+  var contracte = contracteAll.filter(function(c, i){ return !_csOff[i]; });
+  var nExcl = contracteAll.length - contracte.length;
   var totContract = 0, totBugetCmp = 0, totContractCmp = 0, pendingCount = 0;
   contracte.forEach(function(c){
     totContract += c.contract;
@@ -7562,7 +7576,7 @@ function renderContractSinteza(proj) {
   // KPI derulare
   html += '<div class="kpi-grid" style="margin-bottom:14px">';
   html += '<div class="kpi"><div class="kpi-label">Total contractat</div><div class="kpi-val">' + fmt(totContract) + '</div><div class="kpi-sub">lei fără TVA · ' + nSemnat + ' semnate (' + fmt(totSemnat) + ') + ' + nInSemnare + ' în semnare (' + fmt(totInSemnare) + ')</div></div>';
-  html += '<div class="kpi"><div class="kpi-label">Saving vs buget</div><div class="kpi-val" style="color:' + (totDelta>=0?'#3B6D11':'#9B59B6') + '">' + (totDelta>=0?'+':'−') + Math.abs(totDelta/totBugetCmp*100).toFixed(1).replace('.',',') + '%</div><div class="kpi-sub">' + (totDelta>=0?'+':'−') + fmt(Math.abs(totDelta)) + ' lei · buget ' + fmt(totBugetCmp) + ' → contractat ' + fmt(totContractCmp) + '</div></div>';
+  html += '<div class="kpi"><div class="kpi-label">Saving vs buget</div><div class="kpi-val" style="color:' + (totDelta>=0?'#3B6D11':'#9B59B6') + '">' + (totDelta>=0?'+':'−') + Math.abs((totBugetCmp ? totDelta/totBugetCmp : 0)*100).toFixed(1).replace('.',',') + '%</div><div class="kpi-sub">' + (totDelta>=0?'+':'−') + fmt(Math.abs(totDelta)) + ' lei · buget ' + fmt(totBugetCmp) + ' → contractat ' + fmt(totContractCmp) + '</div></div>';
   html += '<div class="kpi"><div class="kpi-label">Marjă vs venit (bază)</div><div class="kpi-val" style="color:' + (margVenit>=0?'#3B6D11':'#9B59B6') + '">' + (margVenit>=0?'+':'−') + Math.abs(margVenitPct).toFixed(1).replace('.',',') + '%</div><div class="kpi-sub">' + (margVenit>=0?'+':'−') + fmt(Math.abs(Math.round(margVenit))) + ' lei · venit ' + fmt(totVenit) + ' → cost ' + fmt(totCostVenit) + ' (fără indexare)' + (function(){ var cf = totContract - totCostVenit, nf = contracte.length - venitCount; if (nf<=0) return ''; var m2 = totVenit - totContract; return '<div style="margin-top:4px;padding-top:4px;border-top:1px dashed #CBD2DA;font-size:10px;color:#854F0B">Dacă includem și costurile fără venit de la beneficiar (' + nf + ' contracte, ' + fmt(cf) + ' lei: AA3 DS04, RTE, geotehnician): ' + (m2>=0?'+':'−') + fmt(Math.abs(Math.round(m2))) + ' lei · ' + (m2>=0?'+':'−') + Math.abs(m2/totVenit*100).toFixed(1).replace('.',',') + '%</div>'; })() + '</div></div>';
   html += '<div class="kpi" style="background:#EAF3DE;border-color:#C0DD97"><div class="kpi-label">Marjă vs venit + indexare</div><div class="kpi-val" style="color:#3B6D11">+' + margVenitIdxPct.toFixed(1).replace('.',',') + '%</div><div class="kpi-sub">+' + fmt(Math.round(margVenitIdx)) + ' lei · venit indexat ' + fmt(Math.round(venitIndexat)) + ' (coef. ' + AN_INDEX.toFixed(4).replace(".",",") + ' · +' + fmt(Math.round(indexUplift)) + ' din indexare)' + (function(){ var cf = totContract - totCostVenit, nf = contracte.length - venitCount; if (nf<=0) return ''; var m3 = venitIndexat - totContract; return '<div style="margin-top:4px;padding-top:4px;border-top:1px dashed #9CC46B;font-size:10px;color:#854F0B">Dacă includem și costurile fără venit de la beneficiar (' + nf + ' contracte, ' + fmt(cf) + ' lei: AA3 DS04, RTE, geotehnician): +' + fmt(Math.round(m3)) + ' lei · +' + (m3/venitIndexat*100).toFixed(1).replace('.',',') + '%</div>'; })() + '</div></div>';
   html += '<div class="kpi"><div class="kpi-label">Grad acoperire (semnat + în semnare)</div><div class="kpi-val" style="color:' + gradAcopCol + '">' + gradAcoperire.toFixed(1).replace('.',',') + '%</div><div class="kpi-sub">din 17,08 mil lei buget intern eDevize (Cap.1-13 + Org. Șantier) · din care semnat ' + gradSemnat.toFixed(1).replace('.',',') + '%</div></div>';
@@ -7573,14 +7587,16 @@ function renderContractSinteza(proj) {
   html += '<div style="height:18px;background:#EEF0F3;border-radius:6px;overflow:hidden"><div style="display:flex;height:100%"><div style="height:100%;width:' + Math.max(gradSemnat,1.2) + '%;background:#1F3864;min-width:2px"></div><div style="height:100%;width:' + (gradAcoperire - gradSemnat) + '%;background:#85B7EB"></div></div></div></div>';
 
   // tabel contracte — container cu scroll intern + header sticky (ca la Probleme identificate în execuție), ca lista să nu tot lungească pagina pe măsură ce se adaugă contracte
-  html += '<div class="proj-card" style="margin-bottom:14px"><div style="overflow:auto;max-height:min(65vh,640px);border-radius:8px">';
+  html += '<div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:0 0 8px;font-size:11px;color:#5A6472"><b>Joacă-te cu bifele:</b> debifat = contractul iese din total, saving și marjă. <button onclick="csAll(true)" style="padding:3px 10px;border:1px solid #CBD2DA;border-radius:99px;background:#fff;cursor:pointer;font-size:11px">Bifează toate</button><button onclick="csAll(false)" style="padding:3px 10px;border:1px solid #CBD2DA;border-radius:99px;background:#fff;cursor:pointer;font-size:11px">Debifează toate</button>' + (nExcl ? '<span style="color:#B7791F;font-weight:700">' + nExcl + ' excluse din calcul</span>' : '') + '</div>';
+  html += '<div class="proj-card" style="margin-bottom:14px"><div style="overflow:auto;max-height:min(65vh,640px);border-radius:8px" id="cs-scroll">';
   html += '<table style="width:100%;border-collapse:collapse;font-size:11px;min-width:900px">';
   html += '<thead><tr>';
-  ['Scope','Furnizor','Buget alocat','Valoare contract','Saving vs buget','Venit beneficiar','Marjă vs venit'].forEach(function(h,i){
+  ['Scope (bifă = inclus în calcul)','Furnizor','Buget alocat','Valoare contract','Saving vs buget','Venit beneficiar','Marjă vs venit'].forEach(function(h,i){
     html += '<th style="position:sticky;top:0;z-index:1;background:#1F3864;color:#fff;text-align:' + (i>=2?'right':'left') + ';padding:8px 10px;white-space:nowrap">' + h + '</th>';
   });
   html += '</tr></thead><tbody>';
-  contracte.forEach(function(c){
+  contracteAll.forEach(function(c, ci){
+    var off = !!_csOff[ci];
     var pending = (c.buget === null);
     var nebug = (c.buget === 0);
     var bugetCell = pending ? '<span style="color:#8A94A3;font-style:italic">în curs</span>' : (nebug ? '<span style="color:#8A94A3;font-style:italic">nebugetat</span>' : fmt(c.buget));
@@ -7613,8 +7629,8 @@ function renderContractSinteza(proj) {
     if (c.mkt) detailBits.push('<b style="color:#2F6B1E">'+ c.mkt + (c.mktDetail ? ' ' + c.mktDetail : '') +'</b>');
     if (c.ctx) detailBits.push('<b style="color:#3A5573">'+ c.ctx + (c.ctxDetail ? ' ' + c.ctxDetail : '') +'</b>');
     var detailLine = detailBits.length ? '<details style="margin-top:2px"><summary style="font-size:10px;color:#8A94A3;cursor:pointer">detalii</summary><div style="font-size:10px;color:#5A6472;margin-top:3px;line-height:1.5;width:280px;max-width:80vw;white-space:normal">' + detailBits.join(' · ') + '</div></details>' : '';
-    html += '<tr style="border-bottom:1px solid #E8E8E8">';
-    html += '<td style="padding:8px 10px"><b>' + c.scope + '</b>' + statusChip + (c.nr?'<div style="font-size:10px;color:#9AA3B0;margin-top:2px">'+c.nr+'</div>':'') + detailLine + '</td>';
+    html += '<tr style="border-bottom:1px solid #E8E8E8' + (off ? ';opacity:.4;background:#F5F5F5' : '') + '">';
+    html += '<td style="padding:8px 10px"><label style="display:flex;gap:8px;align-items:flex-start;cursor:pointer"><input type="checkbox" ' + (off ? '' : 'checked') + ' onchange="csToggle(' + ci + ',this.checked)" style="margin-top:3px"><span><b>' + c.scope + '</b>' + statusChip + (c.nr?'<div style="font-size:10px;color:#9AA3B0;margin-top:2px">'+c.nr+'</div>':'') + '</span></label>' + detailLine + '</td>';
     html += '<td style="padding:8px 10px;white-space:nowrap">' + c.furnizor + '</td>';
     html += '<td style="padding:8px 10px;text-align:right;white-space:nowrap">' + bugetCell + '</td>';
     html += '<td style="padding:8px 10px;text-align:right;white-space:nowrap;font-weight:600">' + fmt(c.contract) + '</td>';
@@ -7627,7 +7643,7 @@ function renderContractSinteza(proj) {
   html += '<td style="padding:8px 10px" colspan="2">TOTAL contractat</td>';
   html += '<td style="padding:8px 10px;text-align:right">' + fmt(totBugetCmp) + '</td>';
   html += '<td style="padding:8px 10px;text-align:right">' + fmt(totContract) + '</td>';
-  html += '<td style="padding:8px 10px;text-align:right;color:' + (totDelta>=0?'#3B6D11':'#9B59B6') + '">' + (totDelta>=0?'+':'−') + fmt(Math.abs(totDelta)) + '<div style="font-size:9px">' + (totDelta>=0?'+':'−') + Math.abs(totDelta/totBugetCmp*100).toFixed(1).replace('.',',') + '%</div></td>';
+  html += '<td style="padding:8px 10px;text-align:right;color:' + (totDelta>=0?'#3B6D11':'#9B59B6') + '">' + (totDelta>=0?'+':'−') + fmt(Math.abs(totDelta)) + '<div style="font-size:9px">' + (totDelta>=0?'+':'−') + Math.abs((totBugetCmp ? totDelta/totBugetCmp : 0)*100).toFixed(1).replace('.',',') + '%</div></td>';
   html += '<td style="padding:8px 10px;text-align:right">' + fmt(totVenit) + '</td>';
   html += '<td style="padding:8px 10px;text-align:right;color:' + (margVenit>=0?'#3B6D11':'#9B59B6') + '">' + (margVenit>=0?'+':'−') + fmt(Math.abs(Math.round(margVenit))) + '<div style="font-size:9px">' + (margVenit>=0?'+':'−') + Math.abs(margVenitPct).toFixed(1).replace('.',',') + '%</div>' + '<div style="font-size:9px;font-weight:600;color:' + (margVenitIdx>=0?'#1E6E2D':'#9B59B6') + ';margin-top:2px;border-top:1px dashed #C7CEDA;padding-top:2px">cu index SL2: ' + (margVenitIdx>=0?'+':'−') + fmt(Math.round(Math.abs(margVenitIdx))) + ' (' + (margVenitIdx>=0?'+':'−') + Math.abs(margVenitIdxPct).toFixed(1).replace('.',',') + '%)</div></td>';
   html += '</tr></tfoot></table></div>';

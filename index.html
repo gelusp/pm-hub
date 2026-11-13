@@ -2968,6 +2968,16 @@ function renderDocContract(proj) {
 // automat cronologic invers (cel mai recent primul) după cheia "k" (AAAALLZZ + rang zi).
 var DOCBENEF_DIR = '13. Documente transmise de beneficiar/';
 var DOCS_BENEF = [
+  { k:202611132, d:'13.11.2026', cat:'REVENDICARE', nr:'A5-1348', serie:'A5',
+    titlu:'Decizia Supervizorului — RESPINGEREA Revendicării Antreprenorului nr. 4 (liste suplimentare)',
+    desc:'Decizie U.M. 02311 (Supervizor, cl. 69c.1 și 69c.2) pe Revendicarea nr. 4 din 30.10.2026 (adresa 13898, înreg. AE-1421/30.10.2026): RESPINGERE. Motive: (1) nerespectarea subcl. 69a.1 și 69a.2 (HG 1/2018); (2) lipsa elementelor justificative din teren, Antreprenorul executând în amplasament din 08.07.2026 (Ordinele administrative de începere A5-1001/02.07.2026 și A5-1068/27.07.2026); (3) ajustarea valorii contractului este posibilă doar după negocierea finală a documentației economice — adresa 13821/09.10.2026, ședința de negociere din 03.11.2026, la finalul căreia Antreprenorul retransmite documentația revizuită. Termen dezacord: 10 zile (→ 23.11.2026).',
+    color:'#C0392B', bg:'#FDEDEC', icon:'ti-circle-x',
+    url:'https://drive.google.com/file/d/12G3kwtk4nkZsX6Q0ommCAsSG_67mMfKW/view?usp=sharing' },
+  { k:202611131, d:'13.11.2026', cat:'REVENDICARE', nr:'A5-1347', serie:'A5',
+    titlu:'Admitere în principiu — Revendicarea Antreprenorului nr. 3 (DS04, prelungire durată)',
+    desc:'Supervizorul (U.M. 02311, cl. 69c.1) admite în principiu prelungirea duratei de execuție generată de dispoziția de șantier nr. 4, pe Revendicarea nr. 3 din 14.10.2026 (adresa 13835, înreg. A5-1346). Nu aprobă automat numărul de zile solicitat: cuantificarea se face conform 69c.2, în ședință de consultare la Centrul de domenii și infrastructuri nr. 6 Constanța, convocată după aprobarea DS nr. 4 și în termenul din 69c.2 lit. a).',
+    color:'#3B6D11', bg:'#EAF4E2', icon:'ti-circle-check',
+    url:'https://drive.google.com/file/d/1LlkSoxEkdZa6ro21P7-X8Og4w-I4vss7/view?usp=sharing' },
   { k:202611121, d:'12.11.2026', cat:'BENEFICIAR', nr:'AE-1536', serie:'AE',
     titlu:'Respingere grafic de execuție actualizat la 10.11.2026 (Supervizor) — de corectat în 10 zile',
     desc:'Emailul UM 02311 comunică respingerea de către Supervizor a Programului de execuție actualizat la 10.11.2026 (cl. 17, subcl. 17.11). Motive: (1) ID 73, Obiectul 3 — demolare platformă betonată din fața hangarului și rigolă: planificat start 31.12.2026 / finish 21.01.2027, contrar PV de demolare A-5612/14.08.2026, care a recepționat demolările Obiectelor 1 și 3; (2) ID 238, Obiectul 4 — platformă betonată și rigolă: planificat start 21.01.2027 / finish 25.02.2027, contrar situației din teren (fază determinantă pentru stratul de formă 13.10.2026; în SL4 sunt cuprinse săpătura platformei, stabilizarea pământului și evacuarea pământului); (3) ID 239–250: datele de start și finish se corelează cu situația din teren. Conform subcl. 17.5, Antreprenorul are 10 zile calendaristice să transmită Programul de execuție actualizat și corectat (→ 22.11.2026).',
@@ -5396,6 +5406,8 @@ var EVENIMENTE = [
   { id:'EV14', data:'2026-10-14', tip:'EREN', titlu:'Depunere Revendicarea Antreprenorului nr. 3 (DS04): +27 zile, fără costuri', doc:'Adresa 13835/14.10.2026', clauza:'69a.2 / 21.4 / 35.1', notificat:'N/A', dosar:'RA3', nota:'Detalii finale (eveniment încheiat 29.09) până la 29.10.2026.' },
   { id:'EV16', data:'2026-10-19', tip:'Beneficiar', titlu:'Dispoziție de șantier nr. 1 (PROEX CONSTRUCT): balast → piatră spartă la stratul de fundație + adaptare rigolă', doc:'DS nr. 1/19.10.2026', clauza:'37 / 69a.1', notificat:'De verificat', dosar:'F7', necesitaNotificare:true, nota:'Net NR/NCS1 negativ (−141.549,36 lei), fără costuri suplimentare pentru Beneficiar; Revendicarea nr. 5 în draft (folder 24. Revendicari/3. Revendicare piatra sparta).' },
   { id:'EV17', data:'2026-11-12', tip:'Beneficiar', titlu:'Respingere grafic de execuție actualizat la 10.11.2026 (Supervizor) — de corectat în 10 zile', doc:'AE-1536/12.11.2026', clauza:'17.5 / 17.11', notificat:'N/A', dosar:'F8', nota:'Retransmitere program corectat până la 22.11.2026 (practic 20.11).' },
+  { id:'EV18', data:'2026-11-13', tip:'Beneficiar', titlu:'Admitere în principiu — Revendicarea Antreprenorului nr. 3 (DS04, prelungire durată)', doc:'A5-1347/13.11.2026', clauza:'69c.1', notificat:'N/A', dosar:'RA3', nota:'Numărul de zile se stabilește la ședința de consultare (69c.2), convocată după aprobarea DS nr. 4; Decizia în 30 zile de la admitere.' },
+  { id:'EV19', data:'2026-11-13', tip:'Beneficiar', titlu:'Decizie de respingere — Revendicarea Antreprenorului nr. 4 (liste suplimentare)', doc:'A5-1348/13.11.2026', clauza:'69c.1 / 69c.2', notificat:'N/A', dosar:'RL', nota:'Dezacord în 10 zile (23.11.2026). Ajustarea valorii doar după negocierea finală a documentației economice.' },
   { id:'EV15', data:'2026-10-14', tip:'Beneficiar', titlu:'Act de constatare nr. 2 (transmis prin email AE-1301)', doc:'A5-1240/14.10.2026', clauza:'—', notificat:'N/A', dosar:'F4', nota:'Termen de remediere 28.10.2026 (de confirmat din act).' }
 ];
 
@@ -5474,10 +5486,11 @@ function renderEvenimente(proj) {
 // ═══════════════════════════════════════════════════════════════
 var TERM_DOSARE = [
   { id:'RA3', parte:'Antreprenor', titlu:'Revendicarea Antreprenorului nr. 3 — DS04, teren fundare anexe (27 zile)',
-    eveniment:'2026-09-07', notificare:null, detalii:'2026-10-14', admitere:null, decizie:null, dezacord:null,
-    doc:'Adresa 13835/14.10.2026',
+    eveniment:'2026-09-07', notificare:null, detalii:'2026-10-14', admitere:'2026-11-13', decizie:null, dezacord:null,
+    doc:'Adresa 13835/14.10.2026 · Admitere în principiu A5-1347/13.11.2026',
     nota:'Data notificării 69a.1 NU e completată — de găsit (Act constatare A-1159/17.09.2026 și alte adrese). Eveniment continuu până la DS04/29.09.2026: detalii finale în 30 zile de la încheiere (până la 29.10.2026).',
-    detaliiFinaleLa:'2026-09-29', detaliiFinaleDepuse:true },
+    detaliiFinaleLa:'2026-09-29', detaliiFinaleDepuse:true,
+    nota2:'ADMISĂ ÎN PRINCIPIU 13.11.2026 (A5-1347): prelungire de durată generată de DS04; numărul de zile se stabilește la ședința de consultare (69c.2), convocată după aprobarea DS nr. 4.' },
   { id:'RB3', parte:'Beneficiar', titlu:'Revendicarea Beneficiarului nr. 3 — înlocuire personal-cheie (20.000 lei)',
     eveniment:null, notificare:'2026-09-03', detalii:'2026-09-11', admitere:null, decizie:null, dezacord:null, inchis:true,
     doc:'A5-1132/03.09.2026 · detaliere finală A5-1154/11.09.2026',
@@ -5487,9 +5500,9 @@ var TERM_DOSARE = [
     doc:'Decizia A5-1155/11.09.2026',
     nota:'Decizie emisă 11.09.2026. Termen de dezacord 10 zile (până la 21.09.2026) — dacă nu s-a emis, decizia e finală și obligatorie; de facturat/compensat 20.000 lei.' },
   { id:'RL', parte:'Antreprenor', titlu:'Revendicarea Antreprenorului — liste suplimentare NR/NCS1/NCS2 (net +5.668.485 lei, nr. 4 provizoriu)',
-    eveniment:'2026-06-25', notificare:'2026-10-09', detalii:null, admitere:null, decizie:null, dezacord:null, tardivInchis:true,
-    doc:'Adresa 13821/09.10.2026',
-    nota:'Notificarea 69a.1 = adresa 13821/09.10.2026 (clauza „constituie și notificare 69a.1” e în draft; de validat cu juridicul). Detalii în 30 zile → 08.11.2026 (practic vineri 06.11). Evenimentul luat la 25.06.2026 (predarea PT cu liste): față de el notificarea e tardivă — risc 69a.1, de analizat cu juridicul. ALERTA „Notificare revendicare 69a.1 — tardiv” ÎNCHISĂ 01.11.2026 (decizie Manager de contract): notificarea s-a transmis 09.10.2026, tardiv față de eveniment; nu mai e acțiune de făcut, riscul rămâne în dosar și se tratează în argumentația revendicării. Termenul de detalii (08.11.2026) rămâne activ.' },
+    eveniment:'2026-06-25', notificare:'2026-10-09', detalii:'2026-10-30', admitere:null, respins:'2026-11-13', respinsNota:'RESPINGERE (Decizia A5-1348/13.11.2026)', decizie:null, dezacord:null, tardivInchis:true,
+    doc:'Adresa 13821/09.10.2026 · Revendicarea nr. 4: 13898/30.10.2026 (AE-1421) · Decizie respingere A5-1348/13.11.2026',
+    nota:'REVENDICAREA NR. 4 (13898/30.10.2026) RESPINSĂ prin Decizia Supervizorului A5-1348/13.11.2026: neîndeplinire 69a.1/69a.2, fără elemente din teren (lucrări din 08.07.2026), iar ajustarea valorii se face doar după negocierea finală a documentației economice (ședința 03.11; EREN retransmite documentația revizuită). Dezacord în 10 zile → 23.11.2026. Notificarea 69a.1 = adresa 13821/09.10.2026 (clauza „constituie și notificare 69a.1” e în draft; de validat cu juridicul). Detalii în 30 zile → 08.11.2026 (practic vineri 06.11). Evenimentul luat la 25.06.2026 (predarea PT cu liste): față de el notificarea e tardivă — risc 69a.1, de analizat cu juridicul. ALERTA „Notificare revendicare 69a.1 — tardiv” ÎNCHISĂ 01.11.2026 (decizie Manager de contract): notificarea s-a transmis 09.10.2026, tardiv față de eveniment; nu mai e acțiune de făcut, riscul rămâne în dosar și se tratează în argumentația revendicării. Termenul de detalii (08.11.2026) rămâne activ.' },
   { id:'RA2', parte:'Antreprenor', titlu:'Revendicarea Antreprenorului nr. 02 — scenariu securitate incendiu (spumă 8→5 m)',
     eveniment:'2026-03-20', notificare:null, detalii:null, admitere:'2026-05-05', decizie:'2026-05-05', dezacord:null, inchis:true,
     doc:'Decizia A5-838/05.05.2026 · nota A5-848/07.05.2026 · AA2 A5-849/08.05.2026',
@@ -5585,8 +5598,8 @@ function termeneCalc() {
     if (x.detalii) {
       var sA = _tAdd(x.detalii, 30);
       push({dosar:tag, etapa:'Admitere/respingere în principiu — Supervizor', clauza:'69c.1', resp:'Supervizor', baza:'detalii ' + _tFmt(x.detalii) + ' + 30 zile',
-        scad:sA, done:!!x.admitere, consec:'Tăcere = respingere în principiu; o notificare după termen nu produce efecte.', nota:x.admitere ? 'Primită ' + _tFmt(x.admitere) : '', doc:x.doc});
-      if (!x.admitere) {
+        scad:sA, done:!!x.admitere || !!x.respins, consec:'Tăcere = respingere în principiu; o notificare după termen nu produce efecte.', nota:x.admitere ? 'Primită ' + _tFmt(x.admitere) : (x.respins ? 'Răspuns primit ' + _tFmt(x.respins) + ': ' + (x.respinsNota || 'respinsă') : ''), doc:x.doc});
+      if (!x.admitere && !x.respins) {
         push({dosar:tag, etapa:'Notificare de dezacord (respingere în principiu / tăcere)', clauza:'69c.1 + 69c.5', resp:'EREN' + (x.parte === 'Beneficiar' ? ' / Beneficiar' : ''), baza:'expirare termen admitere ' + _tFmt(sA) + ' + 10 zile',
           scad:_tAdd(sA,10), done:!!x.dezacord, consec:'Dacă nu se emite, părțile decad din dreptul la timp/bani pe revendicare. Notificarea de dezacord emisă tardiv e nulă.', nota:'Se aplică dacă Supervizorul nu a admis în principiu.', doc:x.doc});
       }
@@ -5598,9 +5611,10 @@ function termeneCalc() {
         scad:sD, done:!!x.decizie, consec:'Decizie tardivă nu produce efecte; părțile pot notifica dezacord în 10 zile de la expirare.', nota:x.decizie ? 'Emisă ' + _tFmt(x.decizie) : '', doc:x.doc});
     }
     // 5. Dezacord la Decizie
-    if (x.decizie) {
-      push({dosar:tag, etapa:'Notificare de dezacord la Decizie', clauza:'69c.2(b) + 69c.5', resp:'EREN / Beneficiar', baza:'decizie ' + _tFmt(x.decizie) + ' + 10 zile',
-        scad:_tAdd(x.decizie,10), done:!!x.dezacord || !!x.inchis, consec:'Dacă nu se emite, Decizia devine finală și obligatorie.', nota:x.dezacord ? 'Emis ' + _tFmt(x.dezacord) : (x.inchis ? 'Dosar închis' : ''), doc:x.doc});
+    if (x.decizie || x.respins) {
+      var dDec = x.decizie || x.respins;
+      push({dosar:tag, etapa:'Notificare de dezacord la Decizie', clauza:'69c.2(b) + 69c.5', resp:'EREN / Beneficiar', baza:'decizie ' + _tFmt(dDec) + ' + 10 zile',
+        scad:_tAdd(dDec,10), done:!!x.dezacord || !!x.inchis, consec:'Dacă nu se emite, Decizia devine finală și obligatorie.', nota:x.dezacord ? 'Emis ' + _tFmt(x.dezacord) : (x.inchis ? 'Dosar închis' : ''), doc:x.doc});
     }
     rows.slice(n0).forEach(function(r) {
       if (x.inchis) r.status = 'Respectat';

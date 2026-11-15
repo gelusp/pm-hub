@@ -5050,8 +5050,9 @@ function renderMarjaReala(proj) {
   var idxTot = 0; MR_IDX.forEach(function(p){ if (S.idx[p.k]) idxTot += p.v; });
   var brutC = brut - provTot, netC = net - provTot;
   var venitI = MR_VENIT + idxTot, netI = netC + idxTot, planPct = (1-MR_BUG_EXEC/MR_VAL_EXEC)*100, okI = netI/venitI*100 >= planPct;
-  var okc = net/MR_VENIT*100 >= NEG_MARJA;
-  var h = '<div class="proj-header"><div class="proj-title">Marjă curentă</div><div class="proj-meta">Hangar Kogălniceanu · Venit − Costuri directe − Costuri indirecte − Penalități · marjă planificată ' + String(NEG_MARJA).replace('.',',') + '%</div></div>';
+  var planP = (1-MR_BUG_EXEC/MR_VAL_EXEC)*100;
+  var okc = net/MR_VENIT*100 >= planP;
+  var h = '<div class="proj-header"><div class="proj-title">Marjă curentă</div><div class="proj-meta">Hangar Kogălniceanu · Venit − Costuri directe − Costuri indirecte − Penalități · marjă planificată ' + planP.toFixed(1).replace('.',',') + '% (buget la producția realizată)</div></div>';
   h += '<div class="module-badge" style="background:#FDF2E0;color:#B7791F"><i class="ti ti-alert-triangle" style="font-size:13px"></i> CD și CI reale din Power BI — actualizate la 12.11.2026 (până la 10.11) · venit = decontat SL1–SL5 fără TVA (3.666.015) · costuri încă neînregistrate (Bauelemente SL2, Alesol, diferență A&C) — marja NU e validată</div>';
   h += '<div style="display:flex;gap:14px;flex-wrap:wrap;align-items:center;padding:10px 14px;border:1px solid var(--border);border-radius:8px;background:#FAFBFC;margin:10px 0 14px;font-size:12px">' +
     '<label style="cursor:pointer"><input type="checkbox" id="mrOf" ' + (S.ofertare ? 'checked' : '') + ' onchange="_mrSt.ofertare=this.checked;renderMarjaReala(\'hangar\')"> Include costurile de Ofertare (' + fm(ciOfert) + ' lei)</label>' +
@@ -5061,7 +5062,7 @@ function renderMarjaReala(proj) {
     card('Venit recunoscut', fm(MR_VENIT), 'lei · decontat SL1–SL5 fără TVA') +
     card('Marjă brută (după CD)', fm(brut), pc(brut,MR_VENIT) + ' din venit') +
     card('Costuri indirecte + penalități', fm(ciAfis + pen), pc(ciAfis+pen,MR_VENIT) + ' din venit · CI ' + fm(ciAfis) + ' · penalități ' + fm(pen), '#C0392B') +
-    card('MARJĂ CURENTĂ (netă) · înregistrat', fm(net), '<span style="font-size:22px;font-weight:800;color:' + (okc ? '#3B6D11' : '#C0392B') + '">' + pc(net,MR_VENIT) + '</span> din venit · înregistrat<br>vs ' + String(NEG_MARJA).replace('.',',') + '% planificat · ' + (okc ? 'peste plan' : 'sub plan'), okc ? '#3B6D11' : '#C0392B', true) +
+    card('MARJĂ CURENTĂ (netă) · înregistrat', fm(net), '<span style="font-size:22px;font-weight:800;color:' + (okc ? '#3B6D11' : '#C0392B') + '">' + pc(net,MR_VENIT) + '</span> din venit · înregistrat<br>vs ' + planP.toFixed(1).replace('.',',') + '% planificat · ' + (okc ? 'peste plan' : 'sub plan'), okc ? '#3B6D11' : '#C0392B', true) +
     '<div style="flex:1.4;min-width:170px;border:3px solid ' + (netC/MR_VENIT*100 >= (1-MR_BUG_EXEC/MR_VAL_EXEC)*100 ? '#3B6D11' : '#C0392B') + ';border-radius:8px;padding:10px 12px;background:#FFF3D6;box-shadow:0 3px 12px rgba(183,121,31,0.35)"><div style="font-size:11px;font-weight:700;color:#B7791F">MARJĂ CORECTATĂ (netă) · ajustată A&C + costuri lipsă</div><div style="font-size:28px;font-weight:800;color:#1F3864">' + fm(netC) + '</div><div style="font-size:22px;font-weight:800;color:' + (netC/MR_VENIT*100 >= (1-MR_BUG_EXEC/MR_VAL_EXEC)*100 ? '#3B6D11' : '#C0392B') + '">' + pc(netC,MR_VENIT) + ' <span style="font-size:11px;font-weight:400;color:#7F8C8D">din venit</span></div><div style="font-size:11px;color:#7F8C8D">după ajustare cost ' + (provTot>=0?'+':'') + fm(provTot) + ' lei (A&C nefacturat −789.221; Bauelemente + Alesol +390.099; recuperare Triptic −55.761) · vs ' + ((1-MR_BUG_EXEC/MR_VAL_EXEC)*100).toFixed(1).replace('.',',') + '% planificat · ' + (netC/MR_VENIT*100 >= (1-MR_BUG_EXEC/MR_VAL_EXEC)*100 ? 'peste plan' : 'SUB plan') + '</div></div>' +
     '<div style="flex:1.4;min-width:170px;border:3px solid ' + (okI ? '#3B6D11' : '#C0392B') + ';border-radius:8px;padding:10px 12px;background:#EAF4E2;box-shadow:0 3px 12px rgba(59,109,17,0.30)"><div style="font-size:11px;font-weight:700;color:#3B6D11">MARJĂ CORECTATĂ + INDEXARE</div><div style="font-size:28px;font-weight:800;color:#1F3864">' + fm(netI) + '</div><div style="font-size:22px;font-weight:800;color:' + (okI ? '#3B6D11' : '#C0392B') + '">' + pc(netI,venitI) + ' <span style="font-size:11px;font-weight:400;color:#7F8C8D">din venit + indexare</span></div><div style="font-size:11px;color:#7F8C8D">indexare cunoscută +' + fm(idxTot) + ' · vs ' + planPct.toFixed(1).replace('.',',') + '% planificat · ' + (okI ? 'peste plan' : 'SUB plan') + '</div></div></div>';
   // cascada
@@ -5500,7 +5501,7 @@ var TERM_DOSARE = [
     doc:'Decizia A5-1155/11.09.2026',
     nota:'Decizie emisă 11.09.2026. Termen de dezacord 10 zile (până la 21.09.2026) — dacă nu s-a emis, decizia e finală și obligatorie; de facturat/compensat 20.000 lei.' },
   { id:'RL', parte:'Antreprenor', titlu:'Revendicarea Antreprenorului — liste suplimentare NR/NCS1/NCS2 (net +5.668.485 lei, nr. 4 provizoriu)',
-    eveniment:'2026-06-25', notificare:'2026-10-09', detalii:'2026-10-30', admitere:null, respins:'2026-11-13', respinsNota:'RESPINGERE (Decizia A5-1348/13.11.2026)', decizie:null, dezacord:null, tardivInchis:true,
+    eveniment:'2026-06-25', notificare:'2026-10-09', detalii:'2026-10-30', admitere:null, respins:'2026-11-13', respinsNota:'RESPINGERE (Decizia A5-1348/13.11.2026)', dezacordRenuntat:true, decizie:null, dezacord:null, tardivInchis:true,
     doc:'Adresa 13821/09.10.2026 · Revendicarea nr. 4: 13898/30.10.2026 (AE-1421) · Decizie respingere A5-1348/13.11.2026',
     nota:'REVENDICAREA NR. 4 (13898/30.10.2026) RESPINSĂ prin Decizia Supervizorului A5-1348/13.11.2026: neîndeplinire 69a.1/69a.2, fără elemente din teren (lucrări din 08.07.2026), iar ajustarea valorii se face doar după negocierea finală a documentației economice (ședința 03.11; EREN retransmite documentația revizuită). Dezacord în 10 zile → 23.11.2026. Notificarea 69a.1 = adresa 13821/09.10.2026 (clauza „constituie și notificare 69a.1” e în draft; de validat cu juridicul). Detalii în 30 zile → 08.11.2026 (practic vineri 06.11). Evenimentul luat la 25.06.2026 (predarea PT cu liste): față de el notificarea e tardivă — risc 69a.1, de analizat cu juridicul. ALERTA „Notificare revendicare 69a.1 — tardiv” ÎNCHISĂ 01.11.2026 (decizie Manager de contract): notificarea s-a transmis 09.10.2026, tardiv față de eveniment; nu mai e acțiune de făcut, riscul rămâne în dosar și se tratează în argumentația revendicării. Termenul de detalii (08.11.2026) rămâne activ.' },
   { id:'RA2', parte:'Antreprenor', titlu:'Revendicarea Antreprenorului nr. 02 — scenariu securitate incendiu (spumă 8→5 m)',
@@ -5535,8 +5536,8 @@ var TERM_FIX = [
     clauza:'17.5 / 17.11', resp:'EREN', fix:'2026-11-22',
     consec:'Programul de execuție actualizat nu este aprobat până la retransmitere; neîncadrarea în termen poate fi invocată de Beneficiar/Supervizor.', nota:'Corecturi cerute: ID 73 (Obiect 3, demolare — PV A-5612/14.08.2026), ID 238 (Obiect 4, platformă — fază determinantă 13.10, SL4), ID 239–250 (corelare cu terenul). 22.11.2026 cade duminică: practic vineri 20.11.' },
   { id:'F6', titlu:'Ședință de negociere — cantități lucrări suplimentare și documentația economică (ora 10:00, DDI București)',
-    clauza:'—', resp:'EREN', fix:'2026-11-03',
-    consec:'Prezența reprezentanților EREN este solicitată de Beneficiar; pregătire: panou de negociere, probe pe teme, plafon 15%.', nota:'Convocare AE-1398/29.10.2026, ca urmare a adresei 13821/09.10.2026.' },
+    clauza:'—', resp:'EREN', fix:'2026-11-03', done:true,
+    consec:'Prezența reprezentanților EREN este solicitată de Beneficiar; pregătire: panou de negociere, probe pe teme, plafon 15%.', nota:'REZOLVAT — ședința a avut loc la 03.11.2026 (confirmat 15.11.2026). Concluzie: EREN retransmite documentația economică revizuită; ajustarea valorii doar după negocierea finală (Decizia A5-1348/13.11.2026). Convocare AE-1398/29.10.2026.'},
   // ── Grup sprinklere (dashboard: Analiză Instalații → Cap.6/8 — Grup Sprinklere). Termene interne/furnizor, nu contractuale. ──
   { id:'SPR1', titlu:'Grup sprinklere — răspuns Triptic: acord NFPA 20/FM, motor 250 kW, fișa 2 corectată, domeniu de livrare',
     clauza:'Sprinklere', resp:'Triptic', fix:'2026-10-22', done:true,
@@ -5614,7 +5615,7 @@ function termeneCalc() {
     if (x.decizie || x.respins) {
       var dDec = x.decizie || x.respins;
       push({dosar:tag, etapa:'Notificare de dezacord la Decizie', clauza:'69c.2(b) + 69c.5', resp:'EREN / Beneficiar', baza:'decizie ' + _tFmt(dDec) + ' + 10 zile',
-        scad:_tAdd(dDec,10), done:!!x.dezacord || !!x.inchis, consec:'Dacă nu se emite, Decizia devine finală și obligatorie.', nota:x.dezacord ? 'Emis ' + _tFmt(x.dezacord) : (x.inchis ? 'Dosar închis' : ''), doc:x.doc});
+        scad:_tAdd(dDec,10), done:!!x.dezacord || !!x.inchis || !!x.dezacordRenuntat, consec:'Dacă nu se emite, Decizia devine finală și obligatorie.', nota:x.dezacord ? 'Emis ' + _tFmt(x.dezacord) : (x.dezacordRenuntat ? 'ÎNCHIS 15.11.2026 — decizie Manager de contract: nu se mai notifică dezacord; Decizia A5-1348 rămâne finală, iar documentația economică revizuită se retransmite în negociere.' : (x.inchis ? 'Dosar închis' : '')), doc:x.doc, status: (x.dezacordRenuntat && !x.dezacord && !x.inchis) ? 'Închis' : undefined});
     }
     rows.slice(n0).forEach(function(r) {
       if (x.inchis) r.status = 'Respectat';

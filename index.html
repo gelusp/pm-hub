@@ -1749,6 +1749,18 @@ var PLAN_CONTRACT_ACADEMIA = [
   "obs": "Acțiune URGENTĂ adăugată la cererea lui Gelu (08.11.2026). Proiectarea a început la 05.11.2026: DTAD în 30 de zile (05.12.2026), DTAC până la 05.03.2027. Termen intern provizoriu 09.11.2026 — de confirmat. Status 08.11.2026: mail trimis către BEMEL (solicitat draft contract de proiectare, informare despre plata directă); se așteaptă draftul, termen solicitat 12.11.2026.",
   "prio": "critic",
   "faza": "B"
+ },
+ {
+   "nr": "24h",
+   "task": "Act adițional la Acordul de asociere cu BEMEL (și ICCO): drept de regres între asociați, contragaranție a BEMEL pentru partea sa din garanția de bună execuție, obligații cu termene pentru asistența tehnică / dispozițiile de șantier / listele de cantități (cu penalități și remediere), reținerea din plata directă, procedura de comunicare cu AC; contractul de proiectare ca anexă",
+   "resp": "EREN CONS (Gelu + juridic) + BEMEL + ICCO",
+   "term": "20.11.2026",
+   "intern": "20.11.2026",
+   "livrabil": "Act adițional semnat de toți asociații; contract de proiectare ca anexă",
+   "temei": "Aviz juridic 16.11.2026; Acord de asociere nr. 01/28.07.2025 (art. 5, 6.3, 6.4)",
+   "obs": "Adăugat la cererea lui Gelu (16.11.2026), pe baza avizului juridicului: acordul actual nu prevede regres, contragaranție, pârghii față de BEMEL pe parcurs sau procedura de comunicare cu AC. Legat de acțiunea 24g. Termen intern provizoriu 20.11.2026 — de confirmat.",
+   "prio": "critic",
+   "faza": "B"
  }
 ];
 
@@ -2968,6 +2980,11 @@ function renderDocContract(proj) {
 // automat cronologic invers (cel mai recent primul) după cheia "k" (AAAALLZZ + rang zi).
 var DOCBENEF_DIR = '13. Documente transmise de beneficiar/';
 var DOCS_BENEF = [
+  { k:202611191, d:'19.11.2026', cat:'REVENDICARE', nr:'AE-1594', serie:'AE',
+    titlu:'Aprobare dispoziții de șantier nr. 2, 3, 4 și convocare la ședința de consultare — Revendicarea nr. 3 (25.11.2026, ora 09:00)',
+    desc:'Emailul UM 02311 comunică aprobarea documentației aferente dispozițiilor de șantier nr. 2, 3 și 4 (raport A5-1365/19.11.2026, înregistrată A5-1367/19.11.2026). Ca urmare a admiterii în principiu a Revendicării Antreprenorului nr. 3 (A5-1347/13.11.2026), solicită prezența reprezentantului EREN la ședința de consultare (69c.2 lit. a) din 25.11.2026, ora 09:00, la sediul Centrului de Domenii și Infrastructuri nr. 6 Constanța, pentru soluționarea Revendicării nr. 3 (DS04, prelungire durată). Data limită de organizare a ședinței: 28.11.2026.',
+    color:'#B9770E', bg:'#FEF5E7', icon:'ti-calendar-event',
+    url:'https://drive.google.com/file/d/18cFAOEeokN6as6oXrQTF51ZaPtZwJQJg/view?usp=sharing' },
   { k:202611132, d:'13.11.2026', cat:'REVENDICARE', nr:'A5-1348', serie:'A5',
     titlu:'Decizia Supervizorului — RESPINGEREA Revendicării Antreprenorului nr. 4 (liste suplimentare)',
     desc:'Decizie U.M. 02311 (Supervizor, cl. 69c.1 și 69c.2) pe Revendicarea nr. 4 din 30.10.2026 (adresa 13898, înreg. AE-1421/30.10.2026): RESPINGERE. Motive: (1) nerespectarea subcl. 69a.1 și 69a.2 (HG 1/2018); (2) lipsa elementelor justificative din teren, Antreprenorul executând în amplasament din 08.07.2026 (Ordinele administrative de începere A5-1001/02.07.2026 și A5-1068/27.07.2026); (3) ajustarea valorii contractului este posibilă doar după negocierea finală a documentației economice — adresa 13821/09.10.2026, ședința de negociere din 03.11.2026, la finalul căreia Antreprenorul retransmite documentația revizuită. Termen dezacord: 10 zile (→ 23.11.2026).',
@@ -4626,12 +4643,12 @@ var REGPD = [
    impactTimp:'Fără impact direct pe termen; necesar la fiecare verificare a cotei de fundare (afectează reluarea sapăturilor)',
    actiune:'ÎNCHIS 01.11.2026 — decizie Manager de contract: punct încheiat în registru. Costul geotehnicianului (Ana Proiect Design, 500 lei/vizită, ~4.000 lei la 8 vizite estimate) rămâne la EREN, în afara bugetului inițial, și nu se solicită Beneficiarului. Valoarea reală depinde de numărul de vizite; se urmărește în costurile directe (Marjă curentă).',
    sursa:'Contract de colaborare Ana Proiect Design (draft) — 9. Contracte / 8. Ana Proiect Design - geotehnist; preț indicat de Manager de contract: 8 vizite × 500 lei'},
-  {cod:'PE13', categorie:'Contractual', detaliu:'Grafic de execuție actualizat 10.11.2026 — respins de Supervizor', valoare:0, valoareText:'Necuantificat', termen:'22.11.2026', status:'Deschis', dataStatus:'12.11.2026',
+  {cod:'PE13', categorie:'Contractual', detaliu:'Grafic de execuție actualizat 10.11.2026 — respins de Supervizor', valoare:0, valoareText:'Necuantificat', termen:'22.11.2026', status:'Închis', dataStatus:'19.11.2026',
    problema:'Supervizorul a respins Programul de execuție actualizat la 10.11.2026 (cl. 17, subcl. 17.11): Obiectul 3 (demolare platformă și rigolă) planificat 31.12.2026–21.01.2027 deși demolările au fost recepționate prin PV A-5612/14.08.2026; Obiectul 4 (platformă și rigolă) planificat 21.01–25.02.2027 contrar situației din teren (fază determinantă stratul de formă 13.10.2026; SL4 include săpătura, stabilizarea și evacuarea pământului); ID 239–250 de corelat cu terenul.',
    explicatii:'Conform subcl. 17.5, Antreprenorul are 10 zile calendaristice de la comunicare pentru a transmite Programul de execuție actualizat și corectat (12.11 → 22.11.2026, duminică; practic vineri 20.11). Fără impact valoric direct; risc procedural: un program neaprobat poate fi invocat de Beneficiar în discuțiile despre durată (Revendicarea nr. 3, DS04) și în actul adițional.',
    cauza:'Neconcordanță între graficul transmis și situația reală din teren (planificare).',
    impactTimp:'Termen de 10 zile pentru retransmitere (22.11.2026)',
-   actiune:'Corectare ID 73, 238, 239–250 în grafic (planificare) și retransmitere până la 20.11.2026; verificare coerență cu Revendicarea nr. 3 (durată).',
+   actiune:'ÎNCHIS 19.11.2026 — decizie Manager de contract: graficul corectat (ID 73, 238, 239–250) a fost retransmis în termenul de 10 zile (subcl. 17.5). Se redeschide dacă Supervizorul îl respinge din nou.',
    sursa:'Email UM 02311 AE-1536/12.11.2026 (Documente Contract)'}
 ];
 // ═══════════════════════════════════════════════════════════════
@@ -5410,6 +5427,7 @@ var EVENIMENTE = [
   { id:'EV17', data:'2026-11-12', tip:'Beneficiar', titlu:'Respingere grafic de execuție actualizat la 10.11.2026 (Supervizor) — de corectat în 10 zile', doc:'AE-1536/12.11.2026', clauza:'17.5 / 17.11', notificat:'N/A', dosar:'F8', nota:'Retransmitere program corectat până la 22.11.2026 (practic 20.11).' },
   { id:'EV18', data:'2026-11-13', tip:'Beneficiar', titlu:'Admitere în principiu — Revendicarea Antreprenorului nr. 3 (DS04, prelungire durată)', doc:'A5-1347/13.11.2026', clauza:'69c.1', notificat:'N/A', dosar:'RA3', nota:'Numărul de zile se stabilește la ședința de consultare (69c.2), convocată după aprobarea DS nr. 4; Decizia în 30 zile de la admitere.' },
   { id:'EV19', data:'2026-11-13', tip:'Beneficiar', titlu:'Decizie de respingere — Revendicarea Antreprenorului nr. 4 (liste suplimentare)', doc:'A5-1348/13.11.2026', clauza:'69c.1 / 69c.2', notificat:'N/A', dosar:'RL', nota:'Dezacord în 10 zile (23.11.2026). Ajustarea valorii doar după negocierea finală a documentației economice.' },
+  { id:'EV20', data:'2026-11-19', tip:'Beneficiar', titlu:'Aprobare DS nr. 2, 3, 4 + convocare ședință de consultare Revendicarea nr. 3 (25.11.2026, 09:00)', doc:'AE-1594/19.11.2026', clauza:'69c.2', notificat:'N/A', dosar:'F9', nota:'DS 2, 3, 4 aprobate prin A5-1365 / A5-1367 din 19.11.2026. Decizia Supervizorului pe RA3: în 30 zile de la admitere (13.12.2026).' },
   { id:'EV15', data:'2026-10-14', tip:'Beneficiar', titlu:'Act de constatare nr. 2 (transmis prin email AE-1301)', doc:'A5-1240/14.10.2026', clauza:'—', notificat:'N/A', dosar:'F4', nota:'Termen de remediere 28.10.2026 (de confirmat din act).' }
 ];
 
@@ -5534,8 +5552,11 @@ var TERM_FIX = [
     clauza:'69a.1', resp:'EREN', fix:'2026-11-18',
     consec:'Peste termen (30 zile de la eveniment, 19.10.2026): EREN suportă consecințele pe perioada de dinaintea notificării.', nota:'Draftul Revendicării nr. 5 are data notificării necompletată („___.2026”): de confirmat dacă s-a transmis. Detaliere (69a.2) în 30 zile de la notificare. NR −456.592,34 / NCS1 +315.042,98 / net −141.549,36 lei (liste complete).' },
   { id:'F8', titlu:'Grafic de execuție actualizat și corectat — respins de Supervizor (AE-1536/12.11.2026), 10 zile',
-    clauza:'17.5 / 17.11', resp:'EREN', fix:'2026-11-22',
-    consec:'Programul de execuție actualizat nu este aprobat până la retransmitere; neîncadrarea în termen poate fi invocată de Beneficiar/Supervizor.', nota:'Corecturi cerute: ID 73 (Obiect 3, demolare — PV A-5612/14.08.2026), ID 238 (Obiect 4, platformă — fază determinantă 13.10, SL4), ID 239–250 (corelare cu terenul). 22.11.2026 cade duminică: practic vineri 20.11.' },
+    clauza:'17.5 / 17.11', resp:'EREN', fix:'2026-11-22', done:true,
+    consec:'Programul de execuție actualizat nu este aprobat până la retransmitere; neîncadrarea în termen poate fi invocată de Beneficiar/Supervizor.', nota:'REZOLVAT — graficul corectat a fost retransmis (confirmat de Manager de contract, 19.11.2026). Respingere: AE-1536/12.11.2026 (ID 73, 238, 239–250).'},
+  { id:'F9', titlu:'Ședință de consultare — Revendicarea Antreprenorului nr. 3 (DS04, prelungire durată), ora 09:00, Centrul de Domenii și Infrastructuri nr. 6 Constanța',
+    clauza:'69c.2 lit. a)', resp:'EREN', fix:'2026-11-25',
+    consec:'Consultarea (15 zile de la admitere) precede Decizia Supervizorului, care urmează în alte 15 zile (→ 13.12.2026). Dacă EREN nu participă, procedura de consultare se consideră respectată.', nota:'Convocare AE-1594/19.11.2026 (data limită de organizare 28.11.2026). Pregătire: numărul de zile solicitat pentru DS04 (27), grafic, dovezi (PV A-1159, DS04, DS nr. 4 aprobată A5-1365/1367).' },
   { id:'F6', titlu:'Ședință de negociere — cantități lucrări suplimentare și documentația economică (ora 10:00, DDI București)',
     clauza:'—', resp:'EREN', fix:'2026-11-03', done:true,
     consec:'Prezența reprezentanților EREN este solicitată de Beneficiar; pregătire: panou de negociere, probe pe teme, plafon 15%.', nota:'REZOLVAT — ședința a avut loc la 03.11.2026 (confirmat 15.11.2026). Concluzie: EREN retransmite documentația economică revizuită; ajustarea valorii doar după negocierea finală (Decizia A5-1348/13.11.2026). Convocare AE-1398/29.10.2026.'},

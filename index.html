@@ -5083,8 +5083,8 @@ var PREV = {
   realizatSL: 3666015,        // valoare lucrări SL1–SL5 (incl. SL5 octombrie 2026), fără TVA
   contractBase: 19305182.02,  // contract după AA2
   buget: 17075952,            // Deviz General intern (cost țintă)
-  indexareReal: 95930.30,     // ajustare SL2 definitivă (48.5)
-  indexarePot: 2420000,       // potențial total indexare (Sinteză contract) — estimare
+  indexareReal: 447788.59,    // ajustări SL2+SL3+SL4 DEFINITIVE (48.5): 95.930,30 + 112.446,41 + 239.411,87
+  indexarePot: 2683584,       // potențial total indexare — waterfall SL: reale SL2–SL4 + rest C+M × An SL4 (1,167711) — estimare
   luni: ['oct 2026','nov 2026','dec 2026','ian 2027','feb 2027','mar 2027','apr 2027','mai 2027'],
   wVenit: [8, 10, 12, 15, 17, 17, 13, 8],   // % din venitul rămas de facturat — ESTIMARE (înlocuiți cu graficul valoric)
   wCost:  [10, 13, 15, 16, 16, 14, 10, 6]   // % din costul rămas — ESTIMARE
@@ -5134,8 +5134,8 @@ var MR_PROV = [
 var MR_IDX = [
   {k:'sl2', n:'SL2 — execuție (DEFINITIV)', baza:638203.00, an:1.150313152, v:95930.30, st:'definitiv', src:'Calcul actualizare SL4 sept. 2026 · Io 143,70 (ian.2025)'},
   {k:'sl3', n:'SL3 — execuție (DEFINITIV)', baza:699504.28, an:1.160751566, v:112446.41, st:'definitiv', src:'In iul.2026 = 166,80 final (rectificat), Buletin 08/2026'},
-  {k:'sl4', n:'SL4 — execuție (provizoriu)', baza:1427530.55, an:1.160055672, v:228484.36, st:'provizoriu', src:'In iul.2026 = 166,70 provizoriu'},
-  {k:'sl5', n:'SL5 — execuție (provizoriu, uz intern)', baza:251427.52, an:1.167711, v:42167.04, st:'provizoriu', src:'In aug.2026 = 167,80 (ultim publicat; luna aferentă sept. nepublicată)'}
+  {k:'sl4', n:'SL4 — execuție (DEFINITIV)', baza:1427530.55, an:1.167710508, v:239411.87, st:'definitiv', src:'In aug.2026 = 167,80 final (rectificat), Buletin 09/2026'},
+  {k:'sl5', n:'SL5 — execuție (provizoriu, uz intern)', baza:251427.52, an:1.176061239, v:44266.64, st:'provizoriu', src:'In sept.2026 = 169,00 provizoriu (Buletin 09/2026); uz intern'}
 ];
 var MR_BUG_EXEC = 3105185, MR_VAL_EXEC = 3657387; /* Power BI 15.11.2026: buget cost la producția realizată / venit CA */
 var _mrSt = {ofertare:true, cd:null, prov:{bau:true,ale:true,tri:true,ac:true}, idx:{sl2:true,sl3:true,sl4:true,sl5:true}};
@@ -5189,7 +5189,7 @@ function renderMarjaReala(proj) {
     '<div style="font-size:11px;color:#7F8C8D;margin-bottom:14px">Corecția acoperă doar subcontractorii identificați în analizele din 20.10. Nu include: materiale cumpărate și nefacturate, producția executată dar nedecontată către beneficiar (SL5), venituri fără subcontractor (~28.700 lei), OS Ideal Max. Din acest motiv marja corectată e tot o limită superioară.</div>';
   var ix = '<div style="font-weight:600;margin:6px 0">Indexare cunoscută <span style="font-weight:400;color:#7F8C8D;font-size:11px">· ajustare de preț, sub-clauza 48.5 — venit suplimentar, fără cost (subcontracte la preț fix)</span></div><div style="border:1px solid #BFD8A7;background:#F6FBF1;border-radius:8px;padding:10px 14px;margin-bottom:14px">';
   MR_IDX.forEach(function(p){ ix += '<div style="display:flex;gap:10px;align-items:flex-start;padding:5px 0;border-bottom:1px solid #E1EED5;font-size:12px"><input type="checkbox" ' + (S.idx[p.k]?'checked':'') + ' onchange="_mrSt.idx[\'' + p.k + '\']=this.checked;renderMarjaReala(\'hangar\')" style="margin-top:2px"><div style="flex:1"><div style="font-weight:600">' + p.n + '</div><div style="font-size:11px;color:#7F8C8D">bază ' + fm(p.baza) + ' × (An ' + p.an.toFixed(6).replace('.',',') + ' − 1) · ' + p.src + '</div></div><div style="font-weight:700;white-space:nowrap">' + fm(p.v) + '</div></div>'; });
-  ix += '<div style="display:flex;justify-content:space-between;padding-top:6px;font-size:12px;font-weight:700"><span>Indexare inclusă</span><span>' + fm(idxTot) + ' lei</span></div><div style="font-size:11px;color:#7F8C8D;margin-top:6px">SL2 și SL3 sunt DEFINITIVE (indici finali iunie 165,30 / iulie 166,80); SL4 provizoriu; SL5 provizoriu de uz intern (indice august 167,80, luna aferentă sept. nepublicată). Indexarea nu e în decontatul de 3.666.015 (SL fără ajustare). Se bifează doar ce vrei să socotești.</div></div>';
+  ix += '<div style="display:flex;justify-content:space-between;padding-top:6px;font-size:12px;font-weight:700"><span>Indexare inclusă</span><span>' + fm(idxTot) + ' lei</span></div><div style="font-size:11px;color:#7F8C8D;margin-top:6px">SL2, SL3 și SL4 sunt DEFINITIVE (indici finali iunie 165,30 / iulie 166,80 / august 167,80); SL5 provizoriu de uz intern (indice septembrie 169,00, provizoriu — Buletin 09/2026). Indexarea nu e în decontatul de 3.666.015 (SL fără ajustare). Se bifează doar ce vrei să socotești.</div></div>';
   h += cr + ix;
   // Proiectare vs Executie (SL1 = proiectare; SL2-SL4 = executie)
   var vP = 640350, cP = D.cd_cat['Proiectare (Triptic)'] || 0, vE = MR_VENIT - vP, cE = cd - cP;
@@ -5333,7 +5333,7 @@ function renderPrevizi(proj) {
   html += '<div class="proj-card" style="margin-bottom:14px"><div class="proj-card-header" style="background:#1F3864"><span style="font-size:13px;font-weight:600;color:#fff"><i class="ti ti-calculator"></i> Din ce se compune marja la final</span></div><div style="overflow:hidden"><table style="width:100%;border-collapse:collapse;font-size:12px"><tbody>' +
     row('Contract după AA2', PREV.contractBase, 'execuție 18.521.332 + proiectare 783.850') +
     row('+ Liste suplimentare acceptate', c.acc, st.acc + '% din netul cerut (' + fm(c.netTot) + ' lei)') +
-    row('+ Indexare prețuri (48.5)', c.idx, 'SL2 real ' + fm(PREV.indexareReal) + ' + ' + st.grad + '% din restul potențialului (' + fm(PREV.indexarePot) + ' total, estimare)') +
+    row('+ Indexare prețuri (48.5)', c.idx, 'SL2–SL4 reale (definitive) ' + fm(PREV.indexareReal) + ' + ' + st.grad + '% din restul potențialului (' + fm(PREV.indexarePot) + ' total, estimare)') +
     row('= VENIT LA FINAL', c.venit, '', true) +
     row('Buget intern (Deviz General)', PREV.buget, 'cost țintă, include proiectarea') +
     row('+ Depășiri identificate în registrul de probleme', c.pe, 'toate punctele cu valoare (PE01–PE12), inclusiv penalități și sume suportate de EREN') +
@@ -7005,7 +7005,7 @@ function renderProdSed3(proj) {
   fin.forEach(function(x){ t += '<tr><td style="'+TD+'">'+x[0]+'</td><td style="'+TD+';text-align:right">'+x[1]+'</td><td style="'+TD+';text-align:right">'+x[2]+'</td><td style="'+TD+';text-align:right;font-weight:600">'+x[3]+'</td></tr>'; });
   t += '</table></div>';
   html += card('Financiar — venit, costuri, marjă (lei fără TVA)', t);
-  html += '<div style="font-size:10.5px;color:#666;margin:-6px 0 14px">Ajustări de preț: SL2 95.930 și SL3 112.446 definitive; SL4 228.484 și SL5 42.167 provizorii (nerecunoscute în CA). Buget cost din Power BI la producția realizată (3.105.185 = 84,9% din venit), aplicat la planul F6. CH41 (04.10) abandonat: dublări (Triptic 2×584.500 etc.).</div>';
+  html += '<div style="font-size:10.5px;color:#666;margin:-6px 0 14px">Ajustări de preț: SL2 95.930, SL3 112.446 și SL4 239.412 definitive; SL5 42.167 provizorie (nerecunoscute în CA). Buget cost din Power BI la producția realizată (3.105.185 = 84,9% din venit), aplicat la planul F6. CH41 (04.10) abandonat: dublări (Triptic 2×584.500 etc.).</div>';
   // abateri
   var ab = [
     ["Execuție","#FCE4E4","#C0392B","Structură 42,9% vs 79,5% plan (−1,73 mil. lei): teren de fundare neconform (DS04), oțel A&amp;C contractat abia la 02.11 și nemontat, platformă începută 19.10, arhitectură neînceput, panouri acoperiș necomandate (soluție PIR)."],
@@ -7619,7 +7619,7 @@ function renderContractSinteza(proj) {
   var margVenit = totVenit - totCostVenit;            // marjă absolută vs venit
   var margVenitPct = totVenit>0 ? (margVenit/totVenit*100) : 0;
   // Influența indexării (subcl. 48.5): venit execuție C+M × An; subcontracte preț fix → rămâne la EREN
-  var AN_INDEX = 1.150313152;                          // coeficient indexare SL2 DEFINITIV (In iun.2026=165,3 rectificat / Io ian.2025=143,70). SL3 DEFINITIV = 1,160752 (In iul.2026=166,80 rectificat/final, Buletin 08/2026). SL4=1,160056 PROVIZORIU (lună corectă = august 167,80, de refăcut). SL5 uz intern = 1,167711 (In aug.2026=167,80, lună aferentă sept. nepublicată)
+  var AN_INDEX = 1.150313152;                          // SCENARIU: coeficient păstrat la SL2 (conservator, coerent cu notele pe contracte). Definitive: SL2 = 1,150313 (In iun.2026=165,3 / Io ian.2025=143,70); SL3 = 1,160752 (In iul.2026=166,80); SL4 DEFINITIV = 1,167711 (In aug.2026=167,80, Buletin 09/2026). SL5 uz intern = 1,176061 (In sept.2026=169,00 provizoriu)
   var venitIndexat = totVenit * AN_INDEX;
   var margVenitIdx = venitIndexat - totCostVenit;
   var margVenitIdxPct = venitIndexat>0 ? (margVenitIdx/venitIndexat*100) : 0;
@@ -7630,8 +7630,10 @@ function renderContractSinteza(proj) {
   var SL2_COEF = 1.150313152;                           // DEFINITIV
   var SL2_REAL = SL2_BASE * (SL2_COEF - 1);             // 95.930,30 lei — fix, nu se mai recalculează
   var CM_TOTAL = 16096516;                              // valoare execuție C+M supusă indexării (fără proiectare, fără OS)
-  var CM_REST_DUPA_SL2 = CM_TOTAL - SL2_BASE;
-  var indexPotential = SL2_REAL + CM_REST_DUPA_SL2 * (SL2_COEF - 1); // SL2 real + (Val ctr − Val SL2) × indice cunoscut curent
+  var SL3_BASE = 699504.28, SL3_COEF = 1.160751566, SL3_REAL = SL3_BASE * (SL3_COEF - 1);      // SL3 DEFINITIV (In iul.2026=166,80)
+  var SL4_BASE = 1427530.55, SL4_COEF = 1.167710508, SL4_REAL = SL4_BASE * (SL4_COEF - 1);    // SL4 DEFINITIV (In aug.2026=167,80, Buletin 09/2026)
+  var CM_REST_DUPA_SL4 = CM_TOTAL - SL2_BASE - SL3_BASE - SL4_BASE;
+  var indexPotential = SL2_REAL + SL3_REAL + SL4_REAL + CM_REST_DUPA_SL4 * (SL4_COEF - 1); // SL2–SL4 reale + (C+M − SL2 − SL3 − SL4) × ultimul indice definitiv (SL4)
   var EXEC = 17075952; // buget intern total eDevize (Cap.1-13 + Org. Șantier) — numitor grad de contractare (Gelu, 27.09.2026: raportare la buget, nu la suma asigurată CAR 18.521.332, folosită greșit anterior)
   var gradAcoperire = (totContract / EXEC * 100); // semnat + în semnare
   var totInSemnare = 0, nInSemnare = 0;
@@ -7688,11 +7690,11 @@ function renderContractSinteza(proj) {
   html += '<div class="proj-card-body">';
   html += '<div style="display:flex;gap:22px;flex-wrap:wrap;margin-bottom:10px">';
   html += '<div><div style="font-size:22px;font-weight:700;color:#3B6D11">+15,0%</div><div style="font-size:11px;color:#5A6472">coeficient SL2 DEFINITIV · An = 1,150313</div></div>';
-  html += '<div><div style="font-size:22px;font-weight:700;color:#1F3864">95.930</div><div style="font-size:11px;color:#5A6472">lei ajustare SL2 — REALĂ, fixă (iul.2026, definitiv — se transmite la plată)</div></div>';
-  html += '<div><div style="font-size:22px;font-weight:700;color:#3B6D11">~2,42 mil</div><div style="font-size:11px;color:#5A6472">lei potențial total (SL2 real + rest proiectat la coef. SL2)</div></div>';
+  html += '<div><div style="font-size:22px;font-weight:700;color:#1F3864">447.789</div><div style="font-size:11px;color:#5A6472">lei ajustări SL2–SL4 — REALE, definitive (SL2 95.930 + SL3 112.446 + SL4 239.412)</div></div>';
+  html += '<div><div style="font-size:22px;font-weight:700;color:#3B6D11">~2,68 mil</div><div style="font-size:11px;color:#5A6472">lei potențial total (SL2–SL4 reale + rest proiectat la coef. SL4 = 1,167711)</div></div>';
   html += '</div>';
-  html += '<details><summary style="font-size:11px;color:#8A94A3;cursor:pointer">detalii formulă și metodologie</summary><div style="font-size:11px;color:#444;line-height:1.55;margin-top:6px"><b>An = av + (1−av)·In/Io</b> · av=0 · Io=143,70 (ian.2025, Data de Referință) · In=165,30 (iun.2026, rectificat) · sursă Buletin Statistic de Prețuri INS nr.07/2026 ("Calcul Actualizare SL4 - Septembrie 2026", ver.25.09.2026). Cumulat ajustări SL2–SL4 (SL3/SL4 provizorii) = 429.072,58 lei. Se aplică DOAR execuției (C+M ≈ 16,10 mil lei), NU proiectării.<br>' +
-    '<b>Formulă potențial (waterfall SL, nu coeficient unic pe tot):</b> ' + fmt(Math.round(indexPotential)) + ' lei = SL2 real (' + fmt(Math.round(SL2_REAL)) + ' lei, bază ' + fmt(SL2_BASE) + ') + rest neacoperit de SL2 (' + fmt(CM_REST_DUPA_SL2) + ' lei) × coef. SL2 (singurul definitiv, cât timp SL3 nu e final). La SL3 final, termenul de „rest" se recalculează pe (C+M − SL2 − SL3) cu coeficientul SL3, iar totalul devine SL2 real + SL3 real + proiecție pe rest — ș.a.m.d.<br>' +
+  html += '<details><summary style="font-size:11px;color:#8A94A3;cursor:pointer">detalii formulă și metodologie</summary><div style="font-size:11px;color:#444;line-height:1.55;margin-top:6px"><b>An = av + (1−av)·In/Io</b> · av=0 · Io=143,70 (ian.2025, Data de Referință) · In=165,30 (iun.2026, rectificat) · sursă Buletin Statistic de Prețuri INS nr.07/2026 ("Calcul Actualizare SL4 - Septembrie 2026", ver.25.09.2026). SL3 (In iul. 166,80) și SL4 (In aug. 167,80, Buletin 09/2026) sunt DEFINITIVE; cumulat ajustări reale SL2–SL4 = 447.788,59 lei. KPI-ul +15,0% este scenariul pe coeficientul SL2 (păstrat conservator). Se aplică DOAR execuției (C+M ≈ 16,10 mil lei), NU proiectării.<br>' +
+    '<b>Formulă potențial (waterfall SL, nu coeficient unic pe tot):</b> ' + fmt(Math.round(indexPotential)) + ' lei = SL2–SL4 reale (' + fmt(Math.round(SL2_REAL+SL3_REAL+SL4_REAL)) + ' lei: SL2 ' + fmt(Math.round(SL2_REAL)) + ' + SL3 ' + fmt(Math.round(SL3_REAL)) + ' + SL4 ' + fmt(Math.round(SL4_REAL)) + ') + rest neacoperit de SL2–SL4 (' + fmt(CM_REST_DUPA_SL4) + ' lei) × coef. SL4 (ultimul definitiv). La fiecare SL nou devenit final, termenul de „rest" se recalculează pe (C+M − SL-urile finale) cu coeficientul ultimului final, iar totalul devine suma ajustărilor reale + proiecție pe rest.<br>' +
     'Ajustarea crește cu indicii ICC pe măsură ce se decontează lucrările; subcontractele fiind la preț fix, indexarea rămâne integral câștig pentru EREN. <b>Efect în analiză:</b> ridică marja reală vs venit — vezi KPI-urile din Derulare.</div></details>';
   html += '</div></div>';
 
@@ -9207,7 +9209,8 @@ function renderSL4(proj) {
         '<a href="https://drive.google.com/file/d/1TeVGTX-XAlHtmLXPXgPacxPs0t_vWH74/view?usp=sharing" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:#A04000;color:#fff;border-radius:6px;font-size:12px;font-weight:600;text-decoration:none"><i class="ti ti-blueprint"></i> 4.1 Anexe FA (planșe)</a>' +
         '<a href="https://drive.google.com/file/d/1qCcLlcI8j8PRXgfAITumu2kWueeBH6q8/view?usp=sharing" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:#1F4E79;color:#fff;border-radius:6px;font-size:12px;font-weight:600;text-decoration:none"><i class="ti ti-chart-bar"></i> 5. Grafic fizic și valoric (F6)</a>' +
         '<a href="https://drive.google.com/file/d/1ffUesigsC-vRDgKINQZWrp-M1L7gyzFB/view?usp=sharing" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:#8E44AD;color:#fff;border-radius:6px;font-size:12px;font-weight:600;text-decoration:none"><i class="ti ti-chart-line"></i> 6. Realizat vs planificat + Curba S</a>' +
-        '<a href="https://drive.google.com/file/d/1hg_ilgP3IG06tbHuXOuBVPWbQg0vdybZ/view?usp=sharing" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:#C0392B;color:#fff;border-radius:6px;font-size:12px;font-weight:600;text-decoration:none"><i class="ti ti-file-percent"></i> 7. Ajustare prețuri SL4</a>' +
+        '<a href="https://drive.google.com/file/d/1hg_ilgP3IG06tbHuXOuBVPWbQg0vdybZ/view?usp=sharing" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:#C0392B;color:#fff;border-radius:6px;font-size:12px;font-weight:600;text-decoration:none"><i class="ti ti-file-percent"></i> 7. Ajustare prețuri SL4 — provizoriu 25.09</a>' +
+        '<a href="https://drive.google.com/file/d/1dDzFr20eTEeqvhXxJZew9LvcDxti-AkS/view?usp=sharing" target="_blank" style="display:inline-flex;align-items:center;gap:6px;padding:8px 16px;background:#186A3B;color:#fff;border-radius:6px;font-size:12px;font-weight:600;text-decoration:none"><i class="ti ti-file-percent"></i> 7a. Ajustare prețuri SL4 — DEFINITIV (la plată)</a>' +
       '</div>' +
 
       '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:16px">' +
@@ -9357,32 +9360,32 @@ function renderSL4(proj) {
 
       '<div style="font-size:11px;font-weight:700;color:#2C3E50;margin:18px 0 8px;text-transform:uppercase;letter-spacing:0.05em">' +
         '<i class="ti ti-file-percent"></i> Ajustare de preț (indexare) — sub-clauza 48.5' +
-        '<span style="font-size:9px;background:#FDEBD0;color:#B9530E;padding:1px 8px;border-radius:99px;font-weight:700;margin-left:8px;letter-spacing:0.03em">SL4 INDICE PROVIZORIU</span>' +
+        '<span style="font-size:9px;background:#D5F5E3;color:#186A3B;padding:1px 8px;border-radius:99px;font-weight:700;margin-left:8px;letter-spacing:0.03em">INDICE FINAL &#183; aug. 2026</span>' +
       '</div>' +
       '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:10px">' +
-        '<div style="background:#FDEDEC;border-radius:8px;padding:12px;text-align:center;border-top:3px solid #C0392B">' +
-          '<div style="font-size:10px;color:#C0392B;font-weight:700;margin-bottom:4px">COEF. AJUSTARE SL4 (An)</div>' +
-          '<div style="font-size:16px;font-weight:700;color:#C0392B">1,160056</div>' +
-          '<div style="font-size:10px;color:var(--text-secondary)">In/Io = 166,7 / 143,7</div>' +
+        '<div style="background:#E7F6E8;border-radius:8px;padding:12px;text-align:center;border-top:3px solid #186A3B">' +
+          '<div style="font-size:10px;color:#186A3B;font-weight:700;margin-bottom:4px">COEF. AJUSTARE SL4 (An)</div>' +
+          '<div style="font-size:16px;font-weight:700;color:#186A3B">1,167711</div>' +
+          '<div style="font-size:10px;color:var(--text-secondary)">In/Io = 167,8 / 143,7</div>' +
         '</div>' +
-        '<div style="background:#FDEDEC;border-radius:8px;padding:12px;text-align:center">' +
-          '<div style="font-size:10px;color:#C0392B;font-weight:700;margin-bottom:4px">AJUSTARE SL4</div>' +
-          '<div style="font-size:16px;font-weight:700;color:#C0392B">228.484,36</div>' +
-          '<div style="font-size:10px;color:var(--text-secondary)">lei fără TVA · provizoriu</div>' +
+        '<div style="background:#E7F6E8;border-radius:8px;padding:12px;text-align:center">' +
+          '<div style="font-size:10px;color:#186A3B;font-weight:700;margin-bottom:4px">AJUSTARE SL4 (DEFINITIV)</div>' +
+          '<div style="font-size:16px;font-weight:700;color:#186A3B">239.411,87</div>' +
+          '<div style="font-size:10px;color:var(--text-secondary)">lei fără TVA · la plată</div>' +
         '</div>' +
-        '<div style="background:#FDEDEC;border-radius:8px;padding:12px;text-align:center">' +
-          '<div style="font-size:10px;color:#C0392B;font-weight:700;margin-bottom:4px">AJUSTARE SL4 CU TVA</div>' +
-          '<div style="font-size:16px;font-weight:700;color:#C0392B">276.466,08</div>' +
+        '<div style="background:#E7F6E8;border-radius:8px;padding:12px;text-align:center">' +
+          '<div style="font-size:10px;color:#186A3B;font-weight:700;margin-bottom:4px">AJUSTARE SL4 CU TVA</div>' +
+          '<div style="font-size:16px;font-weight:700;color:#186A3B">289.688,36</div>' +
           '<div style="font-size:10px;color:var(--text-secondary)">lei (TVA 21%)</div>' +
         '</div>' +
         '<div style="background:#2C3E50;border-radius:8px;padding:12px;text-align:center">' +
           '<div style="font-size:10px;color:#fff;font-weight:700;margin-bottom:4px">CUMULAT AJUSTĂRI</div>' +
-          '<div style="font-size:16px;font-weight:700;color:#fff">436.861,07</div>' +
-          '<div style="font-size:10px;color:#BFC9D4">lei fără TVA</div>' +
+          '<div style="font-size:16px;font-weight:700;color:#fff">447.788,59</div>' +
+          '<div style="font-size:10px;color:#BFC9D4">lei fără TVA (SL2+SL3+SL4)</div>' +
         '</div>' +
       '</div>' +
       '<div style="font-size:10px;color:var(--text-secondary);margin-bottom:10px">' +
-        'SL2 DEFINITIV (indice final iunie 165,30). SL3 DEFINITIV (indice final iulie 166,80, Buletin 08/2026 — rectificat). SL4 rămâne provizoriu (informare) până la rectificarea indicelui aferent \xb7 Sursa: Buletin INS nr. 07–08/2026' +
+        'SL2 DEFINITIV (indice final iunie 165,30). SL3 DEFINITIV (indice final iulie 166,80, Buletin 08/2026). SL4 DEFINITIV (indice final august 167,80, rectificat — Buletin 09/2026). In = indice cost construcții total, tabel 15 INS; An = In/Io, Io = 143,70.' +
       '</div>' +
       '<div style="overflow-x:auto;margin-bottom:6px">' +
         '<table style="width:100%;border-collapse:collapse;font-size:11px">' +
@@ -9399,14 +9402,14 @@ function renderSL4(proj) {
             '<tr style="border-bottom:1px solid #EEE"><td style="padding:7px 8px;font-weight:700;color:#6C3483">SL1</td><td style="padding:7px 8px;color:#888">nu se ajustează</td><td style="padding:7px 8px;text-align:right">627.850,00</td><td style="padding:7px 8px;text-align:right;color:var(--text-secondary)">—</td><td style="padding:7px 8px;text-align:right">0,00</td><td style="padding:7px 8px;text-align:right">0,00</td><td style="padding:7px 8px;text-align:right">0,00</td></tr>' +
             '<tr style="background:#E7F6E8;border-bottom:1px solid #EEE"><td style="padding:7px 8px;font-weight:700;color:#186A3B">SL2</td><td style="padding:7px 8px;font-weight:600;color:#186A3B">DEFINITIV (la plată)</td><td style="padding:7px 8px;text-align:right">638.203,00</td><td style="padding:7px 8px;text-align:right">1,150313</td><td style="padding:7px 8px;text-align:right;font-weight:600">95.930,30</td><td style="padding:7px 8px;text-align:right">20.145,36</td><td style="padding:7px 8px;text-align:right;font-weight:600">116.075,66</td></tr>' +
             '<tr style="background:#E7F6E8;border-bottom:1px solid #EEE"><td style="padding:7px 8px;font-weight:700;color:#186A3B">SL3</td><td style="padding:7px 8px;font-weight:600;color:#186A3B">DEFINITIV (la plată)</td><td style="padding:7px 8px;text-align:right">699.504,28</td><td style="padding:7px 8px;text-align:right">1,160752</td><td style="padding:7px 8px;text-align:right;font-weight:600">112.446,41</td><td style="padding:7px 8px;text-align:right">23.613,75</td><td style="padding:7px 8px;text-align:right;font-weight:600">136.060,15</td></tr>' +
-            '<tr style="background:#FDF0E1;border-bottom:1px solid #EEE"><td style="padding:7px 8px;font-weight:700;color:#B9530E">SL4</td><td style="padding:7px 8px;color:#B9530E">provizoriu</td><td style="padding:7px 8px;text-align:right">1.427.530,55</td><td style="padding:7px 8px;text-align:right">1,160056</td><td style="padding:7px 8px;text-align:right;font-weight:600">228.484,36</td><td style="padding:7px 8px;text-align:right">47.981,72</td><td style="padding:7px 8px;text-align:right;font-weight:600">276.466,08</td></tr>' +
+            '<tr style="background:#E7F6E8;border-bottom:1px solid #EEE"><td style="padding:7px 8px;font-weight:700;color:#186A3B">SL4</td><td style="padding:7px 8px;font-weight:600;color:#186A3B">DEFINITIV (la plată)</td><td style="padding:7px 8px;text-align:right">1.427.530,55</td><td style="padding:7px 8px;text-align:right">1,167711</td><td style="padding:7px 8px;text-align:right;font-weight:600">239.411,87</td><td style="padding:7px 8px;text-align:right">50.276,49</td><td style="padding:7px 8px;text-align:right;font-weight:600">289.688,36</td></tr>' +
           '</tbody>' +
           '<tfoot>' +
-            '<tr style="background:#2C3E50;color:#fff;font-weight:700"><td colspan="4" style="padding:8px">TOTAL AJUSTĂRI CUMULATE</td><td style="padding:8px;text-align:right;font-size:13px">436.861,07</td><td style="padding:8px;text-align:right">91.740,83</td><td style="padding:8px;text-align:right;font-size:13px">528.601,89</td></tr>' +
+            '<tr style="background:#2C3E50;color:#fff;font-weight:700"><td colspan="4" style="padding:8px">TOTAL AJUSTĂRI CUMULATE</td><td style="padding:8px;text-align:right;font-size:13px">447.788,59</td><td style="padding:8px;text-align:right">94.035,60</td><td style="padding:8px;text-align:right;font-size:13px">541.824,17</td></tr>' +
           '</tfoot>' +
         '</table>' +
       '</div>' +
-      '<div style="font-size:10px;color:var(--text-secondary);font-style:italic">Ajustarea se transmite beneficiarului doar când indicele e final: SL2 (iunie 2026 rectificat) e definitivă și merge la plată; SL3 și SL4 rămân provizorii (informare) până la rectificarea indicilor aferenți.</div>' +
+      '<div style="font-size:10px;color:var(--text-secondary);font-style:italic">Ajustarea se transmite beneficiarului doar când indicele e final: SL2 (iunie), SL3 (iulie) și SL4 (august 2026, Buletin 09/2026) sunt DEFINITIVE și merg la plată. SL4: 239.411,87 lei fără TVA (289.688,36 cu TVA), diferență +10.927,51 lei față de varianta provizorie (228.484,36). Adresa pentru act adițional: nr. 14048 / 26.11.2026 (folder „SL 4 / ver 26.11.2026”).</div>' +
     '</div>' +
     '<div class="page-footer">PM Hub · EREN CONS SRL · 2026</div>';
 }
@@ -9617,7 +9620,7 @@ function renderSL5(proj) {
         '<span style="font-size:9px;background:#FEF9E7;color:#7D6608;padding:1px 8px;border-radius:99px;font-weight:700;margin-left:8px;letter-spacing:0.03em">SL5 PROVIZORIU · UZ INTERN</span>' +
       '</div>' +
       '<div style="font-size:10px;color:var(--text-secondary);margin-bottom:10px">' +
-        'SL2 și SL3 DEFINITIVE (indici finali iunie 165,30, resp. iulie 166,80 — Buletin 08/2026). SL4 provizoriu (informare). SL5: indicele aferent (septembrie 2026) nu e încă publicat; valoarea de mai jos e o estimare de UZ INTERN pe ultimul indice publicat — august 2026 (167,80, provizoriu) — NU se transmite beneficiarului.' +
+        'SL2, SL3 și SL4 DEFINITIVE (indici finali iunie 165,30, iulie 166,80, resp. august 167,80 — Buletin 09/2026). SL5: indicele aferent (septembrie 2026) este încă provizoriu (169,00, Buletin 09/2026); valoarea de mai jos e o estimare de UZ INTERN pe acest indice provizoriu — NU se transmite beneficiarului.' +
       '</div>' +
       '<div style="overflow-x:auto;margin-bottom:6px">' +
         '<table style="width:100%;border-collapse:collapse;font-size:11px">' +
@@ -9634,16 +9637,16 @@ function renderSL5(proj) {
             '<tr style="border-bottom:1px solid #EEE"><td style="padding:7px 8px;font-weight:700;color:#6C3483">SL1</td><td style="padding:7px 8px;color:#888">nu se ajustează</td><td style="padding:7px 8px;text-align:right">627.850,00</td><td style="padding:7px 8px;text-align:right;color:var(--text-secondary)">—</td><td style="padding:7px 8px;text-align:right">0,00</td><td style="padding:7px 8px;text-align:right">0,00</td><td style="padding:7px 8px;text-align:right">0,00</td></tr>' +
             '<tr style="background:#E7F6E8;border-bottom:1px solid #EEE"><td style="padding:7px 8px;font-weight:700;color:#186A3B">SL2</td><td style="padding:7px 8px;font-weight:600;color:#186A3B">DEFINITIV (la plată)</td><td style="padding:7px 8px;text-align:right">638.203,00</td><td style="padding:7px 8px;text-align:right">1,150313</td><td style="padding:7px 8px;text-align:right;font-weight:600">95.930,30</td><td style="padding:7px 8px;text-align:right">20.145,36</td><td style="padding:7px 8px;text-align:right;font-weight:600">116.075,66</td></tr>' +
             '<tr style="background:#E7F6E8;border-bottom:1px solid #EEE"><td style="padding:7px 8px;font-weight:700;color:#186A3B">SL3</td><td style="padding:7px 8px;font-weight:600;color:#186A3B">DEFINITIV (la plată)</td><td style="padding:7px 8px;text-align:right">699.504,28</td><td style="padding:7px 8px;text-align:right">1,160752</td><td style="padding:7px 8px;text-align:right;font-weight:600">112.446,41</td><td style="padding:7px 8px;text-align:right">23.613,75</td><td style="padding:7px 8px;text-align:right;font-weight:600">136.060,15</td></tr>' +
-            '<tr style="background:#FDF0E1;border-bottom:1px solid #EEE"><td style="padding:7px 8px;font-weight:700;color:#B9530E">SL4</td><td style="padding:7px 8px;color:#B9530E">provizoriu</td><td style="padding:7px 8px;text-align:right">1.427.530,55</td><td style="padding:7px 8px;text-align:right">1,160056</td><td style="padding:7px 8px;text-align:right;font-weight:600">228.484,36</td><td style="padding:7px 8px;text-align:right">47.981,72</td><td style="padding:7px 8px;text-align:right;font-weight:600">276.466,08</td></tr>' +
-            '<tr style="background:#FEF9E7;border-bottom:1px solid #EEE"><td style="padding:7px 8px;font-weight:700;color:#7D6608">SL5</td><td style="padding:7px 8px;color:#7D6608">provizoriu · uz intern (In aug. 167,80)</td><td style="padding:7px 8px;text-align:right">251.427,52</td><td style="padding:7px 8px;text-align:right">1,167711</td><td style="padding:7px 8px;text-align:right;font-weight:600;color:#7D6608">42.167,04</td><td style="padding:7px 8px;text-align:right;color:#7D6608">8.855,08</td><td style="padding:7px 8px;text-align:right;font-weight:600;color:#7D6608">51.022,11</td></tr>' +
+            '<tr style="background:#E7F6E8;border-bottom:1px solid #EEE"><td style="padding:7px 8px;font-weight:700;color:#186A3B">SL4</td><td style="padding:7px 8px;font-weight:600;color:#186A3B">DEFINITIV (la plată)</td><td style="padding:7px 8px;text-align:right">1.427.530,55</td><td style="padding:7px 8px;text-align:right">1,167711</td><td style="padding:7px 8px;text-align:right;font-weight:600">239.411,87</td><td style="padding:7px 8px;text-align:right">50.276,49</td><td style="padding:7px 8px;text-align:right;font-weight:600">289.688,36</td></tr>' +
+            '<tr style="background:#FEF9E7;border-bottom:1px solid #EEE"><td style="padding:7px 8px;font-weight:700;color:#7D6608">SL5</td><td style="padding:7px 8px;color:#7D6608">provizoriu · uz intern (In sept. 169,00)</td><td style="padding:7px 8px;text-align:right">251.427,52</td><td style="padding:7px 8px;text-align:right">1,176061</td><td style="padding:7px 8px;text-align:right;font-weight:600;color:#7D6608">44.266,64</td><td style="padding:7px 8px;text-align:right;color:#7D6608">9.295,99</td><td style="padding:7px 8px;text-align:right;font-weight:600;color:#7D6608">53.562,63</td></tr>' +
           '</tbody>' +
           '<tfoot>' +
-            '<tr style="background:#2C3E50;color:#fff;font-weight:700"><td colspan="4" style="padding:8px">TOTAL AJUSTĂRI CUMULATE (SL2–SL4, transmisibile)</td><td style="padding:8px;text-align:right;font-size:13px">436.861,07</td><td style="padding:8px;text-align:right">91.740,83</td><td style="padding:8px;text-align:right;font-size:13px">528.601,89</td></tr>' +
-            '<tr style="background:#5B4A1A;color:#fff;font-weight:600"><td colspan="4" style="padding:7px 8px;font-size:10px">Cumulat INTERN incl. SL5 provizoriu (august)</td><td style="padding:7px 8px;text-align:right;font-size:12px">479.028,11</td><td style="padding:7px 8px;text-align:right;font-size:10px">100.595,91</td><td style="padding:7px 8px;text-align:right;font-size:12px">579.624,02</td></tr>' +
+            '<tr style="background:#2C3E50;color:#fff;font-weight:700"><td colspan="4" style="padding:8px">TOTAL AJUSTĂRI CUMULATE (SL2–SL4, transmisibile)</td><td style="padding:8px;text-align:right;font-size:13px">447.788,59</td><td style="padding:8px;text-align:right">94.035,60</td><td style="padding:8px;text-align:right;font-size:13px">541.824,17</td></tr>' +
+            '<tr style="background:#5B4A1A;color:#fff;font-weight:600"><td colspan="4" style="padding:7px 8px;font-size:10px">Cumulat INTERN incl. SL5 provizoriu (septembrie)</td><td style="padding:7px 8px;text-align:right;font-size:12px">492.055,23</td><td style="padding:7px 8px;text-align:right;font-size:10px">103.331,59</td><td style="padding:7px 8px;text-align:right;font-size:12px">595.386,80</td></tr>' +
           '</tfoot>' +
         '</table>' +
       '</div>' +
-      '<div style="font-size:10px;color:var(--text-secondary);font-style:italic">Ajustarea se transmite beneficiarului doar când indicele e final: SL2 (iunie) și SL3 (iulie) sunt DEFINITIVE și merg la plată; SL4 rămâne provizoriu (informare). SL5: ajustarea de 42.167,04 lei este o estimare de UZ INTERN pe indicele august 2026 (167,80, ultimul publicat), NU se transmite — se recalculează și se oficializează la publicarea indicelui aferent (septembrie 2026). Baza SL5 = execuția C+M 251.427,52 lei (asistența tehnică nu se indexează).</div>' +
+      '<div style="font-size:10px;color:var(--text-secondary);font-style:italic">Ajustarea se transmite beneficiarului doar când indicele e final: SL2 (iunie), SL3 (iulie) și SL4 (august) sunt DEFINITIVE și merg la plată. SL5: ajustarea de 44.266,64 lei este o estimare de UZ INTERN pe indicele septembrie 2026 (169,00, provizoriu — Buletin 09/2026), NU se transmite — se recalculează și se oficializează la rectificarea indicelui (buletinul următor). Baza SL5 = execuția C+M 251.427,52 lei (asistența tehnică nu se indexează).</div>' +
     '</div>' +
     '<div class="page-footer">PM Hub · EREN CONS SRL · 2026</div>';
 }

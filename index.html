@@ -463,7 +463,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
         </div>
         <div class="submenu" id="sub-academia-dtad" style="margin-left:14px;border-left:2px solid var(--grey-200)">
           <div class="submenu-item" id="item-academia-dtadliste" onclick="renderAcademiaDtadListe()">
-            <i class="ti ti-file-spreadsheet" style="color:#1A5276"></i> Liste BTA 24.11.2026
+            <i class="ti ti-file-spreadsheet" style="color:#1A5276"></i> Liste BTA 26.11.2026 – finale
           </div>
         </div>
         <div class="submenu-item" id="item-academia-docbenef" onclick="goModule('academia','docbenef')">
@@ -2174,17 +2174,19 @@ function renderAcademiaDemolari() {
   document.getElementById('main').innerHTML = html;
 }
 
-// ── DTAD · Liste BTA 24.11.2026 (devize eDevize primite pentru faza DTAD) ──
+// ── DTAD · Liste BTA 26.11.2026 – finale (predate către AC, faza DTAD) ──
 // Linkurile se completează aici (Drive/SharePoint); până atunci butoanele apar inactive.
-var DTAD_LISTE_LINKS = { dg:'https://drive.google.com/file/d/1oGJZy1t66eeCN91uvoWx3_2VwNo0mswi/view?usp=sharing', f1:'https://drive.google.com/file/d/1rBmuLk87Iw1GTfpgn3-c3hB8W3R4wBzd/view?usp=sharing', f2dem:'https://drive.google.com/file/d/1eIKxnBLVQypzEju0UYpK2KQnLSWWocSh/view?usp=sharing', f2os:'https://drive.google.com/file/d/1QJ6XPxWaI-Wg2wP7azSRRSg0-42ssZKc/view?usp=sharing', f3dem:'https://drive.google.com/file/d/1t-2jG6bnMXn8z-J_SKzir0uBqMfYHTCT/view?usp=sharing', f3os1:'https://drive.google.com/file/d/1MljC0dein592OV1GrnqZwB8HZQ9jsafL/view?usp=sharing', f3os2:'https://drive.google.com/file/d/1IO9ex_14lA5IqSBTY4mdk9UzGabdMN3n/view?usp=sharing' };
+var DTAD_LISTE_LINKS = { dg:'https://drive.google.com/file/d/1UXcnn-ptxjC1wxIHWgI3pwS8Qv0WXfKn/view?usp=sharing', f1:'https://drive.google.com/file/d/1R8sq_Rwy_I96NVed--F7AVvt0W_JTSSe/view?usp=sharing', f2:'https://drive.google.com/file/d/1EI8mChnkcZ7G0_HfroHGAyK7Uy2ajmK1/view?usp=sharing', f3val:'https://drive.google.com/file/d/1g2MjgegOoQYxmZDGGgVQORCOa3SNf-QI/view?usp=sharing', f3fara:'https://drive.google.com/file/d/1-0XlSI3tk7A4KdqSfGK2xuQSLdiEk6Ce/view?usp=sharing' };
 
 function renderAcademiaDtadListe() {
   _activateAcademiaItem('item-academia-dtadliste');
   var fmt = function(n){ return n.toLocaleString('ro-RO',{minimumFractionDigits:2,maximumFractionDigits:2}) + ' lei'; };
   var pct = function(a,b){ return (a/b*100).toLocaleString('ro-RO',{minimumFractionDigits:1,maximumFractionDigits:1}) + '%'; };
-  var dem=4056221.72, os=1238723.84, tot=5294945.55, tva=1111938.57, totTva=6406884.12;
+  var dem=4056378.97, os=1056640.51, tot=5113019.49, tva=1073734.09, totTva=6186753.58;
+  var osLuc=797846.58, osConexe=258793.93;
+  var totV24=5294945.55;               // total din listele 24.11.2026 (înlocuite)
   var dgVechi=3527377.95;              // DG din DTAD-ul primit de la proiectant (doar demolare)
-  var poz06=2449555.50;                // F3 demolare, poz. 06 colectare/sortare/concasare deșeuri
+  var poz06=2449696.93;                // F3 demolare, poz. 06 colectare/sortare/concasare deșeuri
   var dif=dem-dgVechi;
 
   var kpi=function(lab,val,sub,col){
@@ -2207,7 +2209,7 @@ function renderAcademiaDtadListe() {
   };
 
   var html =
-    '<div class="proj-header"><div class="proj-title">DTAD — Liste BTA 24.11.2026</div>'+
+    '<div class="proj-header"><div class="proj-title">DTAD — Liste BTA 26.11.2026 (finale, predate către AC)</div>'+
     '<div class="proj-meta">Academia Navală · devize eDevize faza DTAD (Eren Cons / BEMEL AG) · valori fără TVA, TVA 21%</div></div>';
   html += '<div class="nivel-card" style="padding:18px 20px">';
   html += '<div style="display:flex;flex-wrap:wrap;gap:12px;margin-bottom:16px">'+
@@ -2225,18 +2227,17 @@ function renderAcademiaDtadListe() {
   html += '<div style="font-size:12px;font-weight:700;color:#1A5276;margin:4px 0 2px">Documente (în ordine: DG → F1 → F2 → F3)</div>';
   html += row('DG','#1A5276','Deviz general — faza DTAD',fmt(tot)+' · cap. 1 demolare '+fmt(dem)+' + cap. 5 OS '+fmt(os),'dg');
   html += row('F1','#2E6DA4','Centralizator pe obiectiv',fmt(tot)+' · cu TVA '+fmt(totTva),'f1');
-  html += row('F2','#5499C7','Demolare clădire existentă — centralizator pe obiect',fmt(dem),'f2dem');
-  html += row('F2','#5499C7','Organizare de șantier — centralizator pe obiect',fmt(os),'f2os');
-  html += row('F3','#1F6B3A','Demolare clădire existentă — listă cantități',fmt(dem)+' · 8 poziții','f3dem');
-  html += row('F3','#1F6B3A','Lucrări construcții și instalații aferente OS — listă cantități',fmt(1002134.60),'f3os1');
-  html += row('F3','#1F6B3A','Cheltuieli conexe organizării de șantier — listă cantități',fmt(236589.24),'f3os2');
+  html += row('F2','#5499C7','Centralizator pe obiect — Demolare ('+fmt(dem)+') și OS ('+fmt(os)+')','OS: lucrări '+fmt(osLuc)+' + cheltuieli conexe '+fmt(osConexe),'f2');
+  html += row('F3','#1F6B3A','Liste cantități — cu valori','Demolare (8 poziții) + OS · prețuri unitare și totaluri','f3val');
+  html += row('F3','#1F6B3A','Liste cantități — fără valori','Aceleași liste, doar cu cantități (fără prețuri)','f3fara');
 
   html += '<div style="font-size:12px;line-height:1.6;color:var(--text);border-top:1px solid var(--border);margin-top:16px;padding-top:12px">'+
     '<b>De reținut:</b><ul style="margin:6px 0 0;padding-left:18px">'+
-    '<li>Demolarea a crescut de la '+fmt(dgVechi)+' (DG din DTAD-ul primit) la '+fmt(dem)+': <b>+'+fmt(dif)+' ('+pct(dif,dgVechi)+')</b>.</li>'+
-    '<li>Poziția 06 (colectare, sortare, concasare deșeuri, 4.100 mc) = '+fmt(poz06)+', adică <b>'+pct(poz06,dem)+' din demolare</b>.</li>'+
-    '<li>Încărcarea și transportul sunt calculate pe 8.200 t (2 t/mc), față de 4.100 mc din memoriu — de verificat factorul de conversie.</li>'+
-    '<li>Bazinul de apă nu apare în aceste liste (nici în DTAD); în bugetul intern de demolări e cuprins separat, ≈108.200 lei.</li>'+
+    '<li>Față de listele din 24.11: total <b>−'+fmt(totV24-tot)+'</b> (scăderea vine din OS: '+fmt(1238723.84)+' → '+fmt(os)+'); demolarea rămâne practic neschimbată ('+fmt(dem)+').</li>'+
+    '<li>Față de DG-ul din DTAD-ul inițial, demolarea a crescut cu <b>+'+fmt(dif)+' ('+pct(dif,dgVechi)+')</b>.</li>'+
+    '<li>Poziția 06 (colectare, concasare, manipulare deșeuri, 4.450 mc × 550,49 lei) = '+fmt(poz06)+', adică <b>'+pct(poz06,dem)+' din demolare</b>.</li>'+
+    '<li>Încărcarea (poz. 07) și transportul (poz. 08) sunt calculate pe 9.800 t.</li>'+
+    '<li>Bazinul de apă nu apare în aceste liste; în bugetul intern de demolări e cuprins separat, ≈108.200 lei.</li>'+
     '</ul></div>';
   html += '</div>';
   html += '<div class="page-footer">PM Hub · EREN CONS SRL · 2026</div>';
